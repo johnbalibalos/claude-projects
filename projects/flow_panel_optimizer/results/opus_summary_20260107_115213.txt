@@ -1,0 +1,53 @@
+FLOW PANEL OPTIMIZER - OPUS ABLATION STUDY
+============================================================
+
+Date: 2026-01-07T11:52:13.170492
+Model: claude-opus-4-20250514
+Test cases: 16
+Conditions: 4
+
+RESULTS BY CONDITION
+------------------------------------------------------------
+                   accuracy              complexity_index ci_improvement latency tool_calls
+                       mean    std count             mean           mean    mean        sum
+condition                                                                                  
+baseline              0.040  0.094    16            0.785          0.047  11.009          0
+mcp_only              0.042  0.075    16            0.101          0.699  40.861        143
+mcp_plus_retrieval    0.195  0.237    16            0.199          0.711  48.705        184
+retrieval_standard    0.366  0.374    16            1.293          0.208  11.981          0
+
+RESULTS BY CASE TYPE
+------------------------------------------------------------
+                                        accuracy  complexity_index
+condition          case_type                                      
+baseline           adversarial             0.000             0.380
+                   in_distribution         0.000             0.992
+                   near_distribution       0.036             0.893
+                   out_of_distribution     0.125             0.570
+mcp_only           adversarial             0.000             0.000
+                   in_distribution         0.000             0.090
+                   near_distribution       0.042             0.135
+                   out_of_distribution     0.125             0.135
+mcp_plus_retrieval adversarial             0.000             0.000
+                   in_distribution         0.382             0.180
+                   near_distribution       0.167             0.392
+                   out_of_distribution     0.042             0.135
+retrieval_standard adversarial             0.000             0.845
+                   in_distribution         0.779             1.833
+                   near_distribution       0.254             1.815
+                   out_of_distribution     0.042             0.185
+
+KEY FINDINGS
+------------------------------------------------------------
+1. Baseline accuracy: 4.0%
+2. MCP tools only: 4.2% (+0.1pp vs baseline)
+3. Retrieval only: 36.6% (+32.6pp vs baseline)
+4. MCP + Retrieval: 19.5% (+15.5pp vs baseline)
+
+5. Total tool calls (MCP only): 143
+
+COMPLEXITY INDEX (lower is better):
+  baseline: 0.78
+  mcp_only: 0.10
+  retrieval_standard: 1.29
+  mcp_plus_retrieval: 0.20

@@ -91,6 +91,28 @@ pytest -v  # Verbose output
 pytest --cov=flow_panel_optimizer  # With coverage
 ```
 
+## Limitations
+
+### Theoretical vs. Actual Calculations
+- **Spectral data is approximated**: Uses Gaussian fits to emission peaks, not real measured spectra from FPbase or manufacturer data
+- **Spreading matrix is theoretical only**: Actual SSM requires single-stained controls and instrument-specific measurements
+- **No excitation spectra considered**: Real overlap depends on both excitation and emission
+
+### Validation Gaps
+- **Limited ground truth**: Complexity index is not a published standard metric with validated thresholds
+- **No instrument validation**: Calculations not validated against real cytometer outputs or spreading matrices
+- **OMIP comparison is incomplete**: Only covers a subset of published panels
+
+### Scope Limitations
+- **No antibody considerations**: Does not account for antibody availability, cross-reactivity, or clone performance
+- **No co-expression modeling**: Assumes markers can be treated independently (not always true)
+- **Single instrument assumption**: Does not model differences between instrument configurations
+
+### Known Issues
+- Fluorophore database is incomplete (primarily common cytometry dyes)
+- Some tandem dyes (e.g., PE-Cy7) degrade over time - not modeled
+- Autofluorescence not considered
+
 ## References
 
 1. Park LM et al. OMIP-069: Forty-Color Full Spectrum Flow Cytometry Panel. Cytometry A. 2020;97(10):1044-1051.
