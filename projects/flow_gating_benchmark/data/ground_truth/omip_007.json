@@ -1,0 +1,172 @@
+{
+  "test_case_id": "OMIP-007",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-007",
+  "doi": "10.1002/cyto.a.omip007",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Human PBMC",
+    "species": "human",
+    "application": "Monocyte subset identification",
+    "tissue": "PBMC",
+    "disease_state": null,
+    "additional_notes": "8-color monocyte panel"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD14",
+        "fluorophore": "APC",
+        "clone": null
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "FITC",
+        "clone": null
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "BV421",
+        "clone": null
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "APC-H7",
+        "clone": null
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "BUV395",
+        "clone": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "BUV496",
+        "clone": null
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "PE",
+        "clone": null
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "7-AAD",
+        "clone": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "gate_type": "Unknown",
+      "is_critical": false,
+      "notes": null,
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
+          "gate_type": "Unknown",
+          "is_critical": true,
+          "notes": null,
+          "children": [
+            {
+              "name": "Live",
+              "markers": [
+                "7-AAD"
+              ],
+              "gate_type": "Unknown",
+              "is_critical": true,
+              "notes": null,
+              "children": [
+                {
+                  "name": "CD45+",
+                  "markers": [
+                    "CD45"
+                  ],
+                  "gate_type": "Unknown",
+                  "is_critical": true,
+                  "notes": null,
+                  "children": [
+                    {
+                      "name": "Lineage-",
+                      "markers": [
+                        "CD3",
+                        "CD19",
+                        "CD56"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": null,
+                      "children": [
+                        {
+                          "name": "Monocytes",
+                          "markers": [
+                            "CD14",
+                            "HLA-DR"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [
+                            {
+                              "name": "Classical",
+                              "markers": [
+                                "CD14",
+                                "CD16"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": []
+                            },
+                            {
+                              "name": "Intermediate",
+                              "markers": [
+                                "CD14",
+                                "CD16"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": []
+                            },
+                            {
+                              "name": "Non-classical",
+                              "markers": [
+                                "CD14",
+                                "CD16"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "validation": {
+    "paper_source": "Figure 1",
+    "curator_notes": "8-color panel"
+  },
+  "metadata": {
+    "curation_date": "2026-01-07",
+    "curator": "Auto-generated"
+  }
+}

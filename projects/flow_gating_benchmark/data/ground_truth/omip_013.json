@@ -1,0 +1,232 @@
+{
+  "test_case_id": "OMIP-013",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-013",
+  "doi": "10.1002/cyto.a.omip013",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Human PBMC",
+    "species": "human",
+    "application": "T helper subset identification",
+    "tissue": "PBMC",
+    "disease_state": null,
+    "additional_notes": "14-color Th subset panel"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD3",
+        "fluorophore": "BUV395",
+        "clone": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BV421",
+        "clone": null
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "BUV496",
+        "clone": null
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "BV510",
+        "clone": null
+      },
+      {
+        "marker": "CXCR3",
+        "fluorophore": "PE",
+        "clone": null
+      },
+      {
+        "marker": "CCR6",
+        "fluorophore": "APC",
+        "clone": null
+      },
+      {
+        "marker": "CXCR5",
+        "fluorophore": "FITC",
+        "clone": null
+      },
+      {
+        "marker": "CCR4",
+        "fluorophore": "PE-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "APC-H7",
+        "clone": null
+      },
+      {
+        "marker": "CCR10",
+        "fluorophore": "BV605",
+        "clone": null
+      },
+      {
+        "marker": "CD161",
+        "fluorophore": "BV650",
+        "clone": null
+      },
+      {
+        "marker": "CD127",
+        "fluorophore": "BV711",
+        "clone": null
+      },
+      {
+        "marker": "CD25",
+        "fluorophore": "BV785",
+        "clone": null
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "Zombie NIR",
+        "clone": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "gate_type": "Unknown",
+      "is_critical": false,
+      "notes": null,
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
+          "gate_type": "Unknown",
+          "is_critical": true,
+          "notes": null,
+          "children": [
+            {
+              "name": "Live",
+              "markers": [
+                "Zombie NIR"
+              ],
+              "gate_type": "Unknown",
+              "is_critical": true,
+              "notes": null,
+              "children": [
+                {
+                  "name": "Lymphocytes",
+                  "markers": [
+                    "FSC-A",
+                    "SSC-A"
+                  ],
+                  "gate_type": "Unknown",
+                  "is_critical": true,
+                  "notes": null,
+                  "children": [
+                    {
+                      "name": "CD3+ T cells",
+                      "markers": [
+                        "CD3"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": null,
+                      "children": [
+                        {
+                          "name": "CD4+ T cells",
+                          "markers": [
+                            "CD4"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [
+                            {
+                              "name": "Memory CD4",
+                              "markers": [
+                                "CD45RA"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [
+                                {
+                                  "name": "Th1",
+                                  "markers": [
+                                    "CXCR3",
+                                    "CCR6"
+                                  ],
+                                  "gate_type": "Unknown",
+                                  "is_critical": false,
+                                  "notes": null,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Th2",
+                                  "markers": [
+                                    "CCR4",
+                                    "CXCR3"
+                                  ],
+                                  "gate_type": "Unknown",
+                                  "is_critical": false,
+                                  "notes": null,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Th17",
+                                  "markers": [
+                                    "CCR6",
+                                    "CD161"
+                                  ],
+                                  "gate_type": "Unknown",
+                                  "is_critical": false,
+                                  "notes": null,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Tfh",
+                                  "markers": [
+                                    "CXCR5"
+                                  ],
+                                  "gate_type": "Unknown",
+                                  "is_critical": false,
+                                  "notes": null,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Th22",
+                                  "markers": [
+                                    "CCR10",
+                                    "CCR6"
+                                  ],
+                                  "gate_type": "Unknown",
+                                  "is_critical": false,
+                                  "notes": null,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "validation": {
+    "paper_source": "Figure 1",
+    "curator_notes": "14-color panel"
+  },
+  "metadata": {
+    "curation_date": "2026-01-07",
+    "curator": "Auto-generated"
+  }
+}

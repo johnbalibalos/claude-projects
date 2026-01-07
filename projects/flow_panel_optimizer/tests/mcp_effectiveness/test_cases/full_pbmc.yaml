@@ -1,0 +1,103 @@
+name: "full_pbmc_panel"
+description: "Comprehensive PBMC immunophenotyping covering major lineages"
+instrument: "5-laser (UVBYR: 355nm, 405nm, 488nm, 561nm, 640nm)"
+expected_difficulty: "very_hard"
+
+markers:
+  # Lineage markers
+  - name: "CD3"
+    expression: "high"
+    description: "Pan T-cell"
+
+  - name: "CD4"
+    expression: "high"
+    description: "Helper T-cell"
+
+  - name: "CD8"
+    expression: "high"
+    description: "Cytotoxic T-cell"
+
+  - name: "CD14"
+    expression: "high"
+    description: "Classical monocytes"
+
+  - name: "CD16"
+    expression: "medium"
+    description: "Non-classical monocytes, NK cells"
+
+  - name: "CD19"
+    expression: "high"
+    description: "B cells"
+
+  - name: "CD56"
+    expression: "medium"
+    description: "NK cells"
+
+  # T-cell memory
+  - name: "CD45RA"
+    expression: "high"
+    description: "Naive marker"
+
+  - name: "CCR7"
+    expression: "medium"
+    description: "Central memory marker"
+
+  - name: "CD27"
+    expression: "medium"
+    description: "Memory/co-stimulation"
+
+  - name: "CD28"
+    expression: "medium"
+    description: "Co-stimulation"
+
+  # Activation
+  - name: "CD38"
+    expression: "variable"
+    description: "Activation marker"
+
+  - name: "HLA-DR"
+    expression: "variable"
+    description: "Activation, APC marker"
+
+  - name: "CD69"
+    expression: "low"
+    description: "Early activation"
+
+  # Exhaustion/checkpoint
+  - name: "PD-1"
+    expression: "low"
+    description: "Exhaustion/checkpoint"
+
+  - name: "TIM-3"
+    expression: "low"
+    description: "Exhaustion marker"
+
+  - name: "LAG-3"
+    expression: "low"
+    description: "Exhaustion marker"
+
+  # Proliferation
+  - name: "Ki-67"
+    expression: "low"
+    intracellular: true
+    description: "Proliferation marker"
+
+  # Other
+  - name: "CD127"
+    expression: "low"
+    description: "IL-7R, Treg exclusion"
+
+  - name: "Viability"
+    expression: "high"
+    description: "Dead cell exclusion"
+
+coexpression_notes:
+  - "CD3/CD19/CD14 are mutually exclusive lineage markers"
+  - "CD4 and CD8 mutually exclusive"
+  - "NK cells: CD3-CD56+CD16+/-"
+  - "Monocyte subsets: Classical (CD14++CD16-), Intermediate (CD14++CD16+), Non-classical (CD14+CD16++)"
+  - "Multiple dim exhaustion markers need bright fluorophores"
+
+notes: "Maximum complexity panel - 20 markers with many dim targets"
+
+reference_panel: "Inspired by OMIP-069 marker selection"

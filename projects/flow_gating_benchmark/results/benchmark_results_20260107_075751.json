@@ -1,0 +1,590 @@
+{
+  "timestamp": "20260107_075751",
+  "n_test_cases": 2,
+  "model": "claude-sonnet-4-20250514",
+  "metrics": {
+    "total": 2,
+    "valid": 2,
+    "parse_success_rate": 1.0,
+    "hierarchy_f1_mean": 0.6075757575757575,
+    "hierarchy_f1_min": 0.5333333333333333,
+    "hierarchy_f1_max": 0.6818181818181818,
+    "hierarchy_precision_mean": 0.5230263157894737,
+    "hierarchy_precision_min": 0.42105263157894735,
+    "hierarchy_precision_max": 0.625,
+    "hierarchy_recall_mean": 0.7386363636363636,
+    "hierarchy_recall_min": 0.7272727272727273,
+    "hierarchy_recall_max": 0.75,
+    "structure_accuracy_mean": 0.6388888888888888,
+    "structure_accuracy_min": 0.5,
+    "structure_accuracy_max": 0.7777777777777778,
+    "critical_gate_recall_mean": 0.45,
+    "critical_gate_recall_min": 0.4,
+    "critical_gate_recall_max": 0.5,
+    "hallucination_rate_mean": 0.12061403508771928,
+    "hallucination_rate_min": 0.08333333333333333,
+    "hallucination_rate_max": 0.15789473684210525,
+    "depth_accuracy_mean": 0.7083333333333334,
+    "depth_accuracy_min": 0.6666666666666667,
+    "depth_accuracy_max": 0.75
+  },
+  "token_usage": {
+    "input": 1102,
+    "output": 3202,
+    "total": 4304
+  },
+  "cost_usd": 0.05133600000000001,
+  "results": [
+    {
+      "test_case_id": "OMIP-023",
+      "model": "claude-sonnet-4-20250514",
+      "condition": "standard_cot",
+      "parse_success": true,
+      "parse_format": "json_code_block",
+      "parse_error": null,
+      "evaluation": {
+        "hierarchy_f1": 0.5333333333333333,
+        "hierarchy_precision": 0.42105263157894735,
+        "hierarchy_recall": 0.7272727272727273,
+        "structure_accuracy": 0.5,
+        "critical_gate_recall": 0.5,
+        "hallucination_rate": 0.15789473684210525,
+        "depth_accuracy": 0.6666666666666667,
+        "predicted_gates": [
+          "Leukocytes",
+          "Myeloid Cells",
+          "Non-classical Monocytes",
+          "B Cells",
+          "NK Cells",
+          "Classical Monocytes",
+          "T Cells",
+          "Singlets",
+          "Time Gate",
+          "All Events",
+          "Intermediate Monocytes",
+          "Live Cells",
+          "CD56bright NK",
+          "Non-T Non-B Cells",
+          "DN T Cells",
+          "Non-T Cells",
+          "CD8+ T Cells",
+          "CD56dim NK",
+          "CD4+ T Cells"
+        ],
+        "ground_truth_gates": [
+          "All Events",
+          "Monocytes",
+          "CD45+",
+          "NK cells",
+          "T cells",
+          "Lymphocytes",
+          "CD8+ T cells",
+          "B cells",
+          "Live",
+          "Singlets",
+          "CD4+ T cells"
+        ],
+        "matching_gates": [
+          "NK Cells",
+          "Singlets",
+          "CD4+ T Cells",
+          "CD8+ T Cells",
+          "All Events",
+          "Live Cells",
+          "B Cells",
+          "T Cells"
+        ],
+        "missing_gates": [
+          "Monocytes",
+          "CD45+",
+          "Lymphocytes"
+        ],
+        "extra_gates": [
+          "Leukocytes",
+          "CD56dim NK",
+          "Non-T Cells",
+          "DN T Cells",
+          "Non-T Non-B Cells",
+          "Myeloid Cells",
+          "Time Gate",
+          "Non-classical Monocytes",
+          "Intermediate Monocytes",
+          "Classical Monocytes",
+          "CD56bright NK"
+        ],
+        "hallucinated_gates": [
+          "Non-classical Monocytes",
+          "Non-T Non-B Cells",
+          "Non-T Cells"
+        ],
+        "missing_critical": [
+          "CD45+",
+          "Lymphocytes"
+        ],
+        "correct_relationships": 1,
+        "total_relationships": 2,
+        "structure_errors": [
+          "Gate 'Singlets': predicted parent='Time Gate', expected parent='All Events'"
+        ],
+        "parse_success": true,
+        "parse_error": null
+      },
+      "parsed_hierarchy": {
+        "name": "All Events",
+        "markers": [],
+        "children": [
+          {
+            "name": "Time Gate",
+            "markers": [
+              "Time"
+            ],
+            "children": [
+              {
+                "name": "Singlets",
+                "markers": [
+                  "FSC-A",
+                  "FSC-H"
+                ],
+                "children": [
+                  {
+                    "name": "Live Cells",
+                    "markers": [
+                      "7-AAD"
+                    ],
+                    "children": [
+                      {
+                        "name": "Leukocytes",
+                        "markers": [
+                          "CD45"
+                        ],
+                        "children": [
+                          {
+                            "name": "T Cells",
+                            "markers": [
+                              "CD3"
+                            ],
+                            "children": [
+                              {
+                                "name": "CD4+ T Cells",
+                                "markers": [
+                                  "CD4"
+                                ],
+                                "children": []
+                              },
+                              {
+                                "name": "CD8+ T Cells",
+                                "markers": [
+                                  "CD8"
+                                ],
+                                "children": []
+                              },
+                              {
+                                "name": "DN T Cells",
+                                "markers": [
+                                  "CD4",
+                                  "CD8"
+                                ],
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "name": "Non-T Cells",
+                            "markers": [
+                              "CD3"
+                            ],
+                            "children": [
+                              {
+                                "name": "B Cells",
+                                "markers": [
+                                  "CD19"
+                                ],
+                                "children": []
+                              },
+                              {
+                                "name": "Non-T Non-B Cells",
+                                "markers": [
+                                  "CD19"
+                                ],
+                                "children": [
+                                  {
+                                    "name": "NK Cells",
+                                    "markers": [
+                                      "CD56"
+                                    ],
+                                    "children": [
+                                      {
+                                        "name": "CD56bright NK",
+                                        "markers": [
+                                          "CD56",
+                                          "CD16"
+                                        ],
+                                        "children": []
+                                      },
+                                      {
+                                        "name": "CD56dim NK",
+                                        "markers": [
+                                          "CD56",
+                                          "CD16"
+                                        ],
+                                        "children": []
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "name": "Myeloid Cells",
+                                    "markers": [
+                                      "CD56"
+                                    ],
+                                    "children": [
+                                      {
+                                        "name": "Classical Monocytes",
+                                        "markers": [
+                                          "CD14",
+                                          "CD16"
+                                        ],
+                                        "children": []
+                                      },
+                                      {
+                                        "name": "Intermediate Monocytes",
+                                        "markers": [
+                                          "CD14",
+                                          "CD16"
+                                        ],
+                                        "children": []
+                                      },
+                                      {
+                                        "name": "Non-classical Monocytes",
+                                        "markers": [
+                                          "CD14",
+                                          "CD16"
+                                        ],
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "test_case_id": "OMIP-069",
+      "model": "claude-sonnet-4-20250514",
+      "condition": "standard_cot",
+      "parse_success": true,
+      "parse_format": "json_code_block",
+      "parse_error": null,
+      "evaluation": {
+        "hierarchy_f1": 0.6818181818181818,
+        "hierarchy_precision": 0.625,
+        "hierarchy_recall": 0.75,
+        "structure_accuracy": 0.7777777777777778,
+        "critical_gate_recall": 0.4,
+        "hallucination_rate": 0.08333333333333333,
+        "depth_accuracy": 0.75,
+        "predicted_gates": [
+          "B Cells",
+          "Classical Monocytes",
+          "NK Cells",
+          "T Cells",
+          "Time Gate",
+          "All Events",
+          "Intermediate Monocytes",
+          "CD4+ Naive",
+          "CD4+ Memory",
+          "Live Cells",
+          "CD56bright NK",
+          "CD45+ Immune Cells",
+          "Singlets (FSC)",
+          "Lymphocytes",
+          "Non-B Cells",
+          "Non-T Cells",
+          "Naive B Cells",
+          "CD8+ Memory",
+          "CD8+ T Cells",
+          "Singlets (SSC)",
+          "CD56dim NK",
+          "CD4+ T Cells",
+          "Memory B Cells",
+          "CD8+ Naive"
+        ],
+        "ground_truth_gates": [
+          "Monocytes",
+          "Non-classical Monocytes",
+          "Classical Monocytes",
+          "CD8+ T cells",
+          "Singlets",
+          "CD4+ T cells",
+          "All Events",
+          "CD45+",
+          "CD4+ Naive",
+          "CD4+ Memory",
+          "B cells",
+          "CD56bright NK",
+          "NK cells",
+          "Lymphocytes",
+          "Time",
+          "Live",
+          "CD8+ Memory",
+          "T cells",
+          "CD56dim NK",
+          "CD8+ Naive"
+        ],
+        "matching_gates": [
+          "CD8+ Naive",
+          "NK Cells",
+          "CD8+ T Cells",
+          "CD56dim NK",
+          "CD4+ T Cells",
+          "Lymphocytes",
+          "CD4+ Naive",
+          "All Events",
+          "Live Cells",
+          "CD8+ Memory",
+          "CD4+ Memory",
+          "B Cells",
+          "T Cells",
+          "Classical Monocytes",
+          "CD56bright NK"
+        ],
+        "missing_gates": [
+          "Monocytes",
+          "Singlets",
+          "CD45+",
+          "Time",
+          "Non-classical Monocytes"
+        ],
+        "extra_gates": [
+          "Singlets (SSC)",
+          "Non-B Cells",
+          "Naive B Cells",
+          "Non-T Cells",
+          "Memory B Cells",
+          "Time Gate",
+          "Singlets (FSC)",
+          "Intermediate Monocytes",
+          "CD45+ Immune Cells"
+        ],
+        "hallucinated_gates": [
+          "Non-B Cells",
+          "Non-T Cells"
+        ],
+        "missing_critical": [
+          "Time",
+          "Singlets",
+          "CD45+"
+        ],
+        "correct_relationships": 7,
+        "total_relationships": 9,
+        "structure_errors": [
+          "Gate 'Lymphocytes': predicted parent='Live Cells', expected parent='CD45+'",
+          "Gate 'Classical Monocytes': predicted parent='Non-B Cells', expected parent='Monocytes'"
+        ],
+        "parse_success": true,
+        "parse_error": null
+      },
+      "parsed_hierarchy": {
+        "name": "All Events",
+        "markers": [],
+        "children": [
+          {
+            "name": "Time Gate",
+            "markers": [
+              "Time"
+            ],
+            "children": [
+              {
+                "name": "Singlets (FSC)",
+                "markers": [
+                  "FSC-A",
+                  "FSC-H"
+                ],
+                "children": [
+                  {
+                    "name": "Singlets (SSC)",
+                    "markers": [
+                      "SSC-A",
+                      "SSC-H"
+                    ],
+                    "children": [
+                      {
+                        "name": "Live Cells",
+                        "markers": [
+                          "Zombie NIR"
+                        ],
+                        "children": [
+                          {
+                            "name": "Lymphocytes",
+                            "markers": [
+                              "FSC-A",
+                              "SSC-A"
+                            ],
+                            "children": [
+                              {
+                                "name": "CD45+ Immune Cells",
+                                "markers": [
+                                  "CD45"
+                                ],
+                                "children": [
+                                  {
+                                    "name": "T Cells",
+                                    "markers": [
+                                      "CD3"
+                                    ],
+                                    "children": [
+                                      {
+                                        "name": "CD4+ T Cells",
+                                        "markers": [
+                                          "CD4"
+                                        ],
+                                        "children": [
+                                          {
+                                            "name": "CD4+ Naive",
+                                            "markers": [
+                                              "CD45RA",
+                                              "CD127"
+                                            ],
+                                            "children": []
+                                          },
+                                          {
+                                            "name": "CD4+ Memory",
+                                            "markers": [
+                                              "CD45RA",
+                                              "CD127"
+                                            ],
+                                            "children": []
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "name": "CD8+ T Cells",
+                                        "markers": [
+                                          "CD8"
+                                        ],
+                                        "children": [
+                                          {
+                                            "name": "CD8+ Naive",
+                                            "markers": [
+                                              "CD45RA",
+                                              "CD127"
+                                            ],
+                                            "children": []
+                                          },
+                                          {
+                                            "name": "CD8+ Memory",
+                                            "markers": [
+                                              "CD45RA",
+                                              "CD127"
+                                            ],
+                                            "children": []
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "name": "Non-T Cells",
+                                    "markers": [
+                                      "CD3"
+                                    ],
+                                    "children": [
+                                      {
+                                        "name": "B Cells",
+                                        "markers": [
+                                          "CD19"
+                                        ],
+                                        "children": [
+                                          {
+                                            "name": "Naive B Cells",
+                                            "markers": [
+                                              "CD45RA"
+                                            ],
+                                            "children": []
+                                          },
+                                          {
+                                            "name": "Memory B Cells",
+                                            "markers": [
+                                              "CD45RA"
+                                            ],
+                                            "children": []
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "name": "Non-B Cells",
+                                        "markers": [
+                                          "CD19"
+                                        ],
+                                        "children": [
+                                          {
+                                            "name": "Classical Monocytes",
+                                            "markers": [
+                                              "CD14",
+                                              "CD16"
+                                            ],
+                                            "children": []
+                                          },
+                                          {
+                                            "name": "Intermediate Monocytes",
+                                            "markers": [
+                                              "CD14",
+                                              "CD16"
+                                            ],
+                                            "children": []
+                                          },
+                                          {
+                                            "name": "NK Cells",
+                                            "markers": [
+                                              "CD56"
+                                            ],
+                                            "children": [
+                                              {
+                                                "name": "CD56bright NK",
+                                                "markers": [
+                                                  "CD56",
+                                                  "CD16"
+                                                ],
+                                                "children": []
+                                              },
+                                              {
+                                                "name": "CD56dim NK",
+                                                "markers": [
+                                                  "CD56",
+                                                  "CD16"
+                                                ],
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

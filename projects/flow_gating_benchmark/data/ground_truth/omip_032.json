@@ -1,0 +1,240 @@
+{
+  "test_case_id": "OMIP-032",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-032",
+  "doi": "10.1002/cyto.a.omip032",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Mouse bone marrow",
+    "species": "mouse",
+    "application": "Mouse myeloid cell phenotyping",
+    "tissue": "bone",
+    "disease_state": null,
+    "additional_notes": "12-color mouse myeloid panel"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD11b",
+        "fluorophore": "BV421",
+        "clone": null
+      },
+      {
+        "marker": "CD11c",
+        "fluorophore": "PE",
+        "clone": null
+      },
+      {
+        "marker": "Ly6C",
+        "fluorophore": "FITC",
+        "clone": null
+      },
+      {
+        "marker": "Ly6G",
+        "fluorophore": "APC",
+        "clone": null
+      },
+      {
+        "marker": "F4/80",
+        "fluorophore": "PE-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "APC-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "MHCII",
+        "fluorophore": "BV510",
+        "clone": null
+      },
+      {
+        "marker": "CD115",
+        "fluorophore": "BV605",
+        "clone": null
+      },
+      {
+        "marker": "CD64",
+        "fluorophore": "BV711",
+        "clone": null
+      },
+      {
+        "marker": "SiglecF",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": null
+      },
+      {
+        "marker": "CD103",
+        "fluorophore": "BV785",
+        "clone": null
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "Zombie NIR",
+        "clone": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "gate_type": "Unknown",
+      "is_critical": false,
+      "notes": null,
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
+          "gate_type": "Unknown",
+          "is_critical": true,
+          "notes": null,
+          "children": [
+            {
+              "name": "Live",
+              "markers": [
+                "Zombie NIR"
+              ],
+              "gate_type": "Unknown",
+              "is_critical": true,
+              "notes": null,
+              "children": [
+                {
+                  "name": "CD45+",
+                  "markers": [
+                    "CD45"
+                  ],
+                  "gate_type": "Unknown",
+                  "is_critical": true,
+                  "notes": null,
+                  "children": [
+                    {
+                      "name": "CD11b+",
+                      "markers": [
+                        "CD11b"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": null,
+                      "children": [
+                        {
+                          "name": "Neutrophils",
+                          "markers": [
+                            "Ly6G"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": []
+                        },
+                        {
+                          "name": "Monocytes",
+                          "markers": [
+                            "Ly6C",
+                            "Ly6G"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [
+                            {
+                              "name": "Ly6Chi Monocytes",
+                              "markers": [
+                                "Ly6C"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": []
+                            },
+                            {
+                              "name": "Ly6Clo Monocytes",
+                              "markers": [
+                                "Ly6C"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Macrophages",
+                          "markers": [
+                            "F4/80",
+                            "CD64"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": []
+                        },
+                        {
+                          "name": "Eosinophils",
+                          "markers": [
+                            "SiglecF"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Dendritic cells",
+                      "markers": [
+                        "CD11c",
+                        "MHCII"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": null,
+                      "children": [
+                        {
+                          "name": "cDC1",
+                          "markers": [
+                            "CD103"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": []
+                        },
+                        {
+                          "name": "cDC2",
+                          "markers": [
+                            "CD11b"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "validation": {
+    "paper_source": "Figure 1",
+    "curator_notes": "12-color panel"
+  },
+  "metadata": {
+    "curation_date": "2026-01-07",
+    "curator": "Auto-generated"
+  }
+}

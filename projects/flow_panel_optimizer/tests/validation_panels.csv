@@ -1,0 +1,9 @@
+Panel Name,Description,Fluorophores,N Fluorophores,N Pairs,Total Similarity Score,Avg Similarity,Max Similarity,N Critical Pairs (>0.90),N High Risk Pairs (>0.70),Quality Rating
+Basic T-cell panel (4-color),Common 4-color T-cell panel,"BV421, FITC, PE, APC",4,6,0.0275,0.0046,0.0266,0,0,EXCELLENT
+Extended T-cell panel (8-color),Standard 8-color immunophenotyping,"BV421, BV510, FITC, PE, PE-Cy7, APC, APC-Cy7, BV785",8,28,3.9269,0.1402,1.0,3,1,POOR
+Similar green fluorophores,Deliberately similar - should have high overlap,"FITC, BB515, Alexa Fluor 488",3,3,2.8989,0.9663,0.98,3,0,POOR
+Similar far-red fluorophores,Red laser fluorophores - check tandem overlaps,"APC, Alexa Fluor 647, APC-Cy7, APC-Fire750",4,6,1.9301,0.3217,0.97,2,0,POOR
+Violet laser panel,Full Brilliant Violet series,"BV421, BV480, BV510, BV605, BV650, BV711, BV785",7,21,2.4849,0.1183,0.85,0,3,EXCELLENT
+Well-separated panel,Spectrally distinct fluorophores,"BV421, FITC, PE, APC, BV785",5,10,0.0275,0.0028,0.0266,0,0,EXCELLENT
+OMIP-069 subset (10 colors),Subset from published 40-color panel,"BUV395, BV421, BV510, BV605, FITC, PE, PE-Cy5, PerCP-Cy5.5, APC, APC-Cy7",10,45,3.3912,0.0754,0.8694,0,1,EXCELLENT
+Problematic PE tandems,PE tandem series - check tandem spreading,"PE, PE-CF594, PE-Cy5, PE-Cy5.5, PE-Cy7",5,10,1.7832,0.1783,0.92,1,1,ACCEPTABLE

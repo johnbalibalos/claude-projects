@@ -1,0 +1,35 @@
+# DrugDevBench specific ignores
+
+# Generated figures (can be regenerated with scripts/generate_sample_figures.py)
+data/figures/**/*.png
+data/figures/**/*.jpg
+data/figures/**/*.jpeg
+
+# Keep .gitkeep files
+!data/figures/**/.gitkeep
+
+# Cache directories
+data/cache/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Test results
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build artifacts
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/

@@ -1,0 +1,204 @@
+{
+  "test_case_id": "OMIP-011",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-011",
+  "doi": "10.1002/cyto.a.omip011",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Mouse splenocytes",
+    "species": "mouse",
+    "application": "Mouse B cell subset identification",
+    "tissue": "splenocytes",
+    "disease_state": null,
+    "additional_notes": "12-color mouse B cell panel"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "B220",
+        "fluorophore": "BV421",
+        "clone": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "FITC",
+        "clone": null
+      },
+      {
+        "marker": "IgM",
+        "fluorophore": "PE",
+        "clone": null
+      },
+      {
+        "marker": "IgD",
+        "fluorophore": "APC",
+        "clone": null
+      },
+      {
+        "marker": "CD21",
+        "fluorophore": "PE-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "CD23",
+        "fluorophore": "BV510",
+        "clone": null
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "APC-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "CD138",
+        "fluorophore": "BV605",
+        "clone": null
+      },
+      {
+        "marker": "GL7",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": null
+      },
+      {
+        "marker": "CD95",
+        "fluorophore": "BV711",
+        "clone": null
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "BV785",
+        "clone": null
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "Zombie NIR",
+        "clone": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "gate_type": "Unknown",
+      "is_critical": false,
+      "notes": null,
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
+          "gate_type": "Unknown",
+          "is_critical": true,
+          "notes": null,
+          "children": [
+            {
+              "name": "Live",
+              "markers": [
+                "Zombie NIR"
+              ],
+              "gate_type": "Unknown",
+              "is_critical": true,
+              "notes": null,
+              "children": [
+                {
+                  "name": "CD45+",
+                  "markers": [
+                    "CD45"
+                  ],
+                  "gate_type": "Unknown",
+                  "is_critical": true,
+                  "notes": null,
+                  "children": [
+                    {
+                      "name": "B cells",
+                      "markers": [
+                        "B220",
+                        "CD19"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": null,
+                      "children": [
+                        {
+                          "name": "Transitional",
+                          "markers": [
+                            "IgM",
+                            "CD21",
+                            "CD23"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": []
+                        },
+                        {
+                          "name": "Follicular",
+                          "markers": [
+                            "IgD",
+                            "CD21",
+                            "CD23"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": []
+                        },
+                        {
+                          "name": "Marginal Zone",
+                          "markers": [
+                            "IgM",
+                            "CD21",
+                            "CD23"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": []
+                        },
+                        {
+                          "name": "GC B cells",
+                          "markers": [
+                            "GL7",
+                            "CD95"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": []
+                        },
+                        {
+                          "name": "Plasma cells",
+                          "markers": [
+                            "CD138",
+                            "B220"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "validation": {
+    "paper_source": "Figure 1",
+    "curator_notes": "12-color panel"
+  },
+  "metadata": {
+    "curation_date": "2026-01-07",
+    "curator": "Auto-generated"
+  }
+}

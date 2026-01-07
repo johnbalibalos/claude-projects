@@ -1,0 +1,296 @@
+{
+  "test_case_id": "OMIP-072",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-072",
+  "doi": "10.1002/cyto.a.omip072",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Mouse splenocytes",
+    "species": "mouse",
+    "application": "Comprehensive mouse immune profiling",
+    "tissue": "Spleen",
+    "disease_state": null,
+    "additional_notes": "30-color mouse comprehensive panel"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD45",
+        "fluorophore": "BUV395",
+        "clone": null
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "BUV496",
+        "clone": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BUV563",
+        "clone": null
+      },
+      {
+        "marker": "CD8a",
+        "fluorophore": "BUV661",
+        "clone": null
+      },
+      {
+        "marker": "B220",
+        "fluorophore": "BUV737",
+        "clone": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "BV421",
+        "clone": null
+      },
+      {
+        "marker": "CD11b",
+        "fluorophore": "BV510",
+        "clone": null
+      },
+      {
+        "marker": "CD11c",
+        "fluorophore": "BV605",
+        "clone": null
+      },
+      {
+        "marker": "F4/80",
+        "fluorophore": "BV650",
+        "clone": null
+      },
+      {
+        "marker": "Ly6G",
+        "fluorophore": "BV711",
+        "clone": null
+      },
+      {
+        "marker": "Ly6C",
+        "fluorophore": "BV785",
+        "clone": null
+      },
+      {
+        "marker": "NK1.1",
+        "fluorophore": "FITC",
+        "clone": null
+      },
+      {
+        "marker": "TCRb",
+        "fluorophore": "PE",
+        "clone": null
+      },
+      {
+        "marker": "TCRgd",
+        "fluorophore": "PE-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "MHCII",
+        "fluorophore": "APC",
+        "clone": null
+      },
+      {
+        "marker": "CD44",
+        "fluorophore": "APC-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "CD62L",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": null
+      },
+      {
+        "marker": "CD25",
+        "fluorophore": "AF700",
+        "clone": null
+      },
+      {
+        "marker": "FoxP3",
+        "fluorophore": "BUV805",
+        "clone": null
+      },
+      {
+        "marker": "PD-1",
+        "fluorophore": "PE-CF594",
+        "clone": null
+      },
+      {
+        "marker": "CXCR5",
+        "fluorophore": "BV750",
+        "clone": null
+      },
+      {
+        "marker": "IgM",
+        "fluorophore": "BB515",
+        "clone": null
+      },
+      {
+        "marker": "IgD",
+        "fluorophore": "BV545",
+        "clone": null
+      },
+      {
+        "marker": "GL7",
+        "fluorophore": "BV690",
+        "clone": null
+      },
+      {
+        "marker": "CD95",
+        "fluorophore": "PE-Dazzle594",
+        "clone": null
+      },
+      {
+        "marker": "Ki67",
+        "fluorophore": "BUV615",
+        "clone": null
+      },
+      {
+        "marker": "Granzyme B",
+        "fluorophore": "APC-R700",
+        "clone": null
+      },
+      {
+        "marker": "IFNg",
+        "fluorophore": "BV480",
+        "clone": null
+      },
+      {
+        "marker": "CD138",
+        "fluorophore": "BB700",
+        "clone": null
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "Zombie NIR",
+        "clone": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "gate_type": "Unknown",
+      "is_critical": false,
+      "notes": null,
+      "children": [
+        {
+          "name": "Time",
+          "markers": [
+            "Time"
+          ],
+          "gate_type": "Unknown",
+          "is_critical": true,
+          "notes": null,
+          "children": [
+            {
+              "name": "Singlets",
+              "markers": [
+                "FSC-A",
+                "FSC-H"
+              ],
+              "gate_type": "Unknown",
+              "is_critical": true,
+              "notes": null,
+              "children": [
+                {
+                  "name": "Live",
+                  "markers": [
+                    "Zombie NIR"
+                  ],
+                  "gate_type": "Unknown",
+                  "is_critical": true,
+                  "notes": null,
+                  "children": [
+                    {
+                      "name": "CD45+",
+                      "markers": [
+                        "CD45"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": true,
+                      "notes": null,
+                      "children": [
+                        {
+                          "name": "T cells",
+                          "markers": [
+                            "CD3"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [
+                            {
+                              "name": "CD4+ T",
+                              "markers": [
+                                "CD4"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": []
+                            },
+                            {
+                              "name": "CD8+ T",
+                              "markers": [
+                                "CD8"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "B cells",
+                          "markers": [
+                            "CD19"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": []
+                        },
+                        {
+                          "name": "NK cells",
+                          "markers": [
+                            "CD56"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": []
+                        },
+                        {
+                          "name": "Monocytes",
+                          "markers": [
+                            "CD14"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "validation": {
+    "paper_source": "Figure 1",
+    "curator_notes": "30-color panel"
+  },
+  "metadata": {
+    "curation_date": "2026-01-07",
+    "curator": "Auto-generated"
+  }
+}

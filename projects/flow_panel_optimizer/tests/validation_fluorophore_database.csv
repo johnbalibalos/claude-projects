@@ -1,0 +1,49 @@
+Name,Excitation Max (nm),Emission Max (nm),Excitation Range,Emission Range,Optimal Laser (nm),Compatible Lasers,Relative Brightness,Category,Primary Vendor,Notes
+APC,650,660,600-670,640-700,640,"633, 640",80,protein,Multiple,Allophycocyanin
+APC-Cy7,650,785,600-670,745-830,640,"633, 640",45,tandem,Multiple,Prone to degradation
+APC-Fire 750,650,787,600-670,750-840,640,"633, 640",55,tandem,BioLegend,
+APC-Fire750,650,787,600-670,750-840,640,"633, 640",55,tandem,BioLegend,
+APC-H7,650,785,600-670,745-830,640,"633, 640",50,tandem,BD Biosciences,More stable than APC-Cy7
+APC-R700,650,700,600-670,675-740,640,"633, 640",65,tandem,BD Biosciences,
+Alexa Fluor 488,495,519,465-515,500-560,488,488,45,basic,Thermo Fisher,
+Alexa Fluor 647,650,668,610-670,645-710,640,"633, 640",75,basic,Thermo Fisher,
+Alexa Fluor 700,702,723,660-720,700-760,640,"633, 640",35,basic,Thermo Fisher,
+BB515,490,515,460-510,495-555,488,488,65,polymer,BD Biosciences,
+BUV395,350,395,320-380,375-430,355,355,75,polymer,BD Biosciences,
+BUV496,350,496,320-380,460-540,355,355,80,polymer,BD Biosciences,
+BUV563,350,563,320-380,530-610,355,355,70,polymer,BD Biosciences,
+BUV615,350,615,320-380,580-660,355,355,65,polymer,BD Biosciences,
+BUV661,350,661,320-380,625-710,355,355,60,polymer,BD Biosciences,
+BUV737,350,737,320-380,695-785,355,355,55,polymer,BD Biosciences,
+BUV805,350,805,320-380,760-850,355,355,45,polymer,BD Biosciences,
+BV421,407,421,380-430,400-460,405,405,120,polymer,BD Biosciences,"Brilliant Violet, very bright"
+BV480,436,478,400-460,455-520,405,405,80,polymer,BD Biosciences,
+BV510,405,510,380-430,480-560,405,405,95,polymer,BD Biosciences,
+BV570,405,570,380-430,540-620,405,405,70,polymer,BD Biosciences,
+BV605,405,605,380-430,575-650,405,405,105,polymer,BD Biosciences,
+BV650,405,650,380-430,615-700,405,405,85,polymer,BD Biosciences,
+BV711,405,711,380-430,670-760,405,405,90,polymer,BD Biosciences,
+BV750,405,750,380-430,710-800,405,405,55,polymer,BD Biosciences,
+BV785,405,785,380-430,745-830,405,405,50,polymer,BD Biosciences,
+FITC,494,519,460-510,500-560,488,488,30,basic,Multiple,Fluorescein isothiocyanate
+LIVE/DEAD Aqua,367,526,340-410,490-580,405,"355, 405",35,basic,Thermo Fisher,
+LIVE/DEAD Blue,350,450,320-380,420-500,355,"355, 405",40,basic,Thermo Fisher,
+PE,496,578,460-570,555-620,561,"488, 561",100,protein,Multiple,"R-Phycoerythrin, brightness reference"
+PE-CF594,496,612,460-570,585-650,561,"488, 561",90,tandem,BD Biosciences,
+PE-Cy5,496,667,460-570,640-710,561,"488, 561",75,tandem,Multiple,
+PE-Cy5.5,496,695,460-570,665-740,561,"488, 561",60,tandem,Multiple,
+PE-Cy7,496,785,460-570,745-830,561,"488, 561",70,tandem,Multiple,Prone to degradation
+PE-Dazzle 594,496,610,460-570,585-650,561,"488, 561",85,tandem,BioLegend,
+Pacific Blue,401,452,380-420,430-490,405,405,45,basic,Thermo Fisher,
+PerCP,482,678,440-510,650-720,488,488,25,protein,Multiple,Peridinin chlorophyll protein
+PerCP-Cy5.5,482,695,440-510,665-740,488,488,35,tandem,Multiple,
+PerCP-eFluor 710,482,710,440-510,680-755,488,488,30,tandem,Thermo Fisher,
+Spark Blue 550,488,550,460-510,520-590,488,488,55,polymer,BioLegend,
+Spark NIR 685,640,685,600-670,660-720,640,"633, 640",50,polymer,BioLegend,
+Super Bright 436,405,436,380-430,410-475,405,405,110,polymer,Thermo Fisher,
+Super Bright 600,405,602,380-430,570-650,405,405,95,polymer,Thermo Fisher,
+Super Bright 702,405,702,380-430,665-750,405,405,75,polymer,Thermo Fisher,
+Zombie Aqua,405,516,380-430,480-560,405,405,40,basic,BioLegend,
+Zombie NIR,719,746,680-750,720-800,640,"633, 640",30,basic,BioLegend,
+eFluor 450,405,450,380-430,420-500,405,405,60,polymer,Thermo Fisher,
+eFluor 506,405,506,380-430,475-550,405,405,50,polymer,Thermo Fisher,

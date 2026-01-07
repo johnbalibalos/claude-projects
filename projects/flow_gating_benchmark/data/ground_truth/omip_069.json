@@ -1,0 +1,218 @@
+{
+  "test_case_id": "OMIP-069",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-069",
+  "doi": "10.1002/cyto.a.24213",
+  "flowrepository_id": "FR-FCM-Z7YM",
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Human PBMC",
+    "species": "human",
+    "application": "Deep immunophenotyping of major immune lineages including T cells, B cells, NK cells, and myeloid populations",
+    "tissue": "Peripheral blood",
+    "disease_state": null,
+    "additional_notes": "40-color full spectrum flow cytometry panel for comprehensive immune profiling"
+  },
+  "panel": {
+    "entries": [
+      {"marker": "CD3", "fluorophore": "BUV395", "clone": "UCHT1", "channel": null},
+      {"marker": "CD4", "fluorophore": "BUV496", "clone": "SK3", "channel": null},
+      {"marker": "CD8", "fluorophore": "BUV661", "clone": "SK1", "channel": null},
+      {"marker": "CD45", "fluorophore": "BV421", "clone": "HI30", "channel": null},
+      {"marker": "CD45RA", "fluorophore": "BV510", "clone": "HI100", "channel": null},
+      {"marker": "CD19", "fluorophore": "BV605", "clone": "SJ25C1", "channel": null},
+      {"marker": "CD14", "fluorophore": "BV650", "clone": "M5E2", "channel": null},
+      {"marker": "CD16", "fluorophore": "BV711", "clone": "3G8", "channel": null},
+      {"marker": "CD56", "fluorophore": "BV750", "clone": "5.1H11", "channel": null},
+      {"marker": "CD127", "fluorophore": "BV785", "clone": "A019D5", "channel": null},
+      {"marker": "Live/Dead", "fluorophore": "Zombie NIR", "clone": null, "channel": null}
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "gate_type": "Unknown",
+      "is_critical": false,
+      "notes": "Starting population - all acquired events",
+      "children": [
+        {
+          "name": "Time",
+          "markers": ["Time"],
+          "gate_type": "RangeGate",
+          "is_critical": true,
+          "notes": "Exclude acquisition artifacts at start/end",
+          "children": [
+            {
+              "name": "Singlets",
+              "markers": ["FSC-A", "FSC-H"],
+              "gate_type": "PolygonGate",
+              "is_critical": true,
+              "notes": "Exclude doublets and aggregates",
+              "children": [
+                {
+                  "name": "Live",
+                  "markers": ["Zombie NIR"],
+                  "gate_type": "RangeGate",
+                  "is_critical": true,
+                  "notes": "Zombie NIR negative = live cells",
+                  "children": [
+                    {
+                      "name": "CD45+",
+                      "markers": ["CD45"],
+                      "gate_type": "RectangleGate",
+                      "is_critical": true,
+                      "notes": "Leukocyte gate - exclude debris",
+                      "children": [
+                        {
+                          "name": "Lymphocytes",
+                          "markers": ["FSC-A", "SSC-A"],
+                          "gate_type": "PolygonGate",
+                          "is_critical": true,
+                          "notes": "FSC/SSC lymphocyte gate",
+                          "children": [
+                            {
+                              "name": "T cells",
+                              "markers": ["CD3"],
+                              "gate_type": "RectangleGate",
+                              "is_critical": false,
+                              "notes": "CD3+ T lymphocytes",
+                              "children": [
+                                {
+                                  "name": "CD4+ T cells",
+                                  "markers": ["CD4"],
+                                  "gate_type": "RectangleGate",
+                                  "is_critical": false,
+                                  "notes": "Helper T cells",
+                                  "children": [
+                                    {
+                                      "name": "CD4+ Naive",
+                                      "markers": ["CD45RA", "CD127"],
+                                      "gate_type": "RectangleGate",
+                                      "is_critical": false,
+                                      "notes": "CD45RA+ CD127+ naive CD4 T cells",
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "CD4+ Memory",
+                                      "markers": ["CD45RA"],
+                                      "gate_type": "RectangleGate",
+                                      "is_critical": false,
+                                      "notes": "CD45RA- memory CD4 T cells",
+                                      "children": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "CD8+ T cells",
+                                  "markers": ["CD8"],
+                                  "gate_type": "RectangleGate",
+                                  "is_critical": false,
+                                  "notes": "Cytotoxic T cells",
+                                  "children": [
+                                    {
+                                      "name": "CD8+ Naive",
+                                      "markers": ["CD45RA", "CD127"],
+                                      "gate_type": "RectangleGate",
+                                      "is_critical": false,
+                                      "notes": "CD45RA+ CD127+ naive CD8 T cells",
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "CD8+ Memory",
+                                      "markers": ["CD45RA"],
+                                      "gate_type": "RectangleGate",
+                                      "is_critical": false,
+                                      "notes": "CD45RA- memory CD8 T cells",
+                                      "children": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "B cells",
+                              "markers": ["CD19"],
+                              "gate_type": "RectangleGate",
+                              "is_critical": false,
+                              "notes": "CD19+ B lymphocytes",
+                              "children": []
+                            },
+                            {
+                              "name": "NK cells",
+                              "markers": ["CD56", "CD16"],
+                              "gate_type": "RectangleGate",
+                              "is_critical": false,
+                              "notes": "CD3- CD56+ and/or CD16+ NK cells",
+                              "children": [
+                                {
+                                  "name": "CD56bright NK",
+                                  "markers": ["CD56"],
+                                  "gate_type": "RectangleGate",
+                                  "is_critical": false,
+                                  "notes": "CD56bright CD16dim/neg regulatory NK cells",
+                                  "children": []
+                                },
+                                {
+                                  "name": "CD56dim NK",
+                                  "markers": ["CD56", "CD16"],
+                                  "gate_type": "RectangleGate",
+                                  "is_critical": false,
+                                  "notes": "CD56dim CD16+ cytotoxic NK cells",
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Monocytes",
+                          "markers": ["CD14", "FSC-A", "SSC-A"],
+                          "gate_type": "PolygonGate",
+                          "is_critical": false,
+                          "notes": "CD14+ monocytes in monocyte FSC/SSC region",
+                          "children": [
+                            {
+                              "name": "Classical Monocytes",
+                              "markers": ["CD14", "CD16"],
+                              "gate_type": "RectangleGate",
+                              "is_critical": false,
+                              "notes": "CD14++ CD16- classical monocytes",
+                              "children": []
+                            },
+                            {
+                              "name": "Non-classical Monocytes",
+                              "markers": ["CD14", "CD16"],
+                              "gate_type": "RectangleGate",
+                              "is_critical": false,
+                              "notes": "CD14+ CD16++ non-classical monocytes",
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "validation": {
+    "paper_source": "Figure 2, Supplementary Materials",
+    "wsp_extraction_match": null,
+    "discrepancies": [],
+    "curator_notes": "Simplified from full 40-color panel for example. Full panel includes additional markers for detailed subset identification.",
+    "validation_date": null
+  },
+  "metadata": {
+    "curation_date": "2025-01-07",
+    "curator": "John Balibalos",
+    "flowkit_version": null,
+    "last_updated": null
+  }
+}

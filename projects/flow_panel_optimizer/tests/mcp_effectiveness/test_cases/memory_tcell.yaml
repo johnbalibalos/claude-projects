@@ -1,0 +1,64 @@
+name: "memory_tcell_panel"
+description: "Detailed memory T-cell subset characterization"
+instrument: "4-laser (VBYR: 405nm, 488nm, 561nm, 640nm)"
+expected_difficulty: "medium"
+
+markers:
+  - name: "CD3"
+    expression: "high"
+    description: "Pan T-cell marker"
+
+  - name: "CD4"
+    expression: "high"
+    description: "Helper T-cell marker"
+
+  - name: "CD8"
+    expression: "high"
+    description: "Cytotoxic T-cell marker"
+
+  - name: "CD45RA"
+    expression: "high"
+    description: "Naive marker"
+
+  - name: "CCR7"
+    expression: "medium"
+    description: "Lymph node homing receptor"
+
+  - name: "CD27"
+    expression: "medium"
+    description: "Co-stimulatory molecule"
+
+  - name: "CD28"
+    expression: "medium"
+    description: "Co-stimulatory molecule"
+
+  - name: "CD57"
+    expression: "low"
+    description: "Terminal differentiation marker"
+
+  - name: "CD127"
+    expression: "low"
+    description: "IL-7 receptor alpha"
+
+  - name: "CD25"
+    expression: "low"
+    description: "IL-2 receptor alpha"
+
+  - name: "PD-1"
+    expression: "low"
+    description: "Exhaustion marker"
+
+  - name: "Viability"
+    expression: "high"
+    description: "Dead cell exclusion"
+
+coexpression_notes:
+  - "CD4 and CD8 mutually exclusive"
+  - "CD45RA+CCR7+ = Naive (TN)"
+  - "CD45RA-CCR7+ = Central Memory (TCM)"
+  - "CD45RA-CCR7- = Effector Memory (TEM)"
+  - "CD45RA+CCR7- = TEMRA"
+  - "CD57+ indicates terminal differentiation"
+  - "CD127 low + CD25 high suggests Tregs"
+
+reference_panel: null

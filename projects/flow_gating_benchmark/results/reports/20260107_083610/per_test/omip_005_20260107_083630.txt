@@ -1,0 +1,129 @@
+================================================================================
+DETAILED TEST REPORT: OMIP-005
+================================================================================
+Generated: 2026-01-07 08:36:30
+
+## TEST CASE INFORMATION
+----------------------------------------
+ID:          OMIP-005
+Species:     human
+Sample Type: Human PBMC
+Colors:      10
+Source:      omip_paper
+
+## PANEL MARKERS
+----------------------------------------
+  CD3, CD56, CD16, NKG2D, NKp46
+  CD57, CD94, CD45, KIR, Live/Dead
+
+## SCORING SUMMARY
+----------------------------------------
+Parse Status:        SUCCESS (json_code_block)
+Hierarchy F1:        19.4%
+  - Precision:       13.6%
+  - Recall:          33.3%
+Structure Accuracy:  100.0%
+Critical Gate Recall:33.3%
+Hallucination Rate:  0.0%
+Depth Accuracy:      66.7%
+
+## HIERARCHY COMPARISON
+----------------------------------------
+
+### Gold Standard (OMIP)
+  └── All Events
+      └── Singlets [FSC-A, FSC-H]
+          └── Live [Zombie NIR]
+              └── Lymphocytes [FSC-A, SSC-A]
+                  └── NK cells [CD3, CD56]
+                      ├── CD56bright [CD56, CD16]
+                      └── CD56dim [CD56, CD16]
+                          ├── CD57+ NK [CD57]
+                          └── CD57- NK [CD57]
+
+### LLM Prediction
+  └── All Events
+      └── Time Gate [Time]
+          └── Singlets (FSC) [FSC-H, FSC-A]
+              └── Singlets (SSC) [SSC-H, SSC-A]
+                  └── Live Cells [Zombie NIR]
+                      └── Leukocytes [CD45]
+                          ├── T Cells [CD3, CD56]
+                          ├── NKT Cells [CD3, CD56]
+                          ├── NK Cells [CD3, CD56]
+                          │   ├── CD56bright NK [CD56, CD16]
+                          │   │   ├── CD56bright NKG2D+ [NKG2D]
+                          │   │   ├── CD56bright NKp46+ [NKp46]
+                          │   │   ├── CD56bright CD57+ [CD57]
+                          │   │   ├── CD56bright CD94+ [CD94]
+                          │   │   └── CD56bright KIR+ [KIR]
+                          │   └── CD56dim NK [CD56, CD16]
+                          │       ├── CD56dim NKG2D+ [NKG2D]
+                          │       ├── CD56dim NKp46+ [NKp46]
+                          │       ├── CD56dim CD57+ [CD57]
+                          │       ├── CD56dim CD94+ [CD94]
+                          │       └── CD56dim KIR+ [KIR]
+                          └── Other Cells [CD3, CD56]
+
+## GATE-BY-GATE ANALYSIS
+----------------------------------------
+
+### Matching Gates (3)
+  [OK] All Events
+  [OK] Live Cells
+  [OK] NK Cells
+
+### Missing Gates (6)
+  [MISSING] CD56bright
+  [MISSING] CD56dim
+  [MISSING] CD57+ NK
+  [MISSING] CD57- NK
+  [CRITICAL] Lymphocytes
+  [CRITICAL] Singlets
+
+### Extra Gates / Hallucinations (19)
+  [EXTRA] CD56bright CD57+
+  [EXTRA] CD56bright CD94+
+  [EXTRA] CD56bright KIR+
+  [EXTRA] CD56bright NK
+  [EXTRA] CD56bright NKG2D+
+  [EXTRA] CD56bright NKp46+
+  [EXTRA] CD56dim CD57+
+  [EXTRA] CD56dim CD94+
+  [EXTRA] CD56dim KIR+
+  [EXTRA] CD56dim NK
+  [EXTRA] CD56dim NKG2D+
+  [EXTRA] CD56dim NKp46+
+  [EXTRA] Leukocytes
+  [EXTRA] NKT Cells
+  [EXTRA] Other Cells
+  [EXTRA] Singlets (FSC)
+  [EXTRA] Singlets (SSC)
+  [EXTRA] T Cells
+  [EXTRA] Time Gate
+
+### Structure Errors (0)
+  (None - structure correct)
+
+## CRITICAL GATES CHECKLIST
+----------------------------------------
+
+Gate                 In Gold Std     In Prediction   Status
+-----------------------------------------------------------------
+Time                 NO              YES             EXTRA
+Singlets             YES             YES             OK
+Live                 YES             YES             OK
+CD45+                NO              NO              N/A
+Lymphocytes          YES             NO              MISSED
+
+## STRATEGY NOTES
+----------------------------------------
+Condition: standard_cot
+Model:     claude-sonnet-4-20250514
+
+## RECOMMENDATIONS
+----------------------------------------
+- Add explicit QC gate instructions (Time, Singlets, Live/Dead)
+- Reduce over-generation of subset populations
+
+================================================================================

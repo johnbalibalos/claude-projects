@@ -1,0 +1,357 @@
+{
+  "test_case_id": "OMIP-027",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-027",
+  "doi": "10.1002/cyto.a.omip027",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Human tumor",
+    "species": "human",
+    "application": "Tumor-infiltrating lymphocyte analysis",
+    "tissue": "tumor",
+    "disease_state": null,
+    "additional_notes": "24-color tumor immune panel"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD45",
+        "fluorophore": "BUV395",
+        "clone": null
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "BUV496",
+        "clone": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BUV563",
+        "clone": null
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "BUV661",
+        "clone": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "BUV737",
+        "clone": null
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "BV421",
+        "clone": null
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "BV510",
+        "clone": null
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "BV605",
+        "clone": null
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "BV650",
+        "clone": null
+      },
+      {
+        "marker": "CD11b",
+        "fluorophore": "BV711",
+        "clone": null
+      },
+      {
+        "marker": "CD11c",
+        "fluorophore": "BV785",
+        "clone": null
+      },
+      {
+        "marker": "PD-1",
+        "fluorophore": "PE",
+        "clone": null
+      },
+      {
+        "marker": "PD-L1",
+        "fluorophore": "APC",
+        "clone": null
+      },
+      {
+        "marker": "CTLA-4",
+        "fluorophore": "PE-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "TIM-3",
+        "fluorophore": "FITC",
+        "clone": null
+      },
+      {
+        "marker": "LAG-3",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": null
+      },
+      {
+        "marker": "CD39",
+        "fluorophore": "AF700",
+        "clone": null
+      },
+      {
+        "marker": "CD103",
+        "fluorophore": "BUV805",
+        "clone": null
+      },
+      {
+        "marker": "CD69",
+        "fluorophore": "PE-CF594",
+        "clone": null
+      },
+      {
+        "marker": "Ki67",
+        "fluorophore": "APC-R700",
+        "clone": null
+      },
+      {
+        "marker": "FoxP3",
+        "fluorophore": "BV750",
+        "clone": null
+      },
+      {
+        "marker": "CD25",
+        "fluorophore": "BB515",
+        "clone": null
+      },
+      {
+        "marker": "Granzyme B",
+        "fluorophore": "APC-H7",
+        "clone": null
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "Zombie NIR",
+        "clone": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "gate_type": "Unknown",
+      "is_critical": false,
+      "notes": null,
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
+          "gate_type": "Unknown",
+          "is_critical": true,
+          "notes": null,
+          "children": [
+            {
+              "name": "Live",
+              "markers": [
+                "Zombie NIR"
+              ],
+              "gate_type": "Unknown",
+              "is_critical": true,
+              "notes": null,
+              "children": [
+                {
+                  "name": "CD45+ TILs",
+                  "markers": [
+                    "CD45"
+                  ],
+                  "gate_type": "Unknown",
+                  "is_critical": true,
+                  "notes": null,
+                  "children": [
+                    {
+                      "name": "T cells",
+                      "markers": [
+                        "CD3"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": null,
+                      "children": [
+                        {
+                          "name": "CD8+ TIL",
+                          "markers": [
+                            "CD8"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [
+                            {
+                              "name": "Exhausted",
+                              "markers": [
+                                "PD-1",
+                                "TIM-3",
+                                "LAG-3"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": []
+                            },
+                            {
+                              "name": "Resident",
+                              "markers": [
+                                "CD103",
+                                "CD69"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": []
+                            },
+                            {
+                              "name": "Cytotoxic",
+                              "markers": [
+                                "Granzyme B"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CD4+ TIL",
+                          "markers": [
+                            "CD4"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [
+                            {
+                              "name": "Tregs",
+                              "markers": [
+                                "CD25",
+                                "FoxP3"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": []
+                            },
+                            {
+                              "name": "Th1",
+                              "markers": [
+                                "PD-1"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "NK cells",
+                      "markers": [
+                        "CD56",
+                        "CD3"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": null,
+                      "children": []
+                    },
+                    {
+                      "name": "B cells",
+                      "markers": [
+                        "CD19"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": null,
+                      "children": []
+                    },
+                    {
+                      "name": "Myeloid",
+                      "markers": [
+                        "CD14",
+                        "CD11b"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": null,
+                      "children": [
+                        {
+                          "name": "TAMs",
+                          "markers": [
+                            "CD14",
+                            "HLA-DR"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": []
+                        },
+                        {
+                          "name": "MDSCs",
+                          "markers": [
+                            "CD11b",
+                            "HLA-DR"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Tumor cells",
+                  "markers": [
+                    "CD45"
+                  ],
+                  "gate_type": "Unknown",
+                  "is_critical": false,
+                  "notes": null,
+                  "children": [
+                    {
+                      "name": "PD-L1+ tumor",
+                      "markers": [
+                        "PD-L1"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "validation": {
+    "paper_source": "Figure 1",
+    "curator_notes": "24-color panel"
+  },
+  "metadata": {
+    "curation_date": "2026-01-07",
+    "curator": "Auto-generated"
+  }
+}

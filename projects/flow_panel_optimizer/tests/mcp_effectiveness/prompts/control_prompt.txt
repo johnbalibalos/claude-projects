@@ -1,0 +1,38 @@
+You are an expert flow cytometry panel designer. Design a flow cytometry panel for the following markers on a {instrument} cytometer.
+
+## Markers to include:
+
+{marker_list}
+
+## Instructions:
+
+For each marker, assign an appropriate fluorophore. Consider:
+
+1. **Spectral overlap**: Avoid fluorophores with similar emission spectra
+2. **Brightness matching**: Match fluorophore brightness to antigen expression level
+   - High expression markers can use dimmer fluorophores (FITC, PerCP)
+   - Low expression markers need brighter fluorophores (PE, APC, BV421)
+3. **Laser lines**: Ensure fluorophores are compatible with available lasers
+4. **Tandem dye considerations**: Tandems (PE-Cy7, APC-Cy7) can be less stable
+
+## Available fluorophore categories by laser:
+
+**Violet (405nm)**: BV421, BV480, BV510, BV570, BV605, BV650, BV711, BV750, BV785, Pacific Blue
+**Blue (488nm)**: FITC, BB515, PerCP, PerCP-Cy5.5, PE (can also use 561nm)
+**Yellow-Green (561nm)**: PE, PE-CF594, PE-Cy5, PE-Cy5.5, PE-Cy7
+**Red (633/640nm)**: APC, Alexa Fluor 647, APC-R700, APC-Fire750, APC-Cy7
+**UV (355nm)** (if available): BUV395, BUV496, BUV563, BUV615, BUV661, BUV737, BUV805
+
+## Output format:
+
+Provide your panel as a table:
+
+| Marker | Fluorophore | Expression Level | Rationale |
+|--------|-------------|------------------|-----------|
+| CD3    | BV421       | High             | Bright, clean violet channel |
+| ...    | ...         | ...              | ... |
+
+After the table:
+1. Rate overall panel quality: Excellent / Good / Fair / Poor
+2. List any potentially problematic fluorophore pairs (high spectral overlap)
+3. Suggest any alternatives if conflicts exist

@@ -1,0 +1,44 @@
+name: "basic_tcell_panel"
+description: "Simple T-cell immunophenotyping for basic research"
+instrument: "4-laser (VBYR: 405nm, 488nm, 561nm, 640nm)"
+expected_difficulty: "easy"
+
+markers:
+  - name: "CD3"
+    expression: "high"
+    description: "Pan T-cell marker"
+
+  - name: "CD4"
+    expression: "high"
+    description: "Helper T-cell marker"
+
+  - name: "CD8"
+    expression: "high"
+    description: "Cytotoxic T-cell marker"
+
+  - name: "CD45RA"
+    expression: "high"
+    description: "Naive T-cell marker"
+
+  - name: "CD45RO"
+    expression: "medium"
+    description: "Memory T-cell marker"
+
+  - name: "CCR7"
+    expression: "medium"
+    description: "Central memory/naive marker"
+
+  - name: "CD27"
+    expression: "medium"
+    description: "Memory/activation marker"
+
+  - name: "Viability"
+    expression: "high"
+    description: "Dead cell exclusion dye"
+
+coexpression_notes:
+  - "CD4 and CD8 are mutually exclusive on mature T cells"
+  - "CD45RA and CD45RO are generally mutually exclusive"
+  - "CCR7+CD45RA+ = Naive, CCR7+CD45RA- = Central Memory"
+
+reference_panel: null

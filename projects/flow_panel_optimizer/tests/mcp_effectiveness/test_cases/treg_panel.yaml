@@ -1,0 +1,78 @@
+name: "treg_panel"
+description: "Regulatory T-cell identification and characterization"
+instrument: "5-laser (UVBYR: 355nm, 405nm, 488nm, 561nm, 640nm)"
+expected_difficulty: "hard"
+
+markers:
+  - name: "CD3"
+    expression: "high"
+    description: "Pan T-cell marker"
+
+  - name: "CD4"
+    expression: "high"
+    description: "Helper T-cell marker (Tregs are CD4+)"
+
+  - name: "CD8"
+    expression: "high"
+    description: "Cytotoxic T-cell marker (dump channel)"
+
+  - name: "CD25"
+    expression: "medium"
+    description: "IL-2R alpha, high on Tregs"
+
+  - name: "CD127"
+    expression: "low"
+    description: "IL-7R alpha, low/negative on Tregs"
+
+  - name: "FOXP3"
+    expression: "medium"
+    intracellular: true
+    description: "Treg lineage transcription factor"
+
+  - name: "Helios"
+    expression: "medium"
+    intracellular: true
+    description: "Thymic vs peripheral Treg origin"
+
+  - name: "CTLA-4"
+    expression: "low"
+    intracellular: true
+    description: "Suppressive function marker"
+
+  - name: "CD45RA"
+    expression: "high"
+    description: "Naive vs memory Tregs"
+
+  - name: "CCR7"
+    expression: "medium"
+    description: "Lymph node homing"
+
+  - name: "CD39"
+    expression: "low"
+    description: "Ectonucleotidase, suppressive Tregs"
+
+  - name: "CD73"
+    expression: "low"
+    description: "Ectonucleotidase, works with CD39"
+
+  - name: "TIGIT"
+    expression: "low"
+    description: "Inhibitory receptor"
+
+  - name: "LAG-3"
+    expression: "low"
+    description: "Inhibitory receptor"
+
+  - name: "Viability"
+    expression: "high"
+    description: "Dead cell exclusion"
+
+coexpression_notes:
+  - "Tregs: CD4+CD25+CD127low/negFOXP3+"
+  - "Many dim markers - needs careful fluorophore brightness matching"
+  - "FOXP3 and Helios are both intracellular"
+  - "CD39 and CD73 often co-expressed on suppressive Tregs"
+
+notes: "Challenging panel due to many low-expression markers requiring bright fluorophores"
+
+reference_panel: null
