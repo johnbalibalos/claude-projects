@@ -73,6 +73,123 @@ python -m src.experiments.runner
 | Critical Gate Recall | % of "must-have" gates present | Missed live/dead = fundamental error |
 | Hallucination Rate | Gates predicted that don't match markers | Identifies confabulation |
 
+### Detailed Metric Definitions
+
+#### Hierarchy F1 Score
+
+**What it measures:** Whether the predicted gating hierarchy contains the correct gate populations.
+
+**How it's computed:**
+
+```
+Precision = |Predicted ∩ Ground Truth| / |Predicted|
+Recall = |Predicted ∩ Ground Truth| / |Ground Truth|
+F1 = 2 × (Precision × Recall) / (Precision + Recall)
+```
+
+**Fuzzy matching:** Gate names are normalized before comparison:
+- Case-insensitive (`CD3+ T Cells` → `cd3+ t cells`)
+- Suffix normalization (`positive` → `+`, `negative` → `-`)
+- Common abbreviations (`lymphocytes` → `lymphs`, `monocytes` → `monos`)
+- Whitespace normalization
+
+**Example:**
+```
+Ground Truth: {All Events, Singlets, Live, CD3+ T cells, CD4+ T cells}
+Predicted:    {All Events, Singlets, Live, T cells, CD4+, B cells}
+
+Matching (after normalization): {All Events, Singlets, Live, CD4+} = 4
+Missing: {CD3+ T cells} = 1 (T cells doesn't match CD3+ T cells)
+Extra: {B cells} = 1
+
+Precision = 4/6 = 0.667
+Recall = 4/5 = 0.800
+F1 = 2 × (0.667 × 0.800) / (0.667 + 0.800) = 0.727
+```
+
+#### Structure Accuracy
+
+**What it measures:** Whether predicted gates have correct parent-child relationships.
+
+**How it's computed:**
+1. Extract parent-child map from both hierarchies: `{gate: parent}`
+2. Find gates that exist in both predictions (common gates)
+3. Compare parent assignments for common gates
+4. Accuracy = correct assignments / total common gates
+
+**Example:**
+```
+Ground Truth:
+  All Events → Singlets → Live → CD3+ → CD4+
+
+Predicted:
+  All Events → Singlets → Live → CD4+  (CD3+ missing, CD4+ parent is Live)
+
+Common gates: {All Events, Singlets, Live, CD4+}
+- All Events: parent=None ✓
+- Singlets: parent=All Events ✓
+- Live: parent=Singlets ✓
+- CD4+: parent=Live ✗ (should be CD3+)
+
+Structure Accuracy = 3/4 = 0.75
+```
+
+#### Critical Gate Recall
+
+**What it measures:** Whether essential quality control gates are present.
+
+**Default critical gates:**
+- `singlets` - Doublet exclusion
+- `live` / `live/dead` - Viability discrimination
+- `lymphocytes` / `lymphs` - Lymphocyte gate
+- `cd45+` - Leukocyte marker
+
+**How it's computed:**
+1. Identify which critical gates appear in ground truth
+2. Check if each is present in prediction (with fuzzy matching)
+3. Recall = present critical gates / total critical gates in ground truth
+
+**Why it matters:** Missing a live/dead gate means analyzing dead cells, invalidating all downstream analysis. This metric catches fundamental methodological errors.
+
+#### Hallucination Rate
+
+**What it measures:** Gates that reference markers not present in the panel.
+
+**How it's computed:**
+1. Build set of valid markers from panel definition
+2. Add common non-marker dimensions: `FSC-A`, `FSC-H`, `SSC-A`, `SSC-H`, `Time`
+3. For each predicted gate:
+   - Skip generic gates (singlets, live, all events, etc.)
+   - If gate contains `+` or `-` (marker reference) but no valid marker found → hallucination
+4. Rate = hallucinated gates / total predicted gates
+
+**Example:**
+```
+Panel markers: {CD3, CD4, CD8, CD19}
+
+Predicted gates: {All Events, Singlets, Live, CD3+, CD4+, CCR7+}
+
+CCR7 not in panel but CCR7+ gate predicted → Hallucination
+
+Hallucination Rate = 1/6 = 0.167
+```
+
+**Why it matters:** A hallucinated gate referencing a marker not in the panel would produce empty or nonsensical results. This directly measures confabulation in domain-specific contexts.
+
+#### Depth Accuracy (Secondary)
+
+**What it measures:** Whether the hierarchy has appropriate depth/complexity.
+
+**How it's computed:**
+```
+Accuracy = max(0, 1 - |predicted_depth - ground_truth_depth| / ground_truth_depth)
+```
+
+A prediction with depth 3 against ground truth depth 5 would score:
+```
+Accuracy = max(0, 1 - |3-5|/5) = max(0, 1 - 0.4) = 0.6
+```
+
 ## Limitations
 
 ### Ground Truth Challenges
