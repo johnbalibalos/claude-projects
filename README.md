@@ -16,9 +16,24 @@ This repository contains experimental tools and benchmarks for evaluating how LL
 
 | Project | Domain | Type | Status |
 |---------|--------|------|--------|
+| [flow_gating_benchmark](projects/flow_gating_benchmark/) | Flow Cytometry | Benchmark | Experimental |
 | [flow_panel_optimizer](projects/flow_panel_optimizer/) | Flow Cytometry | MCP Tool | Experimental |
 | [drugdevbench](projects/drugdevbench/) | Drug Development | Benchmark | Experimental |
-| [flow_gating_benchmark](projects/flow_gating_benchmark/) | Flow Cytometry | Benchmark | Experimental |
+
+### Flow Gating Benchmark
+
+**Question:** Can LLMs predict flow cytometry gating strategies from panel information?
+
+An evaluation framework testing whether LLMs can predict appropriate gating hierarchies given marker panels and experimental context. Uses OMIP (Optimized Multicolor Immunofluorescence Panel) papers as ground truth.
+
+```
+projects/flow_gating_benchmark/
+├── src/
+│   ├── curation/      # OMIP data extraction
+│   ├── evaluation/    # Metrics and scoring
+│   └── experiments/   # Experiment runner
+└── data/ground_truth/ # Curated OMIP gating hierarchies
+```
 
 ### Flow Panel Optimizer
 
@@ -48,21 +63,6 @@ projects/drugdevbench/
 │   ├── evaluation/    # Scoring and ablation framework
 │   └── models/        # Multi-model support via LiteLLM
 └── data/              # Figures and annotations
-```
-
-### Flow Gating Benchmark
-
-**Question:** Can LLMs predict flow cytometry gating strategies from panel information?
-
-An evaluation framework testing whether LLMs can predict appropriate gating hierarchies given marker panels and experimental context. Uses OMIP (Optimized Multicolor Immunofluorescence Panel) papers as ground truth.
-
-```
-projects/flow_gating_benchmark/
-├── src/
-│   ├── curation/      # OMIP data extraction
-│   ├── evaluation/    # Metrics and scoring
-│   └── experiments/   # Experiment runner
-└── data/ground_truth/ # Curated OMIP gating hierarchies
 ```
 
 ## Shared Libraries
