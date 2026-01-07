@@ -14,9 +14,13 @@ Secondary Metrics:
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
+from pathlib import Path
+from typing import TYPE_CHECKING, Any
 
 from curation.schemas import GatingHierarchy, GateNode, Panel
+
+if TYPE_CHECKING:
+    from evaluation.equivalences import AnnotationCapture, EquivalenceRegistry
 
 
 @dataclass
@@ -206,6 +210,9 @@ def compute_hierarchy_f1(
     predicted: GatingHierarchy | dict,
     ground_truth: GatingHierarchy | dict,
     fuzzy_match: bool = True,
+    equivalence_registry: EquivalenceRegistry | None = None,
+    annotation_capture: AnnotationCapture | None = None,
+    test_case_id: str | None = None,
 ) -> tuple[float, float, float, list[str], list[str], list[str]]:
     """
     Compute precision, recall, and F1 for gate names.
@@ -214,6 +221,9 @@ def compute_hierarchy_f1(
         predicted: Predicted hierarchy
         ground_truth: Ground truth hierarchy
         fuzzy_match: Whether to use fuzzy name matching
+        equivalence_registry: Optional registry for enhanced matching
+        annotation_capture: Optional capture for near-miss pairs
+        test_case_id: Test case ID for annotation capture context
 
     Returns:
         Tuple of (f1, precision, recall, matching, missing, extra)
@@ -221,8 +231,17 @@ def compute_hierarchy_f1(
     pred_gates = extract_gate_names(predicted)
     gt_gates = extract_gate_names(ground_truth)
 
-    if fuzzy_match:
-        # Normalize for comparison
+    if equivalence_registry is not None:
+        # Use enhanced matching with equivalence registry
+        matching, missing, extra = _match_with_registry(
+            pred_gates=pred_gates,
+            gt_gates=gt_gates,
+            registry=equivalence_registry,
+            annotation_capture=annotation_capture,
+            test_case_id=test_case_id,
+        )
+    elif fuzzy_match:
+        # Normalize for comparison (original behavior)
         pred_normalized = {normalize_gate_name(g): g for g in pred_gates}
         gt_normalized = {normalize_gate_name(g): g for g in gt_gates}
 
@@ -240,6 +259,69 @@ def compute_hierarchy_f1(
     f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
 
     return f1, precision, recall, matching, missing, extra
+
+
+def _match_with_registry(
+    pred_gates: set[str],
+    gt_gates: set[str],
+    registry: EquivalenceRegistry,
+    annotation_capture: AnnotationCapture | None = None,
+    test_case_id: str | None = None,
+) -> tuple[list[str], list[str], list[str]]:
+    """
+    Match gates using equivalence registry with optional near-miss capture.
+
+    Args:
+        pred_gates: Predicted gate names
+        gt_gates: Ground truth gate names
+        registry: Equivalence registry for matching
+        annotation_capture: Optional capture for near-misses
+        test_case_id: Test case ID for context
+
+    Returns:
+        Tuple of (matching, missing, extra)
+    """
+    matching = []
+    matched_gt = set()
+    matched_pred = set()
+
+    # Build canonical lookup for ground truth
+    gt_canonical_map: dict[str, list[str]] = {}
+    for gt in gt_gates:
+        canonical = registry.get_canonical(gt)
+        if canonical not in gt_canonical_map:
+            gt_canonical_map[canonical] = []
+        gt_canonical_map[canonical].append(gt)
+
+    # Match predictions against ground truth
+    for pred in pred_gates:
+        pred_canonical = registry.get_canonical(pred)
+
+        if pred_canonical in gt_canonical_map:
+            # Found a match
+            gt_matches = gt_canonical_map[pred_canonical]
+            if gt_matches:
+                gt_match = gt_matches[0]  # Take first match
+                matching.append(pred)
+                matched_gt.add(gt_match)
+                matched_pred.add(pred)
+
+    # Identify missing and extra
+    missing = [g for g in gt_gates if g not in matched_gt]
+    extra = [g for g in pred_gates if g not in matched_pred]
+
+    # Capture near-misses for unmatched pairs
+    if annotation_capture and test_case_id:
+        for pred in extra:
+            for gt in missing:
+                annotation_capture.check_and_capture(
+                    predicted=pred,
+                    ground_truth=gt,
+                    test_case_id=test_case_id,
+                    parent_context=None,
+                )
+
+    return matching, missing, extra
 
 
 def compute_structure_accuracy(
@@ -432,6 +514,9 @@ def evaluate_prediction(
     ground_truth: GatingHierarchy,
     panel: Panel,
     critical_gates: list[str] | None = None,
+    equivalence_registry: EquivalenceRegistry | None = None,
+    annotation_capture: AnnotationCapture | None = None,
+    test_case_id: str | None = None,
 ) -> EvaluationResult:
     """
     Compute all evaluation metrics for a prediction.
@@ -441,6 +526,9 @@ def evaluate_prediction(
         ground_truth: Ground truth GatingHierarchy
         panel: Panel definition
         critical_gates: Optional list of critical gates
+        equivalence_registry: Optional registry for enhanced matching
+        annotation_capture: Optional capture for near-miss pairs
+        test_case_id: Test case ID for annotation capture context
 
     Returns:
         Complete EvaluationResult
@@ -449,7 +537,11 @@ def evaluate_prediction(
 
     # Hierarchy F1
     f1, precision, recall, matching, missing, extra = compute_hierarchy_f1(
-        predicted, ground_truth
+        predicted,
+        ground_truth,
+        equivalence_registry=equivalence_registry,
+        annotation_capture=annotation_capture,
+        test_case_id=test_case_id,
     )
     result.hierarchy_f1 = f1
     result.hierarchy_precision = precision
