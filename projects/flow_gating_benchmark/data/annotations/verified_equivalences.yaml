@@ -1,0 +1,452 @@
+# Flow Gating Benchmark - Verified Gate Name Equivalences
+#
+# This file contains expert-verified equivalence classes for gate names.
+# Used by the scoring system to recognize semantically identical gates
+# that may be written differently across papers or LLM outputs.
+#
+# Format:
+#   - canonical: The normalized form used internally
+#     variants: List of equivalent names (case-insensitive matching)
+#     domain: Category for organization
+#     notes: Optional clarification
+#
+# To add new equivalences:
+#   1. Review pending_annotations.jsonl for candidates
+#   2. Verify semantic equivalence with domain expert
+#   3. Add to appropriate section below
+#   4. Re-run tests to validate improvement
+
+version: "1.0"
+last_updated: "2026-01-07"
+curator: "initial_seed"
+
+equivalence_classes:
+
+  # =============================================================================
+  # T CELL SUBSETS - MAJOR POPULATIONS
+  # =============================================================================
+
+  - canonical: "gamma-delta t cells"
+    variants:
+      - "gd t cells"
+      - "gd t"
+      - "gammadelta t cells"
+      - "gamma delta t cells"
+      - "gamma-delta t"
+      - "gdt cells"
+      - "gdt"
+    domain: "t_cell_subsets"
+    notes: "Greek letters often rendered as 'gd' in ASCII"
+
+  - canonical: "double negative"
+    variants:
+      - "dn"
+      - "dn t cells"
+      - "dn thymocytes"
+      - "double negative t cells"
+      - "cd4-cd8-"
+      - "cd4- cd8-"
+      - "cd4 negative cd8 negative"
+    domain: "t_cell_development"
+    notes: "CD4-CD8- population in thymic development or peripheral blood"
+
+  - canonical: "double positive"
+    variants:
+      - "dp"
+      - "dp t cells"
+      - "dp thymocytes"
+      - "double positive t cells"
+      - "cd4+cd8+"
+      - "cd4+ cd8+"
+      - "cd4 positive cd8 positive"
+    domain: "t_cell_development"
+    notes: "CD4+CD8+ population, primarily thymic"
+
+  - canonical: "regulatory t cells"
+    variants:
+      - "tregs"
+      - "treg"
+      - "t regulatory"
+      - "t regulatory cells"
+      - "cd4+cd25+"
+      - "cd4+cd25+foxp3+"
+      - "cd4+cd25hi"
+      - "cd4+cd25high"
+      - "cd4+ cd25+ foxp3+"
+      - "cd25+ foxp3+"
+      - "foxp3+ tregs"
+      - "suppressor t cells"
+    domain: "t_cell_subsets"
+    notes: "Immunosuppressive CD4+ subset"
+
+  - canonical: "t helper cells"
+    variants:
+      - "th cells"
+      - "helper t cells"
+      - "cd4+ t cells"
+      - "cd4 t cells"
+      - "cd4+ t"
+      - "cd4+"
+      - "cd4 positive"
+      - "cd4 positive t cells"
+    domain: "t_cell_subsets"
+
+  - canonical: "cytotoxic t cells"
+    variants:
+      - "ctl"
+      - "ctls"
+      - "cytotoxic t lymphocytes"
+      - "cd8+ t cells"
+      - "cd8 t cells"
+      - "cd8+ t"
+      - "cd8+"
+      - "cd8 positive"
+      - "cd8 positive t cells"
+      - "killer t cells"
+    domain: "t_cell_subsets"
+
+  # =============================================================================
+  # T CELL MEMORY SUBSETS
+  # =============================================================================
+
+  - canonical: "naive t cells"
+    variants:
+      - "naive"
+      - "tn"
+      - "t naive"
+      - "naive t"
+      - "cd45ra+ccr7+"
+      - "cd45ra+ ccr7+"
+      - "ccr7+cd45ra+"
+    domain: "t_cell_memory"
+    notes: "CD45RA+CCR7+ phenotype"
+
+  - canonical: "central memory"
+    variants:
+      - "cm"
+      - "tcm"
+      - "t central memory"
+      - "central memory t cells"
+      - "cd45ra-ccr7+"
+      - "cd45ra- ccr7+"
+      - "ccr7+cd45ra-"
+      - "cd45ro+ccr7+"
+    domain: "t_cell_memory"
+    notes: "CD45RA-CCR7+ or CD45RO+CCR7+ phenotype"
+
+  - canonical: "effector memory"
+    variants:
+      - "em"
+      - "tem"
+      - "t effector memory"
+      - "effector memory t cells"
+      - "cd45ra-ccr7-"
+      - "cd45ra- ccr7-"
+      - "ccr7-cd45ra-"
+      - "cd45ro+ccr7-"
+    domain: "t_cell_memory"
+    notes: "CD45RA-CCR7- or CD45RO+CCR7- phenotype"
+
+  - canonical: "temra"
+    variants:
+      - "t emra"
+      - "temra cells"
+      - "effector memory ra"
+      - "effector memory re-expressing ra"
+      - "cd45ra+ccr7-"
+      - "cd45ra+ ccr7-"
+      - "ccr7-cd45ra+"
+      - "terminal effector"
+      - "terminally differentiated"
+    domain: "t_cell_memory"
+    notes: "CD45RA+CCR7- terminal effector phenotype"
+
+  # =============================================================================
+  # INNATE LYMPHOID CELLS
+  # =============================================================================
+
+  - canonical: "natural killer cells"
+    variants:
+      - "nk cells"
+      - "nk"
+      - "nks"
+      - "cd3-cd56+"
+      - "cd56+ nk"
+      - "cd56+cd3-"
+      - "cd56 positive"
+      - "cd16+cd56+"
+    domain: "innate_lymphoid"
+
+  - canonical: "nkt cells"
+    variants:
+      - "natural killer t cells"
+      - "nk t cells"
+      - "cd3+cd56+"
+      - "cd56+cd3+"
+      - "invariant nkt"
+      - "inkt"
+      - "inkt cells"
+      - "type i nkt"
+      - "type ii nkt"
+    domain: "innate_lymphoid"
+    notes: "CD3+CD56+ or invariant NKT (iNKT)"
+
+  - canonical: "innate lymphoid cells"
+    variants:
+      - "ilc"
+      - "ilcs"
+      - "ilc1"
+      - "ilc2"
+      - "ilc3"
+      - "group 1 ilc"
+      - "group 2 ilc"
+      - "group 3 ilc"
+    domain: "innate_lymphoid"
+
+  - canonical: "mait cells"
+    variants:
+      - "mucosal-associated invariant t"
+      - "mucosal associated invariant t"
+      - "mr1-restricted t cells"
+      - "cd161+ t cells"
+      - "va7.2+ t cells"
+    domain: "innate_lymphoid"
+    notes: "Mucosal-associated invariant T cells"
+
+  # =============================================================================
+  # B CELLS
+  # =============================================================================
+
+  - canonical: "b cells"
+    variants:
+      - "b lymphocytes"
+      - "cd19+"
+      - "cd19 positive"
+      - "cd19+ cells"
+      - "cd20+"
+      - "cd20 positive"
+      - "b"
+    domain: "b_cells"
+
+  - canonical: "naive b cells"
+    variants:
+      - "naive b"
+      - "bn"
+      - "igd+cd27-"
+      - "igd+ cd27-"
+      - "unswitched naive"
+    domain: "b_cells"
+
+  - canonical: "memory b cells"
+    variants:
+      - "memory b"
+      - "bm"
+      - "cd27+ b cells"
+      - "cd27+"
+      - "switched memory"
+      - "class-switched"
+    domain: "b_cells"
+
+  - canonical: "plasmablasts"
+    variants:
+      - "plasma blasts"
+      - "pb"
+      - "pbs"
+      - "cd27++cd38++"
+      - "cd27hi cd38hi"
+      - "cd27high cd38high"
+      - "antibody-secreting cells"
+      - "asc"
+    domain: "b_cells"
+
+  - canonical: "plasma cells"
+    variants:
+      - "pc"
+      - "pcs"
+      - "cd138+"
+      - "cd138 positive"
+      - "syndecan-1+"
+    domain: "b_cells"
+
+  # =============================================================================
+  # MYELOID CELLS
+  # =============================================================================
+
+  - canonical: "monocytes"
+    variants:
+      - "monos"
+      - "mono"
+      - "cd14+"
+      - "cd14 positive"
+      - "cd14+ cells"
+    domain: "myeloid"
+
+  - canonical: "classical monocytes"
+    variants:
+      - "classical mono"
+      - "cd14++cd16-"
+      - "cd14hi cd16-"
+      - "cd14high cd16-"
+      - "cd14+cd16-"
+    domain: "myeloid"
+    notes: "CD14++CD16- phenotype"
+
+  - canonical: "non-classical monocytes"
+    variants:
+      - "non classical mono"
+      - "nonclassical monocytes"
+      - "cd14+cd16++"
+      - "cd14dim cd16+"
+      - "cd14lo cd16+"
+      - "cd14low cd16+"
+      - "patrolling monocytes"
+    domain: "myeloid"
+    notes: "CD14dimCD16++ phenotype"
+
+  - canonical: "intermediate monocytes"
+    variants:
+      - "intermediate mono"
+      - "cd14++cd16+"
+      - "cd14hi cd16+"
+      - "cd14high cd16+"
+      - "transitional monocytes"
+    domain: "myeloid"
+    notes: "CD14++CD16+ phenotype"
+
+  - canonical: "neutrophils"
+    variants:
+      - "neuts"
+      - "pmn"
+      - "polymorphonuclear"
+      - "granulocytes"
+      - "cd66b+"
+      - "cd66b positive"
+    domain: "myeloid"
+
+  - canonical: "dendritic cells"
+    variants:
+      - "dc"
+      - "dcs"
+      - "conventional dc"
+      - "cdc"
+      - "myeloid dc"
+      - "mdc"
+    domain: "myeloid"
+
+  - canonical: "plasmacytoid dendritic cells"
+    variants:
+      - "pdc"
+      - "pdcs"
+      - "plasmacytoid dc"
+      - "cd123+ dc"
+      - "cd303+"
+      - "bdca-2+"
+    domain: "myeloid"
+
+  # =============================================================================
+  # QC GATES
+  # =============================================================================
+
+  - canonical: "singlets"
+    variants:
+      - "single cells"
+      - "singlet"
+      - "non-doublets"
+      - "fsc-a vs fsc-h"
+      - "fsc singlets"
+    domain: "qc_gates"
+    notes: "Doublet exclusion gate"
+
+  - canonical: "live cells"
+    variants:
+      - "live"
+      - "viable"
+      - "viable cells"
+      - "live/dead-"
+      - "live/dead negative"
+      - "7-aad-"
+      - "7aad-"
+      - "pi-"
+      - "pi negative"
+      - "dapi-"
+      - "fixable viability-"
+      - "fvd-"
+      - "zombie-"
+    domain: "qc_gates"
+    notes: "Viability gate - negative for live/dead dye"
+
+  - canonical: "lymphocytes"
+    variants:
+      - "lymphs"
+      - "lymphocyte gate"
+      - "fsc vs ssc lymphs"
+      - "fsc-a vs ssc-a lymphocytes"
+      - "small lymphocytes"
+    domain: "qc_gates"
+    notes: "FSC/SSC lymphocyte scatter gate"
+
+  - canonical: "leukocytes"
+    variants:
+      - "cd45+"
+      - "cd45 positive"
+      - "cd45+ cells"
+      - "white blood cells"
+      - "wbc"
+    domain: "qc_gates"
+
+  - canonical: "all events"
+    variants:
+      - "total events"
+      - "ungated"
+      - "root"
+      - "all"
+      - "parent"
+    domain: "qc_gates"
+
+  - canonical: "time gate"
+    variants:
+      - "time"
+      - "time vs parameter"
+      - "acquisition time"
+      - "stable acquisition"
+    domain: "qc_gates"
+    notes: "Gate to exclude acquisition artifacts"
+
+# =============================================================================
+# PATTERN-BASED EQUIVALENCES (REGEX)
+# =============================================================================
+# These patterns allow automatic normalization of common variations
+
+patterns:
+  # "X cells" <-> "Xs" (e.g., "T cells" <-> "Ts")
+  - pattern: "^(.+) cells$"
+    equivalent: "\\1s"
+    bidirectional: true
+
+  # "CD## positive" <-> "CD##+"
+  - pattern: "^cd(\\d+) positive$"
+    equivalent: "cd\\1+"
+    bidirectional: true
+
+  # "CD## negative" <-> "CD##-"
+  - pattern: "^cd(\\d+) negative$"
+    equivalent: "cd\\1-"
+    bidirectional: true
+
+  # "CD##hi" <-> "CD##high" <-> "CD##++"
+  - pattern: "^cd(\\d+)hi$"
+    equivalent: "cd\\1high"
+    bidirectional: true
+
+  - pattern: "^cd(\\d+)high$"
+    equivalent: "cd\\1++"
+    bidirectional: true
+
+  # "CD##lo" <-> "CD##low" <-> "CD##dim"
+  - pattern: "^cd(\\d+)lo$"
+    equivalent: "cd\\1low"
+    bidirectional: true
+
+  - pattern: "^cd(\\d+)low$"
+    equivalent: "cd\\1dim"
+    bidirectional: true
