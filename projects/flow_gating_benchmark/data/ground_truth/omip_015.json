@@ -118,97 +118,111 @@
               ],
               "gate_type": "Unknown",
               "is_critical": true,
-              "notes": null,
+              "notes": "Zombie NIR negative = live cells",
               "children": [
                 {
-                  "name": "Lymphocytes",
+                  "name": "Lineage-",
                   "markers": [
-                    "FSC-A",
-                    "SSC-A"
+                    "CD3",
+                    "CD19",
+                    "CD14"
                   ],
                   "gate_type": "Unknown",
-                  "is_critical": true,
+                  "is_critical": false,
                   "notes": null,
                   "children": [
                     {
-                      "name": "Lineage-",
+                      "name": "CD127+ ILCs",
                       "markers": [
-                        "CD3",
-                        "CD19",
-                        "CD14"
+                        "CD127"
                       ],
                       "gate_type": "Unknown",
                       "is_critical": false,
                       "notes": null,
                       "children": [
                         {
-                          "name": "CD127+ ILCs",
+                          "name": "ILC1",
                           "markers": [
-                            "CD127"
+                            "CD117",
+                            "CRTH2"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": [
-                            {
-                              "name": "ILC1",
-                              "markers": [
-                                "CD117",
-                                "CRTH2"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": []
-                            },
-                            {
-                              "name": "ILC2",
-                              "markers": [
-                                "CRTH2",
-                                "CD294"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": []
-                            },
-                            {
-                              "name": "ILC3",
-                              "markers": [
-                                "CD117",
-                                "NKp44"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": []
-                            }
-                          ]
+                          "children": [],
+                          "marker_logic": []
                         },
                         {
-                          "name": "NK cells",
+                          "name": "ILC2",
                           "markers": [
-                            "CD56"
+                            "CRTH2",
+                            "CD294"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "ILC3",
+                          "markers": [
+                            "CD117",
+                            "NKp44"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        }
+                      ],
+                      "marker_logic": []
+                    },
+                    {
+                      "name": "NK cells",
+                      "markers": [
+                        "CD56"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": "CD3- CD56+ NK cells",
+                      "children": [],
+                      "marker_logic": [
+                        {
+                          "marker": "CD56",
+                          "positive": true,
+                          "level": null
+                        },
+                        {
+                          "marker": "CD3",
+                          "positive": false,
+                          "level": null
                         }
                       ]
                     }
-                  ]
+                  ],
+                  "marker_logic": []
+                }
+              ],
+              "marker_logic": [
+                {
+                  "marker": "Zombie NIR",
+                  "positive": false,
+                  "level": null
                 }
               ]
             }
-          ]
+          ],
+          "marker_logic": []
         }
-      ]
+      ],
+      "marker_logic": []
     }
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "15-color panel"
+    "curator_notes": "15-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",

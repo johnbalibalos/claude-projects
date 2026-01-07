@@ -133,121 +133,144 @@
               ],
               "gate_type": "Unknown",
               "is_critical": true,
-              "notes": null,
+              "notes": "Zombie NIR negative = live cells",
               "children": [
                 {
-                  "name": "Lymphocytes",
+                  "name": "CD3+ T cells",
                   "markers": [
-                    "FSC-A",
-                    "SSC-A"
+                    "CD3"
                   ],
                   "gate_type": "Unknown",
-                  "is_critical": true,
-                  "notes": null,
+                  "is_critical": false,
+                  "notes": "CD3+ T lymphocytes",
                   "children": [
                     {
-                      "name": "CD3+ T cells",
+                      "name": "CD8+ T cells",
                       "markers": [
-                        "CD3"
+                        "CD8"
                       ],
                       "gate_type": "Unknown",
                       "is_critical": false,
-                      "notes": null,
+                      "notes": "CD3+ T lymphocytes",
                       "children": [
                         {
-                          "name": "CD8+ T cells",
+                          "name": "Exhausted CD8",
                           "markers": [
-                            "CD8"
+                            "PD-1",
+                            "TIM-3",
+                            "LAG-3"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
                           "children": [
                             {
-                              "name": "Exhausted CD8",
+                              "name": "Terminal Tex",
                               "markers": [
-                                "PD-1",
-                                "TIM-3",
-                                "LAG-3"
+                                "CD39",
+                                "TOX"
                               ],
                               "gate_type": "Unknown",
                               "is_critical": false,
                               "notes": null,
-                              "children": [
-                                {
-                                  "name": "Terminal Tex",
-                                  "markers": [
-                                    "CD39",
-                                    "TOX"
-                                  ],
-                                  "gate_type": "Unknown",
-                                  "is_critical": false,
-                                  "notes": null,
-                                  "children": []
-                                },
-                                {
-                                  "name": "Progenitor Tex",
-                                  "markers": [
-                                    "TCF1",
-                                    "TOX"
-                                  ],
-                                  "gate_type": "Unknown",
-                                  "is_critical": false,
-                                  "notes": null,
-                                  "children": []
-                                }
-                              ]
+                              "children": [],
+                              "marker_logic": []
                             },
                             {
-                              "name": "Activated CD8",
+                              "name": "Progenitor Tex",
                               "markers": [
-                                "CD69",
-                                "HLA-DR",
-                                "Ki67"
+                                "TCF1",
+                                "TOX"
                               ],
                               "gate_type": "Unknown",
                               "is_critical": false,
                               "notes": null,
-                              "children": []
+                              "children": [],
+                              "marker_logic": []
                             }
-                          ]
+                          ],
+                          "marker_logic": []
                         },
                         {
-                          "name": "CD4+ T cells",
+                          "name": "Activated CD8",
                           "markers": [
-                            "CD4"
+                            "CD69",
+                            "HLA-DR",
+                            "Ki67"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": [
-                            {
-                              "name": "Exhausted CD4",
-                              "markers": [
-                                "PD-1",
-                                "TIM-3"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": []
-                            }
-                          ]
+                          "children": [],
+                          "marker_logic": []
+                        }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD3",
+                          "positive": true,
+                          "level": null
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CD4+ T cells",
+                      "markers": [
+                        "CD4"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": "CD3+ T lymphocytes",
+                      "children": [
+                        {
+                          "name": "Exhausted CD4",
+                          "markers": [
+                            "PD-1",
+                            "TIM-3"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD3",
+                          "positive": true,
+                          "level": null
                         }
                       ]
                     }
+                  ],
+                  "marker_logic": [
+                    {
+                      "marker": "CD3",
+                      "positive": true,
+                      "level": null
+                    }
                   ]
+                }
+              ],
+              "marker_logic": [
+                {
+                  "marker": "Zombie NIR",
+                  "positive": false,
+                  "level": null
                 }
               ]
             }
-          ]
+          ],
+          "marker_logic": []
         }
-      ]
+      ],
+      "marker_logic": []
     }
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "18-color panel"
+    "curator_notes": "18-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",

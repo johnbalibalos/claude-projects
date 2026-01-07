@@ -1,0 +1,35 @@
+{
+  "timestamp": "2026-01-07T21:24:24.778610",
+  "n_runs": 9,
+  "by_condition": {
+    "baseline_zero_shot": {
+      "n_runs": 3,
+      "mean_hipc_score": 0.3489583333333333,
+      "mean_omip_score": 0.10183792815371762
+    },
+    "cot_no_rag": {
+      "n_runs": 3,
+      "mean_hipc_score": 0.34027777777777785,
+      "mean_omip_score": 0.08429406850459482
+    },
+    "cot_hipc_rag": {
+      "n_runs": 3,
+      "mean_hipc_score": 0.33888888888888885,
+      "mean_omip_score": 0.08429406850459482
+    }
+  },
+  "by_model": {
+    "claude-sonnet-4-20250514": {
+      "n_runs": 9,
+      "mean_hipc_score": 0.3427083333333333,
+      "mean_omip_score": 0.09014202172096909
+    }
+  },
+  "overall": {
+    "mean_hipc_score": 0.3427083333333333,
+    "mean_omip_score": 0.09014202172096909,
+    "hipc_wins": 6,
+    "omip_wins": 3,
+    "ties": 0
+  }
+}

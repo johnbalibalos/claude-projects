@@ -133,7 +133,7 @@
               ],
               "gate_type": "Unknown",
               "is_critical": true,
-              "notes": null,
+              "notes": "Zombie NIR negative = live cells",
               "children": [
                 {
                   "name": "CD45low",
@@ -163,7 +163,8 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
                         },
                         {
                           "name": "MPP",
@@ -175,7 +176,8 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
                         },
                         {
                           "name": "CMP",
@@ -187,7 +189,8 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
                         },
                         {
                           "name": "GMP",
@@ -199,7 +202,8 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
                         },
                         {
                           "name": "MEP",
@@ -211,7 +215,8 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
                         },
                         {
                           "name": "CLP",
@@ -223,22 +228,34 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
                         }
-                      ]
+                      ],
+                      "marker_logic": []
                     }
-                  ]
+                  ],
+                  "marker_logic": []
+                }
+              ],
+              "marker_logic": [
+                {
+                  "marker": "Zombie NIR",
+                  "positive": false,
+                  "level": null
                 }
               ]
             }
-          ]
+          ],
+          "marker_logic": []
         }
-      ]
+      ],
+      "marker_logic": []
     }
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "18-color panel"
+    "curator_notes": "18-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",

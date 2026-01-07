@@ -80,13 +80,35 @@ class Panel(BaseModel):
             return Complexity.COMPLEX
 
 
+class MarkerExpression(BaseModel):
+    """A marker expression with positive/negative status."""
+
+    marker: str = Field(..., description="Marker name (e.g., 'CD3', 'CD19')")
+    positive: bool = Field(True, description="True for positive (+), False for negative (-)")
+    level: str | None = Field(
+        None,
+        description="Expression level modifier (e.g., 'bright', 'dim', 'high', 'low')",
+    )
+
+    def __str__(self) -> str:
+        """Return string representation like 'CD3+' or 'CD19-'."""
+        suffix = "+" if self.positive else "-"
+        if self.level:
+            suffix = self.level
+        return f"{self.marker}{suffix}"
+
+
 class GateNode(BaseModel):
     """A single gate in the hierarchy."""
 
     name: str = Field(..., description="Gate name (e.g., 'Live', 'CD3+')")
     markers: list[str] = Field(
         default_factory=list,
-        description="Markers/dimensions used for this gate",
+        description="Markers/dimensions used for this gate (legacy, use marker_logic for new gates)",
+    )
+    marker_logic: list[MarkerExpression] = Field(
+        default_factory=list,
+        description="Marker expressions defining this population (e.g., CD3+ CD19-)",
     )
     gate_type: GateType | str = Field(
         default=GateType.UNKNOWN,
@@ -101,6 +123,11 @@ class GateNode(BaseModel):
         description="Whether this is a critical gate that must be present",
     )
     notes: str | None = Field(None, description="Additional notes about this gate")
+
+    @property
+    def marker_logic_str(self) -> str:
+        """Return string representation of marker logic (e.g., 'CD3+ CD19-')."""
+        return " ".join(str(m) for m in self.marker_logic)
 
 
 class GatingHierarchy(BaseModel):
@@ -261,6 +288,10 @@ class TestCase(BaseModel):
 
 
 # Example test case for reference
+# Uses HIPC-standardized gating logic:
+# - No FSC/SSC lymphocyte gate; go directly to CD3+ from CD45+
+# - Negative markers included (T cells = CD3+ CD19-, B cells = CD3- CD19+)
+# Reference: https://www.nature.com/articles/srep20686
 EXAMPLE_TEST_CASE = TestCase(
     test_case_id="OMIP-069",
     source_type=SourceType.OMIP_PAPER,
@@ -279,6 +310,7 @@ EXAMPLE_TEST_CASE = TestCase(
             PanelEntry(marker="CD3", fluorophore="BUV395", clone="UCHT1"),
             PanelEntry(marker="CD4", fluorophore="BUV496", clone="SK3"),
             PanelEntry(marker="CD8", fluorophore="BUV661", clone="SK1"),
+            PanelEntry(marker="CD19", fluorophore="BV605", clone="SJ25C1"),
             PanelEntry(marker="CD45", fluorophore="BV421", clone="HI30"),
             PanelEntry(marker="Live/Dead", fluorophore="Zombie NIR", clone=None),
         ]
@@ -300,13 +332,34 @@ EXAMPLE_TEST_CASE = TestCase(
                                 GateNode(
                                     name="Live",
                                     markers=["Zombie NIR"],
+                                    marker_logic=[MarkerExpression(marker="Zombie NIR", positive=False)],
                                     is_critical=True,
                                     children=[
                                         GateNode(
                                             name="CD45+",
                                             markers=["CD45"],
+                                            marker_logic=[MarkerExpression(marker="CD45", positive=True)],
+                                            notes="All leukocytes; go directly to lineage markers (no FSC/SSC lymphocyte gate)",
                                             children=[
-                                                GateNode(name="T cells", markers=["CD3"]),
+                                                # Plot CD19 vs CD3 first to separate T and B cells
+                                                GateNode(
+                                                    name="T cells",
+                                                    markers=["CD3", "CD19"],
+                                                    marker_logic=[
+                                                        MarkerExpression(marker="CD3", positive=True),
+                                                        MarkerExpression(marker="CD19", positive=False),
+                                                    ],
+                                                    notes="CD3+ CD19- T lymphocytes",
+                                                ),
+                                                GateNode(
+                                                    name="B cells",
+                                                    markers=["CD19", "CD3"],
+                                                    marker_logic=[
+                                                        MarkerExpression(marker="CD3", positive=False),
+                                                        MarkerExpression(marker="CD19", positive=True),
+                                                    ],
+                                                    notes="CD3- CD19+ B lymphocytes (CD20+ also acceptable)",
+                                                ),
                                             ],
                                         )
                                     ],

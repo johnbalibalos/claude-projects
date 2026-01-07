@@ -74,9 +74,46 @@ Live cells
 
 | Factor | Levels |
 |--------|--------|
-| Context | Minimal, Panel-only, Full OMIP |
-| Prompting | Zero-shot, Chain-of-thought |
-| Model | Claude, GPT-4, Gemini |
+| Prompting | Simple, Zero-shot, Chain-of-thought, Weight-of-thought |
+| RAG | None, HIPC, OMIP, Search, Both |
+| Model | Claude Sonnet, Claude Opus, GPT-4o |
+
+### Ground Truth Standards
+
+| Standard | Description |
+|----------|-------------|
+| HIPC (2016) | Expert-validated standardized definitions |
+| OMIP | Paper-specific gating strategies |
+
+Reference: https://www.nature.com/articles/srep20686
+
+## Debugging Guidelines
+
+**IMPORTANT**: When debugging experiments, always start with 1-2 conditions before running full test suites.
+
+```bash
+# Debug with single condition
+python scripts/run_ab_test.py --conditions baseline_zero_shot --test-cases OMIP-023 --dry-run
+
+# Debug with 2 conditions on 1 test case
+python scripts/run_ab_test.py --conditions baseline_zero_shot cot_hipc_rag --test-cases OMIP-023
+
+# Check parsed output
+python -c "
+import json
+with open('results/ab_tests/LATEST_RESULTS.json') as f:
+    data = json.load(f)
+run = data['runs'][0]
+print('Parsed gates:', [g['name'] for g in run['predicted_hierarchy'].get('children', [])])
+print('HIPC matches:', run['ab_result']['hipc_matches'])
+"
+```
+
+### Common Issues
+
+1. **HIPC scores all same** - Check name matching in `find_hipc_match()`
+2. **Empty parsed hierarchy** - Check response parser regex patterns
+3. **Low OMIP scores** - Ground truth gate names may not match LLM output format
 
 ## Key Commands
 

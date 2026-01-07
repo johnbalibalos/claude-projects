@@ -103,7 +103,7 @@
               ],
               "gate_type": "Unknown",
               "is_critical": true,
-              "notes": null,
+              "notes": "Zombie NIR negative = live cells",
               "children": [
                 {
                   "name": "CD45+",
@@ -112,17 +112,16 @@
                   ],
                   "gate_type": "Unknown",
                   "is_critical": true,
-                  "notes": null,
+                  "notes": "All leukocytes; go directly to lineage markers (no FSC/SSC lymphocyte gate per HIPC)",
                   "children": [
                     {
                       "name": "B cells",
                       "markers": [
-                        "B220",
                         "CD19"
                       ],
                       "gate_type": "Unknown",
                       "is_critical": false,
-                      "notes": null,
+                      "notes": "CD3- CD19+ B lymphocytes",
                       "children": [
                         {
                           "name": "Transitional",
@@ -134,7 +133,8 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
                         },
                         {
                           "name": "Follicular",
@@ -146,7 +146,8 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
                         },
                         {
                           "name": "Marginal Zone",
@@ -158,18 +159,25 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
                         },
                         {
                           "name": "GC B cells",
                           "markers": [
-                            "GL7",
-                            "CD95"
+                            "CD19"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
-                          "notes": null,
-                          "children": []
+                          "notes": "CD3- CD19+ B lymphocytes",
+                          "children": [],
+                          "marker_logic": [
+                            {
+                              "marker": "CD19",
+                              "positive": true,
+                              "level": null
+                            }
+                          ]
                         },
                         {
                           "name": "Plasma cells",
@@ -180,22 +188,46 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
+                        }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD19",
+                          "positive": true,
+                          "level": null
                         }
                       ]
                     }
+                  ],
+                  "marker_logic": [
+                    {
+                      "marker": "CD45",
+                      "positive": true,
+                      "level": null
+                    }
                   ]
+                }
+              ],
+              "marker_logic": [
+                {
+                  "marker": "Zombie NIR",
+                  "positive": false,
+                  "level": null
                 }
               ]
             }
-          ]
+          ],
+          "marker_logic": []
         }
-      ]
+      ],
+      "marker_logic": []
     }
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "12-color panel"
+    "curator_notes": "12-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",

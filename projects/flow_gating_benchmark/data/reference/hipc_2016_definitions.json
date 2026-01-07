@@ -1,0 +1,436 @@
+{
+  "t_cells": {
+    "name": "T cells",
+    "canonical_names": [
+      "T lymphocytes",
+      "CD3+ cells",
+      "CD3+ T cells"
+    ],
+    "positive_markers": [
+      "CD3"
+    ],
+    "negative_markers": [
+      "CD19",
+      "CD20"
+    ],
+    "optional_markers": [],
+    "parent_population": "Lymphocytes",
+    "notes": "Primary T cell gate; CD19- recommended when B cell markers in panel",
+    "source": "HIPC 2016 Table 1"
+  },
+  "cd4_t_cells": {
+    "name": "CD4+ T cells",
+    "canonical_names": [
+      "Helper T cells",
+      "CD4 T cells",
+      "Th cells"
+    ],
+    "positive_markers": [
+      "CD3",
+      "CD4"
+    ],
+    "negative_markers": [
+      "CD8"
+    ],
+    "optional_markers": [],
+    "parent_population": "T cells",
+    "notes": "CD3+ CD4+ CD8- helper T cells",
+    "source": "HIPC 2016 Table 2"
+  },
+  "cd8_t_cells": {
+    "name": "CD8+ T cells",
+    "canonical_names": [
+      "Cytotoxic T cells",
+      "CD8 T cells",
+      "CTL"
+    ],
+    "positive_markers": [
+      "CD3",
+      "CD8"
+    ],
+    "negative_markers": [
+      "CD4"
+    ],
+    "optional_markers": [],
+    "parent_population": "T cells",
+    "notes": "CD3+ CD4- CD8+ cytotoxic T cells",
+    "source": "HIPC 2016 Table 2"
+  },
+  "cd4_naive": {
+    "name": "CD4+ Naive",
+    "canonical_names": [
+      "Naive CD4",
+      "CD4 Naive T cells"
+    ],
+    "positive_markers": [
+      "CD3",
+      "CD4",
+      "CD45RA",
+      "CCR7"
+    ],
+    "negative_markers": [
+      "CD8"
+    ],
+    "optional_markers": [],
+    "parent_population": "CD4+ T cells",
+    "notes": "CD45RA+ CCR7+ naive helper T cells",
+    "source": "HIPC 2016 Table 2"
+  },
+  "cd4_cm": {
+    "name": "CD4+ Central Memory",
+    "canonical_names": [
+      "CD4 CM",
+      "CD4+ CM",
+      "Central Memory CD4"
+    ],
+    "positive_markers": [
+      "CD3",
+      "CD4",
+      "CCR7"
+    ],
+    "negative_markers": [
+      "CD8",
+      "CD45RA"
+    ],
+    "optional_markers": [],
+    "parent_population": "CD4+ T cells",
+    "notes": "CD45RA- CCR7+ central memory helper T cells",
+    "source": "HIPC 2016 Table 2"
+  },
+  "cd4_em": {
+    "name": "CD4+ Effector Memory",
+    "canonical_names": [
+      "CD4 EM",
+      "CD4+ EM",
+      "Effector Memory CD4"
+    ],
+    "positive_markers": [
+      "CD3",
+      "CD4"
+    ],
+    "negative_markers": [
+      "CD8",
+      "CD45RA",
+      "CCR7"
+    ],
+    "optional_markers": [],
+    "parent_population": "CD4+ T cells",
+    "notes": "CD45RA- CCR7- effector memory helper T cells",
+    "source": "HIPC 2016 Table 2"
+  },
+  "cd4_temra": {
+    "name": "CD4+ TEMRA",
+    "canonical_names": [
+      "CD4 TEMRA",
+      "CD4+ EMRA",
+      "Terminally differentiated CD4"
+    ],
+    "positive_markers": [
+      "CD3",
+      "CD4",
+      "CD45RA"
+    ],
+    "negative_markers": [
+      "CD8",
+      "CCR7"
+    ],
+    "optional_markers": [],
+    "parent_population": "CD4+ T cells",
+    "notes": "CD45RA+ CCR7- terminally differentiated effector memory",
+    "source": "HIPC 2016 Table 2"
+  },
+  "cd8_naive": {
+    "name": "CD8+ Naive",
+    "canonical_names": [
+      "Naive CD8",
+      "CD8 Naive T cells"
+    ],
+    "positive_markers": [
+      "CD3",
+      "CD8",
+      "CD45RA",
+      "CCR7"
+    ],
+    "negative_markers": [
+      "CD4"
+    ],
+    "optional_markers": [],
+    "parent_population": "CD8+ T cells",
+    "notes": null,
+    "source": "HIPC 2016 Table 2"
+  },
+  "cd8_cm": {
+    "name": "CD8+ Central Memory",
+    "canonical_names": [
+      "CD8 CM",
+      "CD8+ CM"
+    ],
+    "positive_markers": [
+      "CD3",
+      "CD8",
+      "CCR7"
+    ],
+    "negative_markers": [
+      "CD4",
+      "CD45RA"
+    ],
+    "optional_markers": [],
+    "parent_population": "CD8+ T cells",
+    "notes": null,
+    "source": "HIPC 2016 Table 2"
+  },
+  "cd8_em": {
+    "name": "CD8+ Effector Memory",
+    "canonical_names": [
+      "CD8 EM",
+      "CD8+ EM"
+    ],
+    "positive_markers": [
+      "CD3",
+      "CD8"
+    ],
+    "negative_markers": [
+      "CD4",
+      "CD45RA",
+      "CCR7"
+    ],
+    "optional_markers": [],
+    "parent_population": "CD8+ T cells",
+    "notes": null,
+    "source": "HIPC 2016 Table 2"
+  },
+  "cd8_temra": {
+    "name": "CD8+ TEMRA",
+    "canonical_names": [
+      "CD8 TEMRA",
+      "CD8+ EMRA"
+    ],
+    "positive_markers": [
+      "CD3",
+      "CD8",
+      "CD45RA"
+    ],
+    "negative_markers": [
+      "CD4",
+      "CCR7"
+    ],
+    "optional_markers": [],
+    "parent_population": "CD8+ T cells",
+    "notes": null,
+    "source": "HIPC 2016 Table 2"
+  },
+  "b_cells": {
+    "name": "B cells",
+    "canonical_names": [
+      "B lymphocytes",
+      "CD19+ cells",
+      "CD20+ cells"
+    ],
+    "positive_markers": [
+      "CD19"
+    ],
+    "negative_markers": [
+      "CD3"
+    ],
+    "optional_markers": [
+      "CD20"
+    ],
+    "parent_population": "Lymphocytes",
+    "notes": "CD3- CD19+ (or CD20+); either marker acceptable, both not required",
+    "source": "HIPC 2016 Table 1"
+  },
+  "naive_b": {
+    "name": "Naive B cells",
+    "canonical_names": [
+      "Naive B",
+      "IgD+ B cells"
+    ],
+    "positive_markers": [
+      "CD19",
+      "IgD"
+    ],
+    "negative_markers": [
+      "CD3",
+      "CD27"
+    ],
+    "optional_markers": [],
+    "parent_population": "B cells",
+    "notes": null,
+    "source": "HIPC 2016 Table 2"
+  },
+  "memory_b": {
+    "name": "Memory B cells",
+    "canonical_names": [
+      "Memory B",
+      "CD27+ B cells"
+    ],
+    "positive_markers": [
+      "CD19",
+      "CD27"
+    ],
+    "negative_markers": [
+      "CD3"
+    ],
+    "optional_markers": [],
+    "parent_population": "B cells",
+    "notes": null,
+    "source": "HIPC 2016 Table 2"
+  },
+  "transitional_b": {
+    "name": "Transitional B cells",
+    "canonical_names": [
+      "Transitional B"
+    ],
+    "positive_markers": [
+      "CD19",
+      "CD24",
+      "CD38"
+    ],
+    "negative_markers": [
+      "CD3"
+    ],
+    "optional_markers": [],
+    "parent_population": "B cells",
+    "notes": "CD24hi CD38hi transitional B cells",
+    "source": "HIPC 2016 Table 2"
+  },
+  "plasmablasts": {
+    "name": "Plasmablasts",
+    "canonical_names": [
+      "Plasma cells",
+      "ASC"
+    ],
+    "positive_markers": [
+      "CD19",
+      "CD27",
+      "CD38"
+    ],
+    "negative_markers": [
+      "CD3"
+    ],
+    "optional_markers": [],
+    "parent_population": "B cells",
+    "notes": "CD27++ CD38++ plasmablasts/plasma cells",
+    "source": "HIPC 2016 Table 2"
+  },
+  "nk_cells": {
+    "name": "NK cells",
+    "canonical_names": [
+      "Natural Killer cells",
+      "CD56+ cells"
+    ],
+    "positive_markers": [
+      "CD56"
+    ],
+    "negative_markers": [
+      "CD3"
+    ],
+    "optional_markers": [
+      "CD16"
+    ],
+    "parent_population": "Lymphocytes",
+    "notes": "CD3- CD56+ and/or CD16+",
+    "source": "HIPC 2016 Table 1"
+  },
+  "cd56bright_nk": {
+    "name": "CD56bright NK",
+    "canonical_names": [
+      "CD56bright",
+      "Regulatory NK"
+    ],
+    "positive_markers": [
+      "CD56"
+    ],
+    "negative_markers": [
+      "CD3",
+      "CD16"
+    ],
+    "optional_markers": [],
+    "parent_population": "NK cells",
+    "notes": "CD3- CD56bright CD16dim/- regulatory NK cells",
+    "source": "HIPC 2016 Table 2"
+  },
+  "cd56dim_nk": {
+    "name": "CD56dim NK",
+    "canonical_names": [
+      "CD56dim",
+      "Cytotoxic NK"
+    ],
+    "positive_markers": [
+      "CD56",
+      "CD16"
+    ],
+    "negative_markers": [
+      "CD3"
+    ],
+    "optional_markers": [],
+    "parent_population": "NK cells",
+    "notes": "CD3- CD56dim CD16+ cytotoxic NK cells",
+    "source": "HIPC 2016 Table 2"
+  },
+  "monocytes": {
+    "name": "Monocytes",
+    "canonical_names": [
+      "CD14+ cells",
+      "Mono"
+    ],
+    "positive_markers": [
+      "CD14"
+    ],
+    "negative_markers": [
+      "CD3"
+    ],
+    "optional_markers": [],
+    "parent_population": "Leukocytes",
+    "notes": "CD14+ monocytes",
+    "source": "HIPC 2016 Table 1"
+  },
+  "classical_monocytes": {
+    "name": "Classical Monocytes",
+    "canonical_names": [
+      "Classical Mono",
+      "CD14++ CD16-"
+    ],
+    "positive_markers": [
+      "CD14"
+    ],
+    "negative_markers": [
+      "CD16"
+    ],
+    "optional_markers": [],
+    "parent_population": "Monocytes",
+    "notes": "CD14++ CD16- classical monocytes",
+    "source": "HIPC 2016 Table 2"
+  },
+  "intermediate_monocytes": {
+    "name": "Intermediate Monocytes",
+    "canonical_names": [
+      "Intermediate Mono",
+      "CD14++ CD16+"
+    ],
+    "positive_markers": [
+      "CD14",
+      "CD16"
+    ],
+    "negative_markers": [],
+    "optional_markers": [],
+    "parent_population": "Monocytes",
+    "notes": "CD14++ CD16+ intermediate monocytes",
+    "source": "HIPC 2016 Table 2"
+  },
+  "nonclassical_monocytes": {
+    "name": "Non-classical Monocytes",
+    "canonical_names": [
+      "Non-classical Mono",
+      "CD14dim CD16++"
+    ],
+    "positive_markers": [
+      "CD16"
+    ],
+    "negative_markers": [],
+    "optional_markers": [],
+    "parent_population": "Monocytes",
+    "notes": "CD14dim CD16++ non-classical monocytes",
+    "source": "HIPC 2016 Table 2"
+  }
+}

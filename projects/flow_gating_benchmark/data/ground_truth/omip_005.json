@@ -93,85 +93,135 @@
               ],
               "gate_type": "Unknown",
               "is_critical": true,
-              "notes": null,
+              "notes": "Zombie NIR negative = live cells",
               "children": [
                 {
-                  "name": "Lymphocytes",
+                  "name": "NK cells",
                   "markers": [
-                    "FSC-A",
-                    "SSC-A"
+                    "CD3",
+                    "CD56"
                   ],
                   "gate_type": "Unknown",
-                  "is_critical": true,
-                  "notes": null,
+                  "is_critical": false,
+                  "notes": "CD3- CD56+/CD16+ NK cells",
                   "children": [
                     {
-                      "name": "NK cells",
+                      "name": "CD56bright",
                       "markers": [
-                        "CD3",
-                        "CD56"
+                        "CD56",
+                        "CD16"
                       ],
                       "gate_type": "Unknown",
                       "is_critical": false,
-                      "notes": null,
-                      "children": [
+                      "notes": "CD3- CD56bright CD16dim/- regulatory NK cells",
+                      "children": [],
+                      "marker_logic": [
                         {
-                          "name": "CD56bright",
-                          "markers": [
-                            "CD56",
-                            "CD16"
-                          ],
-                          "gate_type": "Unknown",
-                          "is_critical": false,
-                          "notes": null,
-                          "children": []
+                          "marker": "CD3",
+                          "positive": false,
+                          "level": null
                         },
                         {
-                          "name": "CD56dim",
+                          "marker": "CD56",
+                          "positive": true,
+                          "level": "bright"
+                        },
+                        {
+                          "marker": "CD16",
+                          "positive": false,
+                          "level": "dim"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CD56dim",
+                      "markers": [
+                        "CD56",
+                        "CD16"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": "CD3- CD56dim CD16+ cytotoxic NK cells",
+                      "children": [
+                        {
+                          "name": "CD57+ NK",
                           "markers": [
-                            "CD56",
-                            "CD16"
+                            "CD57"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": [
-                            {
-                              "name": "CD57+ NK",
-                              "markers": [
-                                "CD57"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": []
-                            },
-                            {
-                              "name": "CD57- NK",
-                              "markers": [
-                                "CD57"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": []
-                            }
-                          ]
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "CD57- NK",
+                          "markers": [
+                            "CD57"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD3",
+                          "positive": false,
+                          "level": null
+                        },
+                        {
+                          "marker": "CD56",
+                          "positive": true,
+                          "level": "dim"
+                        },
+                        {
+                          "marker": "CD16",
+                          "positive": true,
+                          "level": null
                         }
                       ]
                     }
+                  ],
+                  "marker_logic": [
+                    {
+                      "marker": "CD56",
+                      "positive": true,
+                      "level": null
+                    },
+                    {
+                      "marker": "CD16",
+                      "positive": true,
+                      "level": null
+                    },
+                    {
+                      "marker": "CD3",
+                      "positive": false,
+                      "level": null
+                    }
                   ]
+                }
+              ],
+              "marker_logic": [
+                {
+                  "marker": "Zombie NIR",
+                  "positive": false,
+                  "level": null
                 }
               ]
             }
-          ]
+          ],
+          "marker_logic": []
         }
-      ]
+      ],
+      "marker_logic": []
     }
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "10-color panel"
+    "curator_notes": "10-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",
