@@ -23,6 +23,9 @@ from typing import Any
 class ReasoningApproach(str, Enum):
     """Reasoning strategy for gating predictions."""
 
+    SIMPLE = "simple"
+    # Minimal prompt: "Design a gating hierarchy with these markers"
+
     ZERO_SHOT = "zero_shot"
     # Direct prediction without explicit reasoning
 
@@ -47,6 +50,9 @@ class RAGCondition(str, Enum):
 
     OMIP_RAG = "omip_rag"
     # Include relevant OMIP paper excerpts
+
+    SEARCH_RAG = "search_rag"
+    # Include Google search results for flow cytometry gating
 
     BOTH_RAG = "both_rag"
     # Include both HIPC and OMIP references
@@ -148,6 +154,14 @@ EXPERIMENTAL_CONDITIONS = {
 
 # Prompt templates for each reasoning approach
 REASONING_PROMPTS = {
+    ReasoningApproach.SIMPLE: """
+Design a gating hierarchy for these markers:
+
+{panel}
+
+Sample: {sample_type}
+""",
+
     ReasoningApproach.ZERO_SHOT: """
 Given this flow cytometry panel, predict the gating hierarchy.
 

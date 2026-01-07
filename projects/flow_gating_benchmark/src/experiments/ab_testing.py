@@ -373,20 +373,90 @@ class ABTester:
 
     def normalize_population_name(self, name: str) -> str:
         """Normalize population name for matching."""
-        return name.lower().strip().replace("_", " ").replace("-", " ")
+        normalized = name.lower().strip()
+        # Remove common variations
+        normalized = normalized.replace("_", " ").replace("-", " ")
+        normalized = normalized.replace(" cells", "").replace(" cell", "")
+        normalized = normalized.replace("lymphocytes", "").replace("lymphocyte", "")
+        normalized = " ".join(normalized.split())  # Collapse whitespace
+        return normalized
 
     def find_hipc_match(self, gate_name: str) -> CellPopulationDefinition | None:
         """Find matching HIPC definition for a gate name."""
         normalized = self.normalize_population_name(gate_name)
 
+        # Keyword patterns to match against HIPC definitions
+        # Maps keywords to HIPC definition keys
+        keyword_matches = {
+            "t cell": "t_cells",
+            "t ": "t_cells",
+            "cd3+": "t_cells",
+            "cd4+ t": "cd4_t_cells",
+            "cd4 t": "cd4_t_cells",
+            "helper t": "cd4_t_cells",
+            "cd8+ t": "cd8_t_cells",
+            "cd8 t": "cd8_t_cells",
+            "cytotoxic t": "cd8_t_cells",
+            "naive cd4": "cd4_naive",
+            "cd4 naive": "cd4_naive",
+            "cd4+ naive": "cd4_naive",
+            "naive cd8": "cd8_naive",
+            "cd8 naive": "cd8_naive",
+            "cd8+ naive": "cd8_naive",
+            "central memory cd4": "cd4_cm",
+            "cd4 cm": "cd4_cm",
+            "cd4+ cm": "cd4_cm",
+            "central memory cd8": "cd8_cm",
+            "cd8 cm": "cd8_cm",
+            "cd8+ cm": "cd8_cm",
+            "effector memory cd4": "cd4_em",
+            "cd4 em": "cd4_em",
+            "cd4+ em": "cd4_em",
+            "effector memory cd8": "cd8_em",
+            "cd8 em": "cd8_em",
+            "cd8+ em": "cd8_em",
+            "temra cd4": "cd4_temra",
+            "cd4 temra": "cd4_temra",
+            "cd4+ temra": "cd4_temra",
+            "temra cd8": "cd8_temra",
+            "cd8 temra": "cd8_temra",
+            "cd8+ temra": "cd8_temra",
+            "b cell": "b_cells",
+            "b ": "b_cells",
+            "cd19+": "b_cells",
+            "cd20+": "b_cells",
+            "naive b": "naive_b",
+            "memory b": "memory_b",
+            "transitional b": "transitional_b",
+            "plasmablast": "plasmablasts",
+            "plasma": "plasmablasts",
+            "nk cell": "nk_cells",
+            "nk ": "nk_cells",
+            "natural killer": "nk_cells",
+            "cd56+": "nk_cells",
+            "cd56bright": "cd56bright_nk",
+            "cd56dim": "cd56dim_nk",
+            "monocyte": "monocytes",
+            "cd14+": "monocytes",
+            "classical mono": "classical_monocytes",
+            "non classical": "nonclassical_monocytes",
+            "nonclassical": "nonclassical_monocytes",
+            "intermediate mono": "intermediate_monocytes",
+        }
+
+        # First try exact match with canonical names
         for key, defn in self.hipc_definitions.items():
-            # Check main name
             if self.normalize_population_name(defn.name) == normalized:
                 return defn
-            # Check canonical alternatives
             for alt in defn.canonical_names:
                 if self.normalize_population_name(alt) == normalized:
                     return defn
+
+        # Then try keyword matching
+        for keyword, defn_key in keyword_matches.items():
+            if keyword in normalized:
+                if defn_key in self.hipc_definitions:
+                    return self.hipc_definitions[defn_key]
 
         return None
 
@@ -486,14 +556,23 @@ class ABTester:
         result.correct_negative_markers = all_correct_negatives
         result.missing_negative_markers = all_missing_negatives
 
-        # Calculate HIPC score based on both name matching and marker logic
+        # Calculate HIPC score based on name matching and marker logic
+        # Name score: what fraction of predicted gates match HIPC definitions
         name_score = len(hipc_matches) / len(predicted_gates) if predicted_gates else 0
-        marker_score = (
-            len(all_correct_negatives) /
-            (len(all_correct_negatives) + len(all_missing_negatives))
-            if (all_correct_negatives or all_missing_negatives) else 1.0
-        )
-        result.hipc_score = (name_score + marker_score) / 2
+
+        # Marker score: how well do matched gates have correct negative markers
+        # Only calculate if we have matches to evaluate
+        if all_correct_negatives or all_missing_negatives:
+            marker_score = len(all_correct_negatives) / (len(all_correct_negatives) + len(all_missing_negatives))
+        elif hipc_matches:
+            # We have name matches but no marker logic to evaluate
+            marker_score = name_score  # Use name score as proxy
+        else:
+            # No matches at all - score is 0
+            marker_score = 0.0
+
+        # Combined score - weight name matching more heavily
+        result.hipc_score = (name_score * 0.7 + marker_score * 0.3) if hipc_matches else name_score
 
         # Find exclusive matches
         hipc_match_set = set(self.normalize_population_name(m) for m in hipc_matches)

@@ -103,10 +103,9 @@ def call_openai(prompt: str, model: str = "gpt-4o") -> str:
 
 def parse_hierarchy_from_response(response: str) -> dict:
     """Parse gating hierarchy from LLM response."""
-    # Try to extract JSON if present
     import re
 
-    # Look for JSON blocks
+    # Try to extract JSON if present
     json_match = re.search(r'```json\s*(.*?)\s*```', response, re.DOTALL)
     if json_match:
         try:
@@ -114,41 +113,94 @@ def parse_hierarchy_from_response(response: str) -> dict:
         except json.JSONDecodeError:
             pass
 
-    # Look for tree structure and convert
-    # This is a simplified parser - real implementation would be more robust
     hierarchy = {
         "name": "All Events",
         "children": [],
         "marker_logic": [],
     }
 
-    # Parse indented tree format
-    lines = response.split("\n")
-    current_level = 0
-    stack = [hierarchy]
+    # Find the code block with the tree structure
+    tree_match = re.search(r'```\s*(.*?)\s*```', response, re.DOTALL)
+    if tree_match:
+        tree_text = tree_match.group(1)
+    else:
+        tree_text = response
+
+    # Parse lines looking for gate definitions
+    lines = tree_text.split("\n")
+    stack = [(0, hierarchy)]  # (indent_level, node)
+
+    # Tree characters to strip (including Unicode box drawing)
+    tree_chars = set("│├└─┌┐┘┬┴┼╔╗╚╝╠╣╦╩╬| \t")
 
     for line in lines:
-        # Skip empty lines and non-gate lines
-        stripped = line.strip()
-        if not stripped or stripped.startswith("#") or stripped.startswith("*"):
+        # Skip empty lines
+        if not line.strip():
             continue
 
-        # Count indentation
-        indent = len(line) - len(line.lstrip())
-        level = indent // 2
-
-        # Extract gate name
-        gate_name = stripped.lstrip("├└│─ ").strip()
-        if not gate_name or len(gate_name) > 100:
+        # Strip tree characters from the left manually
+        idx = 0
+        for i, char in enumerate(line):
+            if char in tree_chars:
+                idx = i + 1
+            else:
+                break
+        stripped = line[idx:].strip()
+        if not stripped:
             continue
 
-        # Check for marker logic in gate name
+        # Calculate indent by position of first non-tree char
+        level = idx // 4  # Tree structures typically use 4-char indents
+
+        # Extract population name
+        # Two formats to handle:
+        # 1. "Live cells (7-AAD negative)" -> gate_name="Live cells" (marker info in parens)
+        # 2. "CD4+ CD8- (CD4+ T cells)" -> gate_name="CD4+ T cells" (name in parens)
+        paren_match = re.search(r'\(([^)]+)\)', stripped)
+        if paren_match:
+            paren_content = paren_match.group(1).strip()
+            pre_paren = stripped[:stripped.find('(')].strip()
+
+            # Check if paren content looks like marker info (contains +/- or common markers)
+            marker_pattern = r'(CD\d+\w*[+-]|CCR\d+[+-]|7-AAD|positive|negative|[+-]\s*$)'
+            if re.search(marker_pattern, paren_content, re.IGNORECASE):
+                # Paren content is marker info, use pre-paren as gate name
+                gate_name = pre_paren if pre_paren else paren_content
+                marker_part = paren_content
+            else:
+                # Paren content is the gate name
+                gate_name = paren_content
+                marker_part = pre_paren
+        else:
+            gate_name = stripped
+            marker_part = stripped
+
+        # Skip non-gate lines (explanatory text, headers, etc.)
+        skip_patterns = [
+            r'^root',
+            r'^all\s*events?',
+            r'^key\s+gating',
+            r'^note',
+            r'^\d+\.',
+            r'^\*\*',
+            r'^the\s+',
+            r'^this\s+',
+            r'^for\s+',
+        ]
+        # Check both the full line and extracted gate name
+        if any(re.match(pat, stripped.lower()) for pat in skip_patterns):
+            continue
+        if any(re.match(pat, gate_name.lower()) for pat in skip_patterns):
+            continue
+
+        if len(gate_name) > 80 or len(gate_name) < 2:
+            continue
+
+        # Extract marker logic from the marker part
         marker_logic = []
-        if "+" in gate_name or "-" in gate_name:
-            # Extract markers from name like "CD3+ CD19-"
-            import re
-            markers = re.findall(r'(CD\d+|CCR\d+|CD\d+\w+)([+-])', gate_name)
-            for marker, sign in markers:
+        markers = re.findall(r'(CD\d+\w*|CCR\d+|7-AAD|Zombie\s*\w+)([+-])?', marker_part, re.IGNORECASE)
+        for marker, sign in markers:
+            if sign:
                 marker_logic.append({
                     "marker": marker,
                     "positive": sign == "+",
@@ -161,13 +213,15 @@ def parse_hierarchy_from_response(response: str) -> dict:
             "marker_logic": marker_logic,
         }
 
-        # Add to appropriate parent
-        while len(stack) > level + 1:
+        # Find correct parent based on indent level
+        while stack and stack[-1][0] >= level:
             stack.pop()
 
         if stack:
-            stack[-1]["children"].append(node)
-            stack.append(node)
+            parent = stack[-1][1]
+            parent["children"].append(node)
+
+        stack.append((level, node))
 
     return hierarchy
 
