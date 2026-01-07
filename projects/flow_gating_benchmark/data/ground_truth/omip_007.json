@@ -83,7 +83,7 @@
               ],
               "gate_type": "Unknown",
               "is_critical": true,
-              "notes": null,
+              "notes": "7-AAD negative = live cells",
               "children": [
                 {
                   "name": "CD45+",
@@ -92,7 +92,7 @@
                   ],
                   "gate_type": "Unknown",
                   "is_critical": true,
-                  "notes": null,
+                  "notes": "All leukocytes; go directly to lineage markers (no FSC/SSC lymphocyte gate per HIPC)",
                   "children": [
                     {
                       "name": "Lineage-",
@@ -113,7 +113,7 @@
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
-                          "notes": null,
+                          "notes": "CD14+ monocytes (CD3-)",
                           "children": [
                             {
                               "name": "Classical",
@@ -124,7 +124,8 @@
                               "gate_type": "Unknown",
                               "is_critical": false,
                               "notes": null,
-                              "children": []
+                              "children": [],
+                              "marker_logic": []
                             },
                             {
                               "name": "Intermediate",
@@ -135,7 +136,8 @@
                               "gate_type": "Unknown",
                               "is_critical": false,
                               "notes": null,
-                              "children": []
+                              "children": [],
+                              "marker_logic": []
                             },
                             {
                               "name": "Non-classical",
@@ -145,25 +147,66 @@
                               ],
                               "gate_type": "Unknown",
                               "is_critical": false,
-                              "notes": null,
-                              "children": []
+                              "notes": "CD14dim CD16++ non-classical monocytes",
+                              "children": [],
+                              "marker_logic": [
+                                {
+                                  "marker": "CD14",
+                                  "positive": true,
+                                  "level": "dim"
+                                },
+                                {
+                                  "marker": "CD16",
+                                  "positive": true,
+                                  "level": "high"
+                                }
+                              ]
+                            }
+                          ],
+                          "marker_logic": [
+                            {
+                              "marker": "CD14",
+                              "positive": true,
+                              "level": null
+                            },
+                            {
+                              "marker": "CD3",
+                              "positive": false,
+                              "level": null
                             }
                           ]
                         }
-                      ]
+                      ],
+                      "marker_logic": []
+                    }
+                  ],
+                  "marker_logic": [
+                    {
+                      "marker": "CD45",
+                      "positive": true,
+                      "level": null
                     }
                   ]
                 }
+              ],
+              "marker_logic": [
+                {
+                  "marker": "7-AAD",
+                  "positive": false,
+                  "level": null
+                }
               ]
             }
-          ]
+          ],
+          "marker_logic": []
         }
-      ]
+      ],
+      "marker_logic": []
     }
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "8-color panel"
+    "curator_notes": "8-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",

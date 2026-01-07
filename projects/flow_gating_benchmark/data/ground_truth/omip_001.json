@@ -78,7 +78,7 @@
               ],
               "gate_type": "Unknown",
               "is_critical": true,
-              "notes": null,
+              "notes": "7-AAD negative = live cells",
               "children": [
                 {
                   "name": "CD3+ T cells",
@@ -87,7 +87,7 @@
                   ],
                   "gate_type": "Unknown",
                   "is_critical": false,
-                  "notes": null,
+                  "notes": "CD3+ T lymphocytes",
                   "children": [
                     {
                       "name": "CD4+ T cells",
@@ -96,7 +96,7 @@
                       ],
                       "gate_type": "Unknown",
                       "is_critical": false,
-                      "notes": null,
+                      "notes": "CD3+ T lymphocytes",
                       "children": [
                         {
                           "name": "CD4+ Naive",
@@ -107,7 +107,8 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
                         },
                         {
                           "name": "CD4+ CM",
@@ -118,7 +119,8 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
                         },
                         {
                           "name": "CD4+ EM",
@@ -129,7 +131,15 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
+                        }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD3",
+                          "positive": true,
+                          "level": null
                         }
                       ]
                     },
@@ -140,7 +150,7 @@
                       ],
                       "gate_type": "Unknown",
                       "is_critical": false,
-                      "notes": null,
+                      "notes": "CD3+ T lymphocytes",
                       "children": [
                         {
                           "name": "CD8+ Naive",
@@ -151,7 +161,8 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
                         },
                         {
                           "name": "CD8+ CM",
@@ -162,7 +173,8 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
                         },
                         {
                           "name": "CD8+ EM",
@@ -173,22 +185,46 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": []
+                          "children": [],
+                          "marker_logic": []
+                        }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD3",
+                          "positive": true,
+                          "level": null
                         }
                       ]
                     }
+                  ],
+                  "marker_logic": [
+                    {
+                      "marker": "CD3",
+                      "positive": true,
+                      "level": null
+                    }
                   ]
+                }
+              ],
+              "marker_logic": [
+                {
+                  "marker": "7-AAD",
+                  "positive": false,
+                  "level": null
                 }
               ]
             }
-          ]
+          ],
+          "marker_logic": []
         }
-      ]
+      ],
+      "marker_logic": []
     }
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "7-color panel"
+    "curator_notes": "7-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",

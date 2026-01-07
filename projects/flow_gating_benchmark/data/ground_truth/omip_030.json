@@ -93,7 +93,7 @@
               ],
               "gate_type": "Unknown",
               "is_critical": true,
-              "notes": null,
+              "notes": "Zombie Aqua negative = live cells",
               "children": [
                 {
                   "name": "CD45+",
@@ -102,7 +102,7 @@
                   ],
                   "gate_type": "Unknown",
                   "is_critical": true,
-                  "notes": null,
+                  "notes": "All leukocytes; go directly to lineage markers (no FSC/SSC lymphocyte gate per HIPC)",
                   "children": [
                     {
                       "name": "T cells",
@@ -112,7 +112,7 @@
                       ],
                       "gate_type": "Unknown",
                       "is_critical": false,
-                      "notes": null,
+                      "notes": "CD3+ T lymphocytes",
                       "children": [
                         {
                           "name": "CD4+ T cells",
@@ -121,7 +121,7 @@
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
-                          "notes": null,
+                          "notes": "CD3+ T lymphocytes",
                           "children": [
                             {
                               "name": "Tregs",
@@ -132,7 +132,8 @@
                               "gate_type": "Unknown",
                               "is_critical": false,
                               "notes": null,
-                              "children": []
+                              "children": [],
+                              "marker_logic": []
                             },
                             {
                               "name": "Naive CD4",
@@ -143,7 +144,8 @@
                               "gate_type": "Unknown",
                               "is_critical": false,
                               "notes": null,
-                              "children": []
+                              "children": [],
+                              "marker_logic": []
                             },
                             {
                               "name": "Memory CD4",
@@ -154,7 +156,15 @@
                               "gate_type": "Unknown",
                               "is_critical": false,
                               "notes": null,
-                              "children": []
+                              "children": [],
+                              "marker_logic": []
+                            }
+                          ],
+                          "marker_logic": [
+                            {
+                              "marker": "CD3",
+                              "positive": true,
+                              "level": null
                             }
                           ]
                         },
@@ -165,7 +175,7 @@
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
-                          "notes": null,
+                          "notes": "CD3+ T lymphocytes",
                           "children": [
                             {
                               "name": "Naive CD8",
@@ -176,7 +186,8 @@
                               "gate_type": "Unknown",
                               "is_critical": false,
                               "notes": null,
-                              "children": []
+                              "children": [],
+                              "marker_logic": []
                             },
                             {
                               "name": "Effector CD8",
@@ -187,24 +198,55 @@
                               "gate_type": "Unknown",
                               "is_critical": false,
                               "notes": null,
-                              "children": []
+                              "children": [],
+                              "marker_logic": []
+                            }
+                          ],
+                          "marker_logic": [
+                            {
+                              "marker": "CD3",
+                              "positive": true,
+                              "level": null
                             }
                           ]
                         }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD3",
+                          "positive": true,
+                          "level": null
+                        }
                       ]
+                    }
+                  ],
+                  "marker_logic": [
+                    {
+                      "marker": "CD45",
+                      "positive": true,
+                      "level": null
                     }
                   ]
                 }
+              ],
+              "marker_logic": [
+                {
+                  "marker": "Zombie Aqua",
+                  "positive": false,
+                  "level": null
+                }
               ]
             }
-          ]
+          ],
+          "marker_logic": []
         }
-      ]
+      ],
+      "marker_logic": []
     }
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "10-color panel"
+    "curator_notes": "10-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",

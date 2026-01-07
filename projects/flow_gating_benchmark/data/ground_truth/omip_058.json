@@ -202,218 +202,357 @@
                   ],
                   "gate_type": "Unknown",
                   "is_critical": true,
-                  "notes": null,
+                  "notes": "Zombie NIR negative = live cells",
                   "children": [
                     {
-                      "name": "Lymphocytes",
+                      "name": "T cells",
                       "markers": [
-                        "FSC-A",
-                        "SSC-A"
+                        "CD3"
                       ],
                       "gate_type": "Unknown",
-                      "is_critical": true,
-                      "notes": null,
+                      "is_critical": false,
+                      "notes": "CD3+ T lymphocytes",
                       "children": [
                         {
-                          "name": "T cells",
+                          "name": "CD4+ T",
                           "markers": [
-                            "CD3"
+                            "CD4"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
-                          "notes": null,
+                          "notes": "CD3+ CD4+ CD8- helper T cells",
                           "children": [
                             {
-                              "name": "CD4+ T",
+                              "name": "CD4 Naive",
                               "markers": [
-                                "CD4"
+                                "CD45RA",
+                                "CCR7"
                               ],
                               "gate_type": "Unknown",
                               "is_critical": false,
                               "notes": null,
-                              "children": [
-                                {
-                                  "name": "CD4 Naive",
-                                  "markers": [
-                                    "CD45RA",
-                                    "CCR7"
-                                  ],
-                                  "gate_type": "Unknown",
-                                  "is_critical": false,
-                                  "notes": null,
-                                  "children": []
-                                },
-                                {
-                                  "name": "CD4 CM",
-                                  "markers": [
-                                    "CD45RO",
-                                    "CCR7"
-                                  ],
-                                  "gate_type": "Unknown",
-                                  "is_critical": false,
-                                  "notes": null,
-                                  "children": []
-                                },
-                                {
-                                  "name": "CD4 EM",
-                                  "markers": [
-                                    "CD45RO",
-                                    "CCR7"
-                                  ],
-                                  "gate_type": "Unknown",
-                                  "is_critical": false,
-                                  "notes": null,
-                                  "children": []
-                                },
-                                {
-                                  "name": "CD4 TEMRA",
-                                  "markers": [
-                                    "CD45RA",
-                                    "CCR7"
-                                  ],
-                                  "gate_type": "Unknown",
-                                  "is_critical": false,
-                                  "notes": null,
-                                  "children": []
-                                }
-                              ]
+                              "children": [],
+                              "marker_logic": []
                             },
                             {
-                              "name": "CD8+ T",
+                              "name": "CD4 CM",
                               "markers": [
-                                "CD8"
+                                "CD45RO",
+                                "CCR7"
                               ],
                               "gate_type": "Unknown",
                               "is_critical": false,
                               "notes": null,
-                              "children": [
-                                {
-                                  "name": "CD8 Naive",
-                                  "markers": [
-                                    "CD45RA",
-                                    "CCR7"
-                                  ],
-                                  "gate_type": "Unknown",
-                                  "is_critical": false,
-                                  "notes": null,
-                                  "children": []
-                                },
-                                {
-                                  "name": "CD8 CM",
-                                  "markers": [
-                                    "CD45RO",
-                                    "CCR7"
-                                  ],
-                                  "gate_type": "Unknown",
-                                  "is_critical": false,
-                                  "notes": null,
-                                  "children": []
-                                },
-                                {
-                                  "name": "CD8 EM",
-                                  "markers": [
-                                    "CD45RO",
-                                    "CCR7"
-                                  ],
-                                  "gate_type": "Unknown",
-                                  "is_critical": false,
-                                  "notes": null,
-                                  "children": []
-                                },
-                                {
-                                  "name": "CD8 TEMRA",
-                                  "markers": [
-                                    "CD45RA",
-                                    "CCR7"
-                                  ],
-                                  "gate_type": "Unknown",
-                                  "is_critical": false,
-                                  "notes": null,
-                                  "children": []
-                                }
-                              ]
+                              "children": [],
+                              "marker_logic": []
                             },
                             {
-                              "name": "iNKT cells",
+                              "name": "CD4 EM",
                               "markers": [
-                                "Va24-Ja18"
+                                "CD45RO",
+                                "CCR7"
                               ],
                               "gate_type": "Unknown",
                               "is_critical": false,
                               "notes": null,
-                              "children": []
+                              "children": [],
+                              "marker_logic": []
+                            },
+                            {
+                              "name": "CD4 TEMRA",
+                              "markers": [
+                                "CD45RA",
+                                "CCR7"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": "CD3+ CD4+ CD8- helper T cells",
+                              "children": [],
+                              "marker_logic": [
+                                {
+                                  "marker": "CD3",
+                                  "positive": true,
+                                  "level": null
+                                },
+                                {
+                                  "marker": "CD4",
+                                  "positive": true,
+                                  "level": null
+                                },
+                                {
+                                  "marker": "CD8",
+                                  "positive": false,
+                                  "level": null
+                                }
+                              ]
+                            }
+                          ],
+                          "marker_logic": [
+                            {
+                              "marker": "CD3",
+                              "positive": true,
+                              "level": null
+                            },
+                            {
+                              "marker": "CD4",
+                              "positive": true,
+                              "level": null
+                            },
+                            {
+                              "marker": "CD8",
+                              "positive": false,
+                              "level": null
                             }
                           ]
                         },
                         {
-                          "name": "NK cells",
+                          "name": "CD8+ T",
                           "markers": [
-                            "CD3",
-                            "CD56"
+                            "CD8"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
-                          "notes": null,
+                          "notes": "CD3+ CD4- CD8+ cytotoxic T cells",
                           "children": [
                             {
-                              "name": "CD56bright",
+                              "name": "CD8 Naive",
                               "markers": [
-                                "CD56",
-                                "CD16"
+                                "CD45RA",
+                                "CCR7"
                               ],
                               "gate_type": "Unknown",
                               "is_critical": false,
                               "notes": null,
-                              "children": []
+                              "children": [],
+                              "marker_logic": []
                             },
                             {
-                              "name": "CD56dim",
+                              "name": "CD8 CM",
                               "markers": [
-                                "CD56",
-                                "CD16"
+                                "CD45RO",
+                                "CCR7"
                               ],
                               "gate_type": "Unknown",
                               "is_critical": false,
                               "notes": null,
-                              "children": [
+                              "children": [],
+                              "marker_logic": []
+                            },
+                            {
+                              "name": "CD8 EM",
+                              "markers": [
+                                "CD45RO",
+                                "CCR7"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            },
+                            {
+                              "name": "CD8 TEMRA",
+                              "markers": [
+                                "CD45RA",
+                                "CCR7"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": "CD3+ CD4- CD8+ cytotoxic T cells",
+                              "children": [],
+                              "marker_logic": [
                                 {
-                                  "name": "CD57+ NK",
-                                  "markers": [
-                                    "CD57"
-                                  ],
-                                  "gate_type": "Unknown",
-                                  "is_critical": false,
-                                  "notes": null,
-                                  "children": []
+                                  "marker": "CD3",
+                                  "positive": true,
+                                  "level": null
                                 },
                                 {
-                                  "name": "Adaptive NK",
-                                  "markers": [
-                                    "NKG2C"
-                                  ],
-                                  "gate_type": "Unknown",
-                                  "is_critical": false,
-                                  "notes": null,
-                                  "children": []
+                                  "marker": "CD8",
+                                  "positive": true,
+                                  "level": null
+                                },
+                                {
+                                  "marker": "CD4",
+                                  "positive": false,
+                                  "level": null
                                 }
                               ]
                             }
+                          ],
+                          "marker_logic": [
+                            {
+                              "marker": "CD3",
+                              "positive": true,
+                              "level": null
+                            },
+                            {
+                              "marker": "CD8",
+                              "positive": true,
+                              "level": null
+                            },
+                            {
+                              "marker": "CD4",
+                              "positive": false,
+                              "level": null
+                            }
                           ]
+                        },
+                        {
+                          "name": "iNKT cells",
+                          "markers": [
+                            "Va24-Ja18"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": "CD3+ T lymphocytes",
+                          "children": [],
+                          "marker_logic": [
+                            {
+                              "marker": "CD3",
+                              "positive": true,
+                              "level": null
+                            }
+                          ]
+                        }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD3",
+                          "positive": true,
+                          "level": null
+                        }
+                      ]
+                    },
+                    {
+                      "name": "NK cells",
+                      "markers": [
+                        "CD3",
+                        "CD56"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": "CD3- CD56+/CD16+ NK cells",
+                      "children": [
+                        {
+                          "name": "CD56bright",
+                          "markers": [
+                            "CD56",
+                            "CD16"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": "CD3- CD56bright CD16dim/- regulatory NK cells",
+                          "children": [],
+                          "marker_logic": [
+                            {
+                              "marker": "CD3",
+                              "positive": false,
+                              "level": null
+                            },
+                            {
+                              "marker": "CD56",
+                              "positive": true,
+                              "level": "bright"
+                            },
+                            {
+                              "marker": "CD16",
+                              "positive": false,
+                              "level": "dim"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CD56dim",
+                          "markers": [
+                            "CD56",
+                            "CD16"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": "CD3- CD56dim CD16+ cytotoxic NK cells",
+                          "children": [
+                            {
+                              "name": "CD57+ NK",
+                              "markers": [
+                                "CD57"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            },
+                            {
+                              "name": "Adaptive NK",
+                              "markers": [
+                                "NKG2C"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            }
+                          ],
+                          "marker_logic": [
+                            {
+                              "marker": "CD3",
+                              "positive": false,
+                              "level": null
+                            },
+                            {
+                              "marker": "CD56",
+                              "positive": true,
+                              "level": "dim"
+                            },
+                            {
+                              "marker": "CD16",
+                              "positive": true,
+                              "level": null
+                            }
+                          ]
+                        }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD56",
+                          "positive": true,
+                          "level": null
+                        },
+                        {
+                          "marker": "CD16",
+                          "positive": true,
+                          "level": null
+                        },
+                        {
+                          "marker": "CD3",
+                          "positive": false,
+                          "level": null
                         }
                       ]
                     }
+                  ],
+                  "marker_logic": [
+                    {
+                      "marker": "Zombie NIR",
+                      "positive": false,
+                      "level": null
+                    }
                   ]
                 }
-              ]
+              ],
+              "marker_logic": []
             }
-          ]
+          ],
+          "marker_logic": []
         }
-      ]
+      ],
+      "marker_logic": []
     }
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "30-color panel"
+    "curator_notes": "30-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",

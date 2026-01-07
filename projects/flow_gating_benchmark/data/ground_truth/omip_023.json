@@ -16,15 +16,60 @@
   },
   "panel": {
     "entries": [
-      {"marker": "CD3", "fluorophore": "APC-H7", "clone": "SK7", "channel": null},
-      {"marker": "CD4", "fluorophore": "PerCP-Cy5.5", "clone": "SK3", "channel": null},
-      {"marker": "CD8", "fluorophore": "APC", "clone": "SK1", "channel": null},
-      {"marker": "CD45", "fluorophore": "V500", "clone": "HI30", "channel": null},
-      {"marker": "CD19", "fluorophore": "PE-Cy7", "clone": "SJ25C1", "channel": null},
-      {"marker": "CD14", "fluorophore": "V450", "clone": "M5E2", "channel": null},
-      {"marker": "CD16", "fluorophore": "FITC", "clone": "3G8", "channel": null},
-      {"marker": "CD56", "fluorophore": "PE", "clone": "B159", "channel": null},
-      {"marker": "Live/Dead", "fluorophore": "7-AAD", "clone": null, "channel": null}
+      {
+        "marker": "CD3",
+        "fluorophore": "APC-H7",
+        "clone": "SK7",
+        "channel": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": "SK3",
+        "channel": null
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "APC",
+        "clone": "SK1",
+        "channel": null
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "V500",
+        "clone": "HI30",
+        "channel": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "PE-Cy7",
+        "clone": "SJ25C1",
+        "channel": null
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "V450",
+        "clone": "M5E2",
+        "channel": null
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "FITC",
+        "clone": "3G8",
+        "channel": null
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "PE",
+        "clone": "B159",
+        "channel": null
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "7-AAD",
+        "clone": null,
+        "channel": null
+      }
     ]
   },
   "gating_hierarchy": {
@@ -37,97 +82,207 @@
       "children": [
         {
           "name": "Singlets",
-          "markers": ["FSC-A", "FSC-H"],
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
           "gate_type": "PolygonGate",
           "is_critical": true,
           "notes": "Exclude doublets",
           "children": [
             {
               "name": "Live",
-              "markers": ["7-AAD"],
+              "markers": [
+                "7-AAD"
+              ],
               "gate_type": "RangeGate",
               "is_critical": true,
               "notes": "7-AAD negative = live cells",
               "children": [
                 {
                   "name": "CD45+",
-                  "markers": ["CD45"],
+                  "markers": [
+                    "CD45"
+                  ],
                   "gate_type": "RectangleGate",
                   "is_critical": true,
-                  "notes": "All leukocytes",
+                  "notes": "All leukocytes; go directly to lineage markers (no FSC/SSC lymphocyte gate per HIPC)",
                   "children": [
                     {
-                      "name": "Lymphocytes",
-                      "markers": ["FSC-A", "SSC-A"],
-                      "gate_type": "PolygonGate",
-                      "is_critical": true,
-                      "notes": "Lymphocyte scatter gate",
+                      "name": "T cells",
+                      "markers": [
+                        "CD3",
+                        "CD19"
+                      ],
+                      "gate_type": "RectangleGate",
+                      "is_critical": false,
+                      "notes": "CD3+ T lymphocytes (CD19- when plotting CD19 vs CD3)",
                       "children": [
                         {
-                          "name": "T cells",
-                          "markers": ["CD3"],
+                          "name": "CD4+ T cells",
+                          "markers": [
+                            "CD3",
+                            "CD19"
+                          ],
                           "gate_type": "RectangleGate",
                           "is_critical": false,
-                          "notes": "CD3+ T cells",
-                          "children": [
+                          "notes": "CD3+ T lymphocytes (CD19- when plotting CD19 vs CD3)",
+                          "children": [],
+                          "marker_logic": [
                             {
-                              "name": "CD4+ T cells",
-                              "markers": ["CD4"],
-                              "gate_type": "RectangleGate",
-                              "is_critical": false,
-                              "notes": "Helper T cells",
-                              "children": []
+                              "marker": "CD3",
+                              "positive": true,
+                              "level": null
                             },
                             {
-                              "name": "CD8+ T cells",
-                              "markers": ["CD8"],
-                              "gate_type": "RectangleGate",
-                              "is_critical": false,
-                              "notes": "Cytotoxic T cells",
-                              "children": []
+                              "marker": "CD19",
+                              "positive": false,
+                              "level": null
                             }
                           ]
                         },
                         {
-                          "name": "B cells",
-                          "markers": ["CD19"],
+                          "name": "CD8+ T cells",
+                          "markers": [
+                            "CD3",
+                            "CD19"
+                          ],
                           "gate_type": "RectangleGate",
                           "is_critical": false,
-                          "notes": "CD3- CD19+ B cells",
-                          "children": []
+                          "notes": "CD3+ T lymphocytes (CD19- when plotting CD19 vs CD3)",
+                          "children": [],
+                          "marker_logic": [
+                            {
+                              "marker": "CD3",
+                              "positive": true,
+                              "level": null
+                            },
+                            {
+                              "marker": "CD19",
+                              "positive": false,
+                              "level": null
+                            }
+                          ]
+                        }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD3",
+                          "positive": true,
+                          "level": null
                         },
                         {
-                          "name": "NK cells",
-                          "markers": ["CD56", "CD16"],
-                          "gate_type": "RectangleGate",
-                          "is_critical": false,
-                          "notes": "CD3- CD56/CD16+ NK cells",
-                          "children": []
+                          "marker": "CD19",
+                          "positive": false,
+                          "level": null
+                        }
+                      ]
+                    },
+                    {
+                      "name": "B cells",
+                      "markers": [
+                        "CD19",
+                        "CD3"
+                      ],
+                      "gate_type": "RectangleGate",
+                      "is_critical": false,
+                      "notes": "CD3- CD19+ B lymphocytes",
+                      "children": [],
+                      "marker_logic": [
+                        {
+                          "marker": "CD19",
+                          "positive": true,
+                          "level": null
+                        },
+                        {
+                          "marker": "CD3",
+                          "positive": false,
+                          "level": null
+                        }
+                      ]
+                    },
+                    {
+                      "name": "NK cells",
+                      "markers": [
+                        "CD56",
+                        "CD16"
+                      ],
+                      "gate_type": "RectangleGate",
+                      "is_critical": false,
+                      "notes": "CD3- CD56+/CD16+ NK cells",
+                      "children": [],
+                      "marker_logic": [
+                        {
+                          "marker": "CD56",
+                          "positive": true,
+                          "level": null
+                        },
+                        {
+                          "marker": "CD16",
+                          "positive": true,
+                          "level": null
+                        },
+                        {
+                          "marker": "CD3",
+                          "positive": false,
+                          "level": null
                         }
                       ]
                     },
                     {
                       "name": "Monocytes",
-                      "markers": ["CD14", "FSC-A", "SSC-A"],
+                      "markers": [
+                        "CD14",
+                        "FSC-A",
+                        "SSC-A"
+                      ],
                       "gate_type": "PolygonGate",
                       "is_critical": false,
-                      "notes": "CD14+ monocytes",
-                      "children": []
+                      "notes": "CD14+ monocytes (CD3-)",
+                      "children": [],
+                      "marker_logic": [
+                        {
+                          "marker": "CD14",
+                          "positive": true,
+                          "level": null
+                        },
+                        {
+                          "marker": "CD3",
+                          "positive": false,
+                          "level": null
+                        }
+                      ]
+                    }
+                  ],
+                  "marker_logic": [
+                    {
+                      "marker": "CD45",
+                      "positive": true,
+                      "level": null
                     }
                   ]
                 }
+              ],
+              "marker_logic": [
+                {
+                  "marker": "7-AAD",
+                  "positive": false,
+                  "level": null
+                }
               ]
             }
-          ]
+          ],
+          "marker_logic": []
         }
-      ]
+      ],
+      "marker_logic": []
     }
   },
   "validation": {
     "paper_source": "Figure 1",
     "wsp_extraction_match": null,
     "discrepancies": [],
-    "curator_notes": "Simple 10-color panel suitable for routine immune monitoring",
+    "curator_notes": "Simple 10-color panel suitable for routine immune monitoring Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included).",
     "validation_date": null
   },
   "metadata": {
