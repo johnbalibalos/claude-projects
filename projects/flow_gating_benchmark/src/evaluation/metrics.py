@@ -81,11 +81,62 @@ class EvaluationResult:
         }
 
 
+# Cell type synonyms for semantic matching
+# Maps variations to a canonical form
+# Note: Keys should include both the original and normalized forms
+# since normalize_gate_name may have already been applied
+CELL_TYPE_SYNONYMS: dict[str, str] = {
+    # T cell variations (include forms after " cells" removal)
+    "t cells": "t_cells",
+    "t": "t_cells",  # After " cells" removal
+    "t-cells": "t_cells",
+    "t lymphocytes": "t_cells",
+    "t lymphs": "t_cells",
+    "cd3+ t cells": "t_cells",
+    "cd3+ t": "t_cells",
+    "cd3+": "t_cells",  # In context often means T cells
+    # B cell variations (include forms after " cells" removal)
+    "b cells": "b_cells",
+    "b": "b_cells",  # After " cells" removal
+    "b-cells": "b_cells",
+    "b lymphocytes": "b_cells",
+    "b lymphs": "b_cells",
+    "cd19+ b cells": "b_cells",
+    "cd19+ b": "b_cells",
+    "cd19+": "b_cells",  # In context often means B cells
+    "cd20+ b cells": "b_cells",
+    "cd20+ b": "b_cells",
+    "cd20+": "b_cells",
+    # NK cell variations
+    "nk cells": "nk_cells",
+    "nk": "nk_cells",
+    "natural killer cells": "nk_cells",
+    "natural killer": "nk_cells",
+    "cd56+ nk cells": "nk_cells",
+    "cd56+ nk": "nk_cells",
+    "cd56+cd3-": "nk_cells",
+    # Monocyte variations
+    "monocytes": "monocytes",
+    "monos": "monocytes",
+    "cd14+ monocytes": "monocytes",
+    "cd14+ monos": "monocytes",
+    "cd14+": "monocytes",
+    # Lymphocyte variations
+    "lymphocytes": "lymphocytes",
+    "lymphs": "lymphocytes",
+}
+
+
 def normalize_gate_name(name: str) -> str:
     """
     Normalize gate name for comparison.
 
     Handles common variations in gate naming conventions.
+
+    Note: This normalization is intentionally conservative to avoid false
+    matches between distinct populations. For example, "CD14+ monocytes"
+    and "classical monos" are different populations and should not match
+    through this simple text normalization.
     """
     normalized = name.lower().strip()
 
@@ -107,6 +158,40 @@ def normalize_gate_name(name: str) -> str:
 
     # Normalize whitespace
     normalized = " ".join(normalized.split())
+
+    return normalized
+
+
+def normalize_gate_semantic(name: str) -> str:
+    """
+    Normalize gate name with semantic synonym matching.
+
+    This is a more aggressive normalization that maps common cell type
+    variations to canonical forms. Use this for parent matching where
+    "CD3+ T cells" should match "T cells".
+
+    Returns the canonical form if a synonym match is found,
+    otherwise returns the basic normalized form.
+    """
+    import re
+
+    normalized = normalize_gate_name(name)
+
+    # Check for exact match in synonyms first
+    if normalized in CELL_TYPE_SYNONYMS:
+        return CELL_TYPE_SYNONYMS[normalized]
+
+    # Check if the normalized name contains a known synonym pattern
+    # Use word boundary matching for short synonyms to avoid false positives
+    for synonym, canonical in CELL_TYPE_SYNONYMS.items():
+        # For very short synonyms (1-2 chars), require word boundaries
+        if len(synonym) <= 2:
+            # Match as whole word or at start/end with non-alpha boundaries
+            pattern = r'(^|[^a-z])' + re.escape(synonym) + r'($|[^a-z])'
+            if re.search(pattern, normalized):
+                return canonical
+        elif synonym in normalized:
+            return canonical
 
     return normalized
 
@@ -327,6 +412,7 @@ def _match_with_registry(
 def compute_structure_accuracy(
     predicted: GatingHierarchy | dict,
     ground_truth: GatingHierarchy | dict,
+    use_semantic_matching: bool = True,
 ) -> tuple[float, int, int, list[str]]:
     """
     Compute accuracy of parent-child relationships.
@@ -334,6 +420,9 @@ def compute_structure_accuracy(
     Args:
         predicted: Predicted hierarchy
         ground_truth: Ground truth hierarchy
+        use_semantic_matching: If True, use semantic normalization that maps
+            cell type synonyms to canonical forms (e.g., "CD3+ T cells" matches
+            "T cells"). If False, use basic text normalization only.
 
     Returns:
         Tuple of (accuracy, correct_count, total_count, errors)
@@ -350,13 +439,16 @@ def compute_structure_accuracy(
     correct = 0
     errors = []
 
+    # Choose normalization function based on matching mode
+    normalize_fn = normalize_gate_semantic if use_semantic_matching else normalize_gate_name
+
     for gate in common_gates:
         pred_parent = pred_parents.get(gate)
         gt_parent = gt_parents.get(gate)
 
         # Normalize parent names for comparison
-        pred_norm = normalize_gate_name(pred_parent) if pred_parent else None
-        gt_norm = normalize_gate_name(gt_parent) if gt_parent else None
+        pred_norm = normalize_fn(pred_parent) if pred_parent else None
+        gt_norm = normalize_fn(gt_parent) if gt_parent else None
 
         if pred_norm == gt_norm:
             correct += 1
@@ -432,6 +524,30 @@ def compute_critical_gate_recall(
     return recall, missing
 
 
+# Cell populations that imply specific markers
+# If a population name matches but required markers aren't in panel, it's likely hallucinated
+POPULATION_REQUIRED_MARKERS: dict[str, list[str]] = {
+    "regulatory t": ["foxp3", "cd25"],
+    "tregs": ["foxp3", "cd25"],
+    "th1": ["ifng", "tbet", "ifn-g"],
+    "th2": ["il4", "gata3", "il-4"],
+    "th17": ["il17", "rorgt", "il-17"],
+    "tfh": ["cxcr5", "pd1", "pd-1"],
+    "nk cells": ["cd56", "cd16"],
+    "nkt": ["cd56", "cd3"],
+    "dendritic": ["cd11c", "hla-dr"],
+    "plasmacytoid": ["cd123", "cd303"],
+    "classical mono": ["cd14", "cd16"],
+    "non-classical mono": ["cd14", "cd16"],
+    "intermediate mono": ["cd14", "cd16"],
+    "memory b": ["cd27", "igd"],
+    "naive b": ["cd27", "igd"],
+    "plasma": ["cd38", "cd138"],
+    "stem": ["cd34"],
+    "hematopoietic stem": ["cd34", "cd38"],
+}
+
+
 def compute_hallucination_rate(
     predicted: GatingHierarchy | dict,
     panel: Panel | list[dict],
@@ -481,9 +597,22 @@ def compute_hallucination_rate(
                 found_marker = True
                 break
 
-        if not found_marker and "+" in gate or "-" in gate:
-            # Gate appears to reference a marker but we didn't find it
+        # Check for +/- marker references without matching panel markers
+        if not found_marker and ("+" in gate or "-" in gate):
             hallucinated.append(gate)
+            continue
+
+        # Check for population names that imply specific markers
+        for population, required_markers in POPULATION_REQUIRED_MARKERS.items():
+            if population in gate_lower:
+                # At least one of the required markers should be in the panel
+                has_required = any(
+                    any(req in pm for pm in panel_markers)
+                    for req in required_markers
+                )
+                if not has_required:
+                    hallucinated.append(gate)
+                    break
 
     rate = len(hallucinated) / len(pred_gates) if pred_gates else 0.0
     return rate, hallucinated

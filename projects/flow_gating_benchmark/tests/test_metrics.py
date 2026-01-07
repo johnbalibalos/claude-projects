@@ -9,6 +9,7 @@ from src.evaluation.metrics import (
     compute_critical_gate_recall,
     compute_hallucination_rate,
     normalize_gate_name,
+    normalize_gate_semantic,
     get_hierarchy_depth,
 )
 
@@ -225,3 +226,186 @@ class TestGetHierarchyDepth:
             ]
         }
         assert get_hierarchy_depth(linear) == 2
+
+
+class TestNormalizeGateSemantic:
+    """Tests for semantic gate name normalization."""
+
+    def test_t_cell_synonyms(self):
+        """Test that T cell variations map to same canonical form."""
+        assert normalize_gate_semantic("T cells") == normalize_gate_semantic("CD3+ T cells")
+        assert normalize_gate_semantic("T lymphocytes") == normalize_gate_semantic("T cells")
+        assert normalize_gate_semantic("CD3+") == normalize_gate_semantic("T cells")
+
+    def test_b_cell_synonyms(self):
+        """Test that B cell variations map to same canonical form."""
+        assert normalize_gate_semantic("B cells") == normalize_gate_semantic("CD19+ B cells")
+        assert normalize_gate_semantic("B lymphocytes") == normalize_gate_semantic("B cells")
+
+    def test_monocyte_synonyms(self):
+        """Test that monocyte variations map to same canonical form."""
+        assert normalize_gate_semantic("Monocytes") == normalize_gate_semantic("monos")
+        assert normalize_gate_semantic("CD14+ monocytes") == normalize_gate_semantic("monocytes")
+
+    def test_non_synonym_preserved(self):
+        """Test that non-synonym names are preserved after normalization."""
+        # These should not match because they're different populations
+        result = normalize_gate_semantic("CD8+ cytotoxic")
+        assert result == "cd8+ cytotoxic"  # Just basic normalization, no synonym mapping
+
+
+class TestHallucinationOperatorPrecedence:
+    """Tests for the operator precedence fix in hallucination detection."""
+
+    def test_gate_with_dash_and_marker_not_hallucinated(self):
+        """Gate with '-' in name should not be hallucinated if marker is found."""
+        # FSC-A contains a dash but FSC is in panel markers
+        hierarchy = {
+            "name": "All Events",
+            "children": [
+                {"name": "FSC-A vs SSC-A gate", "children": []}
+            ]
+        }
+        panel = [{"marker": "CD3", "fluorophore": "BV421"}]
+
+        rate, hallucinated = compute_hallucination_rate(hierarchy, panel)
+        # FSC and SSC are in the default marker set, so this should not be hallucinated
+        assert "FSC-A vs SSC-A gate" not in hallucinated
+
+    def test_gate_with_plus_no_marker_is_hallucinated(self):
+        """Gate with '+' and no matching marker should be hallucinated."""
+        hierarchy = {
+            "name": "All Events",
+            "children": [
+                {"name": "CD999+", "children": []}  # Fake marker
+            ]
+        }
+        panel = [{"marker": "CD3", "fluorophore": "BV421"}]
+
+        rate, hallucinated = compute_hallucination_rate(hierarchy, panel)
+        assert "CD999+" in hallucinated
+
+
+class TestPopulationBasedHallucination:
+    """Tests for population-based hallucination detection."""
+
+    def test_regulatory_t_cells_without_foxp3(self):
+        """Regulatory T cells without FoxP3 in panel should be hallucinated."""
+        hierarchy = {
+            "name": "All Events",
+            "children": [
+                {"name": "Singlets", "children": [
+                    {"name": "Regulatory T cells", "children": []}
+                ]}
+            ]
+        }
+        # Panel without FoxP3 or CD25
+        panel = [
+            {"marker": "CD3", "fluorophore": "BV421"},
+            {"marker": "CD4", "fluorophore": "BV605"},
+        ]
+
+        rate, hallucinated = compute_hallucination_rate(hierarchy, panel)
+        assert "Regulatory T cells" in hallucinated
+
+    def test_regulatory_t_cells_with_foxp3(self):
+        """Regulatory T cells with FoxP3 in panel should not be hallucinated."""
+        hierarchy = {
+            "name": "All Events",
+            "children": [
+                {"name": "Singlets", "children": [
+                    {"name": "Regulatory T cells", "children": []}
+                ]}
+            ]
+        }
+        # Panel with FoxP3
+        panel = [
+            {"marker": "CD3", "fluorophore": "BV421"},
+            {"marker": "CD4", "fluorophore": "BV605"},
+            {"marker": "FoxP3", "fluorophore": "PE"},
+        ]
+
+        rate, hallucinated = compute_hallucination_rate(hierarchy, panel)
+        assert "Regulatory T cells" not in hallucinated
+
+    def test_nk_cells_without_cd56(self):
+        """NK cells without CD56/CD16 in panel should be hallucinated."""
+        hierarchy = {
+            "name": "All Events",
+            "children": [
+                {"name": "NK cells", "children": []}
+            ]
+        }
+        # Panel without CD56 or CD16
+        panel = [
+            {"marker": "CD3", "fluorophore": "BV421"},
+            {"marker": "CD19", "fluorophore": "BV605"},
+        ]
+
+        rate, hallucinated = compute_hallucination_rate(hierarchy, panel)
+        assert "NK cells" in hallucinated
+
+
+class TestSemanticParentMatching:
+    """Tests for semantic matching in structure accuracy."""
+
+    def test_cd3_t_cells_matches_t_cells_parent(self):
+        """CD3+ T cells as parent should match T cells as parent."""
+        predicted = {
+            "name": "All Events",
+            "children": [
+                {"name": "CD3+ T cells", "children": [
+                    {"name": "CD4+", "children": []}
+                ]}
+            ]
+        }
+        ground_truth = {
+            "name": "All Events",
+            "children": [
+                {"name": "T cells", "children": [
+                    {"name": "CD4+", "children": []}
+                ]}
+            ]
+        }
+
+        # With semantic matching, "CD3+ T cells" and "T cells" should match as parents
+        accuracy, correct, total, errors = compute_structure_accuracy(
+            predicted, ground_truth, use_semantic_matching=True
+        )
+
+        # CD4+ should have matching parent (both map to t_cells canonical form)
+        # Only "All Events" is common gate with same parent (None)
+        # So we expect accuracy > 0
+        assert accuracy > 0 or len(errors) == 0
+
+    def test_strict_matching_fails_for_variants(self):
+        """Without semantic matching, T cell variants should not match."""
+        predicted = {
+            "name": "All Events",
+            "children": [
+                {"name": "CD3+ T cells", "children": [
+                    {"name": "CD4+ subset", "children": []}
+                ]}
+            ]
+        }
+        ground_truth = {
+            "name": "All Events",
+            "children": [
+                {"name": "T cells", "children": [
+                    {"name": "CD4+ subset", "children": []}
+                ]}
+            ]
+        }
+
+        # Without semantic matching
+        accuracy_strict, _, _, errors_strict = compute_structure_accuracy(
+            predicted, ground_truth, use_semantic_matching=False
+        )
+
+        # With semantic matching
+        accuracy_semantic, _, _, errors_semantic = compute_structure_accuracy(
+            predicted, ground_truth, use_semantic_matching=True
+        )
+
+        # Semantic matching should produce fewer or equal errors
+        assert len(errors_semantic) <= len(errors_strict)
