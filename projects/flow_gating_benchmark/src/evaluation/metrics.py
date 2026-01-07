@@ -16,7 +16,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from ..curation.schemas import GatingHierarchy, GateNode, Panel
+from curation.schemas import GatingHierarchy, GateNode, Panel
 
 
 @dataclass

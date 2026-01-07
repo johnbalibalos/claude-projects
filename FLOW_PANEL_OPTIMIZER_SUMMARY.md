@@ -2,7 +2,7 @@
 
 **Project:** Flow Panel Optimizer - MCP Tool Ablation Study
 **Date:** January 7, 2026
-**Model:** Claude Sonnet 4 (claude-sonnet-4-20250514)
+**Models:** Claude Sonnet 4, Claude Opus 4
 **Author:** John Balibalos
 
 ---
@@ -75,6 +75,35 @@ This study evaluates whether MCP (Model Context Protocol) tools improve Claude's
 | mcp_plus_retrieval | 0.21 | Low overlap (tools help despite retrieval noise) |
 
 **Finding:** While MCP tools achieve lower Complexity Index (better spectral separation), they fail to match ground truth assignments, suggesting the model optimizes for the wrong fluorophores.
+
+### Overall Performance by Condition (Opus)
+
+| Condition | Accuracy | Std Dev | CI (mean) | CI Improvement | Latency (s) | Tool Calls |
+|-----------|----------|---------|-----------|----------------|-------------|------------|
+| baseline | 4.0% | 9.4% | 0.82 | +5% | 11.0 | 0 |
+| **retrieval_standard** | **36.6%** | 37.4% | 1.25 | +21% | 12.0 | 0 |
+| mcp_only | 4.2% | 7.5% | 0.09 | +70% | 40.9 | 143 |
+| mcp_plus_retrieval | 19.5% | 23.7% | 0.18 | +71% | 48.7 | 184 |
+
+### Performance by Test Case Type (Opus)
+
+| Case Type | Baseline | Retrieval | MCP Only | MCP+Retrieval |
+|-----------|----------|-----------|----------|---------------|
+| In-distribution | 0.0% | **77.9%** | 0.0% | 38.2% |
+| Near-distribution | 3.6% | **25.4%** | 4.2% | 16.7% |
+| Out-of-distribution | 12.5% | 4.2% | **12.5%** | 4.2% |
+| Adversarial | 0.0% | 0.0% | 0.0% | 0.0% |
+
+### Model Comparison: Sonnet vs Opus
+
+| Condition | Sonnet Accuracy | Opus Accuracy |
+|-----------|-----------------|---------------|
+| baseline | 3.6% | 4.0% |
+| retrieval_standard | **38.7%** | **36.6%** |
+| mcp_only | 10.6% | 4.2% |
+| mcp_plus_retrieval | 16.7% | 19.5% |
+
+**Key Observation:** Both models show identical patterns - retrieval dominates, MCP tools achieve excellent CI but poor accuracy. Sonnet has slight edge on mcp_only (10.6% vs 4.2%), while Opus shows marginal improvement on mcp_plus_retrieval (19.5% vs 16.7%).
 
 ---
 
@@ -197,4 +226,4 @@ This negative result is informative: it suggests that successful tool use requir
 ---
 
 *Raw data: `projects/flow_panel_optimizer/results/`*
-*Experiments run: Sonnet (complete), Opus (in progress)*
+*Experiments run: Sonnet (complete), Opus (complete)*

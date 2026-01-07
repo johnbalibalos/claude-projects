@@ -18,9 +18,9 @@ from typing import Any
 
 from tenacity import retry, stop_after_attempt, wait_exponential
 
-from ..curation.schemas import TestCase
-from ..curation.omip_extractor import load_all_test_cases
-from ..evaluation.scorer import GatingScorer, ScoringResult
+from curation.schemas import TestCase
+from curation.omip_extractor import load_all_test_cases
+from evaluation.scorer import GatingScorer, ScoringResult
 from .conditions import ExperimentCondition, get_standard_conditions
 from .prompts import build_prompt
 
@@ -339,7 +339,7 @@ class ExperimentRunner:
         ]
 
         # Group by model
-        from ..evaluation.scorer import compute_metrics_by_model
+        from evaluation.scorer import compute_metrics_by_model
         by_model = compute_metrics_by_model(result.results)
 
         for model, metrics in by_model.items():
@@ -353,7 +353,7 @@ class ExperimentRunner:
         lines.append("METRICS BY CONDITION")
         lines.append("-" * 60)
 
-        from ..evaluation.scorer import compute_metrics_by_condition
+        from evaluation.scorer import compute_metrics_by_condition
         by_condition = compute_metrics_by_condition(result.results)
 
         for condition, metrics in by_condition.items():

@@ -11,7 +11,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Literal
 
-from ..curation.schemas import TestCase
+from curation.schemas import TestCase
 
 
 @dataclass

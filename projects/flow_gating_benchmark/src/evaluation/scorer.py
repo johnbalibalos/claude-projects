@@ -10,7 +10,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from ..curation.schemas import TestCase, GatingHierarchy, Panel
+from curation.schemas import TestCase, GatingHierarchy, Panel
 from .metrics import EvaluationResult, evaluate_prediction
 from .response_parser import parse_llm_response, ParseResult
 
