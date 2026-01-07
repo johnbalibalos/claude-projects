@@ -31,6 +31,7 @@ class ExperimentCondition:
 
 # Available models for testing
 MODELS = {
+    "claude-opus": "claude-opus-4-20250514",
     "claude-sonnet": "claude-sonnet-4-20250514",
     "claude-haiku": "claude-3-5-haiku-20241022",
     "gpt-4o": "gpt-4o",
@@ -129,6 +130,19 @@ def get_ablation_conditions() -> list[ExperimentCondition]:
     """
     return get_all_conditions(
         models=["claude-sonnet"],
+        context_levels=["minimal", "standard", "rich"],
+        prompt_strategies=["direct", "cot"],
+    )
+
+
+def get_opus_ablation_conditions() -> list[ExperimentCondition]:
+    """
+    Get conditions for Opus ablation study.
+
+    1 model × all context × all strategies = 6 conditions
+    """
+    return get_all_conditions(
+        models=["claude-opus"],
         context_levels=["minimal", "standard", "rich"],
         prompt_strategies=["direct", "cot"],
     )
