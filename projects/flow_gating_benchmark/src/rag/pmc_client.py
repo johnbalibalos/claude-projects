@@ -93,7 +93,7 @@ class PMCClient:
     """
 
     BASE_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
-    ID_CONVERTER_URL = "https://www.ncbi.nlm.nih.gov/pmc/utils/idconv/v1.0/"
+    ID_CONVERTER_URL = "https://pmc.ncbi.nlm.nih.gov/tools/idconv/api/v1/articles/"
     OA_URL = "https://www.ncbi.nlm.nih.gov/pmc/utils/oa/oa.fcgi"
 
     def __init__(
@@ -161,7 +161,7 @@ class PMCClient:
             params["api_key"] = self.api_key
 
         try:
-            with httpx.Client(timeout=30) as client:
+            with httpx.Client(timeout=30, follow_redirects=True) as client:
                 response = client.get(self.ID_CONVERTER_URL, params=params)
                 response.raise_for_status()
                 data = response.json()
@@ -184,10 +184,17 @@ class PMCClient:
                 return None
 
         except httpx.HTTPError as e:
+            # Don't cache HTTP errors - they may be temporary
             logger.error(f"HTTP error converting DOI {doi}: {e}")
+            print(f"HTTP error for {doi}: {e}")
+            return None
+        except json.JSONDecodeError as e:
+            logger.error(f"Invalid JSON response for DOI {doi}: {e}")
+            print(f"Invalid JSON for {doi}")
             return None
         except Exception as e:
             logger.error(f"Error converting DOI {doi}: {e}")
+            print(f"Error for {doi}: {e}")
             return None
 
     def fetch_full_text_xml(self, pmcid: str) -> str | None:
