@@ -2,7 +2,7 @@
 
 **Project:** Flow Gating Benchmark - Gating Strategy Prediction Evaluation
 **Date:** January 7, 2026
-**Model:** Claude Sonnet 4 (claude-sonnet-4-20250514)
+**Models:** Claude Sonnet 4, Claude Opus 4
 **Author:** John Balibalos
 
 ---
@@ -17,7 +17,9 @@
 
 This benchmark evaluates whether LLMs can predict flow cytometry gating strategies from panel information alone. Using 30 OMIP (Optimized Multicolor Immunofluorescence Panel) papers as ground truth, we find that **Claude achieves 67.3% hierarchy F1 with chain-of-thought prompting and rich context**, with performance strongly correlated with panel complexity.
 
-**Key Finding:** Claude Sonnet achieves **67.3% hierarchy F1** on gating strategy prediction, with performance ranging from **81.2% on simple panels** to **53.4% on complex 40-color panels**. Critical gate recall (82.3%) demonstrates Claude has learned standard flow cytometry conventions, but the 15.6% hallucination rate requires expert oversight.
+**Key Finding:** Claude Sonnet achieves **67.3% hierarchy F1** on gating strategy prediction, significantly outperforming Claude Opus (41.9% F1). Surprisingly, the more expensive Opus model underperforms on this domain-specific benchmark, suggesting that gating strategy prediction relies more on specialized knowledge than general reasoning capability.
+
+**Model Comparison:** Sonnet outperforms Opus by **+25.4pp** on hierarchy F1, with both models showing 100% parse success rate. This result inverts the typical capability ordering and suggests domain-specific benchmarks may reveal unexpected model behaviors.
 
 ---
 
@@ -89,6 +91,34 @@ This benchmark evaluates whether LLMs can predict flow cytometry gating strategi
 | Complex (26+) | 7 | 0.534 | 0.423 | 0.712 |
 
 **Finding:** Performance degrades with complexity. 40-color panels (OMIP-069) are particularly challenging.
+
+### Model Comparison: Sonnet vs Opus
+
+| Metric | Sonnet | Opus | Delta |
+|--------|--------|------|-------|
+| Hierarchy F1 | **0.673** | 0.419 | **+25.4pp** |
+| Structure Accuracy | **0.589** | 0.491 | +9.8pp |
+| Critical Gate Recall | 0.823 | 0.820 | +0.3pp |
+| Parse Success Rate | 94.4% | **100%** | -5.6pp |
+
+#### Opus Performance by Condition
+
+| Condition | Hierarchy F1 | Parse Rate |
+|-----------|-------------|------------|
+| minimal_direct | 0.391 | 100% |
+| minimal_cot | 0.401 | 100% |
+| standard_direct | 0.444 | 100% |
+| standard_cot | 0.414 | 100% |
+| **rich_direct** | **0.451** | 100% |
+| rich_cot | 0.412 | 100% |
+
+**Key Observations:**
+1. **Opus underperforms Sonnet by 25.4pp** on hierarchy F1 despite being the more capable model
+2. **Opus has 100% parse rate** vs Sonnet's 94.4%, showing better instruction following
+3. **Both models peak with rich context**, but context improvement is smaller for Opus
+4. **CoT hurts Opus performance**: Opus rich_direct (0.451) > rich_cot (0.412), suggesting chain-of-thought may introduce more errors for this model
+
+**Interpretation:** This unexpected result suggests gating strategy prediction relies heavily on domain-specific knowledge rather than general reasoning. Sonnet may have more relevant flow cytometry training data, or Opus's broader capability actually introduces more hallucinations in this specialized domain.
 
 ### Selected OMIP Results (Rich Context + CoT)
 
@@ -264,10 +294,11 @@ Based on our findings, reliable (>90% F1, <5% hallucination) gating prediction r
 
 ## Bottom Line
 
-> Claude can predict gating strategies for simple panels with 81% accuracy, but complex panels and rare populations remain challenging. Hallucination rate (15.6%) requires expert oversight.
+> Claude Sonnet outperforms Opus on gating strategy prediction (67.3% vs 41.9% F1), an unexpected result that suggests domain-specific knowledge matters more than general capability for this task.
 
-This benchmark establishes a reproducible measure of biological reasoning capability that can track improvements over time.
+For practical use: Sonnet achieves 81% accuracy on simple panels but struggles with complex panels and rare populations. Hallucination rate (15.6%) requires expert oversight regardless of model choice.
 
 ---
 
 *Raw data: `projects/flow_gating_benchmark/results/`*
+*Experiments run: Sonnet (complete), Opus (complete)*
