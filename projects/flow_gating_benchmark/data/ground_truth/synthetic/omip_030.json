@@ -1,0 +1,255 @@
+{
+  "test_case_id": "OMIP-030",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-030",
+  "doi": "10.1002/cyto.a.22788",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Mouse splenocytes",
+    "species": "mouse",
+    "application": "Mouse T cell immunophenotyping",
+    "tissue": "splenocytes",
+    "disease_state": null,
+    "additional_notes": "10-color mouse T cell panel"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD3",
+        "fluorophore": "BV421",
+        "clone": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "FITC",
+        "clone": null
+      },
+      {
+        "marker": "CD8a",
+        "fluorophore": "PE",
+        "clone": null
+      },
+      {
+        "marker": "CD44",
+        "fluorophore": "APC",
+        "clone": null
+      },
+      {
+        "marker": "CD62L",
+        "fluorophore": "PE-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "APC-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "CD25",
+        "fluorophore": "BV510",
+        "clone": null
+      },
+      {
+        "marker": "FoxP3",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": null
+      },
+      {
+        "marker": "TCRb",
+        "fluorophore": "BV605",
+        "clone": null
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "Zombie Aqua",
+        "clone": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "gate_type": "Unknown",
+      "is_critical": false,
+      "notes": null,
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
+          "gate_type": "Unknown",
+          "is_critical": true,
+          "notes": null,
+          "children": [
+            {
+              "name": "Live",
+              "markers": [
+                "Zombie Aqua"
+              ],
+              "gate_type": "Unknown",
+              "is_critical": true,
+              "notes": "Zombie Aqua negative = live cells",
+              "children": [
+                {
+                  "name": "CD45+",
+                  "markers": [
+                    "CD45"
+                  ],
+                  "gate_type": "Unknown",
+                  "is_critical": true,
+                  "notes": "All leukocytes; go directly to lineage markers (no FSC/SSC lymphocyte gate per HIPC)",
+                  "children": [
+                    {
+                      "name": "T cells",
+                      "markers": [
+                        "CD3",
+                        "TCRb"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": "CD3+ T lymphocytes",
+                      "children": [
+                        {
+                          "name": "CD4+ T cells",
+                          "markers": [
+                            "CD4"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": "CD3+ T lymphocytes",
+                          "children": [
+                            {
+                              "name": "Tregs",
+                              "markers": [
+                                "CD25",
+                                "FoxP3"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            },
+                            {
+                              "name": "Naive CD4",
+                              "markers": [
+                                "CD44",
+                                "CD62L"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            },
+                            {
+                              "name": "Memory CD4",
+                              "markers": [
+                                "CD44",
+                                "CD62L"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            }
+                          ],
+                          "marker_logic": [
+                            {
+                              "marker": "CD3",
+                              "positive": true,
+                              "level": null
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CD8+ T cells",
+                          "markers": [
+                            "CD8a"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": "CD3+ T lymphocytes",
+                          "children": [
+                            {
+                              "name": "Naive CD8",
+                              "markers": [
+                                "CD44",
+                                "CD62L"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            },
+                            {
+                              "name": "Effector CD8",
+                              "markers": [
+                                "CD44",
+                                "CD62L"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            }
+                          ],
+                          "marker_logic": [
+                            {
+                              "marker": "CD3",
+                              "positive": true,
+                              "level": null
+                            }
+                          ]
+                        }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD3",
+                          "positive": true,
+                          "level": null
+                        }
+                      ]
+                    }
+                  ],
+                  "marker_logic": [
+                    {
+                      "marker": "CD45",
+                      "positive": true,
+                      "level": null
+                    }
+                  ]
+                }
+              ],
+              "marker_logic": [
+                {
+                  "marker": "Zombie Aqua",
+                  "positive": false,
+                  "level": null
+                }
+              ]
+            }
+          ],
+          "marker_logic": []
+        }
+      ],
+      "marker_logic": []
+    }
+  },
+  "validation": {
+    "paper_source": "Figure 1",
+    "curator_notes": "10-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
+  },
+  "metadata": {
+    "curation_date": "2026-01-07",
+    "curator": "Auto-generated"
+  }
+}

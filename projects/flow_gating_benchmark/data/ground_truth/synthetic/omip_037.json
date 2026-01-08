@@ -1,0 +1,264 @@
+{
+  "test_case_id": "OMIP-037",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-037",
+  "doi": "10.1002/cyto.a.22983",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Human cord blood",
+    "species": "human",
+    "application": "Hematopoietic stem cell analysis",
+    "tissue": "cord",
+    "disease_state": null,
+    "additional_notes": "18-color human stem cell panel"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD34",
+        "fluorophore": "BUV395",
+        "clone": null
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "BV421",
+        "clone": null
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "BV510",
+        "clone": null
+      },
+      {
+        "marker": "CD90",
+        "fluorophore": "BV605",
+        "clone": null
+      },
+      {
+        "marker": "CD49f",
+        "fluorophore": "BV650",
+        "clone": null
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "BV711",
+        "clone": null
+      },
+      {
+        "marker": "CD10",
+        "fluorophore": "BV785",
+        "clone": null
+      },
+      {
+        "marker": "CD7",
+        "fluorophore": "FITC",
+        "clone": null
+      },
+      {
+        "marker": "CD123",
+        "fluorophore": "PE",
+        "clone": null
+      },
+      {
+        "marker": "CD135",
+        "fluorophore": "PE-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "CD33",
+        "fluorophore": "APC",
+        "clone": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "APC-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": null
+      },
+      {
+        "marker": "CD71",
+        "fluorophore": "AF700",
+        "clone": null
+      },
+      {
+        "marker": "CD235a",
+        "fluorophore": "BUV496",
+        "clone": null
+      },
+      {
+        "marker": "CD41a",
+        "fluorophore": "BUV563",
+        "clone": null
+      },
+      {
+        "marker": "CD117",
+        "fluorophore": "PE-CF594",
+        "clone": null
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "Zombie NIR",
+        "clone": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "gate_type": "Unknown",
+      "is_critical": false,
+      "notes": null,
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
+          "gate_type": "Unknown",
+          "is_critical": true,
+          "notes": null,
+          "children": [
+            {
+              "name": "Live",
+              "markers": [
+                "Zombie NIR"
+              ],
+              "gate_type": "Unknown",
+              "is_critical": true,
+              "notes": "Zombie NIR negative = live cells",
+              "children": [
+                {
+                  "name": "CD45low",
+                  "markers": [
+                    "CD45"
+                  ],
+                  "gate_type": "Unknown",
+                  "is_critical": true,
+                  "notes": null,
+                  "children": [
+                    {
+                      "name": "CD34+",
+                      "markers": [
+                        "CD34"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": null,
+                      "children": [
+                        {
+                          "name": "HSC",
+                          "markers": [
+                            "CD38",
+                            "CD90",
+                            "CD45RA"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "MPP",
+                          "markers": [
+                            "CD38",
+                            "CD90",
+                            "CD45RA"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "CMP",
+                          "markers": [
+                            "CD38",
+                            "CD123",
+                            "CD45RA"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "GMP",
+                          "markers": [
+                            "CD38",
+                            "CD123",
+                            "CD45RA"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "MEP",
+                          "markers": [
+                            "CD38",
+                            "CD123",
+                            "CD45RA"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "CLP",
+                          "markers": [
+                            "CD38",
+                            "CD10",
+                            "CD7"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        }
+                      ],
+                      "marker_logic": []
+                    }
+                  ],
+                  "marker_logic": []
+                }
+              ],
+              "marker_logic": [
+                {
+                  "marker": "Zombie NIR",
+                  "positive": false,
+                  "level": null
+                }
+              ]
+            }
+          ],
+          "marker_logic": []
+        }
+      ],
+      "marker_logic": []
+    }
+  },
+  "validation": {
+    "paper_source": "Figure 1",
+    "curator_notes": "18-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
+  },
+  "metadata": {
+    "curation_date": "2026-01-07",
+    "curator": "Auto-generated"
+  }
+}
