@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 """
-Run panel design ablation study using Claude Opus.
+Run panel design ablation study.
 
-Evaluates Claude Opus's ability to design flow cytometry panels across:
+Evaluates LLM ability to design flow cytometry panels across:
 - Baseline (no tools, no retrieval)
 - MCP tools only
 - Retrieval only
 - MCP + Retrieval
 
-Saves results to results/ directory.
+Usage:
+    python scripts/run_experiment.py --model opus
+    python scripts/run_experiment.py --model sonnet
+    python scripts/run_experiment.py --model haiku --dry-run
 """
 
-import json
+import argparse
 import os
 import sys
 from datetime import datetime
@@ -28,10 +31,78 @@ from flow_panel_optimizer.evaluation.test_cases import (
 from flow_panel_optimizer.evaluation.conditions import CORE_CONDITIONS
 
 
+# Model configurations
+MODEL_CONFIGS = {
+    "opus": {
+        "model_id": "claude-opus-4-20250514",
+        "max_concurrent": 2,  # More conservative for Opus (higher cost/latency)
+    },
+    "sonnet": {
+        "model_id": "claude-sonnet-4-20250514",
+        "max_concurrent": 3,
+    },
+    "haiku": {
+        "model_id": "claude-3-5-haiku-20241022",
+        "max_concurrent": 5,
+    },
+}
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Run panel design ablation study",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+    python scripts/run_experiment.py --model opus
+    python scripts/run_experiment.py --model sonnet --n-in-dist 3
+    python scripts/run_experiment.py --model haiku --dry-run
+        """,
+    )
+    parser.add_argument(
+        "--model",
+        choices=list(MODEL_CONFIGS.keys()),
+        default="sonnet",
+        help="Model to use (default: sonnet)",
+    )
+    parser.add_argument(
+        "--n-in-dist",
+        type=int,
+        default=6,
+        help="Number of in-distribution test cases (default: 6)",
+    )
+    parser.add_argument(
+        "--n-near-dist",
+        type=int,
+        default=4,
+        help="Number of near-distribution test cases (default: 4)",
+    )
+    parser.add_argument(
+        "--n-out-dist",
+        type=int,
+        default=4,
+        help="Number of out-of-distribution test cases (default: 4)",
+    )
+    parser.add_argument(
+        "--n-adversarial",
+        type=int,
+        default=2,
+        help="Number of adversarial test cases (default: 2)",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print configuration without running",
+    )
+    return parser.parse_args()
+
+
 def main():
-    """Run ablation study and save results."""
+    args = parse_args()
+    config = MODEL_CONFIGS[args.model]
+
     print("=" * 60)
-    print("FLOW PANEL OPTIMIZER - OPUS ABLATION STUDY")
+    print(f"FLOW PANEL OPTIMIZER - {args.model.upper()} ABLATION STUDY")
     print("=" * 60)
     print()
 
@@ -43,10 +114,10 @@ def main():
     # Build test suite with representative cases
     print("Building test suite...")
     suite = build_ablation_test_suite(
-        n_in_dist=6,      # OMIP-derived panels
-        n_near_dist=4,    # Modified OMIP panels
-        n_out_dist=4,     # Novel combinations
-        n_adversarial=2,  # Edge cases
+        n_in_dist=args.n_in_dist,
+        n_near_dist=args.n_near_dist,
+        n_out_dist=args.n_out_dist,
+        n_adversarial=args.n_adversarial,
     )
 
     print(f"Test suite: {suite.name}")
@@ -63,10 +134,18 @@ def main():
         print(f"  - {cond.name}: {cond.description}")
     print()
 
-    # Initialize runner with Opus
+    print(f"Model: {config['model_id']}")
+    print(f"Max concurrent: {config['max_concurrent']}")
+    print()
+
+    if args.dry_run:
+        print("DRY RUN - exiting without running experiment")
+        return
+
+    # Initialize runner
     runner = AblationRunner(
-        model="claude-opus-4-20250514",
-        max_concurrent=2  # More conservative for Opus (higher cost/latency)
+        model=config["model_id"],
+        max_concurrent=config["max_concurrent"],
     )
 
     # Run study
@@ -76,7 +155,7 @@ def main():
     results = runner.run_full_study(
         test_suite=suite,
         conditions=CORE_CONDITIONS,
-        verbose=True
+        verbose=True,
     )
 
     print()
@@ -89,7 +168,7 @@ def main():
     results_dir.mkdir(exist_ok=True)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    results_file = results_dir / f"opus_ablation_{timestamp}.json"
+    results_file = results_dir / f"{args.model}_ablation_{timestamp}.json"
     results.to_json(results_file)
     print(f"\nRaw results saved to: {results_file}")
 
@@ -102,7 +181,7 @@ def main():
         "complexity_index": "mean",
         "ci_improvement": "mean",
         "latency": "mean",
-        "tool_calls": "sum"
+        "tool_calls": "sum",
     }).round(3)
     print(condition_summary)
 
@@ -114,12 +193,12 @@ def main():
     print(case_type_summary)
 
     # Save summary
-    summary_file = results_dir / f"opus_summary_{timestamp}.txt"
+    summary_file = results_dir / f"{args.model}_summary_{timestamp}.txt"
     with open(summary_file, "w") as f:
-        f.write("FLOW PANEL OPTIMIZER - OPUS ABLATION STUDY\n")
+        f.write(f"FLOW PANEL OPTIMIZER - {args.model.upper()} ABLATION STUDY\n")
         f.write("=" * 60 + "\n\n")
         f.write(f"Date: {datetime.now().isoformat()}\n")
-        f.write(f"Model: claude-opus-4-20250514\n")
+        f.write(f"Model: {config['model_id']}\n")
         f.write(f"Test cases: {len(suite.test_cases)}\n")
         f.write(f"Conditions: {len(CORE_CONDITIONS)}\n\n")
 
