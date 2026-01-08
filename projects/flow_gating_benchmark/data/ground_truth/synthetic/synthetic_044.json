@@ -1,0 +1,221 @@
+{
+  "test_case_id": "SYNTH-044",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-044",
+  "doi": "10.1002/cyto.a.23732",
+  "flowrepository_id": "FR-FCM-ZYC2",
+  "has_wsp": true,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Human PBMC",
+    "species": "human",
+    "application": "28-color immunophenotyping of the human dendritic cell compartment",
+    "tissue": "Peripheral blood",
+    "disease_state": null,
+    "additional_notes": "Focus on dendritic cell subsets including pDC, cDC1, cDC2"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD3",
+        "fluorophore": "BUV395",
+        "clone": "UCHT1"
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "BUV496",
+        "clone": "SJ25C1"
+      },
+      {
+        "marker": "CD20",
+        "fluorophore": "BUV563",
+        "clone": "2H7"
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "BUV661",
+        "clone": "M5E2"
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "BUV737",
+        "clone": "3G8"
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "BV421",
+        "clone": "G46-6"
+      },
+      {
+        "marker": "CD11c",
+        "fluorophore": "BV510",
+        "clone": "B-ly6"
+      },
+      {
+        "marker": "CD123",
+        "fluorophore": "BV605",
+        "clone": "7G3"
+      },
+      {
+        "marker": "CD1c",
+        "fluorophore": "BV650",
+        "clone": "L161"
+      },
+      {
+        "marker": "CD141",
+        "fluorophore": "BV711",
+        "clone": "1A4"
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "BV750",
+        "clone": "HI30"
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "Zombie NIR",
+        "clone": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "gate_type": "Unknown",
+      "is_critical": false,
+      "children": [
+        {
+          "name": "Time",
+          "markers": [
+            "Time"
+          ],
+          "gate_type": "RangeGate",
+          "is_critical": true,
+          "children": [
+            {
+              "name": "Singlets",
+              "markers": [
+                "FSC-A",
+                "FSC-H"
+              ],
+              "gate_type": "PolygonGate",
+              "is_critical": true,
+              "children": [
+                {
+                  "name": "Live",
+                  "markers": [
+                    "Zombie NIR"
+                  ],
+                  "gate_type": "RangeGate",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "CD45+",
+                      "markers": [
+                        "CD45"
+                      ],
+                      "gate_type": "RectangleGate",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "Lineage-",
+                          "markers": [
+                            "CD3",
+                            "CD19",
+                            "CD20",
+                            "CD14"
+                          ],
+                          "gate_type": "RectangleGate",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "HLA-DR+",
+                              "markers": [
+                                "HLA-DR"
+                              ],
+                              "gate_type": "RectangleGate",
+                              "children": [
+                                {
+                                  "name": "pDC",
+                                  "markers": [
+                                    "CD123",
+                                    "CD11c"
+                                  ],
+                                  "gate_type": "RectangleGate",
+                                  "children": [],
+                                  "marker_logic": []
+                                },
+                                {
+                                  "name": "cDC",
+                                  "markers": [
+                                    "CD11c"
+                                  ],
+                                  "gate_type": "RectangleGate",
+                                  "children": [
+                                    {
+                                      "name": "cDC1",
+                                      "markers": [
+                                        "CD141"
+                                      ],
+                                      "gate_type": "RectangleGate",
+                                      "children": [],
+                                      "marker_logic": []
+                                    },
+                                    {
+                                      "name": "cDC2",
+                                      "markers": [
+                                        "CD1c"
+                                      ],
+                                      "gate_type": "RectangleGate",
+                                      "children": [],
+                                      "marker_logic": []
+                                    }
+                                  ],
+                                  "marker_logic": []
+                                }
+                              ],
+                              "marker_logic": []
+                            }
+                          ],
+                          "marker_logic": []
+                        }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD45",
+                          "positive": true,
+                          "level": null
+                        }
+                      ],
+                      "notes": "All leukocytes; go directly to lineage markers (no FSC/SSC lymphocyte gate per HIPC)"
+                    }
+                  ],
+                  "marker_logic": [
+                    {
+                      "marker": "Zombie NIR",
+                      "positive": false,
+                      "level": null
+                    }
+                  ],
+                  "notes": "Zombie NIR negative = live cells"
+                }
+              ],
+              "marker_logic": []
+            }
+          ],
+          "marker_logic": []
+        }
+      ],
+      "marker_logic": []
+    }
+  },
+  "validation": {
+    "paper_source": "Figure 1",
+    "curator_notes": "28-color panel focused on DC compartment Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
+  },
+  "metadata": {
+    "curation_date": "2025-01-07",
+    "curator": "John Balibalos"
+  }
+}

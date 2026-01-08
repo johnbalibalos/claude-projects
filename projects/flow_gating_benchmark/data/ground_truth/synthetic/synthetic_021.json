@@ -1,0 +1,232 @@
+{
+  "test_case_id": "SYNTH-021",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-021",
+  "doi": "10.1002/cyto.a.22475",
+  "flowrepository_id": "FR-FCM-ZZ9H",
+  "has_wsp": true,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Human PBMC",
+    "species": "human",
+    "application": "Innate-like T cell phenotyping (MAIT, iNKT, gd T)",
+    "tissue": "PBMC",
+    "disease_state": null,
+    "additional_notes": "12-color innate-like T cell panel"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD3",
+        "fluorophore": "BUV395",
+        "clone": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BV421",
+        "clone": null
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "APC-H7",
+        "clone": null
+      },
+      {
+        "marker": "TCRgd",
+        "fluorophore": "FITC",
+        "clone": null
+      },
+      {
+        "marker": "Va7.2",
+        "fluorophore": "PE",
+        "clone": null
+      },
+      {
+        "marker": "CD161",
+        "fluorophore": "APC",
+        "clone": null
+      },
+      {
+        "marker": "Va24-Ja18",
+        "fluorophore": "PE-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "BV510",
+        "clone": null
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "BV605",
+        "clone": null
+      },
+      {
+        "marker": "CD27",
+        "fluorophore": "BV650",
+        "clone": null
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": null
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "Zombie NIR",
+        "clone": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "gate_type": "Unknown",
+      "is_critical": false,
+      "notes": null,
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
+          "gate_type": "Unknown",
+          "is_critical": true,
+          "notes": null,
+          "children": [
+            {
+              "name": "Live",
+              "markers": [
+                "Zombie NIR"
+              ],
+              "gate_type": "Unknown",
+              "is_critical": true,
+              "notes": "Zombie NIR negative = live cells",
+              "children": [
+                {
+                  "name": "CD3+ T cells",
+                  "markers": [
+                    "CD3"
+                  ],
+                  "gate_type": "Unknown",
+                  "is_critical": false,
+                  "notes": "CD3+ T lymphocytes",
+                  "children": [
+                    {
+                      "name": "gd T cells",
+                      "markers": [
+                        "TCRgd"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": "CD3+ T lymphocytes",
+                      "children": [],
+                      "marker_logic": [
+                        {
+                          "marker": "CD3",
+                          "positive": true,
+                          "level": null
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ab T cells",
+                      "markers": [
+                        "TCRgd"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": "CD3+ T lymphocytes",
+                      "children": [
+                        {
+                          "name": "MAIT cells",
+                          "markers": [
+                            "Va7.2",
+                            "CD161"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": "CD3+ T lymphocytes",
+                          "children": [],
+                          "marker_logic": [
+                            {
+                              "marker": "CD3",
+                              "positive": true,
+                              "level": null
+                            }
+                          ]
+                        },
+                        {
+                          "name": "iNKT cells",
+                          "markers": [
+                            "Va24-Ja18"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": "CD3+ T lymphocytes",
+                          "children": [],
+                          "marker_logic": [
+                            {
+                              "marker": "CD3",
+                              "positive": true,
+                              "level": null
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Conventional T",
+                          "markers": [
+                            "Va7.2",
+                            "Va24-Ja18"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD3",
+                          "positive": true,
+                          "level": null
+                        }
+                      ]
+                    }
+                  ],
+                  "marker_logic": [
+                    {
+                      "marker": "CD3",
+                      "positive": true,
+                      "level": null
+                    }
+                  ]
+                }
+              ],
+              "marker_logic": [
+                {
+                  "marker": "Zombie NIR",
+                  "positive": false,
+                  "level": null
+                }
+              ]
+            }
+          ],
+          "marker_logic": []
+        }
+      ],
+      "marker_logic": []
+    }
+  },
+  "validation": {
+    "paper_source": "Figure 1",
+    "curator_notes": "12-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
+  },
+  "metadata": {
+    "curation_date": "2026-01-07",
+    "curator": "Auto-generated"
+  }
+}

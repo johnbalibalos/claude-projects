@@ -1,0 +1,324 @@
+{
+  "test_case_id": "SYNTH-025",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-025",
+  "doi": "10.1002/cyto.a.22590",
+  "flowrepository_id": "FR-FCM-ZZEC",
+  "has_wsp": true,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Human bone marrow",
+    "species": "human",
+    "application": "Hematopoietic stem and progenitor cell analysis",
+    "tissue": "bone",
+    "disease_state": null,
+    "additional_notes": "22-color bone marrow panel"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD34",
+        "fluorophore": "BUV395",
+        "clone": null
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "BV421",
+        "clone": null
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "BV510",
+        "clone": null
+      },
+      {
+        "marker": "CD90",
+        "fluorophore": "FITC",
+        "clone": null
+      },
+      {
+        "marker": "CD49f",
+        "fluorophore": "PE",
+        "clone": null
+      },
+      {
+        "marker": "CD10",
+        "fluorophore": "APC",
+        "clone": null
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "APC-H7",
+        "clone": null
+      },
+      {
+        "marker": "CD7",
+        "fluorophore": "BV605",
+        "clone": null
+      },
+      {
+        "marker": "CD123",
+        "fluorophore": "BV650",
+        "clone": null
+      },
+      {
+        "marker": "CD135",
+        "fluorophore": "BV711",
+        "clone": null
+      },
+      {
+        "marker": "CD33",
+        "fluorophore": "BV785",
+        "clone": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "PE-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": null
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "AF700",
+        "clone": null
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "BUV496",
+        "clone": null
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "BUV563",
+        "clone": null
+      },
+      {
+        "marker": "CD11b",
+        "fluorophore": "BUV661",
+        "clone": null
+      },
+      {
+        "marker": "CD15",
+        "fluorophore": "BUV737",
+        "clone": null
+      },
+      {
+        "marker": "CD71",
+        "fluorophore": "PE-CF594",
+        "clone": null
+      },
+      {
+        "marker": "CD235a",
+        "fluorophore": "APC-R700",
+        "clone": null
+      },
+      {
+        "marker": "CD41a",
+        "fluorophore": "BV750",
+        "clone": null
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "Zombie NIR",
+        "clone": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "gate_type": "Unknown",
+      "is_critical": false,
+      "notes": null,
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
+          "gate_type": "Unknown",
+          "is_critical": true,
+          "notes": null,
+          "children": [
+            {
+              "name": "Live",
+              "markers": [
+                "Zombie NIR"
+              ],
+              "gate_type": "Unknown",
+              "is_critical": true,
+              "notes": "Zombie NIR negative = live cells",
+              "children": [
+                {
+                  "name": "CD45+",
+                  "markers": [
+                    "CD45"
+                  ],
+                  "gate_type": "Unknown",
+                  "is_critical": true,
+                  "notes": "All leukocytes; go directly to lineage markers (no FSC/SSC lymphocyte gate per HIPC)",
+                  "children": [
+                    {
+                      "name": "CD34+ HSPCs",
+                      "markers": [
+                        "CD34"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": null,
+                      "children": [
+                        {
+                          "name": "HSC",
+                          "markers": [
+                            "CD38",
+                            "CD90",
+                            "CD45RA"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "MPP",
+                          "markers": [
+                            "CD38",
+                            "CD90",
+                            "CD45RA"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "CMP",
+                          "markers": [
+                            "CD38",
+                            "CD123",
+                            "CD45RA"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "GMP",
+                          "markers": [
+                            "CD38",
+                            "CD123",
+                            "CD45RA"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "MEP",
+                          "markers": [
+                            "CD38",
+                            "CD123",
+                            "CD45RA"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "CLP",
+                          "markers": [
+                            "CD38",
+                            "CD10"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        }
+                      ],
+                      "marker_logic": []
+                    },
+                    {
+                      "name": "Mature cells",
+                      "markers": [
+                        "CD34"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": null,
+                      "children": [
+                        {
+                          "name": "Erythroid",
+                          "markers": [
+                            "CD235a",
+                            "CD71"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "Megakaryocytes",
+                          "markers": [
+                            "CD41a"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        }
+                      ],
+                      "marker_logic": []
+                    }
+                  ],
+                  "marker_logic": [
+                    {
+                      "marker": "CD45",
+                      "positive": true,
+                      "level": null
+                    }
+                  ]
+                }
+              ],
+              "marker_logic": [
+                {
+                  "marker": "Zombie NIR",
+                  "positive": false,
+                  "level": null
+                }
+              ]
+            }
+          ],
+          "marker_logic": []
+        }
+      ],
+      "marker_logic": []
+    }
+  },
+  "validation": {
+    "paper_source": "Figure 1",
+    "curator_notes": "22-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
+  },
+  "metadata": {
+    "curation_date": "2026-01-07",
+    "curator": "Auto-generated"
+  }
+}

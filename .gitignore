@@ -34,9 +34,10 @@ env/
 *.swp
 *.swo
 
-# Test results
+# Test results (but allow ground truth test cases)
 *.json
 !pyproject.toml
+!**/ground_truth/**/*.json
 
 # Jupyter
 .ipynb_checkpoints/

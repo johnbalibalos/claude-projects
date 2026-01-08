@@ -1,0 +1,279 @@
+{
+  "test_case_id": "SYNTH-017",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-017",
+  "doi": "10.1002/cyto.a.22293",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Human PBMC",
+    "species": "human",
+    "application": "T cell exhaustion and activation phenotyping",
+    "tissue": "PBMC",
+    "disease_state": null,
+    "additional_notes": "18-color T cell exhaustion panel"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD3",
+        "fluorophore": "BUV395",
+        "clone": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BUV496",
+        "clone": null
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "BUV563",
+        "clone": null
+      },
+      {
+        "marker": "PD-1",
+        "fluorophore": "BV421",
+        "clone": null
+      },
+      {
+        "marker": "TIM-3",
+        "fluorophore": "PE",
+        "clone": null
+      },
+      {
+        "marker": "LAG-3",
+        "fluorophore": "APC",
+        "clone": null
+      },
+      {
+        "marker": "TIGIT",
+        "fluorophore": "FITC",
+        "clone": null
+      },
+      {
+        "marker": "CD39",
+        "fluorophore": "PE-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "APC-H7",
+        "clone": null
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "BV510",
+        "clone": null
+      },
+      {
+        "marker": "CD27",
+        "fluorophore": "BV605",
+        "clone": null
+      },
+      {
+        "marker": "CD28",
+        "fluorophore": "BV650",
+        "clone": null
+      },
+      {
+        "marker": "CD57",
+        "fluorophore": "BV711",
+        "clone": null
+      },
+      {
+        "marker": "CD69",
+        "fluorophore": "BV785",
+        "clone": null
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": null
+      },
+      {
+        "marker": "Ki67",
+        "fluorophore": "AF700",
+        "clone": null
+      },
+      {
+        "marker": "TOX",
+        "fluorophore": "BUV661",
+        "clone": null
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "Zombie NIR",
+        "clone": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "gate_type": "Unknown",
+      "is_critical": false,
+      "notes": null,
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
+          "gate_type": "Unknown",
+          "is_critical": true,
+          "notes": null,
+          "children": [
+            {
+              "name": "Live",
+              "markers": [
+                "Zombie NIR"
+              ],
+              "gate_type": "Unknown",
+              "is_critical": true,
+              "notes": "Zombie NIR negative = live cells",
+              "children": [
+                {
+                  "name": "CD3+ T cells",
+                  "markers": [
+                    "CD3"
+                  ],
+                  "gate_type": "Unknown",
+                  "is_critical": false,
+                  "notes": "CD3+ T lymphocytes",
+                  "children": [
+                    {
+                      "name": "CD8+ T cells",
+                      "markers": [
+                        "CD8"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": "CD3+ T lymphocytes",
+                      "children": [
+                        {
+                          "name": "Exhausted CD8",
+                          "markers": [
+                            "PD-1",
+                            "TIM-3",
+                            "LAG-3"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [
+                            {
+                              "name": "Terminal Tex",
+                              "markers": [
+                                "CD39",
+                                "TOX"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            },
+                            {
+                              "name": "Progenitor Tex",
+                              "markers": [
+                                "TCF1",
+                                "TOX"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            }
+                          ],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "Activated CD8",
+                          "markers": [
+                            "CD69",
+                            "HLA-DR",
+                            "Ki67"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD3",
+                          "positive": true,
+                          "level": null
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CD4+ T cells",
+                      "markers": [
+                        "CD4"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": "CD3+ T lymphocytes",
+                      "children": [
+                        {
+                          "name": "Exhausted CD4",
+                          "markers": [
+                            "PD-1",
+                            "TIM-3"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD3",
+                          "positive": true,
+                          "level": null
+                        }
+                      ]
+                    }
+                  ],
+                  "marker_logic": [
+                    {
+                      "marker": "CD3",
+                      "positive": true,
+                      "level": null
+                    }
+                  ]
+                }
+              ],
+              "marker_logic": [
+                {
+                  "marker": "Zombie NIR",
+                  "positive": false,
+                  "level": null
+                }
+              ]
+            }
+          ],
+          "marker_logic": []
+        }
+      ],
+      "marker_logic": []
+    }
+  },
+  "validation": {
+    "paper_source": "Figure 1",
+    "curator_notes": "18-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
+  },
+  "metadata": {
+    "curation_date": "2026-01-07",
+    "curator": "Auto-generated"
+  }
+}

@@ -1,0 +1,216 @@
+{
+  "test_case_id": "SYNTH-009",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-009",
+  "doi": "10.1002/cyto.a.22042",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Human PBMC",
+    "species": "human",
+    "application": "Regulatory T cell phenotyping",
+    "tissue": "PBMC",
+    "disease_state": null,
+    "additional_notes": "10-color Treg panel"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD3",
+        "fluorophore": "BUV395",
+        "clone": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BV421",
+        "clone": null
+      },
+      {
+        "marker": "CD25",
+        "fluorophore": "PE",
+        "clone": null
+      },
+      {
+        "marker": "CD127",
+        "fluorophore": "FITC",
+        "clone": null
+      },
+      {
+        "marker": "FoxP3",
+        "fluorophore": "APC",
+        "clone": null
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "BV510",
+        "clone": null
+      },
+      {
+        "marker": "CTLA-4",
+        "fluorophore": "PE-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "APC-H7",
+        "clone": null
+      },
+      {
+        "marker": "Helios",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": null
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "Zombie NIR",
+        "clone": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "gate_type": "Unknown",
+      "is_critical": false,
+      "notes": null,
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
+          "gate_type": "Unknown",
+          "is_critical": true,
+          "notes": null,
+          "children": [
+            {
+              "name": "Live",
+              "markers": [
+                "Zombie NIR"
+              ],
+              "gate_type": "Unknown",
+              "is_critical": true,
+              "notes": "Zombie NIR negative = live cells",
+              "children": [
+                {
+                  "name": "CD3+ T cells",
+                  "markers": [
+                    "CD3"
+                  ],
+                  "gate_type": "Unknown",
+                  "is_critical": false,
+                  "notes": "CD3+ T lymphocytes",
+                  "children": [
+                    {
+                      "name": "CD4+ T cells",
+                      "markers": [
+                        "CD4"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": "CD3+ T lymphocytes",
+                      "children": [
+                        {
+                          "name": "Tregs",
+                          "markers": [
+                            "CD25",
+                            "CD127"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [
+                            {
+                              "name": "FoxP3+ Tregs",
+                              "markers": [
+                                "FoxP3"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            },
+                            {
+                              "name": "Naive Tregs",
+                              "markers": [
+                                "CD45RA"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            },
+                            {
+                              "name": "Memory Tregs",
+                              "markers": [
+                                "CD45RA"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            }
+                          ],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "Tconv",
+                          "markers": [
+                            "CD25",
+                            "CD127"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        }
+                      ],
+                      "marker_logic": [
+                        {
+                          "marker": "CD3",
+                          "positive": true,
+                          "level": null
+                        }
+                      ]
+                    }
+                  ],
+                  "marker_logic": [
+                    {
+                      "marker": "CD3",
+                      "positive": true,
+                      "level": null
+                    }
+                  ]
+                }
+              ],
+              "marker_logic": [
+                {
+                  "marker": "Zombie NIR",
+                  "positive": false,
+                  "level": null
+                }
+              ]
+            }
+          ],
+          "marker_logic": []
+        }
+      ],
+      "marker_logic": []
+    }
+  },
+  "validation": {
+    "paper_source": "Figure 1",
+    "curator_notes": "10-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
+  },
+  "metadata": {
+    "curation_date": "2026-01-07",
+    "curator": "Auto-generated"
+  }
+}
