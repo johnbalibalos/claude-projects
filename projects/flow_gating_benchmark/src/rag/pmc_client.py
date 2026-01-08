@@ -679,8 +679,8 @@ def main():
     parser.add_argument(
         "--test-cases-dir",
         type=Path,
-        default=Path("data/ground_truth"),
-        help="Directory containing test case JSON files",
+        default=Path("data/ground_truth/synthetic"),
+        help="Directory containing test case JSON files (use synthetic/ or real/)",
     )
     parser.add_argument(
         "--cache-dir",
