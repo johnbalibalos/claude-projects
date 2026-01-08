@@ -60,30 +60,39 @@ def extract_hierarchy_from_wsp(wsp_path: str | Path) -> ExtractionResult:
         return result
 
     try:
-        # Load workspace (ignore missing FCS files - we only need gates)
-        ws = fk.Workspace(str(wsp_path), ignore_missing_files=True)
-        sample_ids = ws.get_sample_ids()
+        # Use parse_wsp to get gating strategies without loading FCS data
+        wsp_data = fk.parse_wsp(str(wsp_path))
+        samples = wsp_data.get('samples', {})
 
-        result.n_samples = len(sample_ids)
+        result.n_samples = len(samples)
 
-        if not sample_ids:
+        if not samples:
             result.error = "No samples found in workspace"
             return result
 
         # Use first sample
-        sample_id = sample_ids[0]
-        result.sample_used = sample_id
+        sample_name = list(samples.keys())[0]
+        result.sample_used = sample_name
 
-        # Get all gate IDs
-        gate_ids = ws.get_gate_ids(sample_id)
-        result.n_gates = len(gate_ids)
-        result.gate_names = list(gate_ids)
+        sample_data = samples[sample_name]
+        gating_strategy = sample_data.get('gating_strategy')
 
-        # Build hierarchy structure
+        if gating_strategy is None:
+            result.error = "No gating strategy found in sample"
+            return result
+
+        # Get gate IDs - returns list of (gate_name, gate_path_tuple)
+        gate_id_tuples = gating_strategy.get_gate_ids()
+        result.n_gates = len(gate_id_tuples)
+        result.gate_names = [g[0] for g in gate_id_tuples]
+
+        # Build hierarchy structure from gate paths
         gates_data = {}
-        for gate_id in gate_ids:
+        all_markers = set()
+
+        for gate_name, gate_path in gate_id_tuples:
             try:
-                gate = ws.get_gate(sample_id, gate_id)
+                gate = gating_strategy.get_gate(gate_name, gate_path)
 
                 # Extract dimensions (markers used for gating)
                 dimensions = []
@@ -92,30 +101,33 @@ def extract_hierarchy_from_wsp(wsp_path: str | Path) -> ExtractionResult:
                         dim_id = getattr(dim, 'id', None)
                         if dim_id:
                             dimensions.append(dim_id)
+                            all_markers.add(dim_id)
 
-                # Get parent gate
-                parent = getattr(gate, 'parent', None)
+                # Parent is second-to-last in path (last is 'root')
+                parent = gate_path[-1] if len(gate_path) > 1 and gate_path[-1] != 'root' else None
 
-                gates_data[gate_id] = {
+                # Create unique key using full path to handle duplicate names
+                gate_key = f"{gate_name}|{'/'.join(gate_path)}"
+
+                gates_data[gate_key] = {
+                    "name": gate_name,
+                    "parent_path": gate_path,
                     "parent": parent,
                     "markers": dimensions,
                     "gate_type": type(gate).__name__,
                 }
             except Exception as e:
-                gates_data[gate_id] = {
+                gate_key = f"{gate_name}|error"
+                gates_data[gate_key] = {
+                    "name": gate_name,
                     "parent": None,
                     "markers": [],
                     "gate_type": "Unknown",
                     "error": str(e)
                 }
 
-        # Convert flat dict to nested tree
-        result.hierarchy = build_hierarchy_tree(gates_data)
-
-        # Extract unique markers from all gates
-        all_markers = set()
-        for gate_data in gates_data.values():
-            all_markers.update(gate_data.get("markers", []))
+        # Convert to nested tree using gate paths
+        result.hierarchy = build_hierarchy_from_paths(gate_id_tuples, gates_data)
         result.panel_markers = sorted(all_markers)
 
         result.success = True
@@ -126,9 +138,78 @@ def extract_hierarchy_from_wsp(wsp_path: str | Path) -> ExtractionResult:
         return result
 
 
+def build_hierarchy_from_paths(
+    gate_id_tuples: list[tuple[str, tuple]],
+    gates_data: dict[str, dict]
+) -> dict:
+    """
+    Build nested hierarchy tree from gate paths.
+
+    Args:
+        gate_id_tuples: List of (gate_name, gate_path_tuple) from FlowKit
+        gates_data: Dict mapping gate_key to gate data
+
+    Returns:
+        Nested tree structure with root node
+    """
+    # Build parent-child relationships from paths
+    # Path example: ('root', 'Time', 'Singlets', 'aAmine-', 'CD3+')
+    # This means CD3+ is child of aAmine-, which is child of Singlets, etc.
+
+    # Create nodes dict keyed by full path
+    nodes_by_path: dict[tuple, dict] = {}
+
+    for gate_name, gate_path in gate_id_tuples:
+        full_path = gate_path + (gate_name,)
+        gate_key = f"{gate_name}|{'/'.join(gate_path)}"
+        data = gates_data.get(gate_key, {})
+
+        node = {
+            "name": gate_name,
+            "markers": data.get("markers", []),
+            "gate_type": data.get("gate_type", "Unknown"),
+            "is_critical": is_critical_gate(gate_name),
+            "notes": None,
+            "children": [],
+            "marker_logic": infer_marker_logic(gate_name, data.get("markers", []))
+        }
+        nodes_by_path[full_path] = node
+
+    # Now build the tree by connecting parents to children
+    for gate_name, gate_path in gate_id_tuples:
+        full_path = gate_path + (gate_name,)
+        node = nodes_by_path[full_path]
+
+        # Parent path is all but the last element
+        if len(gate_path) > 1:  # Has a non-root parent
+            parent_path = gate_path
+            if parent_path in nodes_by_path:
+                nodes_by_path[parent_path]["children"].append(node)
+
+    # Find root-level gates (those whose parent is just ('root',))
+    root_children = []
+    for gate_name, gate_path in gate_id_tuples:
+        if gate_path == ('root',):
+            full_path = gate_path + (gate_name,)
+            root_children.append(nodes_by_path[full_path])
+
+    # Create root node
+    root = {
+        "name": "All Events",
+        "markers": [],
+        "gate_type": "Unknown",
+        "is_critical": False,
+        "notes": None,
+        "children": root_children,
+        "marker_logic": []
+    }
+
+    return {"root": root}
+
+
 def build_hierarchy_tree(gates_data: dict[str, dict]) -> dict:
     """
-    Convert flat gate dict to nested tree structure.
+    Convert flat gate dict to nested tree structure (legacy).
 
     Args:
         gates_data: Dict mapping gate_id to {parent, markers, gate_type}
