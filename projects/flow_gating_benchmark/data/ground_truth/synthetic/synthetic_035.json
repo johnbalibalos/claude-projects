@@ -1,18 +1,18 @@
 {
-  "test_case_id": "OMIP-041",
-  "source_type": "omip_paper",
-  "omip_id": "OMIP-041",
-  "doi": "10.1002/cyto.a.23267",
-  "flowrepository_id": null,
-  "has_wsp": false,
+  "test_case_id": "SYNTH-035",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-035",
+  "doi": "10.1002/cyto.a.22932",
+  "flowrepository_id": "FR-FCM-ZZX9",
+  "has_wsp": true,
   "wsp_validated": false,
   "context": {
     "sample_type": "Mouse splenocytes",
     "species": "mouse",
-    "application": "Autoimmune disease monitoring",
+    "application": "Age-related immune changes",
     "tissue": "splenocytes",
     "disease_state": null,
-    "additional_notes": "16-color mouse autoimmune panel"
+    "additional_notes": "20-color mouse aging panel"
   },
   "panel": {
     "entries": [
@@ -28,51 +28,61 @@
       },
       {
         "marker": "CD4",
-        "fluorophore": "BV421",
+        "fluorophore": "BUV563",
         "clone": null
       },
       {
         "marker": "CD8a",
-        "fluorophore": "BV510",
+        "fluorophore": "BUV661",
         "clone": null
       },
       {
         "marker": "B220",
-        "fluorophore": "BV605",
+        "fluorophore": "BV421",
         "clone": null
       },
       {
         "marker": "CD19",
-        "fluorophore": "BV650",
+        "fluorophore": "BV510",
         "clone": null
       },
       {
         "marker": "CD44",
-        "fluorophore": "BV711",
+        "fluorophore": "BV605",
         "clone": null
       },
       {
         "marker": "CD62L",
+        "fluorophore": "BV650",
+        "clone": null
+      },
+      {
+        "marker": "CD127",
+        "fluorophore": "BV711",
+        "clone": null
+      },
+      {
+        "marker": "KLRG1",
         "fluorophore": "BV785",
         "clone": null
       },
       {
-        "marker": "CD25",
+        "marker": "CD11b",
         "fluorophore": "FITC",
         "clone": null
       },
       {
-        "marker": "FoxP3",
+        "marker": "Ly6C",
         "fluorophore": "PE",
         "clone": null
       },
       {
-        "marker": "IL-17A",
+        "marker": "CD49b",
         "fluorophore": "PE-Cy7",
         "clone": null
       },
       {
-        "marker": "IFNg",
+        "marker": "NK1.1",
         "fluorophore": "APC",
         "clone": null
       },
@@ -82,13 +92,23 @@
         "clone": null
       },
       {
-        "marker": "CXCR5",
+        "marker": "CD25",
         "fluorophore": "PerCP-Cy5.5",
         "clone": null
       },
       {
-        "marker": "Bcl6",
+        "marker": "FoxP3",
         "fluorophore": "AF700",
+        "clone": null
+      },
+      {
+        "marker": "TCRb",
+        "fluorophore": "BUV805",
+        "clone": null
+      },
+      {
+        "marker": "CD21",
+        "fluorophore": "PE-CF594",
         "clone": null
       },
       {
@@ -154,11 +174,10 @@
                           "notes": "CD3+ CD4+ CD8- helper T cells",
                           "children": [
                             {
-                              "name": "Tfh",
+                              "name": "Naive CD4",
                               "markers": [
-                                "CXCR5",
-                                "PD-1",
-                                "Bcl6"
+                                "CD44",
+                                "CD62L"
                               ],
                               "gate_type": "Unknown",
                               "is_critical": false,
@@ -167,20 +186,10 @@
                               "marker_logic": []
                             },
                             {
-                              "name": "Th17",
+                              "name": "Memory CD4",
                               "markers": [
-                                "IL-17A"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": [],
-                              "marker_logic": []
-                            },
-                            {
-                              "name": "Th1",
-                              "markers": [
-                                "IFNg"
+                                "CD44",
+                                "CD62L"
                               ],
                               "gate_type": "Unknown",
                               "is_critical": false,
@@ -227,7 +236,56 @@
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": "CD3+ CD4- CD8+ cytotoxic T cells",
-                          "children": [],
+                          "children": [
+                            {
+                              "name": "Naive CD8",
+                              "markers": [
+                                "CD44",
+                                "CD62L"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            },
+                            {
+                              "name": "Memory CD8",
+                              "markers": [
+                                "CD44",
+                                "CD62L"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            },
+                            {
+                              "name": "SLEC",
+                              "markers": [
+                                "KLRG1",
+                                "CD127"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            },
+                            {
+                              "name": "MPEC",
+                              "markers": [
+                                "KLRG1",
+                                "CD127"
+                              ],
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "notes": null,
+                              "children": [],
+                              "marker_logic": []
+                            }
+                          ],
                           "marker_logic": [
                             {
                               "marker": "CD3",
@@ -282,6 +340,18 @@
                           "level": null
                         }
                       ]
+                    },
+                    {
+                      "name": "NK cells",
+                      "markers": [
+                        "NK1.1",
+                        "CD49b"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": null,
+                      "children": [],
+                      "marker_logic": []
                     }
                   ],
                   "marker_logic": [
@@ -310,7 +380,7 @@
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "16-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
+    "curator_notes": "20-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",

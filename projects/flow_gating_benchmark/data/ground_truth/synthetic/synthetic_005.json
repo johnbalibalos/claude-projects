@@ -1,18 +1,18 @@
 {
-  "test_case_id": "OMIP-021",
-  "source_type": "omip_paper",
-  "omip_id": "OMIP-021",
-  "doi": "10.1002/cyto.a.22475",
+  "test_case_id": "SYNTH-005",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-005",
+  "doi": "10.1002/cyto.a.22008",
   "flowrepository_id": null,
   "has_wsp": false,
   "wsp_validated": false,
   "context": {
     "sample_type": "Human PBMC",
     "species": "human",
-    "application": "Innate-like T cell phenotyping (MAIT, iNKT, gd T)",
+    "application": "NK cell phenotyping",
     "tissue": "PBMC",
     "disease_state": null,
-    "additional_notes": "12-color innate-like T cell panel"
+    "additional_notes": "10-color NK cell panel"
   },
   "panel": {
     "entries": [
@@ -22,52 +22,42 @@
         "clone": null
       },
       {
-        "marker": "CD4",
-        "fluorophore": "BV421",
-        "clone": null
-      },
-      {
-        "marker": "CD8",
-        "fluorophore": "APC-H7",
-        "clone": null
-      },
-      {
-        "marker": "TCRgd",
-        "fluorophore": "FITC",
-        "clone": null
-      },
-      {
-        "marker": "Va7.2",
+        "marker": "CD56",
         "fluorophore": "PE",
         "clone": null
       },
       {
-        "marker": "CD161",
+        "marker": "CD16",
+        "fluorophore": "FITC",
+        "clone": null
+      },
+      {
+        "marker": "NKG2D",
         "fluorophore": "APC",
         "clone": null
       },
       {
-        "marker": "Va24-Ja18",
+        "marker": "NKp46",
+        "fluorophore": "BV421",
+        "clone": null
+      },
+      {
+        "marker": "CD57",
+        "fluorophore": "BV510",
+        "clone": null
+      },
+      {
+        "marker": "CD94",
         "fluorophore": "PE-Cy7",
         "clone": null
       },
       {
         "marker": "CD45",
-        "fluorophore": "BV510",
+        "fluorophore": "APC-H7",
         "clone": null
       },
       {
-        "marker": "CD56",
-        "fluorophore": "BV605",
-        "clone": null
-      },
-      {
-        "marker": "CD27",
-        "fluorophore": "BV650",
-        "clone": null
-      },
-      {
-        "marker": "CD45RA",
+        "marker": "KIR",
         "fluorophore": "PerCP-Cy5.5",
         "clone": null
       },
@@ -106,80 +96,68 @@
               "notes": "Zombie NIR negative = live cells",
               "children": [
                 {
-                  "name": "CD3+ T cells",
+                  "name": "NK cells",
                   "markers": [
-                    "CD3"
+                    "CD3",
+                    "CD56"
                   ],
                   "gate_type": "Unknown",
                   "is_critical": false,
-                  "notes": "CD3+ T lymphocytes",
+                  "notes": "CD3- CD56+/CD16+ NK cells",
                   "children": [
                     {
-                      "name": "gd T cells",
+                      "name": "CD56bright",
                       "markers": [
-                        "TCRgd"
+                        "CD56",
+                        "CD16"
                       ],
                       "gate_type": "Unknown",
                       "is_critical": false,
-                      "notes": "CD3+ T lymphocytes",
+                      "notes": "CD3- CD56bright CD16dim/- regulatory NK cells",
                       "children": [],
                       "marker_logic": [
                         {
                           "marker": "CD3",
-                          "positive": true,
+                          "positive": false,
                           "level": null
+                        },
+                        {
+                          "marker": "CD56",
+                          "positive": true,
+                          "level": "bright"
+                        },
+                        {
+                          "marker": "CD16",
+                          "positive": false,
+                          "level": "dim"
                         }
                       ]
                     },
                     {
-                      "name": "ab T cells",
+                      "name": "CD56dim",
                       "markers": [
-                        "TCRgd"
+                        "CD56",
+                        "CD16"
                       ],
                       "gate_type": "Unknown",
                       "is_critical": false,
-                      "notes": "CD3+ T lymphocytes",
+                      "notes": "CD3- CD56dim CD16+ cytotoxic NK cells",
                       "children": [
                         {
-                          "name": "MAIT cells",
+                          "name": "CD57+ NK",
                           "markers": [
-                            "Va7.2",
-                            "CD161"
+                            "CD57"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
-                          "notes": "CD3+ T lymphocytes",
+                          "notes": null,
                           "children": [],
-                          "marker_logic": [
-                            {
-                              "marker": "CD3",
-                              "positive": true,
-                              "level": null
-                            }
-                          ]
+                          "marker_logic": []
                         },
                         {
-                          "name": "iNKT cells",
+                          "name": "CD57- NK",
                           "markers": [
-                            "Va24-Ja18"
-                          ],
-                          "gate_type": "Unknown",
-                          "is_critical": false,
-                          "notes": "CD3+ T lymphocytes",
-                          "children": [],
-                          "marker_logic": [
-                            {
-                              "marker": "CD3",
-                              "positive": true,
-                              "level": null
-                            }
-                          ]
-                        },
-                        {
-                          "name": "Conventional T",
-                          "markers": [
-                            "Va7.2",
-                            "Va24-Ja18"
+                            "CD57"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
@@ -191,6 +169,16 @@
                       "marker_logic": [
                         {
                           "marker": "CD3",
+                          "positive": false,
+                          "level": null
+                        },
+                        {
+                          "marker": "CD56",
+                          "positive": true,
+                          "level": "dim"
+                        },
+                        {
+                          "marker": "CD16",
                           "positive": true,
                           "level": null
                         }
@@ -199,8 +187,18 @@
                   ],
                   "marker_logic": [
                     {
-                      "marker": "CD3",
+                      "marker": "CD56",
                       "positive": true,
+                      "level": null
+                    },
+                    {
+                      "marker": "CD16",
+                      "positive": true,
+                      "level": null
+                    },
+                    {
+                      "marker": "CD3",
+                      "positive": false,
                       "level": null
                     }
                   ]
@@ -223,7 +221,7 @@
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "12-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
+    "curator_notes": "10-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",

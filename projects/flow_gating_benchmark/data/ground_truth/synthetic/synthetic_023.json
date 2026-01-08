@@ -1,10 +1,10 @@
 {
-  "test_case_id": "OMIP-023",
-  "source_type": "omip_paper",
+  "test_case_id": "SYNTH-023",
+  "source_type": "synthetic",
   "omip_id": "OMIP-023",
   "doi": "10.1002/cyto.a.22591",
   "flowrepository_id": "FR-FCM-ZZ74",
-  "has_wsp": false,
+  "has_wsp": true,
   "wsp_validated": false,
   "context": {
     "sample_type": "Human PBMC",

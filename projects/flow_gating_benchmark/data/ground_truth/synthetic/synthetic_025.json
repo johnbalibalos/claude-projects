@@ -1,10 +1,10 @@
 {
-  "test_case_id": "OMIP-025",
-  "source_type": "omip_paper",
+  "test_case_id": "SYNTH-025",
+  "source_type": "synthetic",
   "omip_id": "OMIP-025",
   "doi": "10.1002/cyto.a.22590",
-  "flowrepository_id": null,
-  "has_wsp": false,
+  "flowrepository_id": "FR-FCM-ZZEC",
+  "has_wsp": true,
   "wsp_validated": false,
   "context": {
     "sample_type": "Human bone marrow",

@@ -1,18 +1,18 @@
 {
-  "test_case_id": "OMIP-060",
-  "source_type": "omip_paper",
-  "omip_id": "OMIP-060",
-  "doi": "10.1002/cyto.a.23853",
+  "test_case_id": "SYNTH-070",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-070",
+  "doi": "10.1002/cyto.a.24230",
   "flowrepository_id": null,
   "has_wsp": false,
   "wsp_validated": false,
   "context": {
     "sample_type": "Human PBMC",
     "species": "human",
-    "application": "Full spectrum immunophenotyping",
-    "tissue": "PBMC",
+    "application": "Deep immunophenotyping with CyTOF-like depth",
+    "tissue": "Blood",
     "disease_state": null,
-    "additional_notes": "35-color spectral cytometry panel"
+    "additional_notes": "38-color CyTOF-like spectral panel"
   },
   "panel": {
     "entries": [
@@ -47,47 +47,32 @@
         "clone": null
       },
       {
-        "marker": "CD20",
-        "fluorophore": "BV480",
-        "clone": null
-      },
-      {
         "marker": "CD14",
         "fluorophore": "BV510",
         "clone": null
       },
       {
         "marker": "CD16",
-        "fluorophore": "BV570",
-        "clone": null
-      },
-      {
-        "marker": "CD56",
         "fluorophore": "BV605",
         "clone": null
       },
       {
-        "marker": "HLA-DR",
+        "marker": "CD56",
         "fluorophore": "BV650",
         "clone": null
       },
       {
-        "marker": "CD11c",
+        "marker": "HLA-DR",
         "fluorophore": "BV711",
         "clone": null
       },
       {
-        "marker": "CD123",
-        "fluorophore": "BV750",
-        "clone": null
-      },
-      {
-        "marker": "CD27",
+        "marker": "CD11c",
         "fluorophore": "BV785",
         "clone": null
       },
       {
-        "marker": "CD28",
+        "marker": "CD123",
         "fluorophore": "FITC",
         "clone": null
       },
@@ -97,63 +82,78 @@
         "clone": null
       },
       {
-        "marker": "CD127",
-        "fluorophore": "PE-CF594",
-        "clone": null
-      },
-      {
-        "marker": "CD25",
-        "fluorophore": "PE-Cy5",
-        "clone": null
-      },
-      {
-        "marker": "PD-1",
+        "marker": "CD27",
         "fluorophore": "PE-Cy7",
         "clone": null
       },
       {
-        "marker": "CD38",
+        "marker": "CD127",
         "fluorophore": "APC",
         "clone": null
       },
       {
-        "marker": "CD57",
-        "fluorophore": "APC-R700",
+        "marker": "CD25",
+        "fluorophore": "APC-Cy7",
         "clone": null
       },
       {
-        "marker": "CD161",
-        "fluorophore": "APC-Fire750",
-        "clone": null
-      },
-      {
-        "marker": "NKG2A",
+        "marker": "PD-1",
         "fluorophore": "PerCP-Cy5.5",
         "clone": null
       },
       {
-        "marker": "CXCR5",
+        "marker": "TIGIT",
+        "fluorophore": "AF700",
+        "clone": null
+      },
+      {
+        "marker": "TIM-3",
         "fluorophore": "BUV805",
         "clone": null
       },
       {
-        "marker": "CCR6",
+        "marker": "LAG-3",
+        "fluorophore": "PE-CF594",
+        "clone": null
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "BV750",
+        "clone": null
+      },
+      {
+        "marker": "CD57",
         "fluorophore": "BB515",
         "clone": null
       },
       {
-        "marker": "CXCR3",
-        "fluorophore": "BB700",
+        "marker": "NKG2A",
+        "fluorophore": "BV545",
         "clone": null
       },
       {
-        "marker": "CD95",
+        "marker": "CXCR5",
+        "fluorophore": "BV690",
+        "clone": null
+      },
+      {
+        "marker": "CCR6",
+        "fluorophore": "PE-Dazzle594",
+        "clone": null
+      },
+      {
+        "marker": "CXCR3",
         "fluorophore": "BUV615",
         "clone": null
       },
       {
+        "marker": "CD95",
+        "fluorophore": "APC-R700",
+        "clone": null
+      },
+      {
         "marker": "Ki67",
-        "fluorophore": "AF700",
+        "fluorophore": "FITC",
         "clone": null
       },
       {
@@ -163,27 +163,42 @@
       },
       {
         "marker": "TCRgd",
-        "fluorophore": "BV545",
+        "fluorophore": "BV480",
         "clone": null
       },
       {
         "marker": "Va7.2",
-        "fluorophore": "BV690",
+        "fluorophore": "BB700",
+        "clone": null
+      },
+      {
+        "marker": "CD161",
+        "fluorophore": "PE-Cy5",
         "clone": null
       },
       {
         "marker": "Granzyme B",
-        "fluorophore": "FITC",
+        "fluorophore": "AF647",
         "clone": null
       },
       {
         "marker": "IFNg",
-        "fluorophore": "PE-Dazzle594",
+        "fluorophore": "PE-Texas Red",
         "clone": null
       },
       {
         "marker": "TNFa",
-        "fluorophore": "BV711",
+        "fluorophore": "BV570",
+        "clone": null
+      },
+      {
+        "marker": "IL-2",
+        "fluorophore": "APC-Fire750",
+        "clone": null
+      },
+      {
+        "marker": "CD69",
+        "fluorophore": "BUV496-A",
         "clone": null
       },
       {
@@ -301,29 +316,6 @@
                                   "level": null
                                 }
                               ]
-                            },
-                            {
-                              "name": "gd T",
-                              "markers": [
-                                "TCRgd"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": [],
-                              "marker_logic": []
-                            },
-                            {
-                              "name": "MAIT",
-                              "markers": [
-                                "Va7.2",
-                                "CD161"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": [],
-                              "marker_logic": []
                             }
                           ],
                           "marker_logic": [
@@ -347,7 +339,7 @@
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
-                          "notes": "CD3- CD19+ B lymphocytes (CD20+ also acceptable)",
+                          "notes": "CD3- CD19+ B lymphocytes",
                           "children": [],
                           "marker_logic": [
                             {
@@ -365,8 +357,7 @@
                         {
                           "name": "NK cells",
                           "markers": [
-                            "CD56",
-                            "CD3"
+                            "CD56"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
@@ -411,18 +402,6 @@
                               "level": null
                             }
                           ]
-                        },
-                        {
-                          "name": "DCs",
-                          "markers": [
-                            "CD11c",
-                            "HLA-DR"
-                          ],
-                          "gate_type": "Unknown",
-                          "is_critical": false,
-                          "notes": null,
-                          "children": [],
-                          "marker_logic": []
                         }
                       ],
                       "marker_logic": [
@@ -454,7 +433,7 @@
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "35-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
+    "curator_notes": "38-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",

@@ -1,89 +1,74 @@
 {
-  "test_case_id": "OMIP-015",
-  "source_type": "omip_paper",
-  "omip_id": "OMIP-015",
-  "doi": "10.1002/cyto.a.22230",
+  "test_case_id": "SYNTH-011",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-011",
+  "doi": "10.1002/cyto.a.22071",
   "flowrepository_id": null,
   "has_wsp": false,
   "wsp_validated": false,
   "context": {
-    "sample_type": "Human PBMC",
-    "species": "human",
-    "application": "Innate lymphoid cell identification",
-    "tissue": "PBMC",
+    "sample_type": "Mouse splenocytes",
+    "species": "mouse",
+    "application": "Mouse B cell subset identification",
+    "tissue": "splenocytes",
     "disease_state": null,
-    "additional_notes": "15-color innate lymphoid panel"
+    "additional_notes": "12-color mouse B cell panel"
   },
   "panel": {
     "entries": [
       {
-        "marker": "CD3",
-        "fluorophore": "BUV395",
-        "clone": null
-      },
-      {
-        "marker": "CD19",
-        "fluorophore": "BUV496",
-        "clone": null
-      },
-      {
-        "marker": "CD14",
-        "fluorophore": "BUV563",
-        "clone": null
-      },
-      {
-        "marker": "CD127",
+        "marker": "B220",
         "fluorophore": "BV421",
         "clone": null
       },
       {
-        "marker": "CD117",
-        "fluorophore": "PE",
-        "clone": null
-      },
-      {
-        "marker": "CRTH2",
+        "marker": "CD19",
         "fluorophore": "FITC",
         "clone": null
       },
       {
-        "marker": "NKp44",
+        "marker": "IgM",
+        "fluorophore": "PE",
+        "clone": null
+      },
+      {
+        "marker": "IgD",
         "fluorophore": "APC",
         "clone": null
       },
       {
-        "marker": "CD45",
-        "fluorophore": "APC-H7",
+        "marker": "CD21",
+        "fluorophore": "PE-Cy7",
         "clone": null
       },
       {
-        "marker": "CD56",
+        "marker": "CD23",
         "fluorophore": "BV510",
         "clone": null
       },
       {
-        "marker": "CD161",
+        "marker": "CD45",
+        "fluorophore": "APC-Cy7",
+        "clone": null
+      },
+      {
+        "marker": "CD138",
         "fluorophore": "BV605",
         "clone": null
       },
       {
-        "marker": "CD294",
-        "fluorophore": "BV650",
+        "marker": "GL7",
+        "fluorophore": "PerCP-Cy5.5",
         "clone": null
       },
       {
-        "marker": "NKG2A",
+        "marker": "CD95",
         "fluorophore": "BV711",
         "clone": null
       },
       {
-        "marker": "CD336",
+        "marker": "CD38",
         "fluorophore": "BV785",
-        "clone": null
-      },
-      {
-        "marker": "KLRG1",
-        "fluorophore": "PE-Cy7",
         "clone": null
       },
       {
@@ -121,30 +106,29 @@
               "notes": "Zombie NIR negative = live cells",
               "children": [
                 {
-                  "name": "Lineage-",
+                  "name": "CD45+",
                   "markers": [
-                    "CD3",
-                    "CD19",
-                    "CD14"
+                    "CD45"
                   ],
                   "gate_type": "Unknown",
-                  "is_critical": false,
-                  "notes": null,
+                  "is_critical": true,
+                  "notes": "All leukocytes; go directly to lineage markers (no FSC/SSC lymphocyte gate per HIPC)",
                   "children": [
                     {
-                      "name": "CD127+ ILCs",
+                      "name": "B cells",
                       "markers": [
-                        "CD127"
+                        "CD19"
                       ],
                       "gate_type": "Unknown",
                       "is_critical": false,
-                      "notes": null,
+                      "notes": "CD3- CD19+ B lymphocytes",
                       "children": [
                         {
-                          "name": "ILC1",
+                          "name": "Transitional",
                           "markers": [
-                            "CD117",
-                            "CRTH2"
+                            "IgM",
+                            "CD21",
+                            "CD23"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
@@ -153,10 +137,11 @@
                           "marker_logic": []
                         },
                         {
-                          "name": "ILC2",
+                          "name": "Follicular",
                           "markers": [
-                            "CRTH2",
-                            "CD294"
+                            "IgD",
+                            "CD21",
+                            "CD23"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
@@ -165,10 +150,40 @@
                           "marker_logic": []
                         },
                         {
-                          "name": "ILC3",
+                          "name": "Marginal Zone",
                           "markers": [
-                            "CD117",
-                            "NKp44"
+                            "IgM",
+                            "CD21",
+                            "CD23"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "GC B cells",
+                          "markers": [
+                            "CD19"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": "CD3- CD19+ B lymphocytes",
+                          "children": [],
+                          "marker_logic": [
+                            {
+                              "marker": "CD19",
+                              "positive": true,
+                              "level": null
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Plasma cells",
+                          "markers": [
+                            "CD138",
+                            "B220"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
@@ -177,32 +192,22 @@
                           "marker_logic": []
                         }
                       ],
-                      "marker_logic": []
-                    },
-                    {
-                      "name": "NK cells",
-                      "markers": [
-                        "CD56"
-                      ],
-                      "gate_type": "Unknown",
-                      "is_critical": false,
-                      "notes": "CD3- CD56+ NK cells",
-                      "children": [],
                       "marker_logic": [
                         {
-                          "marker": "CD56",
+                          "marker": "CD19",
                           "positive": true,
-                          "level": null
-                        },
-                        {
-                          "marker": "CD3",
-                          "positive": false,
                           "level": null
                         }
                       ]
                     }
                   ],
-                  "marker_logic": []
+                  "marker_logic": [
+                    {
+                      "marker": "CD45",
+                      "positive": true,
+                      "level": null
+                    }
+                  ]
                 }
               ],
               "marker_logic": [
@@ -222,7 +227,7 @@
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "15-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
+    "curator_notes": "12-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",

@@ -1,59 +1,34 @@
 {
-  "test_case_id": "OMIP-013",
-  "source_type": "omip_paper",
-  "omip_id": "OMIP-013",
-  "doi": "10.1002/cyto.a.22201",
+  "test_case_id": "SYNTH-007",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-007",
+  "doi": "10.1002/cyto.a.22033",
   "flowrepository_id": null,
   "has_wsp": false,
   "wsp_validated": false,
   "context": {
     "sample_type": "Human PBMC",
     "species": "human",
-    "application": "T helper subset identification",
+    "application": "Monocyte subset identification",
     "tissue": "PBMC",
     "disease_state": null,
-    "additional_notes": "14-color Th subset panel"
+    "additional_notes": "8-color monocyte panel"
   },
   "panel": {
     "entries": [
       {
-        "marker": "CD3",
-        "fluorophore": "BUV395",
-        "clone": null
-      },
-      {
-        "marker": "CD4",
-        "fluorophore": "BV421",
-        "clone": null
-      },
-      {
-        "marker": "CD8",
-        "fluorophore": "BUV496",
-        "clone": null
-      },
-      {
-        "marker": "CD45RA",
-        "fluorophore": "BV510",
-        "clone": null
-      },
-      {
-        "marker": "CXCR3",
-        "fluorophore": "PE",
-        "clone": null
-      },
-      {
-        "marker": "CCR6",
+        "marker": "CD14",
         "fluorophore": "APC",
         "clone": null
       },
       {
-        "marker": "CXCR5",
+        "marker": "CD16",
         "fluorophore": "FITC",
         "clone": null
       },
       {
-        "marker": "CCR4",
-        "fluorophore": "PE-Cy7",
+        "marker": "HLA-DR",
+        "fluorophore": "BV421",
         "clone": null
       },
       {
@@ -62,28 +37,23 @@
         "clone": null
       },
       {
-        "marker": "CCR10",
-        "fluorophore": "BV605",
+        "marker": "CD3",
+        "fluorophore": "BUV395",
         "clone": null
       },
       {
-        "marker": "CD161",
-        "fluorophore": "BV650",
+        "marker": "CD19",
+        "fluorophore": "BUV496",
         "clone": null
       },
       {
-        "marker": "CD127",
-        "fluorophore": "BV711",
-        "clone": null
-      },
-      {
-        "marker": "CD25",
-        "fluorophore": "BV785",
+        "marker": "CD56",
+        "fluorophore": "PE",
         "clone": null
       },
       {
         "marker": "Live/Dead",
-        "fluorophore": "Zombie NIR",
+        "fluorophore": "7-AAD",
         "clone": null
       }
     ]
@@ -109,44 +79,47 @@
             {
               "name": "Live",
               "markers": [
-                "Zombie NIR"
+                "7-AAD"
               ],
               "gate_type": "Unknown",
               "is_critical": true,
-              "notes": "Zombie NIR negative = live cells",
+              "notes": "7-AAD negative = live cells",
               "children": [
                 {
-                  "name": "CD3+ T cells",
+                  "name": "CD45+",
                   "markers": [
-                    "CD3"
+                    "CD45"
                   ],
                   "gate_type": "Unknown",
-                  "is_critical": false,
-                  "notes": "CD3+ T lymphocytes",
+                  "is_critical": true,
+                  "notes": "All leukocytes; go directly to lineage markers (no FSC/SSC lymphocyte gate per HIPC)",
                   "children": [
                     {
-                      "name": "CD4+ T cells",
+                      "name": "Lineage-",
                       "markers": [
-                        "CD4"
+                        "CD3",
+                        "CD19",
+                        "CD56"
                       ],
                       "gate_type": "Unknown",
                       "is_critical": false,
-                      "notes": "CD3+ T lymphocytes",
+                      "notes": null,
                       "children": [
                         {
-                          "name": "Memory CD4",
+                          "name": "Monocytes",
                           "markers": [
-                            "CD45RA"
+                            "CD14",
+                            "HLA-DR"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
-                          "notes": null,
+                          "notes": "CD14+ monocytes (CD3-)",
                           "children": [
                             {
-                              "name": "Th1",
+                              "name": "Classical",
                               "markers": [
-                                "CXCR3",
-                                "CCR6"
+                                "CD14",
+                                "CD16"
                               ],
                               "gate_type": "Unknown",
                               "is_critical": false,
@@ -155,10 +128,10 @@
                               "marker_logic": []
                             },
                             {
-                              "name": "Th2",
+                              "name": "Intermediate",
                               "markers": [
-                                "CCR4",
-                                "CXCR3"
+                                "CD14",
+                                "CD16"
                               ],
                               "gate_type": "Unknown",
                               "is_critical": false,
@@ -167,56 +140,49 @@
                               "marker_logic": []
                             },
                             {
-                              "name": "Th17",
+                              "name": "Non-classical",
                               "markers": [
-                                "CCR6",
-                                "CD161"
+                                "CD14",
+                                "CD16"
                               ],
                               "gate_type": "Unknown",
                               "is_critical": false,
-                              "notes": null,
+                              "notes": "CD14dim CD16++ non-classical monocytes",
                               "children": [],
-                              "marker_logic": []
-                            },
-                            {
-                              "name": "Tfh",
-                              "markers": [
-                                "CXCR5"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": [],
-                              "marker_logic": []
-                            },
-                            {
-                              "name": "Th22",
-                              "markers": [
-                                "CCR10",
-                                "CCR6"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": [],
-                              "marker_logic": []
+                              "marker_logic": [
+                                {
+                                  "marker": "CD14",
+                                  "positive": true,
+                                  "level": "dim"
+                                },
+                                {
+                                  "marker": "CD16",
+                                  "positive": true,
+                                  "level": "high"
+                                }
+                              ]
                             }
                           ],
-                          "marker_logic": []
+                          "marker_logic": [
+                            {
+                              "marker": "CD14",
+                              "positive": true,
+                              "level": null
+                            },
+                            {
+                              "marker": "CD3",
+                              "positive": false,
+                              "level": null
+                            }
+                          ]
                         }
                       ],
-                      "marker_logic": [
-                        {
-                          "marker": "CD3",
-                          "positive": true,
-                          "level": null
-                        }
-                      ]
+                      "marker_logic": []
                     }
                   ],
                   "marker_logic": [
                     {
-                      "marker": "CD3",
+                      "marker": "CD45",
                       "positive": true,
                       "level": null
                     }
@@ -225,7 +191,7 @@
               ],
               "marker_logic": [
                 {
-                  "marker": "Zombie NIR",
+                  "marker": "7-AAD",
                   "positive": false,
                   "level": null
                 }
@@ -240,7 +206,7 @@
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "14-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
+    "curator_notes": "8-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",

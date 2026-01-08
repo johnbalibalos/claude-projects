@@ -1,6 +1,6 @@
 {
-  "test_case_id": "OMIP-062",
-  "source_type": "omip_paper",
+  "test_case_id": "SYNTH-062",
+  "source_type": "synthetic",
   "omip_id": "OMIP-062",
   "doi": "10.1002/cyto.a.23907",
   "flowrepository_id": null,

@@ -1,54 +1,49 @@
 {
-  "test_case_id": "OMIP-009",
-  "source_type": "omip_paper",
-  "omip_id": "OMIP-009",
-  "doi": "10.1002/cyto.a.22042",
+  "test_case_id": "SYNTH-003",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-003",
+  "doi": "10.1002/cyto.a.21112",
   "flowrepository_id": null,
   "has_wsp": false,
   "wsp_validated": false,
   "context": {
     "sample_type": "Human PBMC",
     "species": "human",
-    "application": "Regulatory T cell phenotyping",
+    "application": "B cell subset identification",
     "tissue": "PBMC",
     "disease_state": null,
-    "additional_notes": "10-color Treg panel"
+    "additional_notes": "8-color B cell panel"
   },
   "panel": {
     "entries": [
       {
-        "marker": "CD3",
-        "fluorophore": "BUV395",
-        "clone": null
-      },
-      {
-        "marker": "CD4",
-        "fluorophore": "BV421",
-        "clone": null
-      },
-      {
-        "marker": "CD25",
-        "fluorophore": "PE",
-        "clone": null
-      },
-      {
-        "marker": "CD127",
-        "fluorophore": "FITC",
-        "clone": null
-      },
-      {
-        "marker": "FoxP3",
+        "marker": "CD19",
         "fluorophore": "APC",
         "clone": null
       },
       {
-        "marker": "CD45RA",
-        "fluorophore": "BV510",
+        "marker": "CD20",
+        "fluorophore": "FITC",
         "clone": null
       },
       {
-        "marker": "CTLA-4",
-        "fluorophore": "PE-Cy7",
+        "marker": "CD27",
+        "fluorophore": "PE",
+        "clone": null
+      },
+      {
+        "marker": "IgD",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": null
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "BV421",
+        "clone": null
+      },
+      {
+        "marker": "CD24",
+        "fluorophore": "BV510",
         "clone": null
       },
       {
@@ -57,13 +52,8 @@
         "clone": null
       },
       {
-        "marker": "Helios",
-        "fluorophore": "PerCP-Cy5.5",
-        "clone": null
-      },
-      {
         "marker": "Live/Dead",
-        "fluorophore": "Zombie NIR",
+        "fluorophore": "7-AAD",
         "clone": null
       }
     ]
@@ -89,81 +79,59 @@
             {
               "name": "Live",
               "markers": [
-                "Zombie NIR"
+                "7-AAD"
               ],
               "gate_type": "Unknown",
               "is_critical": true,
-              "notes": "Zombie NIR negative = live cells",
+              "notes": "7-AAD negative = live cells",
               "children": [
                 {
-                  "name": "CD3+ T cells",
+                  "name": "CD45+",
                   "markers": [
-                    "CD3"
+                    "CD45"
                   ],
                   "gate_type": "Unknown",
-                  "is_critical": false,
-                  "notes": "CD3+ T lymphocytes",
+                  "is_critical": true,
+                  "notes": "All leukocytes; go directly to lineage markers (no FSC/SSC lymphocyte gate per HIPC)",
                   "children": [
                     {
-                      "name": "CD4+ T cells",
+                      "name": "B cells",
                       "markers": [
-                        "CD4"
+                        "CD19"
                       ],
                       "gate_type": "Unknown",
                       "is_critical": false,
-                      "notes": "CD3+ T lymphocytes",
+                      "notes": "CD3- CD19+ B lymphocytes (CD20+ also acceptable)",
                       "children": [
                         {
-                          "name": "Tregs",
+                          "name": "Naive B",
                           "markers": [
-                            "CD25",
-                            "CD127"
+                            "IgD",
+                            "CD27"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
                           "notes": null,
-                          "children": [
-                            {
-                              "name": "FoxP3+ Tregs",
-                              "markers": [
-                                "FoxP3"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": [],
-                              "marker_logic": []
-                            },
-                            {
-                              "name": "Naive Tregs",
-                              "markers": [
-                                "CD45RA"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": [],
-                              "marker_logic": []
-                            },
-                            {
-                              "name": "Memory Tregs",
-                              "markers": [
-                                "CD45RA"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": [],
-                              "marker_logic": []
-                            }
-                          ],
+                          "children": [],
                           "marker_logic": []
                         },
                         {
-                          "name": "Tconv",
+                          "name": "Memory B",
                           "markers": [
-                            "CD25",
-                            "CD127"
+                            "IgD",
+                            "CD27"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "Plasmablasts",
+                          "markers": [
+                            "CD38",
+                            "CD27"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
@@ -174,7 +142,7 @@
                       ],
                       "marker_logic": [
                         {
-                          "marker": "CD3",
+                          "marker": "CD19",
                           "positive": true,
                           "level": null
                         }
@@ -183,7 +151,7 @@
                   ],
                   "marker_logic": [
                     {
-                      "marker": "CD3",
+                      "marker": "CD45",
                       "positive": true,
                       "level": null
                     }
@@ -192,7 +160,7 @@
               ],
               "marker_logic": [
                 {
-                  "marker": "Zombie NIR",
+                  "marker": "7-AAD",
                   "positive": false,
                   "level": null
                 }
@@ -207,7 +175,7 @@
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "10-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
+    "curator_notes": "8-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",

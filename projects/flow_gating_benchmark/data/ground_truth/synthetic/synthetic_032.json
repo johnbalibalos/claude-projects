@@ -1,43 +1,43 @@
 {
-  "test_case_id": "OMIP-030",
-  "source_type": "omip_paper",
-  "omip_id": "OMIP-030",
-  "doi": "10.1002/cyto.a.22788",
+  "test_case_id": "SYNTH-032",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-032",
+  "doi": "10.1002/cyto.a.22867",
   "flowrepository_id": null,
   "has_wsp": false,
   "wsp_validated": false,
   "context": {
-    "sample_type": "Mouse splenocytes",
+    "sample_type": "Mouse bone marrow",
     "species": "mouse",
-    "application": "Mouse T cell immunophenotyping",
-    "tissue": "splenocytes",
+    "application": "Mouse myeloid cell phenotyping",
+    "tissue": "bone",
     "disease_state": null,
-    "additional_notes": "10-color mouse T cell panel"
+    "additional_notes": "12-color mouse myeloid panel"
   },
   "panel": {
     "entries": [
       {
-        "marker": "CD3",
+        "marker": "CD11b",
         "fluorophore": "BV421",
         "clone": null
       },
       {
-        "marker": "CD4",
-        "fluorophore": "FITC",
-        "clone": null
-      },
-      {
-        "marker": "CD8a",
+        "marker": "CD11c",
         "fluorophore": "PE",
         "clone": null
       },
       {
-        "marker": "CD44",
+        "marker": "Ly6C",
+        "fluorophore": "FITC",
+        "clone": null
+      },
+      {
+        "marker": "Ly6G",
         "fluorophore": "APC",
         "clone": null
       },
       {
-        "marker": "CD62L",
+        "marker": "F4/80",
         "fluorophore": "PE-Cy7",
         "clone": null
       },
@@ -47,23 +47,33 @@
         "clone": null
       },
       {
-        "marker": "CD25",
+        "marker": "MHCII",
         "fluorophore": "BV510",
         "clone": null
       },
       {
-        "marker": "FoxP3",
-        "fluorophore": "PerCP-Cy5.5",
-        "clone": null
-      },
-      {
-        "marker": "TCRb",
+        "marker": "CD115",
         "fluorophore": "BV605",
         "clone": null
       },
       {
+        "marker": "CD64",
+        "fluorophore": "BV711",
+        "clone": null
+      },
+      {
+        "marker": "SiglecF",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": null
+      },
+      {
+        "marker": "CD103",
+        "fluorophore": "BV785",
+        "clone": null
+      },
+      {
         "marker": "Live/Dead",
-        "fluorophore": "Zombie Aqua",
+        "fluorophore": "Zombie NIR",
         "clone": null
       }
     ]
@@ -89,11 +99,11 @@
             {
               "name": "Live",
               "markers": [
-                "Zombie Aqua"
+                "Zombie NIR"
               ],
               "gate_type": "Unknown",
               "is_critical": true,
-              "notes": "Zombie Aqua negative = live cells",
+              "notes": "Zombie NIR negative = live cells",
               "children": [
                 {
                   "name": "CD45+",
@@ -105,83 +115,39 @@
                   "notes": "All leukocytes; go directly to lineage markers (no FSC/SSC lymphocyte gate per HIPC)",
                   "children": [
                     {
-                      "name": "T cells",
+                      "name": "CD11b+",
                       "markers": [
-                        "CD3",
-                        "TCRb"
+                        "CD11b"
                       ],
                       "gate_type": "Unknown",
                       "is_critical": false,
-                      "notes": "CD3+ T lymphocytes",
+                      "notes": null,
                       "children": [
                         {
-                          "name": "CD4+ T cells",
+                          "name": "Neutrophils",
                           "markers": [
-                            "CD4"
+                            "Ly6G"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
-                          "notes": "CD3+ T lymphocytes",
-                          "children": [
-                            {
-                              "name": "Tregs",
-                              "markers": [
-                                "CD25",
-                                "FoxP3"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": [],
-                              "marker_logic": []
-                            },
-                            {
-                              "name": "Naive CD4",
-                              "markers": [
-                                "CD44",
-                                "CD62L"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": [],
-                              "marker_logic": []
-                            },
-                            {
-                              "name": "Memory CD4",
-                              "markers": [
-                                "CD44",
-                                "CD62L"
-                              ],
-                              "gate_type": "Unknown",
-                              "is_critical": false,
-                              "notes": null,
-                              "children": [],
-                              "marker_logic": []
-                            }
-                          ],
-                          "marker_logic": [
-                            {
-                              "marker": "CD3",
-                              "positive": true,
-                              "level": null
-                            }
-                          ]
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
                         },
                         {
-                          "name": "CD8+ T cells",
+                          "name": "Monocytes",
                           "markers": [
-                            "CD8a"
+                            "Ly6C",
+                            "Ly6G"
                           ],
                           "gate_type": "Unknown",
                           "is_critical": false,
-                          "notes": "CD3+ T lymphocytes",
+                          "notes": null,
                           "children": [
                             {
-                              "name": "Naive CD8",
+                              "name": "Ly6Chi Monocytes",
                               "markers": [
-                                "CD44",
-                                "CD62L"
+                                "Ly6C"
                               ],
                               "gate_type": "Unknown",
                               "is_critical": false,
@@ -190,10 +156,9 @@
                               "marker_logic": []
                             },
                             {
-                              "name": "Effector CD8",
+                              "name": "Ly6Clo Monocytes",
                               "markers": [
-                                "CD44",
-                                "CD62L"
+                                "Ly6C"
                               ],
                               "gate_type": "Unknown",
                               "is_critical": false,
@@ -202,22 +167,68 @@
                               "marker_logic": []
                             }
                           ],
-                          "marker_logic": [
-                            {
-                              "marker": "CD3",
-                              "positive": true,
-                              "level": null
-                            }
-                          ]
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "Macrophages",
+                          "markers": [
+                            "F4/80",
+                            "CD64"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "Eosinophils",
+                          "markers": [
+                            "SiglecF"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
                         }
                       ],
-                      "marker_logic": [
+                      "marker_logic": []
+                    },
+                    {
+                      "name": "Dendritic cells",
+                      "markers": [
+                        "CD11c",
+                        "MHCII"
+                      ],
+                      "gate_type": "Unknown",
+                      "is_critical": false,
+                      "notes": null,
+                      "children": [
                         {
-                          "marker": "CD3",
-                          "positive": true,
-                          "level": null
+                          "name": "cDC1",
+                          "markers": [
+                            "CD103"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
+                        },
+                        {
+                          "name": "cDC2",
+                          "markers": [
+                            "CD11b"
+                          ],
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "notes": null,
+                          "children": [],
+                          "marker_logic": []
                         }
-                      ]
+                      ],
+                      "marker_logic": []
                     }
                   ],
                   "marker_logic": [
@@ -231,7 +242,7 @@
               ],
               "marker_logic": [
                 {
-                  "marker": "Zombie Aqua",
+                  "marker": "Zombie NIR",
                   "positive": false,
                   "level": null
                 }
@@ -246,7 +257,7 @@
   },
   "validation": {
     "paper_source": "Figure 1",
-    "curator_notes": "10-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
+    "curator_notes": "12-color panel Updated to HIPC-standardized gating logic (no FSC/SSC lymphocyte gate, negative markers included)."
   },
   "metadata": {
     "curation_date": "2026-01-07",
