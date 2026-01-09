@@ -1,0 +1,481 @@
+{
+  "omip_id": "OMIP-074",
+  "pmc_id": "PMC8453800",
+  "doi": "10.1002/cyto.a.24341",
+  "title": "OMIP 074: Phenotypic analysis of  IgG  and  IgA  subclasses on human B cells",
+  "extractions": {
+    "panel": {
+      "xml": {
+        "method": "xml",
+        "data": {
+          "entries": [
+            {
+              "marker": "CD19",
+              "fluorophore": "PE\u2010Dazzle 594",
+              "clone": "HIB19",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD20",
+              "fluorophore": "Alexa Fluor 700",
+              "clone": "2H7",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD27",
+              "fluorophore": "BV650",
+              "clone": "O323",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD21",
+              "fluorophore": "BV605",
+              "clone": "B\u2010ly4",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgA",
+              "fluorophore": "DyLight 405",
+              "clone": "Polyclonal (Goat)",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgD",
+              "fluorophore": "PE\u2010Cy5.5",
+              "clone": "IADB6 (IA6\u20102)",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgE",
+              "fluorophore": "APC\u2010Fire 750",
+              "clone": "MHE\u201018",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgG",
+              "fluorophore": "PE\u2010Cy5",
+              "clone": "G18\u2010145",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgM",
+              "fluorophore": "BV570",
+              "clone": "MHM\u201088",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgA1",
+              "fluorophore": "PerCP\u2010Cy5.5",
+              "clone": "B3506B4",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgA2",
+              "fluorophore": "PE\u2010Vio770",
+              "clone": "IS11\u201021E11",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgG1",
+              "fluorophore": "PE",
+              "clone": "HP6001",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgG2",
+              "fluorophore": "Biotin",
+              "clone": "HP6002",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "Biotin",
+              "fluorophore": "Streptavidin\u2010BV750",
+              "clone": null,
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgG3",
+              "fluorophore": "Alexa Fluor 488",
+              "clone": "HP6050",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgG4",
+              "fluorophore": "APC",
+              "clone": "SAG4",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgKappa",
+              "fluorophore": "BV711",
+              "clone": "G20\u2010193",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgLambda",
+              "fluorophore": "BV786",
+              "clone": "JDC\u201012",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "Dead Cells",
+              "fluorophore": "Aqua Blue",
+              "clone": null,
+              "vendor": null,
+              "cat_number": null
+            }
+          ],
+          "table_caption": "Reagents used for OMIP"
+        },
+        "confidence": 0.9,
+        "timestamp": "2026-01-09T19:16:06.999370",
+        "model": null,
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC8453800.xml",
+        "notes": "Extracted from TABLE 2"
+      },
+      "llm": {
+        "method": "llm",
+        "data": {
+          "entries": [
+            {
+              "marker": "CD19",
+              "fluorophore": "PE-Dazzle 594",
+              "clone": "HIB19"
+            },
+            {
+              "marker": "CD20",
+              "fluorophore": "Alexa Fluor 700",
+              "clone": "2H7"
+            },
+            {
+              "marker": "CD27",
+              "fluorophore": "BV650",
+              "clone": "O323"
+            },
+            {
+              "marker": "CD21",
+              "fluorophore": "BV605",
+              "clone": "B-ly4"
+            },
+            {
+              "marker": "IgA",
+              "fluorophore": "DyLight 405",
+              "clone": "Polyclonal (Goat)"
+            },
+            {
+              "marker": "IgD",
+              "fluorophore": "PE-Cy5.5",
+              "clone": "IADB6 (IA6-2)"
+            },
+            {
+              "marker": "IgE",
+              "fluorophore": "APC-Fire 750",
+              "clone": "MHE-18"
+            },
+            {
+              "marker": "IgG",
+              "fluorophore": "PE-Cy5",
+              "clone": "G18-145"
+            },
+            {
+              "marker": "IgM",
+              "fluorophore": "BV570",
+              "clone": "MHM-88"
+            },
+            {
+              "marker": "IgA1",
+              "fluorophore": "PerCP-Cy5.5",
+              "clone": "B3506B4"
+            },
+            {
+              "marker": "IgA2",
+              "fluorophore": "PE-Vio770",
+              "clone": "IS11-21E11"
+            },
+            {
+              "marker": "IgG1",
+              "fluorophore": "PE",
+              "clone": "HP6001"
+            },
+            {
+              "marker": "IgG2",
+              "fluorophore": "Biotin",
+              "clone": "HP6002"
+            },
+            {
+              "marker": "Biotin",
+              "fluorophore": "Streptavidin-BV750",
+              "clone": null
+            },
+            {
+              "marker": "IgG3",
+              "fluorophore": "Alexa Fluor 488",
+              "clone": "HP6050"
+            },
+            {
+              "marker": "IgG4",
+              "fluorophore": "APC",
+              "clone": "SAG4"
+            },
+            {
+              "marker": "IgKappa",
+              "fluorophore": "BV711",
+              "clone": "G20-193"
+            },
+            {
+              "marker": "IgLambda",
+              "fluorophore": "BV786",
+              "clone": "JDC-12"
+            },
+            {
+              "marker": "Dead Cells",
+              "fluorophore": "Aqua Blue",
+              "clone": null
+            }
+          ],
+          "notes": "IgG2 uses biotin conjugation with streptavidin-BV750 secondary detection. This panel is designed for phenotypic analysis of IgG and IgA subclasses on human B cells from fresh or cryopreserved PBMC."
+        },
+        "confidence": 0.75,
+        "timestamp": "2026-01-09T19:16:15.093249",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC8453800.xml",
+        "notes": null
+      }
+    },
+    "gating_hierarchy": {
+      "llm": {
+        "method": "llm",
+        "data": {
+          "hierarchy": {
+            "name": "All Events",
+            "marker_logic": null,
+            "children": [
+              {
+                "name": "Time gate",
+                "marker_logic": "Time-gated events",
+                "children": [
+                  {
+                    "name": "Singlets",
+                    "marker_logic": "Single events",
+                    "children": [
+                      {
+                        "name": "Lymphocytes",
+                        "marker_logic": "FSC vs SSC",
+                        "children": [
+                          {
+                            "name": "Live cells",
+                            "marker_logic": "Dead Cells-",
+                            "children": [
+                              {
+                                "name": "B cells",
+                                "marker_logic": "CD19+ CD20+",
+                                "children": [
+                                  {
+                                    "name": "Naive B cells",
+                                    "marker_logic": "CD21+ CD27-",
+                                    "children": []
+                                  },
+                                  {
+                                    "name": "Resting Memory (RM)",
+                                    "marker_logic": "CD21+ CD27+",
+                                    "children": []
+                                  },
+                                  {
+                                    "name": "Activated Memory (AM)",
+                                    "marker_logic": "CD21- CD27+",
+                                    "children": []
+                                  },
+                                  {
+                                    "name": "Tissue-like Memory (TLM)",
+                                    "marker_logic": "CD21- CD27-",
+                                    "children": []
+                                  },
+                                  {
+                                    "name": "Class-switched B cells",
+                                    "marker_logic": "IgD- IgM-",
+                                    "children": [
+                                      {
+                                        "name": "IgE+ B cells",
+                                        "marker_logic": "IgE+ IgG-",
+                                        "children": []
+                                      },
+                                      {
+                                        "name": "IgA+ B cells",
+                                        "marker_logic": "IgA+",
+                                        "children": [
+                                          {
+                                            "name": "IgA1+ B cells",
+                                            "marker_logic": "IgA1+",
+                                            "children": []
+                                          },
+                                          {
+                                            "name": "IgA2+ B cells",
+                                            "marker_logic": "IgA2+",
+                                            "children": []
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "name": "IgG+ B cells",
+                                        "marker_logic": "IgG+",
+                                        "children": [
+                                          {
+                                            "name": "IgG1+ B cells",
+                                            "marker_logic": "IgG1+",
+                                            "children": []
+                                          },
+                                          {
+                                            "name": "IgG2+ B cells",
+                                            "marker_logic": "IgG2+",
+                                            "children": []
+                                          },
+                                          {
+                                            "name": "IgG3+ B cells",
+                                            "marker_logic": "IgG3+",
+                                            "children": []
+                                          },
+                                          {
+                                            "name": "IgG4+ B cells",
+                                            "marker_logic": "IgG4+",
+                                            "children": []
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "name": "Kappa+ B cells",
+                                    "marker_logic": "IgKappa+",
+                                    "children": []
+                                  },
+                                  {
+                                    "name": "Lambda+ B cells",
+                                    "marker_logic": "IgLambda+",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "notes": "Gating strategy follows sequential gating through time, singlets, lymphocytes, viable cells, then B cell identification. B cell subsets are analyzed based on CD21/CD27 expression. Class-switched B cells (IgD-IgM-) are used as pre-gate for IgA and IgG subclass analysis. Light chain usage analysis performed on total B cells. IgE+ cells identified using mutual exclusive IgG/IgE expression.",
+          "confidence": 0.9
+        },
+        "confidence": 0.9,
+        "timestamp": "2026-01-09T19:16:29.715175",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC8453800.xml",
+        "notes": null
+      }
+    },
+    "context": {}
+  },
+  "concordance": {
+    "panel": [
+      {
+        "methods": "xml_vs_llm",
+        "metric": "jaccard_markers_normalized",
+        "score": 1.0,
+        "details": {
+          "raw_jaccard": 1.0,
+          "normalized_jaccard": 1.0,
+          "raw_markers_a": [
+            "BIOTIN",
+            "CD19",
+            "CD20",
+            "CD21",
+            "CD27",
+            "DEAD CELLS",
+            "IGA",
+            "IGA1",
+            "IGA2",
+            "IGD",
+            "IGE",
+            "IGG",
+            "IGG1",
+            "IGG2",
+            "IGG3",
+            "IGG4",
+            "IGKAPPA",
+            "IGLAMBDA",
+            "IGM"
+          ],
+          "raw_markers_b": [
+            "BIOTIN",
+            "CD19",
+            "CD20",
+            "CD21",
+            "CD27",
+            "DEAD CELLS",
+            "IGA",
+            "IGA1",
+            "IGA2",
+            "IGD",
+            "IGE",
+            "IGG",
+            "IGG1",
+            "IGG2",
+            "IGG3",
+            "IGG4",
+            "IGKAPPA",
+            "IGLAMBDA",
+            "IGM"
+          ],
+          "canonical_intersection": [
+            "BIOTIN",
+            "CD19",
+            "CD20",
+            "CD21",
+            "CD27",
+            "DEAD CELLS",
+            "IGA",
+            "IGA1",
+            "IGA2",
+            "IGD",
+            "IGE",
+            "IGG",
+            "IGG1",
+            "IGG2",
+            "IGG3",
+            "IGG4",
+            "IGKAPPA",
+            "IGLAMBDA",
+            "IGM"
+          ],
+          "canonical_only_a": [],
+          "canonical_only_b": []
+        }
+      }
+    ],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": "xml",
+    "gating_hierarchy": "llm"
+  }
+}

@@ -1,0 +1,657 @@
+{
+  "omip_id": "OMIP-101",
+  "pmc_id": "PMC10958279",
+  "doi": "10.1002/cyto.a.24827",
+  "title": "OMIP-101: 27-color flow cytometry panel for immunophenotyping of major leukocyte populations in fixed whole blood",
+  "extractions": {
+    "panel": {
+      "xml": {
+        "method": "xml",
+        "data": {
+          "entries": [
+            {
+              "marker": "CD45",
+              "fluorophore": "BV785",
+              "clone": "HI30",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD66",
+              "fluorophore": "BV750",
+              "clone": "B1.1",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD33",
+              "fluorophore": "PE-Cy5",
+              "clone": "WM53",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD14",
+              "fluorophore": "BB660",
+              "clone": "M\u03c6P9",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD11c",
+              "fluorophore": "BUV661",
+              "clone": "B-ly6",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD19",
+              "fluorophore": "R718",
+              "clone": "HIB19",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD56",
+              "fluorophore": "BV711",
+              "clone": "HCD56",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD127",
+              "fluorophore": "PE-Cy5.5",
+              "clone": "eBioRD5",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD3",
+              "fluorophore": "BUV496",
+              "clone": "UCHT-1",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD4",
+              "fluorophore": "BV480",
+              "clone": "SK3",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD8",
+              "fluorophore": "BV570",
+              "clone": "RPA-T8",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "\u03b3\u03b4 TCR",
+              "fluorophore": "BUV395",
+              "clone": "B1",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "TRAV1.2",
+              "fluorophore": "PE",
+              "clone": "3C10",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD161",
+              "fluorophore": "BV650",
+              "clone": "DX12",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD38",
+              "fluorophore": "BB700",
+              "clone": "HIT2",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "HLA-DR",
+              "fluorophore": "BUV563",
+              "clone": "G46-6",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD32",
+              "fluorophore": "BB630",
+              "clone": "FLI8.26",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD16",
+              "fluorophore": "BV605",
+              "clone": "3G8",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgD",
+              "fluorophore": "BUV737",
+              "clone": "IA6-2",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD27",
+              "fluorophore": "BUV805",
+              "clone": "M-T271",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD57",
+              "fluorophore": "BB515",
+              "clone": "NK-1",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD45RA",
+              "fluorophore": "APC-eFluor 780",
+              "clone": "HI100",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CCR7",
+              "fluorophore": "PE-CF594",
+              "clone": "150503",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "V\u03b42",
+              "fluorophore": "BB790",
+              "clone": "B6",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "Perforin",
+              "fluorophore": "BV421",
+              "clone": "\u03b3G9",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "Granzyme B",
+              "fluorophore": "AF647",
+              "clone": "DH2",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "Ki67",
+              "fluorophore": "PE-Cy7",
+              "clone": "B56",
+              "vendor": null,
+              "cat_number": null
+            }
+          ],
+          "table_caption": "Reagents used in OMIP-101."
+        },
+        "confidence": 0.9,
+        "timestamp": "2026-01-09T19:14:06.560494",
+        "model": null,
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC10958279.xml",
+        "notes": "Extracted from Table 2."
+      },
+      "llm": {
+        "method": "llm",
+        "data": {
+          "entries": [
+            {
+              "marker": "CD45",
+              "fluorophore": "BV785",
+              "clone": "HI30"
+            },
+            {
+              "marker": "CD66",
+              "fluorophrome": "BV750",
+              "clone": "B1.1"
+            },
+            {
+              "marker": "CD33",
+              "fluorophore": "PE-Cy5",
+              "clone": "WM53"
+            },
+            {
+              "marker": "CD14",
+              "fluorophore": "BB660",
+              "clone": "M\u03c6P9"
+            },
+            {
+              "marker": "CD11c",
+              "fluorophore": "BUV661",
+              "clone": "B-ly6"
+            },
+            {
+              "marker": "CD19",
+              "fluorophore": "R718",
+              "clone": "HIB19"
+            },
+            {
+              "marker": "CD56",
+              "fluorophore": "BV711",
+              "clone": "HCD56"
+            },
+            {
+              "marker": "CD127",
+              "fluorophore": "PE-Cy5.5",
+              "clone": "eBioRD5"
+            },
+            {
+              "marker": "CD3",
+              "fluorophore": "BUV496",
+              "clone": "UCHT-1"
+            },
+            {
+              "marker": "CD4",
+              "fluorophore": "BV480",
+              "clone": "SK3"
+            },
+            {
+              "marker": "CD8",
+              "fluorophore": "BV570",
+              "clone": "RPA-T8"
+            },
+            {
+              "marker": "\u03b3\u03b4 TCR",
+              "fluorophore": "BUV395",
+              "clone": "B1"
+            },
+            {
+              "marker": "TRAV1.2",
+              "fluorophore": "PE",
+              "clone": "3C10"
+            },
+            {
+              "marker": "CD161",
+              "fluorophore": "BV650",
+              "clone": "DX12"
+            },
+            {
+              "marker": "CD38",
+              "fluorophore": "BB700",
+              "clone": "HIT2"
+            },
+            {
+              "marker": "HLA-DR",
+              "fluorophore": "BUV563",
+              "clone": "G46-6"
+            },
+            {
+              "marker": "CD32",
+              "fluorophore": "BB630",
+              "clone": "FLI8.26"
+            },
+            {
+              "marker": "CD16",
+              "fluorophore": "BV605",
+              "clone": "3G8"
+            },
+            {
+              "marker": "IgD",
+              "fluorophore": "BUV737",
+              "clone": "IA6-2"
+            },
+            {
+              "marker": "CD27",
+              "fluorophore": "BUV805",
+              "clone": "M-T271"
+            },
+            {
+              "marker": "CD57",
+              "fluorophore": "BB515",
+              "clone": "NK-1"
+            },
+            {
+              "marker": "CD45RA",
+              "fluorophore": "APC-eFluor 780",
+              "clone": "HI100"
+            },
+            {
+              "marker": "CCR7",
+              "fluorophore": "PE-CF594",
+              "clone": "150503"
+            },
+            {
+              "marker": "V\u03b42",
+              "fluorophore": "BB790",
+              "clone": "B6"
+            },
+            {
+              "marker": "Perforin",
+              "fluorophore": "BV421",
+              "clone": "\u03b3G9"
+            },
+            {
+              "marker": "Granzyme B",
+              "fluorophore": "AF647",
+              "clone": "DH2"
+            },
+            {
+              "marker": "Ki67",
+              "fluorophore": "PE-Cy7",
+              "clone": "B56"
+            }
+          ],
+          "notes": "27-color panel for immunophenotyping major leukocyte populations in fixed whole blood. No viability dyes or scatter parameters explicitly mentioned in the provided tables."
+        },
+        "confidence": 0.75,
+        "timestamp": "2026-01-09T19:14:14.774939",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC10958279.xml",
+        "notes": null
+      }
+    },
+    "gating_hierarchy": {
+      "llm": {
+        "method": "llm",
+        "data": {
+          "hierarchy": {
+            "name": "All Events",
+            "marker_logic": null,
+            "children": [
+              {
+                "name": "Time gate",
+                "marker_logic": "Consistent fluorescence over time",
+                "children": [
+                  {
+                    "name": "Singlets",
+                    "marker_logic": "FSC-A vs FSC-H",
+                    "children": [
+                      {
+                        "name": "Non-beads",
+                        "marker_logic": "Exclude reference beads",
+                        "children": [
+                          {
+                            "name": "Leukocytes",
+                            "marker_logic": "CD45+ SSC/FSC",
+                            "children": [
+                              {
+                                "name": "Non-aggregates",
+                                "marker_logic": "CD14 vs CD33 (exclude extremes)",
+                                "children": [
+                                  {
+                                    "name": "Non-granulocytes",
+                                    "marker_logic": "CD66-",
+                                    "children": [
+                                      {
+                                        "name": "Myeloid cells",
+                                        "marker_logic": "CD33+",
+                                        "children": [
+                                          {
+                                            "name": "Non-T/B/NK contamination",
+                                            "marker_logic": "CD19- CD3- CD56-",
+                                            "children": [
+                                              {
+                                                "name": "HLA-DR+ myeloid",
+                                                "marker_logic": "HLA-DR+",
+                                                "children": [
+                                                  {
+                                                    "name": "Classical monocytes",
+                                                    "marker_logic": "CD14+ CD16-",
+                                                    "children": []
+                                                  },
+                                                  {
+                                                    "name": "Intermediate monocytes",
+                                                    "marker_logic": "CD14+ CD16+/low",
+                                                    "children": []
+                                                  },
+                                                  {
+                                                    "name": "Non-classical monocytes",
+                                                    "marker_logic": "CD14- CD16+",
+                                                    "children": []
+                                                  },
+                                                  {
+                                                    "name": "mDCs",
+                                                    "marker_logic": "CD14- CD16- HLA-DR+ CD11c+",
+                                                    "children": []
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "name": "Lymphocytes",
+                                        "marker_logic": "CD33- SSC low",
+                                        "children": [
+                                          {
+                                            "name": "B cells",
+                                            "marker_logic": "CD3- CD4- CD56- CD19+",
+                                            "children": [
+                                              {
+                                                "name": "Plasmablasts",
+                                                "marker_logic": "CD38high CD27high",
+                                                "children": []
+                                              },
+                                              {
+                                                "name": "Naive B cells",
+                                                "marker_logic": "IgD+ CD27-",
+                                                "children": []
+                                              },
+                                              {
+                                                "name": "Memory B cells",
+                                                "marker_logic": "IgD- CD27+",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "name": "NK cells",
+                                            "marker_logic": "CD3- CD4- CD19- CD56+",
+                                            "children": [
+                                              {
+                                                "name": "CD56dim NK cells",
+                                                "marker_logic": "CD56dim CD16+",
+                                                "children": []
+                                              },
+                                              {
+                                                "name": "CD56bright NK cells",
+                                                "marker_logic": "CD56bright",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "name": "T cells",
+                                            "marker_logic": "CD3+",
+                                            "children": [
+                                              {
+                                                "name": "Conventional CD4+ T cells",
+                                                "marker_logic": "CD4+ \u03b3\u03b4TCR- TRAV1.2-",
+                                                "children": []
+                                              },
+                                              {
+                                                "name": "Conventional CD8+ T cells",
+                                                "marker_logic": "CD8+ \u03b3\u03b4TCR- TRAV1.2-",
+                                                "children": []
+                                              },
+                                              {
+                                                "name": "\u03b3\u03b4 T cells",
+                                                "marker_logic": "\u03b3\u03b4TCR+",
+                                                "children": [
+                                                  {
+                                                    "name": "V\u03b42+ \u03b3\u03b4 T cells",
+                                                    "marker_logic": "V\u03b42+",
+                                                    "children": []
+                                                  },
+                                                  {
+                                                    "name": "V\u03b42- \u03b3\u03b4 T cells",
+                                                    "marker_logic": "V\u03b42-",
+                                                    "children": []
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "name": "MAIT cells",
+                                                "marker_logic": "TRAV1.2+ CD161+",
+                                                "children": []
+                                              },
+                                              {
+                                                "name": "NKT-like cells",
+                                                "marker_logic": "CD3+ CD56+",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "name": "ILCs",
+                                            "marker_logic": "CD3- CD4- CD19- CD16- CD56- CD127+",
+                                            "children": []
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "name": "Granulocytes",
+                                    "marker_logic": "CD66+",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "notes": "The gating strategy includes quality control steps (time gate, singlet discrimination, bead exclusion, antibody aggregate removal) before cell type identification. Myeloid cells are separated from lymphocytes using CD33, with further subdivision based on lineage markers. T cell differentiation markers (CCR7, CD27, CD45RA, CD127, CD57), activation markers (HLA-DR, CD38, Ki-67), and cytotoxic markers (perforin, granzyme B) are assessed on relevant populations but specific gating strategies for these functional subsets are not detailed in the provided text.",
+          "confidence": 0.85
+        },
+        "confidence": 0.85,
+        "timestamp": "2026-01-09T19:14:35.397442",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC10958279.xml",
+        "notes": null
+      }
+    },
+    "context": {}
+  },
+  "concordance": {
+    "panel": [
+      {
+        "methods": "xml_vs_llm",
+        "metric": "jaccard_markers_normalized",
+        "score": 1.0,
+        "details": {
+          "raw_jaccard": 1.0,
+          "normalized_jaccard": 1.0,
+          "raw_markers_a": [
+            "CCR7",
+            "CD11C",
+            "CD127",
+            "CD14",
+            "CD16",
+            "CD161",
+            "CD19",
+            "CD27",
+            "CD3",
+            "CD32",
+            "CD33",
+            "CD38",
+            "CD4",
+            "CD45",
+            "CD45RA",
+            "CD56",
+            "CD57",
+            "CD66",
+            "CD8",
+            "GRANZYME B",
+            "HLA-DR",
+            "IGD",
+            "KI67",
+            "PERFORIN",
+            "TRAV1.2",
+            "V\u03942",
+            "\u0393\u0394 TCR"
+          ],
+          "raw_markers_b": [
+            "CCR7",
+            "CD11C",
+            "CD127",
+            "CD14",
+            "CD16",
+            "CD161",
+            "CD19",
+            "CD27",
+            "CD3",
+            "CD32",
+            "CD33",
+            "CD38",
+            "CD4",
+            "CD45",
+            "CD45RA",
+            "CD56",
+            "CD57",
+            "CD66",
+            "CD8",
+            "GRANZYME B",
+            "HLA-DR",
+            "IGD",
+            "KI67",
+            "PERFORIN",
+            "TRAV1.2",
+            "V\u03942",
+            "\u0393\u0394 TCR"
+          ],
+          "canonical_intersection": [
+            "CCR7",
+            "CD11C",
+            "CD127",
+            "CD14",
+            "CD16",
+            "CD161",
+            "CD19",
+            "CD27",
+            "CD3",
+            "CD32",
+            "CD33",
+            "CD38",
+            "CD4",
+            "CD45",
+            "CD45RA",
+            "CD56",
+            "CD57",
+            "CD66",
+            "CD8",
+            "GRANZYME B",
+            "IGD",
+            "KI67",
+            "MHC CLASS II",
+            "PERFORIN",
+            "TRAV1.2",
+            "V\u03942",
+            "\u0393\u0394 TCR"
+          ],
+          "canonical_only_a": [],
+          "canonical_only_b": []
+        }
+      }
+    ],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": "xml",
+    "gating_hierarchy": "llm"
+  }
+}

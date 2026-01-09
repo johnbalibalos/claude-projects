@@ -1,0 +1,19 @@
+{
+  "omip_id": "OMIP-028",
+  "pmc_id": "PMC4758211",
+  "doi": "10.1002/cyto.a.22727",
+  "title": "OMIP-028: Activation Panel for Rhesus Macaque NK Cell Subsets",
+  "extractions": {
+    "panel": {},
+    "gating_hierarchy": {},
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": null,
+    "gating_hierarchy": null
+  }
+}

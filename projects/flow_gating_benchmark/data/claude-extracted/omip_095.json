@@ -1,0 +1,135 @@
+{
+  "omip_id": "OMIP-095",
+  "pmc_id": "PMC10843696",
+  "doi": "10.1002/cyto.a.24788",
+  "title": "OMIP-095: 40-Color spectral flow cytometry delineates all major leukocyte populations in murine lymphoid tissues",
+  "extractions": {
+    "panel": {
+      "llm": {
+        "method": "llm",
+        "data": {
+          "entries": [],
+          "notes": "The abstract mentions a 40-color flow cytometry panel but does not provide specific details about the individual antibodies, fluorophores, or clones used. The text only describes the general categories of markers (co-stimulatory, checkpoint, activation, migration, and maturation markers) and the cell types they can identify (T cells, B cells, NK cells, ILCs, monocytes, macrophages, dendritic cells, basophils, neutrophils, eosinophils, progenitors), but no specific antibody panel information is provided in this abstract section."
+        },
+        "confidence": 0.75,
+        "timestamp": "2026-01-09T19:13:56.093466",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC10843696.xml",
+        "notes": null
+      }
+    },
+    "gating_hierarchy": {
+      "llm": {
+        "method": "llm",
+        "data": {
+          "hierarchy": {
+            "name": "All Events",
+            "marker_logic": null,
+            "children": [
+              {
+                "name": "Singlets",
+                "marker_logic": "FSC-A vs FSC-H",
+                "children": [
+                  {
+                    "name": "Live cells",
+                    "marker_logic": "Viability-",
+                    "children": [
+                      {
+                        "name": "Leukocytes",
+                        "marker_logic": "FSC vs SSC",
+                        "children": [
+                          {
+                            "name": "T cells",
+                            "marker_logic": "CD3+",
+                            "children": [
+                              {
+                                "name": "CD4+ T cells",
+                                "marker_logic": "CD4+ CD8-",
+                                "children": []
+                              },
+                              {
+                                "name": "CD8+ T cells",
+                                "marker_logic": "CD4- CD8+",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "name": "B cells",
+                            "marker_logic": "CD19+",
+                            "children": []
+                          },
+                          {
+                            "name": "Natural killer cells",
+                            "marker_logic": "NK1.1+",
+                            "children": []
+                          },
+                          {
+                            "name": "Innate lymphoid cells",
+                            "marker_logic": "Lineage- NK1.1-",
+                            "children": []
+                          },
+                          {
+                            "name": "Monocytes",
+                            "marker_logic": "CD11b+ Ly6C+",
+                            "children": []
+                          },
+                          {
+                            "name": "Macrophages",
+                            "marker_logic": "F4/80+ CD11b+",
+                            "children": []
+                          },
+                          {
+                            "name": "Dendritic cells",
+                            "marker_logic": "CD11c+",
+                            "children": []
+                          },
+                          {
+                            "name": "Basophils",
+                            "marker_logic": "Fc\u03b5RI+ CD200R3+",
+                            "children": []
+                          },
+                          {
+                            "name": "Neutrophils",
+                            "marker_logic": "Ly6G+ CD11b+",
+                            "children": []
+                          },
+                          {
+                            "name": "Eosinophils",
+                            "marker_logic": "Siglec-F+ CD11c-",
+                            "children": []
+                          },
+                          {
+                            "name": "Progenitors",
+                            "marker_logic": "Lineage- c-Kit+",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "notes": "Gating hierarchy inferred from abstract description of major leukocyte populations identified. Specific marker combinations estimated based on standard murine flow cytometry practices since detailed gating strategy not provided in text. Panel designed for surface markers only without intracellular staining.",
+          "confidence": 0.4
+        },
+        "confidence": 0.4,
+        "timestamp": "2026-01-09T19:14:06.551537",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC10843696.xml",
+        "notes": null
+      }
+    },
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": "llm",
+    "gating_hierarchy": "llm"
+  }
+}

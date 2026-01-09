@@ -1,0 +1,515 @@
+{
+  "omip_id": "OMIP-083",
+  "pmc_id": "PMC9310743",
+  "doi": "10.1002/cyto.a.24545",
+  "title": "OMIP 083: A 21\u2010marker 18\u2010color flow cytometry panel for in\u2010depth phenotyping of human peripheral monocytes",
+  "extractions": {
+    "panel": {
+      "xml": {
+        "method": "xml",
+        "data": {
+          "entries": [
+            {
+              "marker": "CD45",
+              "fluorophore": "Alexa Fluor 532",
+              "clone": "HI30",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD66b",
+              "fluorophore": "PE\u2010Dazzle 594",
+              "clone": "G10F5",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD3",
+              "fluorophore": "FITC",
+              "clone": "SK7",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD123",
+              "fluorophore": "FITC",
+              "clone": "6H6",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD19",
+              "fluorophore": "FITC",
+              "clone": "SJ25C1",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD56",
+              "fluorophore": "FITC",
+              "clone": "HCD56",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "TLR2",
+              "fluorophore": "PE",
+              "clone": "11G7",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD14",
+              "fluorophore": "BV570",
+              "clone": "M5E2",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD16",
+              "fluorophore": "BV421",
+              "clone": "3G8",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "SLAN",
+              "fluorophore": "VioBlue",
+              "clone": "DD\u20101",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CCR2",
+              "fluorophore": "APC\u2010Fire 750",
+              "clone": "K036C2",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CX3CR1",
+              "fluorophore": "PerCP\u2010Cy5.5",
+              "clone": "2A9\u20101",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CXCR4",
+              "fluorophore": "BV785",
+              "clone": "125G",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD36",
+              "fluorophore": "VioGreen",
+              "clone": "AC106",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD11c",
+              "fluorophore": "PE\u2010Cy5",
+              "clone": "3.9",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD11b",
+              "fluorophore": "BV650",
+              "clone": "ICRF44",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "HLA\u2010DR",
+              "fluorophore": "BV480",
+              "clone": "G46\u20106",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD86",
+              "fluorophore": "PE\u2010Cy7",
+              "clone": "BU63",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD42b",
+              "fluorophore": "APC",
+              "clone": "HIP1",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD64",
+              "fluorophore": "BV605",
+              "clone": "10.1",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "PD\u20101",
+              "fluorophore": "BV750",
+              "clone": "EH12.2H7",
+              "vendor": null,
+              "cat_number": null
+            }
+          ],
+          "table_caption": "Reagents for OMIP\u2010083"
+        },
+        "confidence": 0.9,
+        "timestamp": "2026-01-09T19:16:58.374167",
+        "model": null,
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC9310743.xml",
+        "notes": "Extracted from TABLE 2"
+      },
+      "llm": {
+        "method": "llm",
+        "data": {
+          "entries": [
+            {
+              "marker": "CD45",
+              "fluorophore": "Alexa Fluor 532",
+              "clone": "HI30"
+            },
+            {
+              "marker": "CD66b",
+              "fluorophore": "PE-Dazzle 594",
+              "clone": "G10F5"
+            },
+            {
+              "marker": "CD3",
+              "fluorophore": "FITC",
+              "clone": "SK7"
+            },
+            {
+              "marker": "CD123",
+              "fluorophore": "FITC",
+              "clone": "6H6"
+            },
+            {
+              "marker": "CD19",
+              "fluorophore": "FITC",
+              "clone": "SJ25C1"
+            },
+            {
+              "marker": "CD56",
+              "fluorophore": "FITC",
+              "clone": "HCD56"
+            },
+            {
+              "marker": "TLR2",
+              "fluorophore": "PE",
+              "clone": "11G7"
+            },
+            {
+              "marker": "CD14",
+              "fluorophore": "BV570",
+              "clone": "M5E2"
+            },
+            {
+              "marker": "CD16",
+              "fluorophrome": "BV421",
+              "clone": "3G8"
+            },
+            {
+              "marker": "SLAN",
+              "fluorophore": "VioBlue",
+              "clone": "DD-1"
+            },
+            {
+              "marker": "CCR2",
+              "fluorophore": "APC-Fire 750",
+              "clone": "K036C2"
+            },
+            {
+              "marker": "CX3CR1",
+              "fluorophore": "PerCP-Cy5.5",
+              "clone": "2A9-1"
+            },
+            {
+              "marker": "CXCR4",
+              "fluorophore": "BV785",
+              "clone": "125G"
+            },
+            {
+              "marker": "CD36",
+              "fluorophore": "VioGreen",
+              "clone": "AC106"
+            },
+            {
+              "marker": "CD11c",
+              "fluorophore": "PE-Cy5",
+              "clone": "3.9"
+            },
+            {
+              "marker": "CD11b",
+              "fluorophore": "BV650",
+              "clone": "ICRF44"
+            },
+            {
+              "marker": "HLA-DR",
+              "fluorophore": "BV480",
+              "clone": "G46-6"
+            },
+            {
+              "marker": "CD86",
+              "fluorophore": "PE-Cy7",
+              "clone": "BU63"
+            },
+            {
+              "marker": "CD42b",
+              "fluorophore": "APC",
+              "clone": "HIP1"
+            },
+            {
+              "marker": "CD64",
+              "fluorophore": "BV605",
+              "clone": "10.1"
+            },
+            {
+              "marker": "PD-1",
+              "fluorophore": "BV750",
+              "clone": "EH12.2H7"
+            }
+          ],
+          "notes": "21-marker 18-color panel for human peripheral monocyte phenotyping. Multiple markers conjugated to FITC for exclusion purposes. No viability dye or scatter parameters explicitly mentioned in the table."
+        },
+        "confidence": 0.75,
+        "timestamp": "2026-01-09T19:17:06.060052",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC9310743.xml",
+        "notes": null
+      }
+    },
+    "gating_hierarchy": {
+      "xml": {
+        "method": "xml",
+        "data": {
+          "table_data": {
+            "headers": [
+              "Purpose",
+              "Delineation of peripheral monocyte subsets and deep phenotyping of monocyte function."
+            ],
+            "rows": [
+              [
+                "Species",
+                "Humans"
+              ],
+              [
+                "Cell type",
+                "PBMCs"
+              ],
+              [
+                "Cross references",
+                "OMIP\u2010023, OMIP\u2010024, OMIP\u2010034, OMIP\u2010038, OMIP\u2010042, OMIP\u2010069"
+              ]
+            ]
+          },
+          "hierarchy": null,
+          "note": "Gating table found but hierarchy requires LLM interpretation"
+        },
+        "confidence": 0.3,
+        "timestamp": "2026-01-09T19:16:58.374183",
+        "model": null,
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC9310743.xml",
+        "notes": "Phenotype table only, no tree structure"
+      },
+      "llm": {
+        "method": "llm",
+        "data": {
+          "hierarchy": {
+            "name": "All Events",
+            "marker_logic": null,
+            "children": [
+              {
+                "name": "Cleaned Events",
+                "marker_logic": "Exclude variable flow rate, doublets, debris, antibody aggregates",
+                "children": [
+                  {
+                    "name": "Leukocytes",
+                    "marker_logic": "CD45+",
+                    "children": [
+                      {
+                        "name": "Non-granulocytes",
+                        "marker_logic": "CD66b-",
+                        "children": [
+                          {
+                            "name": "Monocytes",
+                            "marker_logic": "CD3- CD19- CD56- CD123- TLR2+",
+                            "children": [
+                              {
+                                "name": "Classical Monocytes",
+                                "marker_logic": "CD14++ CD16-",
+                                "children": []
+                              },
+                              {
+                                "name": "Other Monocyte Subsets",
+                                "marker_logic": "CD14var CD16var",
+                                "children": [
+                                  {
+                                    "name": "Intermediate Monocytes",
+                                    "marker_logic": "CCR2+ SLAN-",
+                                    "children": []
+                                  },
+                                  {
+                                    "name": "SLAN+ Nonclassical Monocytes",
+                                    "marker_logic": "CCR2- SLAN+",
+                                    "children": []
+                                  },
+                                  {
+                                    "name": "SLAN- Nonclassical Monocytes",
+                                    "marker_logic": "CCR2- SLAN-",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "notes": "Gating hierarchy extracted from OMIP-083 monocyte panel. The strategy first cleans events, then identifies leukocytes (CD45+), excludes granulocytes (CD66b-), excludes other lineages (CD3-, CD19-, CD56-, CD123-) while selecting monocytes (TLR2+). Monocyte subsets are then defined based on CD14/CD16 expression, followed by further subdivision using CCR2 and SLAN markers. Classical monocytes are confirmed by CCR2/CX3CR1 expression pattern.",
+          "confidence": 0.9
+        },
+        "confidence": 0.9,
+        "timestamp": "2026-01-09T19:17:18.222081",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC9310743.xml",
+        "notes": null
+      }
+    },
+    "context": {}
+  },
+  "concordance": {
+    "panel": [
+      {
+        "methods": "xml_vs_llm",
+        "metric": "jaccard_markers_normalized",
+        "score": 1.0,
+        "details": {
+          "raw_jaccard": 0.8260869565217391,
+          "normalized_jaccard": 1.0,
+          "raw_markers_a": [
+            "CCR2",
+            "CD11B",
+            "CD11C",
+            "CD123",
+            "CD14",
+            "CD16",
+            "CD19",
+            "CD3",
+            "CD36",
+            "CD42B",
+            "CD45",
+            "CD56",
+            "CD64",
+            "CD66B",
+            "CD86",
+            "CX3CR1",
+            "CXCR4",
+            "HLA\u2010DR",
+            "PD\u20101",
+            "SLAN",
+            "TLR2"
+          ],
+          "raw_markers_b": [
+            "CCR2",
+            "CD11B",
+            "CD11C",
+            "CD123",
+            "CD14",
+            "CD16",
+            "CD19",
+            "CD3",
+            "CD36",
+            "CD42B",
+            "CD45",
+            "CD56",
+            "CD64",
+            "CD66B",
+            "CD86",
+            "CX3CR1",
+            "CXCR4",
+            "HLA-DR",
+            "PD-1",
+            "SLAN",
+            "TLR2"
+          ],
+          "canonical_intersection": [
+            "CCR2",
+            "CD11B",
+            "CD11C",
+            "CD123",
+            "CD14",
+            "CD16",
+            "CD19",
+            "CD3",
+            "CD36",
+            "CD42B",
+            "CD45",
+            "CD56",
+            "CD64",
+            "CD66B",
+            "CD86",
+            "CX3CR1",
+            "CXCR4",
+            "MHC CLASS II",
+            "PD-1",
+            "SLAN",
+            "TLR2"
+          ],
+          "canonical_only_a": [],
+          "canonical_only_b": []
+        }
+      }
+    ],
+    "gating_hierarchy": [
+      {
+        "methods": "xml_vs_llm",
+        "metric": "jaccard_gates",
+        "score": 0.0,
+        "details": {
+          "gates_a": [],
+          "gates_b": [
+            "all events",
+            "classical monocytes",
+            "cleaned events",
+            "intermediate monocytes",
+            "leukocytes",
+            "monocytes",
+            "non-granulocytes",
+            "other monocyte subsets",
+            "slan+ nonclassical monocytes",
+            "slan- nonclassical monocytes"
+          ],
+          "intersection": [],
+          "only_in_a": [],
+          "only_in_b": [
+            "all events",
+            "classical monocytes",
+            "cleaned events",
+            "intermediate monocytes",
+            "leukocytes",
+            "monocytes",
+            "non-granulocytes",
+            "other monocyte subsets",
+            "slan+ nonclassical monocytes",
+            "slan- nonclassical monocytes"
+          ]
+        }
+      }
+    ]
+  },
+  "best_extraction": {
+    "panel": "xml",
+    "gating_hierarchy": "llm"
+  }
+}

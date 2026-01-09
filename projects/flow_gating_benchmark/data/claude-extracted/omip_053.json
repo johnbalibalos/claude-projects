@@ -1,0 +1,96 @@
+{
+  "omip_id": "OMIP-053",
+  "pmc_id": "PMC6497402",
+  "doi": "10.1002/cyto.a.23704",
+  "title": "OMIP-053 Identification, Classification, and Isolation of Major FoxP3 Expressing Human CD4 +  Treg Subsets",
+  "extractions": {
+    "panel": {
+      "llm": {
+        "method": "llm",
+        "data": {
+          "entries": [
+            {
+              "marker": "CD4",
+              "fluorophore": null,
+              "clone": null
+            },
+            {
+              "marker": "FoxP3",
+              "fluorophore": null,
+              "clone": null
+            }
+          ],
+          "notes": "Only CD4 and FoxP3 markers are explicitly mentioned in the provided abstract. The abstract references 'major, currently accepted marker combinations' and mentions intra-nuclear markers (ATREG panel) vs surface markers only (BTREG panel), but does not specify the complete antibody panel with fluorophores and clones. Full panel details would likely be in the methods section or supplementary tables not provided in this excerpt."
+        },
+        "confidence": 0.75,
+        "timestamp": "2026-01-09T19:16:00.038606",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC6497402.xml",
+        "notes": null
+      }
+    },
+    "gating_hierarchy": {
+      "llm": {
+        "method": "llm",
+        "data": {
+          "hierarchy": {
+            "name": "All Events",
+            "marker_logic": null,
+            "children": [
+              {
+                "name": "Singlets",
+                "marker_logic": "FSC-A vs FSC-H",
+                "children": [
+                  {
+                    "name": "Live cells",
+                    "marker_logic": "Viability-",
+                    "children": [
+                      {
+                        "name": "Lymphocytes",
+                        "marker_logic": "FSC vs SSC",
+                        "children": [
+                          {
+                            "name": "CD4+ T cells",
+                            "marker_logic": "CD4+",
+                            "children": [
+                              {
+                                "name": "FoxP3+ Treg",
+                                "marker_logic": "FoxP3+",
+                                "children": []
+                              },
+                              {
+                                "name": "FoxP3- non-Treg",
+                                "marker_logic": "FoxP3-",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "notes": "Limited gating information provided. The paper focuses on CD4+ FoxP3+ Treg identification and mentions sub-panels (ATREG with intranuclear markers, BTREG with surface markers only) but specific gating hierarchy details are not described in the provided text. Standard flow cytometry preprocessing gates (singlets, live cells, lymphocytes) are inferred based on typical PBMC analysis workflows.",
+          "confidence": 0.3
+        },
+        "confidence": 0.3,
+        "timestamp": "2026-01-09T19:16:06.984257",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC6497402.xml",
+        "notes": null
+      }
+    },
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": "llm",
+    "gating_hierarchy": "llm"
+  }
+}

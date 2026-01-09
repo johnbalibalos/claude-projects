@@ -1,0 +1,143 @@
+{
+  "omip_id": "OMIP-035",
+  "pmc_id": "PMC5494841",
+  "doi": "10.1002/cyto.a.22932",
+  "title": "OMIP-035: Functional Analysis of Natural Killer Cell Subsets in Macaques",
+  "extractions": {
+    "panel": {
+      "llm": {
+        "method": "llm",
+        "data": {
+          "entries": [
+            {
+              "marker": "Mamu-KIR3DL01",
+              "fluorophore": null,
+              "clone": null
+            },
+            {
+              "marker": "Mamu-KIR3DL05",
+              "fluorophore": null,
+              "clone": null
+            },
+            {
+              "marker": "CD16",
+              "fluorophore": null,
+              "clone": null
+            },
+            {
+              "marker": "CD56",
+              "fluorophore": null,
+              "clone": null
+            }
+          ],
+          "notes": "Only marker names mentioned in abstract. Full panel details with fluorophores and clones not provided in the text excerpt."
+        },
+        "confidence": 0.75,
+        "timestamp": "2026-01-09T19:15:45.970073",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC5494841.xml",
+        "notes": null
+      }
+    },
+    "gating_hierarchy": {
+      "llm": {
+        "method": "llm",
+        "data": {
+          "hierarchy": {
+            "name": "All Events",
+            "marker_logic": null,
+            "children": [
+              {
+                "name": "Singlets",
+                "marker_logic": "FSC-A vs FSC-H",
+                "children": [
+                  {
+                    "name": "Live cells",
+                    "marker_logic": "Viability-",
+                    "children": [
+                      {
+                        "name": "Lymphocytes",
+                        "marker_logic": "FSC vs SSC",
+                        "children": [
+                          {
+                            "name": "NK cells",
+                            "marker_logic": "CD56+ and/or CD16+",
+                            "children": [
+                              {
+                                "name": "Mamu-KIR3DL01+ NK cells",
+                                "marker_logic": "Mamu-KIR3DL01+",
+                                "children": [
+                                  {
+                                    "name": "Mamu-KIR3DL01+ KIR3DL05+ NK cells",
+                                    "marker_logic": "Mamu-KIR3DL01+ Mamu-KIR3DL05+",
+                                    "children": []
+                                  },
+                                  {
+                                    "name": "Mamu-KIR3DL01+ KIR3DL05- NK cells",
+                                    "marker_logic": "Mamu-KIR3DL01+ Mamu-KIR3DL05-",
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "name": "Mamu-KIR3DL01- NK cells",
+                                "marker_logic": "Mamu-KIR3DL01-",
+                                "children": [
+                                  {
+                                    "name": "Mamu-KIR3DL01- KIR3DL05+ NK cells",
+                                    "marker_logic": "Mamu-KIR3DL01- Mamu-KIR3DL05+",
+                                    "children": []
+                                  },
+                                  {
+                                    "name": "Mamu-KIR3DL01- KIR3DL05- NK cells",
+                                    "marker_logic": "Mamu-KIR3DL01- Mamu-KIR3DL05-",
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "name": "CD16+ CD56+ NK cells",
+                                "marker_logic": "CD16+ CD56+",
+                                "children": []
+                              },
+                              {
+                                "name": "CD16+ CD56- NK cells",
+                                "marker_logic": "CD16+ CD56-",
+                                "children": []
+                              },
+                              {
+                                "name": "CD16- CD56+ NK cells",
+                                "marker_logic": "CD16- CD56+",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "notes": "Gating hierarchy inferred from panel markers and abstract description. NK cell identification and subset definitions based on KIR and CD16/CD56 expression patterns. Standard flow cytometry gates assumed for initial cell selection.",
+          "confidence": 0.7
+        },
+        "confidence": 0.7,
+        "timestamp": "2026-01-09T19:15:55.353475",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC5494841.xml",
+        "notes": null
+      }
+    },
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": "llm",
+    "gating_hierarchy": "llm"
+  }
+}

@@ -1,0 +1,29 @@
+#!/bin/bash
+# Pre-commit hook: Run ruff and pyright on staged Python files
+
+set -e
+
+# Get staged Python files
+STAGED_PY_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.py$' || true)
+
+if [ -z "$STAGED_PY_FILES" ]; then
+    echo "No Python files staged, skipping lint/type checks"
+    exit 0
+fi
+
+echo "Running ruff on staged Python files..."
+echo "$STAGED_PY_FILES" | xargs ruff check --fix
+if [ $? -ne 0 ]; then
+    echo "Ruff found issues. Fix them before committing."
+    exit 1
+fi
+
+echo "Running pyright on staged Python files..."
+echo "$STAGED_PY_FILES" | xargs pyright
+if [ $? -ne 0 ]; then
+    echo "Pyright found type errors. Fix them before committing."
+    exit 1
+fi
+
+echo "All checks passed!"
+exit 0

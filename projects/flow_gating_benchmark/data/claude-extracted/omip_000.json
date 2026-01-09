@@ -1,0 +1,19 @@
+{
+  "omip_id": "OMIP-000",
+  "pmc_id": "PMC7581549",
+  "doi": "10.1002/cyto.a.24204",
+  "title": "OMIP-0XX: High-Dimensional Characterization of Global and Antigen-Specific B cells in Chronic Infection",
+  "extractions": {
+    "panel": {},
+    "gating_hierarchy": {},
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": null,
+    "gating_hierarchy": null
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "omip_id": "OMIP-005",
+  "pmc_id": "PMC11389872",
+  "doi": "10.1002/cyto.a.22008",
+  "title": "OMIP-005: Quality and Phenotype of Antigen-Responsive Rhesus Macaque T Cells",
+  "extractions": {
+    "panel": {},
+    "gating_hierarchy": {},
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": null,
+    "gating_hierarchy": null
+  }
+}

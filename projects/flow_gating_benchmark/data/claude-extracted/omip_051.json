@@ -1,0 +1,19 @@
+{
+  "omip_id": "OMIP-051",
+  "pmc_id": "PMC6546165",
+  "doi": "10.1002/cyto.a.23689",
+  "title": "OMIP-051 \u2013 28-color flow cytometry panel to characterize B\ncells and myeloid cells",
+  "extractions": {
+    "panel": {},
+    "gating_hierarchy": {},
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": null,
+    "gating_hierarchy": null
+  }
+}

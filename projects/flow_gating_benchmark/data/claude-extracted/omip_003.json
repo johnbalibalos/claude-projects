@@ -1,0 +1,19 @@
+{
+  "omip_id": "OMIP-003",
+  "pmc_id": "PMC3199331",
+  "doi": "10.1002/cyto.a.21112",
+  "title": "OMIP-003: Phenotypic Analysis of Human Memory B Cells",
+  "extractions": {
+    "panel": {},
+    "gating_hierarchy": {},
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": null,
+    "gating_hierarchy": null
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "omip_id": "OMIP-026",
+  "pmc_id": "PMC4879048",
+  "doi": "10.1002/cyto.a.22808",
+  "title": "OMIP-026: Immunologic Checkpoint Expression on Murine Effector and Memory T-cell Subsets *",
+  "extractions": {
+    "panel": {},
+    "gating_hierarchy": {},
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": null,
+    "gating_hierarchy": null
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "omip_id": "OMIP-044",
+  "pmc_id": "PMC6785241",
+  "doi": "10.1002/cyto.a.23331",
+  "title": "OMIP-044: 28-color immunophenotyping of the human dendritic cell compartment",
+  "extractions": {
+    "panel": {},
+    "gating_hierarchy": {},
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": null,
+    "gating_hierarchy": null
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "omip_id": "OMIP-042",
+  "pmc_id": "PMC6077845",
+  "doi": "10.1002/cyto.a.23303",
+  "title": "OMIP-042: 21-color flow cytometry to comprehensively immunophenotype major lymphocyte and myeloid subsets in human peripheral blood",
+  "extractions": {
+    "panel": {},
+    "gating_hierarchy": {},
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": null,
+    "gating_hierarchy": null
+  }
+}

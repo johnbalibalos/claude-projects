@@ -1,0 +1,19 @@
+{
+  "omip_id": "OMIP-040",
+  "pmc_id": "PMC5739970",
+  "doi": "10.1002/cyto.a.23187",
+  "title": "OMIP-040: Optimized Gating of Human Prostate Cellular Subpopulations",
+  "extractions": {
+    "panel": {},
+    "gating_hierarchy": {},
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": null,
+    "gating_hierarchy": null
+  }
+}

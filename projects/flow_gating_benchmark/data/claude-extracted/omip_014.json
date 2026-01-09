@@ -1,0 +1,19 @@
+{
+  "omip_id": "OMIP-014",
+  "pmc_id": "PMC3581864",
+  "doi": "10.1002/cyto.a.22218",
+  "title": "OMIP-014: Validated multi-functional characterization of antigen-specific human T-cells by intracellular cytokine staining",
+  "extractions": {
+    "panel": {},
+    "gating_hierarchy": {},
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": null,
+    "gating_hierarchy": null
+  }
+}

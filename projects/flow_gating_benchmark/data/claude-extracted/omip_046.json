@@ -1,0 +1,19 @@
+{
+  "omip_id": "OMIP-046",
+  "pmc_id": "PMC6059363",
+  "doi": "10.1002/cyto.a.23357",
+  "title": "OMIP-046: Characterization of invariant T cell subset activation in humans.",
+  "extractions": {
+    "panel": {},
+    "gating_hierarchy": {},
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": null,
+    "gating_hierarchy": null
+  }
+}

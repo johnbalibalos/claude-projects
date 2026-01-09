@@ -1,0 +1,480 @@
+{
+  "omip_id": "OMIP-077",
+  "pmc_id": "PMC9292053",
+  "doi": "10.1002/cyto.a.24481",
+  "title": "OMIP 077: Definition of all principal human leukocyte populations using a broadly applicable 14\u2010color panel",
+  "extractions": {
+    "panel": {
+      "xml": {
+        "method": "xml",
+        "data": {
+          "entries": [
+            {
+              "marker": "CD1c",
+              "fluorophore": "PE",
+              "clone": "AD5\u20108E7",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD3",
+              "fluorophore": "BV605",
+              "clone": "OKT3",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD14",
+              "fluorophore": "BV711",
+              "clone": "M\u03a6P9",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD15",
+              "fluorophore": "PerCP\u2010Cy5.5",
+              "clone": "HI98",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD16",
+              "fluorophore": "APC\u2010efluor780",
+              "clone": "ebioCB16",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD19",
+              "fluorophore": "APC\u2010R700",
+              "clone": "HIB19",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD34",
+              "fluorophore": "FITC",
+              "clone": "HPCA\u20102",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD38",
+              "fluorophore": "BV421",
+              "clone": "HIT2",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD45",
+              "fluorophore": "BV480",
+              "clone": "HI30",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD56",
+              "fluorophore": "PE\u2010Cy7",
+              "clone": "NCAM16.2",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD123",
+              "fluorophore": "BV650",
+              "clone": "7G3",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD141",
+              "fluorophore": "APC",
+              "clone": "AD5\u201014H12",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD193",
+              "fluorophore": "PE\u2010CF594",
+              "clone": "5E8",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "HLA\u2010DR",
+              "fluorophore": "BV786",
+              "clone": "G46\u20106",
+              "vendor": null,
+              "cat_number": null
+            }
+          ],
+          "table_caption": "Summary table of antibodies used in this OMIP"
+        },
+        "confidence": 0.9,
+        "timestamp": "2026-01-09T19:16:40.761712",
+        "model": null,
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC9292053.xml",
+        "notes": "Extracted from TABLE 2"
+      },
+      "llm": {
+        "method": "llm",
+        "data": {
+          "entries": [
+            {
+              "marker": "CD1c",
+              "fluorophore": "PE",
+              "clone": "AD5-8E7"
+            },
+            {
+              "marker": "CD3",
+              "fluorophore": "BV605",
+              "clone": "OKT3"
+            },
+            {
+              "marker": "CD14",
+              "fluorophore": "BV711",
+              "clone": "M\u03a6P9"
+            },
+            {
+              "marker": "CD15",
+              "fluorophore": "PerCP-Cy5.5",
+              "clone": "HI98"
+            },
+            {
+              "marker": "CD16",
+              "fluorophore": "APC-efluor780",
+              "clone": "ebioCB16"
+            },
+            {
+              "marker": "CD19",
+              "fluorophore": "APC-R700",
+              "clone": "HIB19"
+            },
+            {
+              "marker": "CD34",
+              "fluorophore": "FITC",
+              "clone": "HPCA-2"
+            },
+            {
+              "marker": "CD38",
+              "fluorophore": "BV421",
+              "clone": "HIT2"
+            },
+            {
+              "marker": "CD45",
+              "fluorophore": "BV480",
+              "clone": "HI30"
+            },
+            {
+              "marker": "CD56",
+              "fluorophore": "PE-Cy7",
+              "clone": "NCAM16.2"
+            },
+            {
+              "marker": "CD123",
+              "fluorophore": "BV650",
+              "clone": "7G3"
+            },
+            {
+              "marker": "CD141",
+              "fluorophore": "APC",
+              "clone": "AD5-14H12"
+            },
+            {
+              "marker": "CD193",
+              "fluorophore": "PE-CF594",
+              "clone": "5E8"
+            },
+            {
+              "marker": "HLA-DR",
+              "fluorophore": "BV786",
+              "clone": "G46-6"
+            }
+          ],
+          "notes": "14-color panel for comprehensive leukocyte phenotyping in whole blood. No viability dye or scatter parameters specifically mentioned in the provided text."
+        },
+        "confidence": 0.75,
+        "timestamp": "2026-01-09T19:16:46.536122",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC9292053.xml",
+        "notes": null
+      }
+    },
+    "gating_hierarchy": {
+      "xml": {
+        "method": "xml",
+        "data": {
+          "table_data": {
+            "headers": [
+              "Purpose",
+              "Comprehensive phenotyping of leukocyte subsets in WB using flow cytometry with just 14 colors"
+            ],
+            "rows": [
+              [
+                "Species",
+                "Human ( Homo sapiens )"
+              ],
+              [
+                "Cell types",
+                "Leukocytes from human WB (anticoagulated, erythrocyte\u2010depleted)"
+              ],
+              [
+                "Cross references",
+                "OMIP\u2010023, OMIP\u2010024, OMIP\u2010042, OMIP\u2010051, OMIP\u2010063"
+              ]
+            ]
+          },
+          "hierarchy": null,
+          "note": "Gating table found but hierarchy requires LLM interpretation"
+        },
+        "confidence": 0.3,
+        "timestamp": "2026-01-09T19:16:40.761729",
+        "model": null,
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC9292053.xml",
+        "notes": "Phenotype table only, no tree structure"
+      },
+      "llm": {
+        "method": "llm",
+        "data": {
+          "hierarchy": {
+            "name": "All Events",
+            "marker_logic": null,
+            "children": [
+              {
+                "name": "Singlets",
+                "marker_logic": "FSC-A vs FSC-H",
+                "children": [
+                  {
+                    "name": "Live cells",
+                    "marker_logic": "Viability-",
+                    "children": [
+                      {
+                        "name": "Leukocytes",
+                        "marker_logic": "CD45+",
+                        "children": [
+                          {
+                            "name": "T cells",
+                            "marker_logic": "CD3+",
+                            "children": [
+                              {
+                                "name": "NK-T cells",
+                                "marker_logic": "CD3+ CD56+",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "name": "NK cells",
+                            "marker_logic": "CD3- CD56+",
+                            "children": []
+                          },
+                          {
+                            "name": "B cells",
+                            "marker_logic": "CD19+ CD38-",
+                            "children": [
+                              {
+                                "name": "Marginal Zone B cells",
+                                "marker_logic": "CD19+ CD1c+",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "name": "Plasma cells",
+                            "marker_logic": "CD19+ CD38+ HLA-DR+",
+                            "children": []
+                          },
+                          {
+                            "name": "Classical monocytes",
+                            "marker_logic": "CD14+ CD16- HLA-DR+",
+                            "children": []
+                          },
+                          {
+                            "name": "Intermediate monocytes",
+                            "marker_logic": "CD14+ CD16+ HLA-DR+",
+                            "children": []
+                          },
+                          {
+                            "name": "Non-classical monocytes",
+                            "marker_logic": "CD14- CD16+ HLA-DR+",
+                            "children": []
+                          },
+                          {
+                            "name": "CD1c+ mDCs",
+                            "marker_logic": "CD14- CD19- CD1c+ HLA-DR+",
+                            "children": []
+                          },
+                          {
+                            "name": "CD141+ mDCs",
+                            "marker_logic": "CD14- CD19- CD141+ HLA-DR+",
+                            "children": []
+                          },
+                          {
+                            "name": "pDCs",
+                            "marker_logic": "CD14- CD19- CD123+ HLA-DR+",
+                            "children": []
+                          },
+                          {
+                            "name": "Neutrophils",
+                            "marker_logic": "CD16+ CD15+ HLA-DR-",
+                            "children": []
+                          },
+                          {
+                            "name": "Eosinophils",
+                            "marker_logic": "CD15+ CD193+",
+                            "children": []
+                          },
+                          {
+                            "name": "Basophils",
+                            "marker_logic": "CD123+ CD38+ CD193+",
+                            "children": []
+                          },
+                          {
+                            "name": "Progenitor cells",
+                            "marker_logic": "CD34+",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "notes": "Gating strategy inferred from marker specificities table and figure descriptions. The paper focuses on identifying all principal leukocyte populations with 14 markers. Some specific gating logic reconstructed from marker purposes and typical flow cytometry conventions.",
+          "confidence": 0.7
+        },
+        "confidence": 0.7,
+        "timestamp": "2026-01-09T19:16:58.358831",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC9292053.xml",
+        "notes": null
+      }
+    },
+    "context": {}
+  },
+  "concordance": {
+    "panel": [
+      {
+        "methods": "xml_vs_llm",
+        "metric": "jaccard_markers_normalized",
+        "score": 1.0,
+        "details": {
+          "raw_jaccard": 0.8666666666666667,
+          "normalized_jaccard": 1.0,
+          "raw_markers_a": [
+            "CD123",
+            "CD14",
+            "CD141",
+            "CD15",
+            "CD16",
+            "CD19",
+            "CD193",
+            "CD1C",
+            "CD3",
+            "CD34",
+            "CD38",
+            "CD45",
+            "CD56",
+            "HLA\u2010DR"
+          ],
+          "raw_markers_b": [
+            "CD123",
+            "CD14",
+            "CD141",
+            "CD15",
+            "CD16",
+            "CD19",
+            "CD193",
+            "CD1C",
+            "CD3",
+            "CD34",
+            "CD38",
+            "CD45",
+            "CD56",
+            "HLA-DR"
+          ],
+          "canonical_intersection": [
+            "CD123",
+            "CD14",
+            "CD141",
+            "CD15",
+            "CD16",
+            "CD19",
+            "CD193",
+            "CD1C",
+            "CD3",
+            "CD34",
+            "CD38",
+            "CD45",
+            "CD56",
+            "MHC CLASS II"
+          ],
+          "canonical_only_a": [],
+          "canonical_only_b": []
+        }
+      }
+    ],
+    "gating_hierarchy": [
+      {
+        "methods": "xml_vs_llm",
+        "metric": "jaccard_gates",
+        "score": 0.0,
+        "details": {
+          "gates_a": [],
+          "gates_b": [
+            "all events",
+            "b cells",
+            "basophils",
+            "cd141+ mdcs",
+            "cd1c+ mdcs",
+            "classical monocytes",
+            "eosinophils",
+            "intermediate monocytes",
+            "leukocytes",
+            "live cells",
+            "marginal zone b cells",
+            "neutrophils",
+            "nk cells",
+            "nk-t cells",
+            "non-classical monocytes",
+            "pdcs",
+            "plasma cells",
+            "progenitor cells",
+            "singlets",
+            "t cells"
+          ],
+          "intersection": [],
+          "only_in_a": [],
+          "only_in_b": [
+            "all events",
+            "b cells",
+            "basophils",
+            "cd141+ mdcs",
+            "cd1c+ mdcs",
+            "classical monocytes",
+            "eosinophils",
+            "intermediate monocytes",
+            "leukocytes",
+            "live cells",
+            "marginal zone b cells",
+            "neutrophils",
+            "nk cells",
+            "nk-t cells",
+            "non-classical monocytes",
+            "pdcs",
+            "plasma cells",
+            "progenitor cells",
+            "singlets",
+            "t cells"
+          ]
+        }
+      }
+    ]
+  },
+  "best_extraction": {
+    "panel": "xml",
+    "gating_hierarchy": "llm"
+  }
+}

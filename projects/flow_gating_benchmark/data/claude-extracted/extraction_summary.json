@@ -1,0 +1,352 @@
+{
+  "successful": [
+    {
+      "omip_id": "OMIP-095",
+      "pmc_id": "PMC10843696",
+      "panel_methods": [
+        "llm"
+      ],
+      "hierarchy_methods": [
+        "llm"
+      ],
+      "best_panel": "llm",
+      "best_hierarchy": "llm"
+    },
+    {
+      "omip_id": "OMIP-101",
+      "pmc_id": "PMC10958279",
+      "panel_methods": [
+        "xml",
+        "llm"
+      ],
+      "hierarchy_methods": [
+        "llm"
+      ],
+      "best_panel": "xml",
+      "best_hierarchy": "llm",
+      "panel_concordance": [
+        {
+          "methods": "xml_vs_llm",
+          "score": 1.0
+        }
+      ]
+    },
+    {
+      "omip_id": "OMIP-005",
+      "pmc_id": "PMC11389872",
+      "panel_methods": [],
+      "hierarchy_methods": [],
+      "best_panel": null,
+      "best_hierarchy": null
+    },
+    {
+      "omip_id": "OMIP-087",
+      "pmc_id": "PMC12244433",
+      "panel_methods": [
+        "xml",
+        "llm"
+      ],
+      "hierarchy_methods": [
+        "llm"
+      ],
+      "best_panel": "xml",
+      "best_hierarchy": "llm",
+      "panel_concordance": [
+        {
+          "methods": "xml_vs_llm",
+          "score": 0.8108108108108109
+        }
+      ]
+    },
+    {
+      "omip_id": "OMIP-003",
+      "pmc_id": "PMC3199331",
+      "panel_methods": [],
+      "hierarchy_methods": [],
+      "best_panel": null,
+      "best_hierarchy": null
+    },
+    {
+      "omip_id": "OMIP-006",
+      "pmc_id": "PMC3352600",
+      "panel_methods": [],
+      "hierarchy_methods": [],
+      "best_panel": null,
+      "best_hierarchy": null
+    },
+    {
+      "omip_id": "OMIP-008",
+      "pmc_id": "PMC3418807",
+      "panel_methods": [
+        "llm"
+      ],
+      "hierarchy_methods": [
+        "llm"
+      ],
+      "best_panel": "llm",
+      "best_hierarchy": "llm"
+    },
+    {
+      "omip_id": "OMIP-004",
+      "pmc_id": "PMC3510978",
+      "panel_methods": [],
+      "hierarchy_methods": [],
+      "best_panel": null,
+      "best_hierarchy": null
+    },
+    {
+      "omip_id": "OMIP-014",
+      "pmc_id": "PMC3581864",
+      "panel_methods": [],
+      "hierarchy_methods": [],
+      "best_panel": null,
+      "best_hierarchy": null
+    },
+    {
+      "omip_id": "OMIP-022",
+      "pmc_id": "PMC4231567",
+      "panel_methods": [
+        "xml",
+        "llm"
+      ],
+      "hierarchy_methods": [
+        "llm"
+      ],
+      "best_panel": "xml",
+      "best_hierarchy": "llm",
+      "panel_concordance": [
+        {
+          "methods": "xml_vs_llm",
+          "score": 1.0
+        }
+      ]
+    },
+    {
+      "omip_id": "OMIP-017",
+      "pmc_id": "PMC4347402",
+      "panel_methods": [],
+      "hierarchy_methods": [],
+      "best_panel": null,
+      "best_hierarchy": null
+    },
+    {
+      "omip_id": "OMIP-025",
+      "pmc_id": "PMC4454451",
+      "panel_methods": [
+        "llm"
+      ],
+      "hierarchy_methods": [
+        "llm"
+      ],
+      "best_panel": "llm",
+      "best_hierarchy": "llm"
+    },
+    {
+      "omip_id": "OMIP-024",
+      "pmc_id": "PMC4457440",
+      "panel_methods": [],
+      "hierarchy_methods": [],
+      "best_panel": null,
+      "best_hierarchy": null
+    },
+    {
+      "omip_id": "OMIP-028",
+      "pmc_id": "PMC4758211",
+      "panel_methods": [],
+      "hierarchy_methods": [],
+      "best_panel": null,
+      "best_hierarchy": null
+    },
+    {
+      "omip_id": "OMIP-026",
+      "pmc_id": "PMC4879048",
+      "panel_methods": [],
+      "hierarchy_methods": [],
+      "best_panel": null,
+      "best_hierarchy": null
+    },
+    {
+      "omip_id": "OMIP-035",
+      "pmc_id": "PMC5494841",
+      "panel_methods": [
+        "llm"
+      ],
+      "hierarchy_methods": [
+        "llm"
+      ],
+      "best_panel": "llm",
+      "best_hierarchy": "llm"
+    },
+    {
+      "omip_id": "OMIP-040",
+      "pmc_id": "PMC5739970",
+      "panel_methods": [],
+      "hierarchy_methods": [],
+      "best_panel": null,
+      "best_hierarchy": null
+    },
+    {
+      "omip_id": "OMIP-046",
+      "pmc_id": "PMC6059363",
+      "panel_methods": [],
+      "hierarchy_methods": [],
+      "best_panel": null,
+      "best_hierarchy": null
+    },
+    {
+      "omip_id": "OMIP-042",
+      "pmc_id": "PMC6077845",
+      "panel_methods": [],
+      "hierarchy_methods": [],
+      "best_panel": null,
+      "best_hierarchy": null
+    },
+    {
+      "omip_id": "OMIP-053",
+      "pmc_id": "PMC6497402",
+      "panel_methods": [
+        "llm"
+      ],
+      "hierarchy_methods": [
+        "llm"
+      ],
+      "best_panel": "llm",
+      "best_hierarchy": "llm"
+    },
+    {
+      "omip_id": "OMIP-051",
+      "pmc_id": "PMC6546165",
+      "panel_methods": [],
+      "hierarchy_methods": [],
+      "best_panel": null,
+      "best_hierarchy": null
+    },
+    {
+      "omip_id": "OMIP-044",
+      "pmc_id": "PMC6785241",
+      "panel_methods": [],
+      "hierarchy_methods": [],
+      "best_panel": null,
+      "best_hierarchy": null
+    },
+    {
+      "omip_id": "OMIP-000",
+      "pmc_id": "PMC7581549",
+      "panel_methods": [],
+      "hierarchy_methods": [],
+      "best_panel": null,
+      "best_hierarchy": null
+    },
+    {
+      "omip_id": "OMIP-074",
+      "pmc_id": "PMC8453800",
+      "panel_methods": [
+        "xml",
+        "llm"
+      ],
+      "hierarchy_methods": [
+        "llm"
+      ],
+      "best_panel": "xml",
+      "best_hierarchy": "llm",
+      "panel_concordance": [
+        {
+          "methods": "xml_vs_llm",
+          "score": 1.0
+        }
+      ]
+    },
+    {
+      "omip_id": "OMIP-064",
+      "pmc_id": "PMC8485754",
+      "panel_methods": [
+        "llm"
+      ],
+      "hierarchy_methods": [
+        "llm"
+      ],
+      "best_panel": "llm",
+      "best_hierarchy": "llm"
+    },
+    {
+      "omip_id": "OMIP-077",
+      "pmc_id": "PMC9292053",
+      "panel_methods": [
+        "xml",
+        "llm"
+      ],
+      "hierarchy_methods": [
+        "xml",
+        "llm"
+      ],
+      "best_panel": "xml",
+      "best_hierarchy": "llm",
+      "panel_concordance": [
+        {
+          "methods": "xml_vs_llm",
+          "score": 1.0
+        }
+      ],
+      "hierarchy_concordance": [
+        {
+          "methods": "xml_vs_llm",
+          "score": 0.0
+        }
+      ]
+    },
+    {
+      "omip_id": "OMIP-083",
+      "pmc_id": "PMC9310743",
+      "panel_methods": [
+        "xml",
+        "llm"
+      ],
+      "hierarchy_methods": [
+        "xml",
+        "llm"
+      ],
+      "best_panel": "xml",
+      "best_hierarchy": "llm",
+      "panel_concordance": [
+        {
+          "methods": "xml_vs_llm",
+          "score": 1.0
+        }
+      ],
+      "hierarchy_concordance": [
+        {
+          "methods": "xml_vs_llm",
+          "score": 0.0
+        }
+      ]
+    },
+    {
+      "omip_id": "OMIP-076",
+      "pmc_id": "PMC9546025",
+      "panel_methods": [
+        "xml",
+        "llm"
+      ],
+      "hierarchy_methods": [
+        "xml",
+        "llm"
+      ],
+      "best_panel": "xml",
+      "best_hierarchy": "llm",
+      "panel_concordance": [
+        {
+          "methods": "xml_vs_llm",
+          "score": 1.0
+        }
+      ],
+      "hierarchy_concordance": [
+        {
+          "methods": "xml_vs_llm",
+          "score": 0.0
+        }
+      ]
+    }
+  ],
+  "failed": [],
+  "concordance_summary": []
+}

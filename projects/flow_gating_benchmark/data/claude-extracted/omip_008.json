@@ -1,0 +1,96 @@
+{
+  "omip_id": "OMIP-008",
+  "pmc_id": "PMC3418807",
+  "doi": "10.1002/cyto.a.22035",
+  "title": "OMIP-008: Measurement of Th1 and Th2 cytokine polyfunctionality of human T cells",
+  "extractions": {
+    "panel": {
+      "llm": {
+        "method": "llm",
+        "data": {
+          "entries": [
+            {
+              "marker": "CD4",
+              "fluorophore": null,
+              "clone": null
+            },
+            {
+              "marker": "CD8",
+              "fluorophore": null,
+              "clone": null
+            }
+          ],
+          "notes": "Only CD4 and CD8 markers are explicitly mentioned in the abstract. The title references Th1 and Th2 cytokine measurement but no specific cytokine markers, fluorophores, or clones are detailed in the provided text. Full panel details would require the complete methods section."
+        },
+        "confidence": 0.75,
+        "timestamp": "2026-01-09T19:15:04.543982",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC3418807.xml",
+        "notes": null
+      }
+    },
+    "gating_hierarchy": {
+      "llm": {
+        "method": "llm",
+        "data": {
+          "hierarchy": {
+            "name": "All Events",
+            "marker_logic": null,
+            "children": [
+              {
+                "name": "Singlets",
+                "marker_logic": "FSC-A vs FSC-H",
+                "children": [
+                  {
+                    "name": "Live cells",
+                    "marker_logic": "Viability-",
+                    "children": [
+                      {
+                        "name": "Lymphocytes",
+                        "marker_logic": "FSC vs SSC",
+                        "children": [
+                          {
+                            "name": "T cells",
+                            "marker_logic": "CD3+",
+                            "children": [
+                              {
+                                "name": "CD4+ T cells",
+                                "marker_logic": "CD4+ CD8-",
+                                "children": []
+                              },
+                              {
+                                "name": "CD8+ T cells",
+                                "marker_logic": "CD4- CD8+",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "notes": "Limited gating information provided. Standard flow cytometry hierarchy inferred with CD4/CD8 T cell separation based on panel markers and title focus on CD4+ and CD8+ T cell responses. No detailed gating strategy described in the provided text.",
+          "confidence": 0.3
+        },
+        "confidence": 0.3,
+        "timestamp": "2026-01-09T19:15:09.822670",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC3418807.xml",
+        "notes": null
+      }
+    },
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": "llm",
+    "gating_hierarchy": "llm"
+  }
+}

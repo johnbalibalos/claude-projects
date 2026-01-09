@@ -1,32 +1,18 @@
-# Environment variables (contains secrets)
+# Secrets
 .env
 
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
 *.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
 *.egg-info/
-.installed.cfg
-*.egg
+dist/
+build/
+.eggs/
 
 # Virtual environments
 venv/
-ENV/
-env/
+.venv/
 
 # IDE
 .idea/
@@ -34,18 +20,13 @@ env/
 *.swp
 *.swo
 
-# Test results (but allow ground truth test cases and claude settings)
-*.json
-!pyproject.toml
-!**/ground_truth/**/*.json
-!.claude/settings.json
-
 # Jupyter
 .ipynb_checkpoints/
 
-# Docs (downloaded papers, etc.)
+# Project-specific: downloaded papers, experiment outputs
 docs/
-
-# Experiment artifacts
 checkpoints/
-results/
+**/results/
+
+# Local config
+.claude/settings.local.json

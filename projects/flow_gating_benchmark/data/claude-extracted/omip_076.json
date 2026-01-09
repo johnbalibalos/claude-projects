@@ -1,0 +1,584 @@
+{
+  "omip_id": "OMIP-076",
+  "pmc_id": "PMC9546025",
+  "doi": "10.1002/cyto.a.24474",
+  "title": "OMIP 076: High\u2010dimensional  immunophenotyping of murine T\u2010cell, B\u2010cell, and antibody secreting cell subsets",
+  "extractions": {
+    "panel": {
+      "xml": {
+        "method": "xml",
+        "data": {
+          "entries": [
+            {
+              "marker": "PD\u2010L2 (CD273)",
+              "fluorophore": "BUV395",
+              "clone": "TY25",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgD",
+              "fluorophore": "BUV496",
+              "clone": "AMS 9.1",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD44",
+              "fluorophore": "BUV737",
+              "clone": "IM7",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "ICOS (CD278)",
+              "fluorophore": "BV421",
+              "clone": "7E.17G9",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "PD\u20101 (CD279)",
+              "fluorophore": "BV480",
+              "clone": "J43",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "Live/Dead",
+              "fluorophore": "FVS575",
+              "clone": "N/A",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD80",
+              "fluorophore": "BV650",
+              "clone": "16\u201010A1",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IgM",
+              "fluorophore": "BV711",
+              "clone": "R6.60.2",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD4",
+              "fluorophore": "BV786",
+              "clone": "RM4\u20105",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD19",
+              "fluorophore": "BV786",
+              "clone": "1D3",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "Synd\u20101 (CD138)",
+              "fluorophore": "BB515",
+              "clone": "281\u20102",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "TCR\u03b2",
+              "fluorophore": "BB700",
+              "clone": "H57\u2010597",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "Foxp3",
+              "fluorophore": "PE",
+              "clone": "FJK\u201016s",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "B220 (CD45R)",
+              "fluorophore": "PE\u2010CF594",
+              "clone": "RA3\u20106B2",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD25",
+              "fluorophore": "PE\u2010Cy5",
+              "clone": "PC61",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CXCR5 (CD185)",
+              "fluorophore": "PE\u2010Cy7",
+              "clone": "2G8",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "MHC class II (I\u2010A/I\u2010E)",
+              "fluorophore": "AF647",
+              "clone": "M5/114.15.2",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD62L",
+              "fluorophore": "APC\u2010R700",
+              "clone": "MEL\u201014",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD45",
+              "fluorophore": "APC\u2010Cy7",
+              "clone": "30\u2010F11",
+              "vendor": null,
+              "cat_number": null
+            }
+          ],
+          "table_caption": "Reagents used for OMIP"
+        },
+        "confidence": 0.9,
+        "timestamp": "2026-01-09T19:17:18.236229",
+        "model": null,
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC9546025.xml",
+        "notes": "Extracted from TABLE 2"
+      },
+      "llm": {
+        "method": "llm",
+        "data": {
+          "entries": [
+            {
+              "marker": "PD-L2",
+              "fluorophore": "BUV395",
+              "clone": "TY25"
+            },
+            {
+              "marker": "CD273",
+              "fluorophore": "BUV395",
+              "clone": "TY25"
+            },
+            {
+              "marker": "IgD",
+              "fluorophore": "BUV496",
+              "clone": "AMS 9.1"
+            },
+            {
+              "marker": "CD44",
+              "fluorophore": "BUV737",
+              "clone": "IM7"
+            },
+            {
+              "marker": "ICOS",
+              "fluorophore": "BV421",
+              "clone": "7E.17G9"
+            },
+            {
+              "marker": "CD278",
+              "fluorophore": "BV421",
+              "clone": "7E.17G9"
+            },
+            {
+              "marker": "PD-1",
+              "fluorophore": "BV480",
+              "clone": "J43"
+            },
+            {
+              "marker": "CD279",
+              "fluorophore": "BV480",
+              "clone": "J43"
+            },
+            {
+              "marker": "Live/Dead",
+              "fluorophore": "FVS575",
+              "clone": null
+            },
+            {
+              "marker": "CD80",
+              "fluorophore": "BV650",
+              "clone": "16-10A1"
+            },
+            {
+              "marker": "IgM",
+              "fluorophore": "BV711",
+              "clone": "R6.60.2"
+            },
+            {
+              "marker": "CD4",
+              "fluorophore": "BV786",
+              "clone": "RM4-5"
+            },
+            {
+              "marker": "CD19",
+              "fluorophore": "BV786",
+              "clone": "1D3"
+            },
+            {
+              "marker": "Syndecan-1",
+              "fluorophore": "BB515",
+              "clone": "281-2"
+            },
+            {
+              "marker": "CD138",
+              "fluorophore": "BB515",
+              "clone": "281-2"
+            },
+            {
+              "marker": "TCR\u03b2",
+              "fluorophore": "BB700",
+              "clone": "H57-597"
+            },
+            {
+              "marker": "Foxp3",
+              "fluorophore": "PE",
+              "clone": "FJK-16s"
+            },
+            {
+              "marker": "B220",
+              "fluorophore": "PE-CF594",
+              "clone": "RA3-6B2"
+            },
+            {
+              "marker": "CD45R",
+              "fluorophore": "PE-CF594",
+              "clone": "RA3-6B2"
+            },
+            {
+              "marker": "CD25",
+              "fluorophore": "PE-Cy5",
+              "clone": "PC61"
+            },
+            {
+              "marker": "CXCR5",
+              "fluorophore": "PE-Cy7",
+              "clone": "2G8"
+            },
+            {
+              "marker": "CD185",
+              "fluorophore": "PE-Cy7",
+              "clone": "2G8"
+            },
+            {
+              "marker": "MHC class II",
+              "fluorophore": "AF647",
+              "clone": "M5/114.15.2"
+            },
+            {
+              "marker": "I-A/I-E",
+              "fluorophore": "AF647",
+              "clone": "M5/114.15.2"
+            },
+            {
+              "marker": "CD62L",
+              "fluorophore": "APC-R700",
+              "clone": "MEL-14"
+            },
+            {
+              "marker": "CD45",
+              "fluorophore": "APC-Cy7",
+              "clone": "30-F11"
+            }
+          ],
+          "notes": "Panel includes alternative names for same markers (e.g., PD-L2/CD273, ICOS/CD278). Some markers share fluorophores in different tubes (CD4 and CD19 both BV786)."
+        },
+        "confidence": 0.75,
+        "timestamp": "2026-01-09T19:17:29.949699",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC9546025.xml",
+        "notes": null
+      }
+    },
+    "gating_hierarchy": {
+      "xml": {
+        "method": "xml",
+        "data": {
+          "table_data": {
+            "headers": [
+              "Purpose",
+              "Comprehensive immunophenotyping of T\u2010cell, B\u2010cell, and ASC subsets"
+            ],
+            "rows": [
+              [
+                "Species",
+                "Mouse"
+              ],
+              [
+                "Cell types",
+                "Murine tissues containing lymphocyte populations"
+              ],
+              [
+                "Cross\u2010reference",
+                "OMIP\u2010031, OMIP\u2010032, OMIP\u2010054, OMIP\u2010061"
+              ]
+            ]
+          },
+          "hierarchy": null,
+          "note": "Gating table found but hierarchy requires LLM interpretation"
+        },
+        "confidence": 0.3,
+        "timestamp": "2026-01-09T19:17:18.236246",
+        "model": null,
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC9546025.xml",
+        "notes": "Phenotype table only, no tree structure"
+      },
+      "llm": {
+        "method": "llm",
+        "data": {
+          "hierarchy": {
+            "name": "All Events",
+            "marker_logic": null,
+            "children": [
+              {
+                "name": "Singlets",
+                "marker_logic": "FSC-A vs FSC-H",
+                "children": [
+                  {
+                    "name": "Live cells",
+                    "marker_logic": "Live/Dead-",
+                    "children": [
+                      {
+                        "name": "Lymphocytes",
+                        "marker_logic": "FSC vs SSC, CD45+",
+                        "children": [
+                          {
+                            "name": "B cells",
+                            "marker_logic": "TCR\u03b2- CD19+",
+                            "children": [
+                              {
+                                "name": "Plasma cells",
+                                "marker_logic": "CD138+ B220-",
+                                "children": []
+                              },
+                              {
+                                "name": "Plasmablasts",
+                                "marker_logic": "CD138+ B220+",
+                                "children": []
+                              },
+                              {
+                                "name": "Activated B cells",
+                                "marker_logic": "CD80+",
+                                "children": []
+                              },
+                              {
+                                "name": "Memory B cells",
+                                "marker_logic": "PD-L2+ IgD-",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "name": "T cells",
+                            "marker_logic": "TCR\u03b2+ CD4+",
+                            "children": [
+                              {
+                                "name": "Naive T cells",
+                                "marker_logic": "CD44- CD62L+",
+                                "children": []
+                              },
+                              {
+                                "name": "Effector memory T cells",
+                                "marker_logic": "CD44+ CD62L-",
+                                "children": []
+                              },
+                              {
+                                "name": "Central memory T cells",
+                                "marker_logic": "CD44+ CD62L+",
+                                "children": []
+                              },
+                              {
+                                "name": "Regulatory T cells",
+                                "marker_logic": "CD25+ Foxp3+",
+                                "children": [
+                                  {
+                                    "name": "ICOS+ Treg",
+                                    "marker_logic": "ICOS+ CD44+",
+                                    "children": []
+                                  },
+                                  {
+                                    "name": "Follicular regulatory T cells",
+                                    "marker_logic": "CXCR5+ PD-1+",
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "name": "T follicular helper cells",
+                                "marker_logic": "CXCR5+ PD-1+ ICOS+",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "name": "ASC subsets",
+                            "marker_logic": "TCR\u03b2- CD4/CD19-",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "notes": "Gating strategy extracted from OMIP-076 paper focusing on comprehensive T-cell, B-cell, and antibody secreting cell (ASC) subset characterization. The hierarchy includes standard debris/doublet/viability gates followed by primary lymphocyte delineation based on TCR\u03b2 and CD19 expression, then subsequent subset identification using activation, memory, and functional markers.",
+          "confidence": 0.85
+        },
+        "confidence": 0.85,
+        "timestamp": "2026-01-09T19:17:44.115389",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC9546025.xml",
+        "notes": null
+      }
+    },
+    "context": {}
+  },
+  "concordance": {
+    "panel": [
+      {
+        "methods": "xml_vs_llm",
+        "metric": "jaccard_markers_normalized",
+        "score": 1.0,
+        "details": {
+          "raw_jaccard": 0.36363636363636365,
+          "normalized_jaccard": 1.0,
+          "raw_markers_a": [
+            "B220 (CD45R)",
+            "CD19",
+            "CD25",
+            "CD4",
+            "CD44",
+            "CD45",
+            "CD62L",
+            "CD80",
+            "CXCR5 (CD185)",
+            "FOXP3",
+            "ICOS (CD278)",
+            "IGD",
+            "IGM",
+            "LIVE/DEAD",
+            "MHC CLASS II (I\u2010A/I\u2010E)",
+            "PD\u20101 (CD279)",
+            "PD\u2010L2 (CD273)",
+            "SYND\u20101 (CD138)",
+            "TCR\u0392"
+          ],
+          "raw_markers_b": [
+            "B220",
+            "CD138",
+            "CD185",
+            "CD19",
+            "CD25",
+            "CD273",
+            "CD278",
+            "CD279",
+            "CD4",
+            "CD44",
+            "CD45",
+            "CD45R",
+            "CD62L",
+            "CD80",
+            "CXCR5",
+            "FOXP3",
+            "I-A/I-E",
+            "ICOS",
+            "IGD",
+            "IGM",
+            "LIVE/DEAD",
+            "MHC CLASS II",
+            "PD-1",
+            "PD-L2",
+            "SYNDECAN-1",
+            "TCR\u0392"
+          ],
+          "canonical_intersection": [
+            "B220",
+            "CD138",
+            "CD19",
+            "CD25",
+            "CD4",
+            "CD44",
+            "CD45",
+            "CD62L",
+            "CD80",
+            "CXCR5",
+            "FOXP3",
+            "ICOS",
+            "IGD",
+            "IGM",
+            "LIVE/DEAD",
+            "MHC CLASS II",
+            "PD-1",
+            "PD-L2",
+            "TCR\u0392"
+          ],
+          "canonical_only_a": [],
+          "canonical_only_b": []
+        }
+      }
+    ],
+    "gating_hierarchy": [
+      {
+        "methods": "xml_vs_llm",
+        "metric": "jaccard_gates",
+        "score": 0.0,
+        "details": {
+          "gates_a": [],
+          "gates_b": [
+            "activated b cells",
+            "all events",
+            "asc subsets",
+            "b cells",
+            "central memory t cells",
+            "effector memory t cells",
+            "follicular regulatory t cells",
+            "icos+ treg",
+            "live cells",
+            "lymphocytes",
+            "memory b cells",
+            "naive t cells",
+            "plasma cells",
+            "plasmablasts",
+            "regulatory t cells",
+            "singlets",
+            "t cells",
+            "t follicular helper cells"
+          ],
+          "intersection": [],
+          "only_in_a": [],
+          "only_in_b": [
+            "activated b cells",
+            "all events",
+            "asc subsets",
+            "b cells",
+            "central memory t cells",
+            "effector memory t cells",
+            "follicular regulatory t cells",
+            "icos+ treg",
+            "live cells",
+            "lymphocytes",
+            "memory b cells",
+            "naive t cells",
+            "plasma cells",
+            "plasmablasts",
+            "regulatory t cells",
+            "singlets",
+            "t cells",
+            "t follicular helper cells"
+          ]
+        }
+      }
+    ]
+  },
+  "best_extraction": {
+    "panel": "xml",
+    "gating_hierarchy": "llm"
+  }
+}

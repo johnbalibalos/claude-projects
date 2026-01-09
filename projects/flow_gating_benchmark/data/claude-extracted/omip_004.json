@@ -1,0 +1,19 @@
+{
+  "omip_id": "OMIP-004",
+  "pmc_id": "PMC3510978",
+  "doi": "10.1002/cyto.a.21158",
+  "title": "OMIP-004: In-Depth Characterization of Human T Regulatory Cells",
+  "extractions": {
+    "panel": {},
+    "gating_hierarchy": {},
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": null,
+    "gating_hierarchy": null
+  }
+}

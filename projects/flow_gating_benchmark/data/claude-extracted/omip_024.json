@@ -1,0 +1,19 @@
+{
+  "omip_id": "OMIP-024",
+  "pmc_id": "PMC4457440",
+  "doi": "10.1002/cyto.a.22580",
+  "title": "OMIP-024: Pan-leukocyte immunophenotypic characterization of PBMC subsets in human samples",
+  "extractions": {
+    "panel": {},
+    "gating_hierarchy": {},
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": null,
+    "gating_hierarchy": null
+  }
+}

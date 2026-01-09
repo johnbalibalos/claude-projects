@@ -1,0 +1,370 @@
+{
+  "omip_id": "OMIP-022",
+  "pmc_id": "PMC4231567",
+  "doi": "10.1002/cyto.a.22478",
+  "title": "OMIP-022: Comprehensive assessment of antigen-specific human T-cell functionality and memory",
+  "extractions": {
+    "panel": {
+      "xml": {
+        "method": "xml",
+        "data": {
+          "entries": [
+            {
+              "marker": "Viability Dye",
+              "fluorophore": "AViD",
+              "clone": "\u2013",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD14",
+              "fluorophore": "V500",
+              "clone": "M5E2",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD19",
+              "fluorophore": "V500",
+              "clone": "HIB19",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD3",
+              "fluorophore": "ECD",
+              "clone": "UCHT1",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD4",
+              "fluorophore": "APC-eFluor 780",
+              "clone": "RPA-T4",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD8",
+              "fluorophore": "Ax700",
+              "clone": "HIT8a",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CCR7",
+              "fluorophore": "BV605",
+              "clone": "G043H7",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD45RO",
+              "fluorophore": "BV785",
+              "clone": "UCHL1",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IFN-\u03b3",
+              "fluorophore": "V450",
+              "clone": "B27",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IL-2",
+              "fluorophore": "PE",
+              "clone": "MQ1\u201317H12",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "TNF",
+              "fluorophore": "PE-Cy7",
+              "clone": "MAb11",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IL-17A",
+              "fluorophore": "PerCP-Cy5.5",
+              "clone": "BL168",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "IL-22",
+              "fluorophore": "APC",
+              "clone": "IL22JOP",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD107a",
+              "fluorophore": "Ax488",
+              "clone": "H4A3",
+              "vendor": null,
+              "cat_number": null
+            },
+            {
+              "marker": "CD154",
+              "fluorophore": "PE-Cy5",
+              "clone": "TRAP1",
+              "vendor": null,
+              "cat_number": null
+            }
+          ],
+          "table_caption": "Reagents used for OMIP-022"
+        },
+        "confidence": 0.9,
+        "timestamp": "2026-01-09T19:15:09.837067",
+        "model": null,
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC4231567.xml",
+        "notes": "Extracted from Table 2"
+      },
+      "llm": {
+        "method": "llm",
+        "data": {
+          "entries": [
+            {
+              "marker": "Viability Dye",
+              "fluorochrome": "AViD",
+              "clone": null
+            },
+            {
+              "marker": "CD14",
+              "fluorochrome": "V500",
+              "clone": "M5E2"
+            },
+            {
+              "marker": "CD19",
+              "fluorochrome": "V500",
+              "clone": "HIB19"
+            },
+            {
+              "marker": "CD3",
+              "fluorochrome": "ECD",
+              "clone": "UCHT1"
+            },
+            {
+              "marker": "CD4",
+              "fluorochrome": "APC-eFluor 780",
+              "clone": "RPA-T4"
+            },
+            {
+              "marker": "CD8",
+              "fluorochrome": "Ax700",
+              "clone": "HIT8a"
+            },
+            {
+              "marker": "CCR7",
+              "fluorochrome": "BV605",
+              "clone": "G043H7"
+            },
+            {
+              "marker": "CD45RO",
+              "fluorochrome": "BV785",
+              "clone": "UCHL1"
+            },
+            {
+              "marker": "IFN-\u03b3",
+              "fluorochrome": "V450",
+              "clone": "B27"
+            },
+            {
+              "marker": "IL-2",
+              "fluorochrome": "PE",
+              "clone": "MQ1\u201317H12"
+            },
+            {
+              "marker": "TNF",
+              "fluorochrome": "PE-Cy7",
+              "clone": "MAb11"
+            },
+            {
+              "marker": "IL-17A",
+              "fluorochrome": "PerCP-Cy5.5",
+              "clone": "BL168"
+            },
+            {
+              "marker": "IL-22",
+              "fluorochrome": "APC",
+              "clone": "IL22JOP"
+            },
+            {
+              "marker": "CD107a",
+              "fluorochrome": "Ax488",
+              "clone": "H4A3"
+            },
+            {
+              "marker": "CD154",
+              "fluorochrome": "PE-Cy5",
+              "clone": "TRAP1"
+            }
+          ],
+          "notes": "15-parameter panel for comprehensive T-cell analysis including phenotyping, memory categorization, and functional assessment"
+        },
+        "confidence": 0.75,
+        "timestamp": "2026-01-09T19:15:15.984021",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC4231567.xml",
+        "notes": null
+      }
+    },
+    "gating_hierarchy": {
+      "llm": {
+        "method": "llm",
+        "data": {
+          "hierarchy": {
+            "name": "All Events",
+            "marker_logic": null,
+            "children": [
+              {
+                "name": "Time Gate",
+                "marker_logic": "Time vs Events",
+                "children": [
+                  {
+                    "name": "Singlets",
+                    "marker_logic": "FSC-A vs FSC-H",
+                    "children": [
+                      {
+                        "name": "Live cells",
+                        "marker_logic": "Viability-",
+                        "children": [
+                          {
+                            "name": "Lymphocytes",
+                            "marker_logic": "CD14- CD19-",
+                            "children": [
+                              {
+                                "name": "T cells",
+                                "marker_logic": "CD3+",
+                                "children": [
+                                  {
+                                    "name": "CD4+ T cells",
+                                    "marker_logic": "CD4+ CD8-",
+                                    "children": [
+                                      {
+                                        "name": "Memory Subsets",
+                                        "marker_logic": "CCR7 vs CD45RO",
+                                        "children": []
+                                      },
+                                      {
+                                        "name": "Functional Analysis",
+                                        "marker_logic": "IFN-\u03b3, IL-2, TNF, IL-17A, IL-22, CD107a, CD154",
+                                        "children": []
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "name": "CD8+ T cells",
+                                    "marker_logic": "CD4- CD8+",
+                                    "children": [
+                                      {
+                                        "name": "Memory Subsets",
+                                        "marker_logic": "CCR7 vs CD45RO",
+                                        "children": []
+                                      },
+                                      {
+                                        "name": "Functional Analysis",
+                                        "marker_logic": "IFN-\u03b3, IL-2, TNF, IL-17A, IL-22, CD107a, CD154",
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "notes": "Hierarchy extracted from OMIP-022. Time gate used to exclude pressure aberrations, aggregate gates to exclude antibody/cell aggregation. Memory subsets defined by CCR7 vs CD45RO. Functional markers analyzed from both CD4+ and CD8+ populations. IL-17A and CD154 gated on same plot to avoid spectral overlap issues.",
+          "confidence": 0.9
+        },
+        "confidence": 0.9,
+        "timestamp": "2026-01-09T19:15:24.558205",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC4231567.xml",
+        "notes": null
+      }
+    },
+    "context": {}
+  },
+  "concordance": {
+    "panel": [
+      {
+        "methods": "xml_vs_llm",
+        "metric": "jaccard_markers_normalized",
+        "score": 1.0,
+        "details": {
+          "raw_jaccard": 1.0,
+          "normalized_jaccard": 1.0,
+          "raw_markers_a": [
+            "CCR7",
+            "CD107A",
+            "CD14",
+            "CD154",
+            "CD19",
+            "CD3",
+            "CD4",
+            "CD45RO",
+            "CD8",
+            "IFN-\u0393",
+            "IL-17A",
+            "IL-2",
+            "IL-22",
+            "TNF",
+            "VIABILITY DYE"
+          ],
+          "raw_markers_b": [
+            "CCR7",
+            "CD107A",
+            "CD14",
+            "CD154",
+            "CD19",
+            "CD3",
+            "CD4",
+            "CD45RO",
+            "CD8",
+            "IFN-\u0393",
+            "IL-17A",
+            "IL-2",
+            "IL-22",
+            "TNF",
+            "VIABILITY DYE"
+          ],
+          "canonical_intersection": [
+            "CCR7",
+            "CD107A",
+            "CD14",
+            "CD154",
+            "CD19",
+            "CD3",
+            "CD4",
+            "CD45RO",
+            "CD8",
+            "IFN-\u0393",
+            "IL-17A",
+            "IL-2",
+            "IL-22",
+            "TNF",
+            "VIABILITY DYE"
+          ],
+          "canonical_only_a": [],
+          "canonical_only_b": []
+        }
+      }
+    ],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": "xml",
+    "gating_hierarchy": "llm"
+  }
+}

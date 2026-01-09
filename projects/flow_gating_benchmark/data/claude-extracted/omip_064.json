@@ -1,0 +1,107 @@
+{
+  "omip_id": "OMIP-064",
+  "pmc_id": "PMC8485754",
+  "doi": "10.1002/cyto.a.24031",
+  "title": "OMIP-064: A 27-Color Flow Cytometry Panel to Detect and Characterize Human NK Cells and Other Innate Lymphoid Cell Subsets, MAIT Cells, and \u03b3\u03b4 T Cells",
+  "extractions": {
+    "panel": {
+      "llm": {
+        "method": "llm",
+        "data": {
+          "entries": [],
+          "notes": "The abstract provided does not contain the specific antibody panel details including markers, fluorophores, and clones. Only the general purpose and target cell populations (NK cells, innate lymphoid cells, MAIT cells, \u03b3\u03b4 T cells) are mentioned. The actual panel composition would typically be found in the methods section or supplementary tables of the full paper."
+        },
+        "confidence": 0.75,
+        "timestamp": "2026-01-09T19:16:32.930581",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC8485754.xml",
+        "notes": null
+      }
+    },
+    "gating_hierarchy": {
+      "llm": {
+        "method": "llm",
+        "data": {
+          "hierarchy": {
+            "name": "All Events",
+            "marker_logic": null,
+            "children": [
+              {
+                "name": "Singlets",
+                "marker_logic": "FSC-A vs FSC-H",
+                "children": [
+                  {
+                    "name": "Live cells",
+                    "marker_logic": "Viability-",
+                    "children": [
+                      {
+                        "name": "Lymphocytes",
+                        "marker_logic": "FSC vs SSC",
+                        "children": [
+                          {
+                            "name": "T cells",
+                            "marker_logic": "CD3+",
+                            "children": [
+                              {
+                                "name": "MAIT cells",
+                                "marker_logic": "CD3+",
+                                "children": []
+                              },
+                              {
+                                "name": "\u03b3\u03b4 T cells",
+                                "marker_logic": "CD3+",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "name": "Innate Lymphoid Cells",
+                            "marker_logic": "CD3-",
+                            "children": [
+                              {
+                                "name": "NK cells",
+                                "marker_logic": "CD3-",
+                                "children": [
+                                  {
+                                    "name": "Activated NK cells",
+                                    "marker_logic": "activation markers+",
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "name": "Other ILC subsets",
+                                "marker_logic": "CD3-",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "notes": "Panel designed to characterize NK cells, other innate lymphoid cell subsets, MAIT cells, and \u03b3\u03b4 T cells. Specific marker combinations not provided in the text. NK cell activation status is assessed but specific activation markers not detailed. Hierarchy inferred from standard flow cytometry practices and cell types mentioned.",
+          "confidence": 0.4
+        },
+        "confidence": 0.4,
+        "timestamp": "2026-01-09T19:16:40.751968",
+        "model": "claude-sonnet-4-20250514",
+        "source_file": "/home/jb/claude-projects/docs/papers/PMC8485754.xml",
+        "notes": null
+      }
+    },
+    "context": {}
+  },
+  "concordance": {
+    "panel": [],
+    "gating_hierarchy": []
+  },
+  "best_extraction": {
+    "panel": "llm",
+    "gating_hierarchy": "llm"
+  }
+}
