@@ -41,3 +41,7 @@ env/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Experiment artifacts
+checkpoints/
+results/
