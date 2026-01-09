@@ -1,0 +1,9 @@
+# Hypothesis Pipeline Requirements
+# Install with: pip install -r requirements.txt
+
+# Core dependencies
+anthropic>=0.75.0
+pyyaml>=6.0
+
+# Optional: for OpenAI model support
+# openai>=1.0.0
