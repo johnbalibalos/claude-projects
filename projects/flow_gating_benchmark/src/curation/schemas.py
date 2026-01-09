@@ -28,6 +28,7 @@ class SourceType(str, Enum):
     OMIP_PAPER = "omip_paper"
     FLOWREPOSITORY_WSP = "flowrepository_wsp"
     EXPERT_ANNOTATED = "expert_annotated"
+    SYNTHETIC = "synthetic"
 
 
 class GateType(str, Enum):
