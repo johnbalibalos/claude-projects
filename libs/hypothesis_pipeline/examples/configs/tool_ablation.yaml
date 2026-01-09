@@ -1,0 +1,27 @@
+# Tool/MCP Ablation Study
+# Tests whether tool access improves performance
+
+extends: base
+
+name: tool_ablation
+description: Compare performance with and without MCP tools
+hypothesis: Tool access will improve accuracy on tasks requiring domain calculations
+
+tags:
+  - ablation
+  - tools
+  - mcp
+  - benchmark
+
+# Test with and without tools
+tool_configs:
+  - []  # No tools (baseline)
+  - [calculator, search]  # With tools
+
+# Hold these constant
+reasoning_types:
+  - cot  # CoT works well with tool use
+context_levels:
+  - standard
+rag_modes:
+  - none

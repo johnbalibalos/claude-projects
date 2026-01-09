@@ -1,0 +1,42 @@
+# Context Level Ablation
+# Tests how much context information affects performance
+
+extends: base
+
+name: context_ablation
+description: Compare minimal, standard, and rich context levels
+hypothesis: Richer context will improve accuracy, especially for complex domain tasks
+
+tags:
+  - ablation
+  - context
+  - benchmark
+
+# Test all context levels
+context_levels:
+  - minimal
+  - standard
+  - rich
+
+# Hold these constant
+reasoning_types:
+  - cot
+rag_modes:
+  - none
+
+# Custom context configurations
+context_configs:
+  minimal:
+    include_rag: false
+    include_tools: false
+  standard:
+    include_rag: true
+    include_tools: true
+    metadata_fields:
+      - sample_type
+      - species
+  rich:
+    include_rag: true
+    include_tools: true
+    max_rag_docs: 10
+    max_rag_chars: 20000

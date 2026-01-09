@@ -1,0 +1,42 @@
+# Reasoning Strategy Ablation
+# Tests different reasoning approaches while holding other variables constant
+
+extends: base
+
+name: reasoning_ablation
+description: Compare direct, CoT, and WoT reasoning strategies
+hypothesis: Chain-of-thought and web-of-thought will outperform direct prompting on complex tasks
+
+tags:
+  - ablation
+  - reasoning
+  - benchmark
+
+# Test all reasoning strategies
+reasoning_types:
+  - direct
+  - cot
+  - wot
+
+# Hold these constant
+context_levels:
+  - standard
+rag_modes:
+  - none
+
+# Custom strategy configurations
+strategy_configs:
+  cot:
+    reasoning_prompt: |
+      Think through this step by step:
+      1. Identify the key information
+      2. Consider the constraints
+      3. Work through the logic
+      4. Arrive at your answer
+    answer_prefix: "Final Answer:"
+  wot:
+    n_paths: 3
+    evaluation_criteria:
+      - correctness
+      - completeness
+      - consistency
