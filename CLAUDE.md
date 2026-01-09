@@ -10,7 +10,8 @@ Exploratory research projects investigating LLM capabilities in biological and b
 /
 ├── libs/                              # Shared libraries
 │   ├── checkpoint/                    # Resumable workflow checkpointing
-│   └── mcp_tester/                    # MCP/tool ablation framework
+│   ├── mcp_tester/                    # MCP/tool ablation framework
+│   └── hypothesis_pipeline/           # Modular hypothesis testing pipeline
 └── projects/
     ├── flow_panel_optimizer/          # MCP tool for spectral analysis
     ├── drugdevbench/                  # Figure interpretation benchmark
@@ -72,6 +73,38 @@ study = AblationStudy(
 )
 results = study.run()
 ```
+
+### Hypothesis Pipeline (`libs/hypothesis_pipeline/`)
+
+Modular framework for hypothesis testing with independent dimensions:
+
+```python
+from hypothesis_pipeline import (
+    HypothesisPipeline,
+    PipelineConfig,
+    ReasoningType,
+    ContextLevel,
+    RAGMode,
+)
+
+config = PipelineConfig(
+    name="experiment",
+    models=["claude-sonnet-4-20250514"],
+    reasoning_types=[ReasoningType.DIRECT, ReasoningType.COT],
+    context_levels=[ContextLevel.MINIMAL, ContextLevel.STANDARD],
+    rag_modes=[RAGMode.NONE, RAGMode.VECTOR],
+    tool_configs=[[], ["my_tool"]],  # With and without tools
+)
+
+pipeline = HypothesisPipeline(config, evaluator, trial_inputs)
+results = pipeline.run()
+```
+
+**Pluggable components:**
+- `PromptStrategy`: CoT, WoT, direct, few-shot, ReAct
+- `RAGProvider`: none, vector, hybrid, oracle, negative
+- `ContextBuilder`: minimal, standard, rich, oracle
+- `ToolRegistry`: dynamic tool/MCP registration
 
 ## Working in This Repository
 
