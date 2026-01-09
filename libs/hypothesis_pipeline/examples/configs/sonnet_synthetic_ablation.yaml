@@ -65,15 +65,8 @@ strategy_configs:
       - completeness
       - reasoning_quality
 
-# Context-specific configs
-context_configs:
-  minimal:
-    include_metadata: false
-  standard:
-    include_metadata: true
-  rich:
-    include_metadata: true
-    include_examples: true
+# Context-specific configs (use defaults)
+context_configs: {}
 
 # RAG-specific configs
 rag_configs:
