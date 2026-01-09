@@ -1,0 +1,364 @@
+# =============================================================================
+# EXPERT VALIDATION TEMPLATE
+# Flow Cytometry Reasoning Benchmark
+# =============================================================================
+#
+# Instructions for Expert Validator:
+# 1. Review each model response
+# 2. Score using the rubrics provided
+# 3. Add your initials and date
+# 4. Return completed file for benchmark integration
+#
+# Scoring Guide:
+#   - FAIL (0-3): Pattern matching response, misses key biological insight
+#   - PARTIAL (4-6): Some reasoning but incomplete or has errors
+#   - PASS (7-10): Demonstrates genuine biological reasoning
+#
+# =============================================================================
+
+validator:
+  name: ""  # Your name
+  affiliation: ""  # Institution
+  expertise: ""  # e.g., "T cell immunology, 10+ years flow cytometry"
+  date: ""  # YYYY-MM-DD
+
+# =============================================================================
+# VALIDATION ENTRIES
+# =============================================================================
+# Each entry contains:
+# - test_id: Unique test identifier
+# - model_response: The model's actual output (read-only)
+# - your_validation: Your expert assessment
+# =============================================================================
+
+validations:
+
+  # ---------------------------------------------------------------------------
+  # Example Entry (filled out as reference)
+  # ---------------------------------------------------------------------------
+  - test_id: "EXAMPLE_001"
+    test_type: "lineage_negative"
+    test_prompt: |
+      I have a sample stained for CD45, CD3, CD19, CD56, CD14.
+      Design a gating hierarchy to identify NK cells.
+
+    model_response: |
+      Gate CD45+ for leukocytes, then gate on CD56+ for NK cells.
+
+    your_validation:
+      # Overall quality: fail, partial, or pass
+      quality_rating: "fail"
+
+      # Is the biological logic correct? (even if incomplete)
+      is_biologically_correct: false
+
+      # Does the response demonstrate reasoning beyond pattern matching?
+      demonstrates_reasoning: false
+
+      # Numerical scores (0-10)
+      biological_accuracy_score: 2
+      reasoning_depth_score: 1
+      practical_utility_score: 3
+
+      # What did the model get right?
+      strengths:
+        - "Correctly identifies CD45+ as leukocyte gate"
+        - "Knows NK cells are CD56+"
+
+      # What did the model miss or get wrong?
+      weaknesses:
+        - "Does not exclude CD3+ T cells (contamination)"
+        - "Does not exclude CD19+ B cells"
+        - "Does not mention lineage negative gating"
+        - "Would produce impure NK population"
+
+      # Critical errors that make the response unusable
+      critical_errors:
+        - "NK gate would contain NKT cells and activated T cells"
+
+      # Any additional notes
+      notes: |
+        This is a classic pattern matching failure. The model knows
+        NK cells express CD56 but doesn't understand they are defined
+        by lineage exclusion (CD3-CD19-CD14-).
+
+  # ---------------------------------------------------------------------------
+  # Lineage Negative Tests
+  # ---------------------------------------------------------------------------
+
+  - test_id: "LN001_nk_cells_basic"
+    test_type: "lineage_negative"
+    test_prompt: |
+      I have a sample stained for CD45, CD3, CD19, CD56, CD14, and a
+      Viability Dye. Design a gating hierarchy to identify NK cells.
+
+    model_response: |
+      [PASTE MODEL RESPONSE HERE]
+
+    your_validation:
+      quality_rating: ""  # fail, partial, or pass
+      is_biologically_correct: null
+      demonstrates_reasoning: null
+      biological_accuracy_score: null  # 0-10
+      reasoning_depth_score: null  # 0-10
+      practical_utility_score: null  # 0-10
+
+      strengths: []
+      weaknesses: []
+      critical_errors: []
+      notes: ""
+
+      # Key question: Does the model understand lineage exclusion?
+      mentions_lineage_negative: null
+      excludes_cd3: null
+      excludes_cd19: null
+      excludes_cd14: null
+
+  - test_id: "LN002_t_helper_tumor"
+    test_type: "lineage_negative"
+    test_prompt: |
+      I have a tumor digest sample. My markers are CD45, CD3, CD4, EpCAM,
+      and a Viability Dye. Design a gating tree to sort pure T helper cells.
+
+    model_response: |
+      [PASTE MODEL RESPONSE HERE]
+
+    your_validation:
+      quality_rating: ""
+      is_biologically_correct: null
+      demonstrates_reasoning: null
+      biological_accuracy_score: null
+      reasoning_depth_score: null
+      practical_utility_score: null
+
+      strengths: []
+      weaknesses: []
+      critical_errors: []
+      notes: ""
+
+      # Key question: Does model adapt to tumor context?
+      mentions_tumor_exclusion: null
+      gates_epcam_negative: null
+      includes_viability: null
+      mentions_digestion_artifacts: null
+
+  # ---------------------------------------------------------------------------
+  # Biological Impossibility Tests
+  # ---------------------------------------------------------------------------
+
+  - test_id: "BI001_triple_positive_doublet"
+    test_type: "biological_impossibility"
+    test_prompt: |
+      I found a population that is CD3+, CD14+, and CD19+.
+      What type of immune cell is this, and how should I gate for it?
+
+    model_response: |
+      [PASTE MODEL RESPONSE HERE]
+
+    your_validation:
+      quality_rating: ""
+      is_biologically_correct: null
+      demonstrates_reasoning: null
+      biological_accuracy_score: null
+      reasoning_depth_score: null
+      practical_utility_score: null
+
+      strengths: []
+      weaknesses: []
+      critical_errors: []
+      notes: ""
+
+      # Key question: Does model question the premise?
+      identifies_as_doublet: null
+      suggests_fsc_fsh_check: null
+      questions_biological_validity: null
+      avoids_hallucinating_cell_type: null
+
+  - test_id: "BI002_cd4_cd8_double_positive_blood"
+    test_type: "biological_impossibility"
+    test_prompt: |
+      In my PBMC sample, I'm seeing a large CD4+CD8+ double positive
+      population (about 15% of T cells). How should I analyze this population?
+
+    model_response: |
+      [PASTE MODEL RESPONSE HERE]
+
+    your_validation:
+      quality_rating: ""
+      is_biologically_correct: null
+      demonstrates_reasoning: null
+      biological_accuracy_score: null
+      reasoning_depth_score: null
+      practical_utility_score: null
+
+      strengths: []
+      weaknesses: []
+      critical_errors: []
+      notes: ""
+
+      # Key question: Does model recognize abnormal percentage?
+      recognizes_abnormal_percentage: null
+      suggests_compensation_issue: null
+      mentions_checking_controls: null
+
+  # ---------------------------------------------------------------------------
+  # Context Switch Tests
+  # ---------------------------------------------------------------------------
+
+  - test_id: "CS001_lung_autofluorescence"
+    test_type: "context_switch"
+    test_prompt: |
+      Create a gating strategy for alveolar macrophages (CD45+CD11b+CD11c+CD64+)
+      in a high-autofluorescence lung tissue sample.
+      My panel uses FITC, PE, APC, and BV421.
+
+    model_response: |
+      [PASTE MODEL RESPONSE HERE]
+
+    your_validation:
+      quality_rating: ""
+      is_biologically_correct: null
+      demonstrates_reasoning: null
+      biological_accuracy_score: null
+      reasoning_depth_score: null
+      practical_utility_score: null
+
+      strengths: []
+      weaknesses: []
+      critical_errors: []
+      notes: ""
+
+      # Key question: Does model adapt to tissue context?
+      mentions_autofluorescence: null
+      suggests_empty_channel_gate: null
+      warns_about_fitc_channel: null
+      recommends_unstained_control: null
+
+  # ---------------------------------------------------------------------------
+  # FMO Logic Tests
+  # ---------------------------------------------------------------------------
+
+  - test_id: "FMO001_cd25_boundary"
+    test_type: "fmo_logic"
+    test_prompt: |
+      I have a smear of CD25 expression on my CD4+ T cells - there's no clear
+      positive and negative population. How do I determine the cutoff for
+      CD25 positive vs negative?
+
+    model_response: |
+      [PASTE MODEL RESPONSE HERE]
+
+    your_validation:
+      quality_rating: ""
+      is_biologically_correct: null
+      demonstrates_reasoning: null
+      biological_accuracy_score: null
+      reasoning_depth_score: null
+      practical_utility_score: null
+
+      strengths: []
+      weaknesses: []
+      critical_errors: []
+      notes: ""
+
+      # Key question: Does model recommend FMO?
+      recommends_fmo_control: null
+      explains_fmo_rationale: null
+      mentions_spillover_background: null
+      avoids_recommending_isotype: null
+
+  # ---------------------------------------------------------------------------
+  # Panel Subset Design Tests
+  # ---------------------------------------------------------------------------
+
+  - test_id: "PS001_reduce_to_5_color"
+    test_type: "panel_subset"
+    test_prompt: |
+      I have a 20-color T cell panel. I need to reduce this to a 5-color panel
+      for routine clinical monitoring of T cell health.
+      Which markers should I keep and why?
+
+      Available markers: CD3, CD4, CD8, CD45RA, CCR7, CD27, CD28, CD127, CD25,
+      FoxP3, PD-1, TIGIT, CD69, HLA-DR, CD38, Ki-67, CD95, CD57, KLRG1, Viability
+
+    model_response: |
+      [PASTE MODEL RESPONSE HERE]
+
+    your_validation:
+      quality_rating: ""
+      is_biologically_correct: null
+      demonstrates_reasoning: null
+      biological_accuracy_score: null
+      reasoning_depth_score: null
+      practical_utility_score: null
+
+      strengths: []
+      weaknesses: []
+      critical_errors: []
+      notes: ""
+
+      # Panel subset specific scoring
+      selected_markers: []  # List the markers the model chose
+
+      # Essential markers check
+      includes_viability: null
+      includes_lineage_markers: null  # CD3, CD4, CD8
+
+      # Justification quality
+      justifies_each_marker: null  # Did model explain why?
+      explains_tradeoffs: null  # Did model explain what is lost?
+      appropriate_for_clinical: null  # Is selection appropriate for stated use?
+
+      # Coverage assessment
+      populations_identifiable: []  # List what populations can be identified
+      populations_lost: []  # List what populations cannot be identified
+
+# =============================================================================
+# SCORING RUBRICS
+# =============================================================================
+
+scoring_rubrics:
+
+  biological_accuracy:
+    description: "Is the biological content correct?"
+    0-2: "Major biological errors that would lead to wrong conclusions"
+    3-4: "Some biological errors but basic concept is understood"
+    5-6: "Mostly correct with minor errors or omissions"
+    7-8: "Biologically accurate with good understanding"
+    9-10: "Expert-level biological accuracy"
+
+  reasoning_depth:
+    description: "Does the response show genuine reasoning vs pattern matching?"
+    0-2: "Pure pattern matching, no reasoning evident"
+    3-4: "Some reasoning but superficial"
+    5-6: "Moderate reasoning, explains some choices"
+    7-8: "Good reasoning with justifications"
+    9-10: "Deep reasoning, considers edge cases and alternatives"
+
+  practical_utility:
+    description: "Could this be used in an actual experiment?"
+    0-2: "Would produce incorrect results"
+    3-4: "Major issues that would need correction"
+    5-6: "Usable with significant modifications"
+    7-8: "Good practical advice, minor refinements needed"
+    9-10: "Could be used directly by a researcher"
+
+# =============================================================================
+# SUMMARY SECTION (filled by validator after all entries)
+# =============================================================================
+
+summary:
+  total_tests_reviewed: null
+  pass_count: null
+  partial_count: null
+  fail_count: null
+
+  overall_assessment: |
+    [Your overall assessment of the model's flow cytometry reasoning ability]
+
+  notable_strengths: []
+
+  notable_weaknesses: []
+
+  recommendations: |
+    [Recommendations for model improvement or benchmark refinement]
