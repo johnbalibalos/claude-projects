@@ -17,7 +17,7 @@ from typing import Any
 
 import yaml
 
-from .models import ReasoningType, ContextLevel, RAGMode
+from .models import ReasoningType, ContextLevel, RAGMode, DataSource
 
 
 @dataclass
@@ -37,6 +37,10 @@ class PipelineConfig:
     max_tokens: int = 4096
     temperature: float = 0.0
     max_tool_calls: int = 30
+
+    # Experiment execution settings
+    n_bootstrap_runs: int = 1  # Number of times to run each condition (for statistical power)
+    data_source: DataSource = DataSource.SYNTHETIC  # Type of test data
 
     # Pipeline settings
     checkpoint_dir: Path = field(default_factory=lambda: Path("./checkpoints"))
@@ -100,6 +104,12 @@ class PipelineConfig:
                 RAGMode(r) if isinstance(r, str) else r
                 for r in data["rag_modes"]
             ]
+        if "data_source" in data:
+            data["data_source"] = (
+                DataSource(data["data_source"])
+                if isinstance(data["data_source"], str)
+                else data["data_source"]
+            )
 
         # Convert paths
         if "checkpoint_dir" in data:
