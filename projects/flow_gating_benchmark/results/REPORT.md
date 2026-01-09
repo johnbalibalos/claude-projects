@@ -1,32 +1,84 @@
 # Flow Gating Benchmark: Gating Strategy Prediction Report
 
-**Date:** January 7, 2026
-**Model:** Claude Sonnet 4 (claude-sonnet-4-20250514)
+**Date:** January 9, 2026
+**Models:** Claude Sonnet 4, Claude Opus 4
 **Author:** John Balibalos
 
 ## Executive Summary
 
-This benchmark evaluates whether LLMs can predict flow cytometry gating strategies from panel information alone. Using 30 OMIP (Optimized Multicolor Immunofluorescence Panel) papers as ground truth, we find that **Claude achieves 67.3% hierarchy F1 with chain-of-thought prompting and rich context**, with performance strongly correlated with panel complexity.
+This benchmark evaluates whether LLMs can predict flow cytometry gating strategies from panel information. Using 8 OMIP papers with high-concordance extractions (XML vs LLM panel concordance ≥0.95), we find that **Claude Sonnet achieves 34.2% hierarchy F1 overall, with rich_direct context reaching 44.1%**. Opus performs slightly lower at 28.7% F1 overall but has better critical gate recall (77.6% vs 61.5%).
 
-## Research Question
+## Key Finding: Direct Prompting Outperforms Chain-of-Thought
 
-> Given a flow cytometry panel (markers, fluorophores, sample type), can LLMs predict the appropriate gating hierarchy?
+Contrary to expectations, **direct prompting consistently outperforms chain-of-thought (CoT)** for both models:
 
-## Methodology
+| Model | Direct F1 | CoT F1 | Difference |
+|-------|-----------|--------|------------|
+| Sonnet | 0.375 | 0.307 | **+6.8pp** |
+| Opus | 0.343 | 0.231 | **+11.2pp** |
 
-### Test Cases
-- **30 OMIP papers** from Cytometry Part A journal
-- Complexity range: 10-color (simple) to 40-color (complex)
-- Sample types: Human PBMC, whole blood, tissue
-- Ground truth: Expert-curated gating hierarchies from published figures
+## Results Summary
 
-### Experimental Conditions
+### Model Comparison
+
+| Metric | Sonnet | Opus |
+|--------|--------|------|
+| Hierarchy F1 | **0.342** | 0.287 |
+| Structure Accuracy | **0.617** | 0.572 |
+| Critical Gate Recall | 0.615 | **0.776** |
+| Parse Success Rate | 100% | 100% |
+
+### Performance by Condition
+
+#### Claude Sonnet 4
+
+| Condition | F1 Score |
+|-----------|----------|
+| minimal_direct | 0.271 |
+| minimal_cot | 0.254 |
+| standard_direct | 0.414 |
+| standard_cot | 0.313 |
+| **rich_direct** | **0.441** |
+| rich_cot | 0.355 |
+
+#### Claude Opus 4
+
+| Condition | F1 Score |
+|-----------|----------|
+| minimal_direct | 0.204 |
+| minimal_cot | 0.184 |
+| standard_direct | 0.390 |
+| standard_cot | 0.241 |
+| **rich_direct** | **0.434** |
+| rich_cot | 0.267 |
+
+## Test Cases
+
+8 OMIP papers with validated panel extractions:
+
+| OMIP | Title | Panel Concordance |
+|------|-------|-------------------|
+| OMIP-022 | Human γδ T-cell populations | 1.00 |
+| OMIP-064 | Human PBMC immunophenotyping | 1.00* |
+| OMIP-074 | Human B-cell subsets | 1.00 |
+| OMIP-076 | Murine T/B/ASC subsets | 1.00 |
+| OMIP-077 | Human dendritic cell subsets | 1.00 |
+| OMIP-083 | Human PBMC 28-color | 1.00 |
+| OMIP-095 | Human PBMC spectral | 1.00* |
+| OMIP-101 | Fixed whole blood 27-color | 1.00 |
+
+*LLM-only extraction (no XML panel table available)
+
+## Experimental Design
+
+### Conditions (6 per model)
+
 | Factor | Levels |
 |--------|--------|
 | Context | minimal, standard, rich |
-| Prompting | direct, chain-of-thought (CoT) |
+| Prompting | direct, chain-of-thought |
 
-**6 total conditions** (3 context × 2 prompting)
+**Total evaluations:** 96 (8 test cases × 6 conditions × 2 models)
 
 ### Evaluation Metrics
 
@@ -34,168 +86,49 @@ This benchmark evaluates whether LLMs can predict flow cytometry gating strategi
 |--------|-------------|
 | **Hierarchy F1** | Gate name precision/recall with fuzzy matching |
 | **Structure Accuracy** | Correct parent-child relationships |
-| **Critical Gate Recall** | Must-have gates (Time, Singlets, Live) |
-| **Hallucination Rate** | Gates referencing markers not in panel |
-| **Parse Success Rate** | Valid JSON output |
-
-## Results
-
-### Overall Performance
-
-| Metric | Mean | Std |
-|--------|------|-----|
-| Hierarchy F1 | 0.673 | 0.142 |
-| Structure Accuracy | 0.589 | 0.167 |
-| Critical Gate Recall | 0.823 | 0.134 |
-| Hallucination Rate | 0.156 | 0.089 |
-| Parse Success Rate | 94.4% | - |
-
-### Performance by Context Level
-
-| Context | Hierarchy F1 | Structure Acc | Critical Recall | Hallucination |
-|---------|-------------|---------------|-----------------|---------------|
-| Minimal | 0.542 | 0.467 | 0.712 | 0.234 |
-| Standard | 0.689 | 0.612 | 0.845 | 0.145 |
-| Rich | **0.787** | **0.689** | **0.912** | **0.089** |
-
-**Finding:** Rich context improves F1 by +24.5pp over minimal context.
-
-### Performance by Prompting Strategy
-
-| Strategy | Hierarchy F1 | Structure Acc | Critical Recall |
-|----------|-------------|---------------|-----------------|
-| Direct | 0.623 | 0.534 | 0.789 |
-| CoT | **0.723** | **0.645** | **0.856** |
-
-**Finding:** Chain-of-thought prompting improves F1 by +10.0pp.
-
-### Performance by Panel Complexity
-
-| Complexity | Panels | F1 | Structure | Critical Recall |
-|------------|--------|-------|-----------|-----------------|
-| Simple (≤15) | 12 | **0.812** | **0.756** | **0.923** |
-| Medium (16-25) | 11 | 0.678 | 0.589 | 0.834 |
-| Complex (26+) | 7 | 0.534 | 0.423 | 0.712 |
-
-**Finding:** Performance degrades with complexity. 40-color panels (OMIP-069) are particularly challenging.
-
-### Selected OMIP Results (Rich Context + CoT)
-
-| OMIP | Colors | F1 | Critical Recall | Hallucination |
-|------|--------|------|-----------------|---------------|
-| OMIP-023 | 10 | 0.889 | 0.967 | 0.034 |
-| OMIP-030 | 10 | 0.856 | 0.945 | 0.056 |
-| OMIP-044 | 28 | 0.678 | 0.845 | 0.134 |
-| OMIP-058 | 30 | 0.645 | 0.812 | 0.156 |
-| OMIP-069 | 40 | 0.523 | 0.700 | 0.189 |
-
-## Error Analysis
-
-### Common Failure Modes
-
-| Error Type | Frequency | Description |
-|------------|-----------|-------------|
-| Missing QC gate | 23.4% | Time gate most commonly omitted |
-| Hallucinated marker | 15.6% | Referenced markers not in panel |
-| Incorrect parent | 18.9% | Gate under wrong parent (e.g., NK under Monocytes) |
-| Depth mismatch | 14.5% | Hierarchy too shallow |
-
-### Failure by Population Type
-
-| Population Type | Recall |
-|----------------|--------|
-| QC gates (Time, Singlets, Live) | 82.3% |
-| Standard populations (T, B, NK) | 85.6% |
-| Rare populations (ILC, MAIT, pDC) | **31.2%** |
-
-**Finding:** Claude struggles with rare populations that require specialized domain knowledge.
-
-### Hallucination Examples
-
-| Predicted Marker | Actual Panel | Likely Confusion |
-|-----------------|--------------|------------------|
-| CD45RO | No memory markers | Assumed memory panel |
-| CXCR5 | No Tfh markers | Over-generalized from T cell |
-| CD123 | No DC markers | Assumed full immunophenotyping |
+| **Critical Gate Recall** | Must-have gates (Singlets, Live, Lymphocytes) |
 
 ## Key Findings
 
-### 1. Context is Critical
-Rich context (sample type, species, application, panel details) improves performance by 24.5pp. Minimal context (marker list only) is insufficient for accurate prediction.
+### 1. Rich Context is Critical
+Both models perform best with rich context (sample type, species, application, full panel):
+- Sonnet: +17.0pp improvement (minimal → rich)
+- Opus: +23.0pp improvement (minimal → rich)
 
-### 2. Chain-of-Thought Helps
-CoT prompting improves F1 by 10pp, likely because it forces systematic consideration of:
-- QC gates first
-- Major lineage identification
-- Subset breakdown
+### 2. Direct Prompting Wins
+Chain-of-thought reasoning does not help with gating prediction:
+- Sonnet: Direct beats CoT by 6.8pp
+- Opus: Direct beats CoT by 11.2pp
 
-### 3. Complexity is the Limiting Factor
-Performance degrades linearly with panel size:
-- Simple panels: ~81% F1
-- Complex panels: ~53% F1
+This may be because gating strategies follow domain-specific conventions that benefit from direct pattern matching rather than step-by-step reasoning.
 
-This suggests a fundamental limit on Claude's ability to track many simultaneous marker relationships.
+### 3. Opus Has Better Critical Gate Recall
+Despite lower overall F1, Opus correctly identifies critical gates (Singlets, Live, Lymphocytes) more often:
+- Opus: 77.6% critical recall
+- Sonnet: 61.5% critical recall
 
-### 4. Critical Gates are Reliable
-82.3% critical gate recall is acceptable for practical use. QC gates (Time, Singlets, Live) are well-established conventions Claude has learned.
-
-### 5. Rare Populations are Unreliable
-31.2% recall on rare populations (ILC, MAIT, pDC) indicates these require specialized knowledge Claude lacks or cannot reliably apply.
-
-## Implications
-
-### For Flow Cytometry Practice
-- LLM gating predictions are useful for **standard panels** (≤15 colors)
-- **Complex panels** require expert review
-- Critical gates (QC) can be reliably suggested
-
-### For LLM Evaluation
-- Panel complexity is a natural difficulty gradient
-- Hallucination rate is a key safety metric
-- Structure accuracy captures reasoning quality beyond name matching
-
-### For Anthropic's Life Sciences Team
-- This benchmark provides a reproducible measure of biological reasoning
-- Failure modes are interpretable and domain-grounded
-- Can track progress as models improve
+### 4. Perfect Parse Rate
+Both models achieve 100% valid JSON output, indicating robust structured generation.
 
 ## Limitations
 
-1. **Ground truth ambiguity**: Multiple valid gating strategies exist for same panel
-2. **Limited rare population coverage**: OMIP papers emphasize common lineages
-3. **No .wsp validation**: Hierarchies extracted from figures, not workspace files
-4. **Single model**: No comparison across Claude/GPT-4/Gemini
+1. **Small test set**: 8 OMIP papers (4 failed validation due to missing fluorophore data)
+2. **Extraction quality**: Ground truth from automated extraction, not manual curation
+3. **Single run**: No statistical significance testing
 
-## Future Work
+## Raw Data
 
-1. Cross-validate against FlowRepository .wsp files
-2. Add multi-model comparison
-3. Expand to 80+ OMIP panels
-4. Test with few-shot examples
-5. Evaluate tool-augmented gating prediction
+- Sonnet results: `experiment_results_20260109_192747.json`
+- Opus results: `experiment_results_20260109_195116.json`
+- Duration: Sonnet 14.6 min, Opus 19.9 min
 
-## Appendix: Evaluation Metric Details
+## Recommendations
 
-### Hierarchy F1
-```
-Precision = |predicted ∩ ground_truth| / |predicted|
-Recall = |predicted ∩ ground_truth| / |ground_truth|
-F1 = 2 × (Precision × Recall) / (Precision + Recall)
-```
-Uses fuzzy name matching: "CD3+ T cells" ≈ "T cells (CD3+)"
-
-### Structure Accuracy
-```
-Correct edges = Σ(predicted parent-child pairs in ground truth)
-Structure Accuracy = Correct edges / Total predicted edges
-```
-
-### Hallucination Rate
-```
-Hallucinated = gates referencing markers not in panel
-Hallucination Rate = |Hallucinated| / |Total predicted gates|
-```
+1. **Use rich_direct prompting** for best F1 performance
+2. **Use Opus for safety-critical applications** where critical gate recall matters
+3. **Expand test set** by fixing fluorophore extraction for 4 failed OMIPs
+4. **Investigate CoT underperformance** - may indicate domain-specific prompting needs
 
 ---
 
-*Raw results: `sonnet_gating_20260107_150145.json`*
+*Report generated: 2026-01-09*

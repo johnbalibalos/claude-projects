@@ -15,21 +15,18 @@ Usage:
 import argparse
 import os
 import sys
-from datetime import datetime
 from pathlib import Path
 
 # Add project to path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from experiments.runner import run_experiment, ExperimentConfig
 from experiments.conditions import (
-    get_all_conditions,
-    get_ablation_conditions,
-    MODELS,
     CONTEXT_LEVELS,
+    MODELS,
     PROMPT_STRATEGIES,
+    get_all_conditions,
 )
-
+from experiments.runner import run_experiment
 
 # Model-specific configurations
 MODEL_CONFIGS = {
@@ -89,6 +86,11 @@ Examples:
         "--dry-run",
         action="store_true",
         help="Print configuration without running",
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Skip cost confirmation (for hooks)",
     )
     return parser.parse_args()
 
@@ -168,11 +170,11 @@ def main():
         if successful:
             avg_f1 = sum(r.hierarchy_f1 for r in successful) / len(successful)
             avg_structure = sum(r.structure_accuracy for r in successful) / len(successful)
-            avg_critical = sum(r.critical_gate_recall for r in successful) / len(successful)
-            avg_hallucination = sum(r.hallucination_rate for r in successful) / len(successful)
+            avg_critical = sum(getattr(r, 'critical_gate_recall', 0) for r in successful) / len(successful)
+            avg_hallucination = sum(getattr(r, 'hallucination_rate', 0) for r in successful) / len(successful)
             parse_rate = len(successful) / len(result.results)
 
-            print(f"\nOverall Metrics:")
+            print("\nOverall Metrics:")
             print(f"  Hierarchy F1: {avg_f1:.3f}")
             print(f"  Structure Accuracy: {avg_structure:.3f}")
             print(f"  Critical Gate Recall: {avg_critical:.3f}")

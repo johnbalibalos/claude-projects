@@ -1,0 +1,187 @@
+{
+  "test_case_id": "OMIP-035",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-035",
+  "doi": "10.1002/cyto.a.22932",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "unknown",
+    "species": "unknown",
+    "application": "OMIP-035: Functional Analysis of Natural Killer Cell Subsets in Macaques",
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": null
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "Mamu-KIR3DL01",
+        "fluorophore": null,
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "Mamu-KIR3DL05",
+        "fluorophore": null,
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": null,
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": null,
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": [],
+      "gate_type": "Unknown",
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [],
+          "marker_logic": [],
+          "gate_type": "Unknown",
+          "children": [
+            {
+              "name": "Live cells",
+              "markers": [],
+              "marker_logic": [],
+              "gate_type": "Unknown",
+              "children": [
+                {
+                  "name": "Lymphocytes",
+                  "markers": [],
+                  "marker_logic": [],
+                  "gate_type": "Unknown",
+                  "children": [
+                    {
+                      "name": "NK cells",
+                      "markers": [],
+                      "marker_logic": [],
+                      "gate_type": "Unknown",
+                      "children": [
+                        {
+                          "name": "Mamu-KIR3DL01+ NK cells",
+                          "markers": [],
+                          "marker_logic": [],
+                          "gate_type": "Unknown",
+                          "children": [
+                            {
+                              "name": "Mamu-KIR3DL01+ KIR3DL05+ NK cells",
+                              "markers": [],
+                              "marker_logic": [],
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "Mamu-KIR3DL01+ KIR3DL05- NK cells",
+                              "markers": [],
+                              "marker_logic": [],
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Mamu-KIR3DL01- NK cells",
+                          "markers": [],
+                          "marker_logic": [],
+                          "gate_type": "Unknown",
+                          "children": [
+                            {
+                              "name": "Mamu-KIR3DL01- KIR3DL05+ NK cells",
+                              "markers": [],
+                              "marker_logic": [],
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "Mamu-KIR3DL01- KIR3DL05- NK cells",
+                              "markers": [],
+                              "marker_logic": [],
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "CD16+ CD56+ NK cells",
+                          "markers": [],
+                          "marker_logic": [],
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "CD16+ CD56- NK cells",
+                          "markers": [],
+                          "marker_logic": [],
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "CD16- CD56+ NK cells",
+                          "markers": [],
+                          "marker_logic": [],
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        }
+                      ],
+                      "is_critical": false
+                    }
+                  ],
+                  "is_critical": true
+                }
+              ],
+              "is_critical": true
+            }
+          ],
+          "is_critical": true
+        }
+      ],
+      "is_critical": true
+    }
+  },
+  "validation": {
+    "paper_source": null,
+    "wsp_extraction_match": null,
+    "discrepancies": [],
+    "curator_notes": null,
+    "validation_date": null
+  },
+  "metadata": {
+    "curation_date": "2026-01-09",
+    "curator": "claude-extraction",
+    "flowkit_version": null,
+    "last_updated": "2026-01-09"
+  }
+}

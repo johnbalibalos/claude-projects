@@ -1,0 +1,130 @@
+{
+  "test_case_id": "OMIP-064",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-064",
+  "doi": "10.1002/cyto.a.24031",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "unknown",
+    "species": "human",
+    "application": "OMIP-064: A 27-Color Flow Cytometry Panel to Detect and Characterize Human NK Cells and Other Innate Lymphoid Cell Subsets, MAIT Cells, and \u03b3\u03b4 T Cells",
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": null
+  },
+  "panel": {
+    "entries": []
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": [],
+      "gate_type": "Unknown",
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [],
+          "marker_logic": [],
+          "gate_type": "Unknown",
+          "children": [
+            {
+              "name": "Live cells",
+              "markers": [],
+              "marker_logic": [],
+              "gate_type": "Unknown",
+              "children": [
+                {
+                  "name": "Lymphocytes",
+                  "markers": [],
+                  "marker_logic": [],
+                  "gate_type": "Unknown",
+                  "children": [
+                    {
+                      "name": "T cells",
+                      "markers": [],
+                      "marker_logic": [],
+                      "gate_type": "Unknown",
+                      "children": [
+                        {
+                          "name": "MAIT cells",
+                          "markers": [],
+                          "marker_logic": [],
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "\u03b3\u03b4 T cells",
+                          "markers": [],
+                          "marker_logic": [],
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        }
+                      ],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "Innate Lymphoid Cells",
+                      "markers": [],
+                      "marker_logic": [],
+                      "gate_type": "Unknown",
+                      "children": [
+                        {
+                          "name": "NK cells",
+                          "markers": [],
+                          "marker_logic": [],
+                          "gate_type": "Unknown",
+                          "children": [
+                            {
+                              "name": "Activated NK cells",
+                              "markers": [],
+                              "marker_logic": [],
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Other ILC subsets",
+                          "markers": [],
+                          "marker_logic": [],
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        }
+                      ],
+                      "is_critical": false
+                    }
+                  ],
+                  "is_critical": true
+                }
+              ],
+              "is_critical": true
+            }
+          ],
+          "is_critical": true
+        }
+      ],
+      "is_critical": true
+    }
+  },
+  "validation": {
+    "paper_source": null,
+    "wsp_extraction_match": null,
+    "discrepancies": [],
+    "curator_notes": null,
+    "validation_date": null
+  },
+  "metadata": {
+    "curation_date": "2026-01-09",
+    "curator": "claude-extraction",
+    "flowkit_version": null,
+    "last_updated": "2026-01-09"
+  }
+}
