@@ -1,0 +1,74 @@
+# Nine Condition Ablation Study
+# Tests reasoning x context dimensions on synthetic data
+# 3 reasoning x 3 context x 1 rag x 1 tools = 9 conditions
+
+name: nine_condition_ablation
+description: Ablation study with 9 conditions across reasoning and context dimensions
+hypothesis: Do CoT/WoT reasoning and richer context improve LLM performance?
+
+tags:
+  - ablation
+  - synthetic
+  - sonnet
+  - reasoning
+  - context
+
+# Data source labeling
+data_source: synthetic
+
+# Bootstrap/repetition settings
+n_bootstrap_runs: 1
+
+# Model
+models:
+  - claude-sonnet-4-20250514
+
+# Reasoning strategies to test (3)
+reasoning_types:
+  - direct      # Baseline: no explicit reasoning
+  - cot         # Chain of Thought
+  - wot         # Web/Tree of Thought
+
+# Context levels to test (3)
+context_levels:
+  - minimal     # Bare essentials
+  - standard    # Core data + metadata
+  - rich        # All available information
+
+# RAG modes (1 - none only for 9 conditions)
+rag_modes:
+  - none
+
+# No tools for this test
+tool_configs:
+  - []
+
+# Model parameters
+max_tokens: 4096
+temperature: 0.0
+
+# Directories
+checkpoint_dir: ./checkpoints/synthetic/nine_condition
+output_dir: ./results/synthetic/nine_condition
+
+# Strategy-specific configs
+strategy_configs:
+  cot:
+    reasoning_prompt: "Think through this step by step before providing your answer."
+    answer_prefix: "Answer:"
+  wot:
+    n_paths: 2
+    evaluation_criteria:
+      - correctness
+      - completeness
+      - reasoning_quality
+
+# Context-specific configs (use defaults)
+context_configs: {}
+
+# RAG-specific configs
+rag_configs: {}
+
+# Condition count:
+# 1 model x 3 reasoning x 3 context x 1 rag x 1 tools = 9 conditions
+# With n_bootstrap_runs=1: 9 API calls per test case
