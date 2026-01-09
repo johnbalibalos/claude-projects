@@ -95,6 +95,7 @@ CELL_TYPE_SYNONYMS: dict[str, str] = {
     "cd3+ t cells": "t_cells",
     "cd3+ t": "t_cells",
     "cd3+": "t_cells",  # In context often means T cells
+    "cd3+ t cells": "t_cells",
     # B cell variations (include forms after " cells" removal)
     "b cells": "b_cells",
     "b": "b_cells",  # After " cells" removal
@@ -115,6 +116,8 @@ CELL_TYPE_SYNONYMS: dict[str, str] = {
     "cd56+ nk cells": "nk_cells",
     "cd56+ nk": "nk_cells",
     "cd56+cd3-": "nk_cells",
+    "cd3- cd56+": "nk_cells",
+    "cd3-cd56+": "nk_cells",
     # Monocyte variations
     "monocytes": "monocytes",
     "monos": "monocytes",
@@ -124,6 +127,66 @@ CELL_TYPE_SYNONYMS: dict[str, str] = {
     # Lymphocyte variations
     "lymphocytes": "lymphocytes",
     "lymphs": "lymphocytes",
+    # Singlet variations - CRITICAL FIX
+    "singlets": "singlets",
+    "singlets (fsc)": "singlets",
+    "singlets (ssc)": "singlets",
+    "singlets (fsc-a vs fsc-h)": "singlets",
+    "singlets (ssc-a vs ssc-h)": "singlets",
+    "fsc singlets": "singlets",
+    "ssc singlets": "singlets",
+    "singlet": "singlets",
+    # Live/Dead variations
+    "live cells": "live",
+    "live": "live",
+    "live/dead": "live",
+    "viable cells": "live",
+    "viable": "live",
+    # Leukocyte variations
+    "leukocytes": "leukocytes",
+    "cd45+ leukocytes": "leukocytes",
+    "cd45+": "leukocytes",
+    "cd45+ cells": "leukocytes",
+    "white blood cells": "leukocytes",
+    "wbc": "leukocytes",
+    # CD4+ T cell variations
+    "cd4+ t cells": "cd4_t_cells",
+    "cd4+ t": "cd4_t_cells",
+    "cd4 t cells": "cd4_t_cells",
+    "helper t cells": "cd4_t_cells",
+    "t helper": "cd4_t_cells",
+    "th cells": "cd4_t_cells",
+    # CD8+ T cell variations
+    "cd8+ t cells": "cd8_t_cells",
+    "cd8+ t": "cd8_t_cells",
+    "cd8 t cells": "cd8_t_cells",
+    "cytotoxic t cells": "cd8_t_cells",
+    "cytotoxic t": "cd8_t_cells",
+    "ctl": "cd8_t_cells",
+    # Dendritic cell variations
+    "dendritic cells": "dendritic_cells",
+    "dc": "dendritic_cells",
+    "dcs": "dendritic_cells",
+    # Gamma-delta T cell variations
+    "gd t cells": "gamma_delta_t",
+    "gamma delta t cells": "gamma_delta_t",
+    "γδ t cells": "gamma_delta_t",
+    "gd t": "gamma_delta_t",
+    "gammadelta t": "gamma_delta_t",
+    # Regulatory T cell variations
+    "tregs": "regulatory_t",
+    "treg": "regulatory_t",
+    "regulatory t cells": "regulatory_t",
+    "regulatory t": "regulatory_t",
+    "cd4+cd25+foxp3+": "regulatory_t",
+    # Time gate variations
+    "time gate": "time",
+    "time": "time",
+    # All events variations
+    "all events": "all_events",
+    "all": "all_events",
+    "root": "all_events",
+    "ungated": "all_events",
 }
 
 
@@ -131,14 +194,23 @@ def normalize_gate_name(name: str) -> str:
     """
     Normalize gate name for comparison.
 
-    Handles common variations in gate naming conventions.
+    Handles common variations in gate naming conventions including:
+    - Parenthetical qualifiers: "Singlets (FSC)" -> "singlets"
+    - Positive/negative notation: "CD4 positive" -> "cd4+"
+    - Common abbreviations: "lymphocytes" -> "lymphs"
 
     Note: This normalization is intentionally conservative to avoid false
     matches between distinct populations. For example, "CD14+ monocytes"
     and "classical monos" are different populations and should not match
     through this simple text normalization.
     """
+    import re
+
     normalized = name.lower().strip()
+
+    # Remove parenthetical qualifiers like "(FSC)", "(SSC-A vs SSC-H)", etc.
+    # But preserve marker expressions like "CD3+" or "CD19-"
+    normalized = re.sub(r'\s*\([^)]*\)\s*', ' ', normalized)
 
     # Remove common suffixes/prefixes
     replacements = [
@@ -462,7 +534,15 @@ def compute_structure_accuracy(
     return accuracy, correct, len(common_gates), errors
 
 
-# Default critical gates for PBMC samples
+# Default critical gates for PBMC samples - these are always important
+# Maps canonical form to list of acceptable variations
+DEFAULT_CRITICAL_GATES_CANONICAL = {
+    "singlets": ["singlets", "singlet", "singlets (fsc)", "singlets (ssc)"],
+    "live": ["live", "live cells", "live/dead", "viable", "viable cells"],
+    "lymphocytes": ["lymphocytes", "lymphs"],
+}
+
+# Legacy list for backwards compatibility
 DEFAULT_CRITICAL_GATES = [
     "singlets",
     "live",
@@ -473,24 +553,69 @@ DEFAULT_CRITICAL_GATES = [
     "cd45 positive",
 ]
 
+# Panel-specific critical gates based on markers present
+MARKER_CRITICAL_GATES: dict[str, list[str]] = {
+    "cd45": ["leukocytes", "cd45+", "cd45+ cells"],
+    "cd3": ["t cells", "cd3+", "t lymphocytes"],
+    "cd19": ["b cells", "cd19+", "b lymphocytes"],
+    "cd20": ["b cells", "cd20+", "b lymphocytes"],
+    "cd56": ["nk cells", "cd56+", "natural killer"],
+    "cd14": ["monocytes", "cd14+"],
+    "cd11c": ["dendritic cells", "myeloid dc"],
+}
+
+
+def derive_panel_critical_gates(panel: Panel | list[dict]) -> list[str]:
+    """
+    Derive critical gates based on panel markers.
+
+    Args:
+        panel: Panel definition with markers
+
+    Returns:
+        List of critical gate names relevant to this panel
+    """
+    # Get panel markers
+    if isinstance(panel, Panel):
+        panel_markers = {m.lower() for m in panel.markers}
+    else:
+        panel_markers = {entry["marker"].lower() for entry in panel}
+
+    # Always include core QC gates
+    critical = ["singlets", "live"]
+
+    # Add marker-specific critical gates
+    for marker, gates in MARKER_CRITICAL_GATES.items():
+        if marker in panel_markers:
+            # Add the first (most common) gate name
+            critical.append(gates[0])
+
+    return critical
+
 
 def compute_critical_gate_recall(
     predicted: GatingHierarchy | dict,
     ground_truth: GatingHierarchy | dict,
     critical_gates: list[str] | None = None,
+    panel: Panel | list[dict] | None = None,
 ) -> tuple[float, list[str]]:
     """
     Compute recall of critical/must-have gates.
+
+    Uses semantic matching to handle naming variations.
 
     Args:
         predicted: Predicted hierarchy
         ground_truth: Ground truth hierarchy
         critical_gates: List of critical gate names (optional)
+        panel: Panel definition for deriving panel-specific critical gates
 
     Returns:
         Tuple of (recall, list of missing critical gates)
     """
     pred_gates = extract_gate_names(predicted)
+    # Use semantic normalization for better matching
+    pred_semantic = {normalize_gate_semantic(g) for g in pred_gates}
     pred_normalized = {normalize_gate_name(g) for g in pred_gates}
 
     # Get critical gates from ground truth if not specified
@@ -500,25 +625,39 @@ def compute_critical_gate_recall(
         else:
             critical_gates = []
 
-    # Fall back to defaults if still empty
+    # Fall back to panel-derived or default critical gates
     if not critical_gates:
-        gt_gates = extract_gate_names(ground_truth)
-        gt_normalized = {normalize_gate_name(g): g for g in gt_gates}
+        if panel is not None:
+            critical_gates = derive_panel_critical_gates(panel)
+        else:
+            # Use ground truth gates that match known critical patterns
+            gt_gates = extract_gate_names(ground_truth)
+            gt_normalized = {normalize_gate_name(g): g for g in gt_gates}
 
-        # Find which default critical gates are in ground truth
-        critical_gates = [
-            gt_normalized[norm]
-            for norm in DEFAULT_CRITICAL_GATES
-            if norm in gt_normalized
-        ]
+            critical_gates = [
+                gt_normalized[norm]
+                for norm in DEFAULT_CRITICAL_GATES
+                if norm in gt_normalized
+            ]
 
     if not critical_gates:
         return 1.0, []  # No critical gates defined
 
     missing = []
     for gate in critical_gates:
-        if normalize_gate_name(gate) not in pred_normalized:
-            missing.append(gate)
+        gate_norm = normalize_gate_name(gate)
+        gate_semantic = normalize_gate_semantic(gate)
+
+        # Check both normalized and semantic forms
+        if gate_norm not in pred_normalized and gate_semantic not in pred_semantic:
+            # Also check if any prediction maps to same canonical form
+            found = False
+            for pred_gate in pred_gates:
+                if normalize_gate_semantic(pred_gate) == gate_semantic:
+                    found = True
+                    break
+            if not found:
+                missing.append(gate)
 
     recall = (len(critical_gates) - len(missing)) / len(critical_gates)
     return recall, missing

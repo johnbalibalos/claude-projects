@@ -56,6 +56,8 @@ class ExperimentConfig:
     temperature: float = 0.0
     dry_run: bool = False
     log_level: str = "INFO"
+    n_runs: int = 1  # Number of runs for statistical significance
+    random_seed: int | None = None  # For reproducibility across runs
 
 
 @dataclass
@@ -69,6 +71,7 @@ class ExperimentResult:
     errors: list[dict] = field(default_factory=list)
     total_api_calls: int = 0
     total_tokens: int = 0
+    run_number: int = 1  # Which run this is (for multi-run experiments)
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
@@ -80,9 +83,91 @@ class ExperimentResult:
             "n_errors": len(self.errors),
             "total_api_calls": self.total_api_calls,
             "total_tokens": self.total_tokens,
+            "run_number": self.run_number,
             "results": [r.to_dict() for r in self.results],
             "errors": self.errors,
         }
+
+
+@dataclass
+class MultiRunResult:
+    """Aggregated result from multiple experiment runs with confidence intervals."""
+
+    config: ExperimentConfig
+    runs: list[ExperimentResult]
+    aggregate_metrics: dict[str, dict[str, float]] = field(default_factory=dict)
+
+    def compute_statistics(self) -> None:
+        """Compute aggregate statistics with confidence intervals."""
+        import statistics
+
+        # Collect metrics by condition across all runs
+        metrics_by_condition: dict[str, dict[str, list[float]]] = {}
+
+        for run in self.runs:
+            for result in run.results:
+                condition = result.condition
+                if condition not in metrics_by_condition:
+                    metrics_by_condition[condition] = {
+                        "hierarchy_f1": [],
+                        "structure_accuracy": [],
+                        "critical_gate_recall": [],
+                    }
+
+                metrics_by_condition[condition]["hierarchy_f1"].append(result.hierarchy_f1)
+                metrics_by_condition[condition]["structure_accuracy"].append(result.structure_accuracy)
+                metrics_by_condition[condition]["critical_gate_recall"].append(result.critical_gate_recall)
+
+        # Compute mean, std, and 95% CI for each condition
+        for condition, metrics in metrics_by_condition.items():
+            self.aggregate_metrics[condition] = {}
+            for metric_name, values in metrics.items():
+                if len(values) >= 2:
+                    mean = statistics.mean(values)
+                    std = statistics.stdev(values)
+                    n = len(values)
+                    # 95% CI = mean ± 1.96 * (std / sqrt(n))
+                    ci_margin = 1.96 * (std / (n ** 0.5))
+                    self.aggregate_metrics[condition][f"{metric_name}_mean"] = mean
+                    self.aggregate_metrics[condition][f"{metric_name}_std"] = std
+                    self.aggregate_metrics[condition][f"{metric_name}_ci_low"] = mean - ci_margin
+                    self.aggregate_metrics[condition][f"{metric_name}_ci_high"] = mean + ci_margin
+                    self.aggregate_metrics[condition][f"{metric_name}_n"] = n
+                elif len(values) == 1:
+                    self.aggregate_metrics[condition][f"{metric_name}_mean"] = values[0]
+                    self.aggregate_metrics[condition][f"{metric_name}_std"] = 0.0
+                    self.aggregate_metrics[condition][f"{metric_name}_n"] = 1
+
+    def to_dict(self) -> dict[str, Any]:
+        """Convert to dictionary for JSON serialization."""
+        return {
+            "config_name": self.config.name,
+            "n_runs": len(self.runs),
+            "runs": [r.to_dict() for r in self.runs],
+            "aggregate_metrics": self.aggregate_metrics,
+        }
+
+    def format_summary(self) -> str:
+        """Format a human-readable summary with confidence intervals."""
+        lines = [
+            "=" * 70,
+            f"MULTI-RUN EXPERIMENT SUMMARY ({len(self.runs)} runs)",
+            "=" * 70,
+            "",
+        ]
+
+        for condition, metrics in sorted(self.aggregate_metrics.items()):
+            lines.append(f"\n{condition}:")
+            for key in ["hierarchy_f1", "structure_accuracy", "critical_gate_recall"]:
+                mean = metrics.get(f"{key}_mean", 0)
+                ci_low = metrics.get(f"{key}_ci_low", mean)
+                ci_high = metrics.get(f"{key}_ci_high", mean)
+                n = metrics.get(f"{key}_n", 0)
+                lines.append(
+                    f"  {key}: {mean:.3f} [{ci_low:.3f}, {ci_high:.3f}] (n={n})"
+                )
+
+        return "\n".join(lines)
 
 
 class ExperimentRunner:
@@ -205,6 +290,98 @@ class ExperimentRunner:
         self._save_final(result, output_dir)
 
         return result
+
+    def run_multi(self, n_runs: int | None = None) -> MultiRunResult:
+        """
+        Run the experiment multiple times for statistical significance.
+
+        Args:
+            n_runs: Number of runs (defaults to config.n_runs)
+
+        Returns:
+            MultiRunResult with aggregated statistics and confidence intervals
+        """
+        n_runs = n_runs or self.config.n_runs
+        logger.info(f"Starting multi-run experiment with {n_runs} runs")
+
+        runs: list[ExperimentResult] = []
+
+        for run_num in range(1, n_runs + 1):
+            logger.info(f"\n{'='*60}")
+            logger.info(f"RUN {run_num}/{n_runs}")
+            logger.info(f"{'='*60}\n")
+
+            # Run single experiment
+            result = self._run_single_experiment(run_number=run_num)
+            runs.append(result)
+
+            # Log intermediate stats
+            if result.results:
+                avg_f1 = sum(r.hierarchy_f1 for r in result.results) / len(result.results)
+                logger.info(f"Run {run_num} complete: avg F1 = {avg_f1:.3f}")
+
+        # Aggregate results
+        multi_result = MultiRunResult(
+            config=self.config,
+            runs=runs,
+        )
+        multi_result.compute_statistics()
+
+        # Save multi-run results
+        output_dir = Path(self.config.output_dir)
+        self._save_multi_run_results(multi_result, output_dir)
+
+        return multi_result
+
+    def _run_single_experiment(self, run_number: int = 1) -> ExperimentResult:
+        """Run a single experiment iteration."""
+        result = ExperimentResult(
+            config=self.config,
+            start_time=datetime.now(),
+            run_number=run_number,
+        )
+
+        # Load test cases
+        test_cases = load_all_test_cases(self.config.test_cases_dir)
+
+        if not test_cases:
+            logger.warning("No test cases found!")
+            result.end_time = datetime.now()
+            return result
+
+        # Run all conditions
+        for condition in self.config.conditions:
+            for test_case in test_cases:
+                try:
+                    scoring_result = self._run_single(test_case, condition)
+                    result.results.append(scoring_result)
+                    result.total_api_calls += 1
+                except Exception as e:
+                    result.errors.append({
+                        "test_case_id": test_case.test_case_id,
+                        "condition": condition.name,
+                        "error": str(e),
+                        "run_number": run_number,
+                    })
+
+        result.end_time = datetime.now()
+        return result
+
+    def _save_multi_run_results(self, result: MultiRunResult, output_dir: Path) -> None:
+        """Save multi-run experiment results."""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+        # Save full results
+        path = output_dir / f"multirun_results_{timestamp}.json"
+        with open(path, "w") as f:
+            json.dump(result.to_dict(), f, indent=2, default=str)
+        logger.info(f"Multi-run results saved to: {path}")
+
+        # Save summary
+        summary_path = output_dir / f"multirun_summary_{timestamp}.txt"
+        with open(summary_path, "w") as f:
+            f.write(result.format_summary())
+        logger.info(f"Multi-run summary saved to: {summary_path}")
 
     def _run_single(
         self,

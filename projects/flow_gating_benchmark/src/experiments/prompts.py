@@ -59,27 +59,42 @@ COT_TEMPLATE = """You are an expert flow cytometrist. Given the following flow c
 
 Predict the complete gating hierarchy, starting from "All Events" through quality control gates to final cell population identification.
 
-Think through this step-by-step:
+Before providing your final answer, briefly consider:
+- What quality control gates are needed for this specific panel?
+- What populations can this panel's markers identify?
+- How should gates be organized hierarchically?
 
-1. **Quality Control Gates**: What initial QC gates are needed? Consider:
-   - Time gate (to exclude acquisition artifacts)
-   - Singlet gate (to exclude doublets/aggregates)
-   - Live/Dead discrimination
-
-2. **Major Lineage Identification**: What major cell lineages can this panel identify? Consider:
-   - Which markers define major populations (T cells, B cells, NK cells, myeloid)?
-   - What is the logical order to separate these populations?
-
-3. **Subset Identification**: For each major lineage, what subsets can be identified?
-   - What markers distinguish subsets?
-   - What is the gating order within each lineage?
-
-4. **Hierarchy Structure**: Organize into a complete gating tree.
+Use your expertise to determine the best approach for this specific panel. Different panels may require different gating strategies.
 
 After your reasoning, provide the final hierarchy as a JSON object with this structure:
 {schema}
 
-Begin your analysis, then end with only the JSON hierarchy."""
+End with only the JSON hierarchy."""
+
+
+# New: Explanation-capturing template for debugging model decisions
+EXPLANATION_TEMPLATE = """You are an expert flow cytometrist. Given the following flow cytometry panel information, predict the gating hierarchy that an expert would use for data analysis.
+
+{context}
+
+## Task
+
+Predict the complete gating hierarchy with explanations for each gating decision.
+
+For each gate in your hierarchy, explain:
+1. **Purpose**: Why is this gate needed?
+2. **Markers**: Which markers define this population and how?
+3. **Placement**: Why is this gate positioned under its parent?
+
+Return your answer as a JSON object where each gate includes a "rationale" field:
+{{
+    "name": "Gate Name",
+    "markers": ["marker1", "marker2"],
+    "rationale": "Brief explanation of why this gate is included and its biological significance",
+    "children": [...]
+}}
+
+Provide the complete hierarchy with rationales."""
 
 
 PROMPT_TEMPLATES = {
@@ -92,6 +107,11 @@ PROMPT_TEMPLATES = {
         name="chain_of_thought",
         template=COT_TEMPLATE,
         strategy="cot",
+    ),
+    "explanation": PromptTemplate(
+        name="explanation",
+        template=EXPLANATION_TEMPLATE,
+        strategy="direct",  # Uses direct strategy but captures rationales
     ),
 }
 
