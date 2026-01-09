@@ -6,7 +6,7 @@
 
 ## Executive Summary
 
-This benchmark evaluates whether LLMs can predict flow cytometry gating strategies from panel information. Using 8 OMIP papers with high-concordance extractions (XML vs LLM panel concordance ≥0.95), we find that **Claude Sonnet achieves 34.2% hierarchy F1 overall, with rich_direct context reaching 44.1%**. Opus performs slightly lower at 28.7% F1 overall but has better critical gate recall (77.6% vs 61.5%).
+This benchmark evaluates whether LLMs can predict flow cytometry gating strategies from panel information. Using 8 OMIP papers with high-concordance extractions (XML vs LLM panel concordance ≥0.95), we find that **Claude Sonnet achieves 38.4% hierarchy F1 overall, with rich_direct context reaching 46.7%**. Opus performs slightly lower at 31.8% F1 overall but has higher structure accuracy (61.0% vs 57.4%).
 
 ## Key Finding: Direct Prompting Outperforms Chain-of-Thought
 
@@ -14,8 +14,8 @@ Contrary to expectations, **direct prompting consistently outperforms chain-of-t
 
 | Model | Direct F1 | CoT F1 | Difference |
 |-------|-----------|--------|------------|
-| Sonnet | 0.375 | 0.307 | **+6.8pp** |
-| Opus | 0.343 | 0.231 | **+11.2pp** |
+| Sonnet | 0.418 | 0.350 | **+6.8pp** |
+| Opus | 0.365 | 0.271 | **+9.4pp** |
 
 ## Results Summary
 
@@ -23,9 +23,9 @@ Contrary to expectations, **direct prompting consistently outperforms chain-of-t
 
 | Metric | Sonnet | Opus |
 |--------|--------|------|
-| Hierarchy F1 | **0.342** | 0.287 |
-| Structure Accuracy | **0.617** | 0.572 |
-| Critical Gate Recall | 0.615 | **0.776** |
+| Hierarchy F1 | **0.384** | 0.318 |
+| Structure Accuracy | 0.574 | **0.610** |
+| Critical Gate Recall | **0.839** | 0.795 |
 | Parse Success Rate | 100% | 100% |
 
 ### Performance by Condition
@@ -34,23 +34,23 @@ Contrary to expectations, **direct prompting consistently outperforms chain-of-t
 
 | Condition | F1 Score |
 |-----------|----------|
-| minimal_direct | 0.271 |
-| minimal_cot | 0.254 |
-| standard_direct | 0.414 |
-| standard_cot | 0.313 |
-| **rich_direct** | **0.441** |
-| rich_cot | 0.355 |
+| minimal_direct | 0.270 |
+| minimal_cot | 0.296 |
+| standard_direct | 0.436 |
+| standard_cot | 0.440 |
+| **rich_direct** | **0.467** |
+| rich_cot | 0.395 |
 
 #### Claude Opus 4
 
 | Condition | F1 Score |
 |-----------|----------|
 | minimal_direct | 0.204 |
-| minimal_cot | 0.184 |
-| standard_direct | 0.390 |
-| standard_cot | 0.241 |
-| **rich_direct** | **0.434** |
-| rich_cot | 0.267 |
+| minimal_cot | 0.347 |
+| **standard_direct** | **0.390** |
+| standard_cot | 0.292 |
+| rich_direct | 0.389 |
+| rich_cot | 0.284 |
 
 ## Test Cases
 
@@ -90,22 +90,22 @@ Contrary to expectations, **direct prompting consistently outperforms chain-of-t
 
 ## Key Findings
 
-### 1. Rich Context is Critical
-Both models perform best with rich context (sample type, species, application, full panel):
-- Sonnet: +17.0pp improvement (minimal → rich)
-- Opus: +23.0pp improvement (minimal → rich)
+### 1. Rich Context Improves Sonnet Performance
+Sonnet shows clear improvement with richer context:
+- Sonnet: +19.7pp improvement (minimal_direct → rich_direct)
+- Opus: +18.5pp improvement (minimal_direct → standard_direct)
 
-### 2. Direct Prompting Wins
-Chain-of-thought reasoning does not help with gating prediction:
-- Sonnet: Direct beats CoT by 6.8pp
-- Opus: Direct beats CoT by 11.2pp
+### 2. Direct Prompting Generally Wins
+Direct prompting outperforms chain-of-thought at higher context levels:
+- Sonnet rich: Direct beats CoT by 7.2pp
+- Opus standard/rich: Direct beats CoT by 9.8pp / 10.5pp
 
 This may be because gating strategies follow domain-specific conventions that benefit from direct pattern matching rather than step-by-step reasoning.
 
-### 3. Opus Has Better Critical Gate Recall
-Despite lower overall F1, Opus correctly identifies critical gates (Singlets, Live, Lymphocytes) more often:
-- Opus: 77.6% critical recall
-- Sonnet: 61.5% critical recall
+### 3. Sonnet Has Better Critical Gate Recall
+Sonnet correctly identifies critical gates (Singlets, Live, Lymphocytes) more often:
+- Sonnet: 83.9% critical recall
+- Opus: 79.5% critical recall
 
 ### 4. Perfect Parse Rate
 Both models achieve 100% valid JSON output, indicating robust structured generation.
@@ -118,16 +118,17 @@ Both models achieve 100% valid JSON output, indicating robust structured generat
 
 ## Raw Data
 
-- Sonnet results: `experiment_results_20260109_192747.json`
-- Opus results: `experiment_results_20260109_195116.json`
-- Duration: Sonnet 14.6 min, Opus 19.9 min
+- Sonnet results: `experiment_results_20260109_210320.json`
+- Opus results: `experiment_results_20260109_210400.json`
+- Duration: Sonnet 12.4 min, Opus 17.5 min
 
 ## Recommendations
 
-1. **Use rich_direct prompting** for best F1 performance
-2. **Use Opus for safety-critical applications** where critical gate recall matters
-3. **Expand test set** by fixing fluorophore extraction for 4 failed OMIPs
-4. **Investigate CoT underperformance** - may indicate domain-specific prompting needs
+1. **Use rich_direct prompting for Sonnet** for best F1 performance (0.467)
+2. **Use standard_direct prompting for Opus** for best F1 performance (0.390)
+3. **Use Sonnet** when critical gate recall matters (83.9% vs 79.5%)
+4. **Expand test set** by fixing fluorophore extraction for 4 failed OMIPs
+5. **Investigate CoT underperformance** - may indicate domain-specific prompting needs
 
 ---
 

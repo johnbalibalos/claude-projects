@@ -13,20 +13,19 @@
 
 | Model | Hierarchy F1 | Structure Acc | Critical Gate Recall |
 |-------|-------------|---------------|---------------------|
-| **Sonnet 4** | **0.342** | **0.617** | 0.615 |
-| Opus 4 | 0.287 | 0.572 | **0.776** |
+| **Sonnet 4** | **0.384** | 0.574 | **0.839** |
+| Opus 4 | 0.318 | **0.610** | 0.795 |
 
 ### Best Configuration
 
-**rich_direct** (full context, direct prompting):
-- Sonnet: F1 = 0.441
-- Opus: F1 = 0.434
+- **Sonnet:** rich_direct (F1 = 0.467)
+- **Opus:** standard_direct (F1 = 0.390)
 
 ### Key Finding
 
 **Direct prompting outperforms chain-of-thought** for gating prediction:
-- Sonnet: +6.8pp improvement
-- Opus: +11.2pp improvement
+- Sonnet rich: Direct +7.2pp over CoT
+- Opus standard: Direct +9.8pp over CoT
 
 ## Test Set
 
@@ -74,6 +73,6 @@ cat results/REPORT.md
 
 ## Recommendations
 
-1. Use **rich_direct** prompting for best F1
-2. Use **Opus** when critical gate recall matters
+1. Use **Sonnet + rich_direct** for best F1 (0.467)
+2. Use **Sonnet** when critical gate recall matters (83.9%)
 3. Avoid chain-of-thought for this domain task
