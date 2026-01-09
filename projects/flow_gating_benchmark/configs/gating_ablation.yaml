@@ -1,0 +1,103 @@
+# Gating Hierarchy Ablation Study
+# Tests reasoning x context x RAG dimensions on gating prediction
+# 3 reasoning x 3 context x 2 rag = 18 conditions
+
+name: gating_hierarchy_ablation
+description: Ablation study for flow cytometry gating hierarchy prediction
+hypothesis: Do CoT/WoT reasoning and richer context improve gating prediction accuracy?
+
+tags:
+  - ablation
+  - gating
+  - flow_cytometry
+  - sonnet
+
+# Data source labeling
+data_source: real  # Uses OMIP-derived test cases
+
+# Bootstrap/repetition settings
+n_bootstrap_runs: 1
+
+# Model
+models:
+  - claude-sonnet-4-20250514
+
+# Reasoning strategies to test (3)
+reasoning_types:
+  - direct      # Zero-shot: direct prediction
+  - cot         # Chain of Thought: step-by-step reasoning
+  - wot         # Weight of Thought: consider alternatives
+
+# Context levels to test (3)
+context_levels:
+  - minimal     # Just markers list
+  - standard    # Markers + sample type + application
+  - rich        # Full panel details + notes
+
+# RAG modes to test (2)
+rag_modes:
+  - none        # No retrieval, rely on parametric knowledge
+  - oracle      # Include HIPC reference definitions
+
+# No MCP tools for this test
+tool_configs:
+  - []
+
+# Model parameters
+max_tokens: 4096
+temperature: 0.0
+
+# Directories
+checkpoint_dir: ./checkpoints/gating_ablation
+output_dir: ./results/gating_ablation
+
+# Strategy-specific configs
+strategy_configs:
+  cot:
+    reasoning_prompt: |
+      Think through this systematically:
+      1. First, identify the quality control gates (singlets, live/dead)
+      2. Then, identify the major lineage markers in the panel
+      3. For each lineage, determine the appropriate parent population
+      4. Consider which negative markers are needed to exclude other lineages
+      5. Finally, identify any subset markers for further phenotyping
+    answer_prefix: "Gating Hierarchy:"
+  wot:
+    n_paths: 2
+    evaluation_criteria:
+      - gate_completeness
+      - hierarchy_structure
+      - marker_logic_correctness
+
+# Context-specific configs
+context_configs:
+  minimal:
+    include_markers: true
+    include_sample_type: false
+    include_application: false
+  standard:
+    include_markers: true
+    include_sample_type: true
+    include_application: true
+  rich:
+    include_markers: true
+    include_sample_type: true
+    include_application: true
+    include_fluorophores: true
+    include_clones: true
+
+# RAG-specific configs
+rag_configs:
+  oracle:
+    max_documents: 1
+    source: hipc_definitions
+
+# Test cases to use (1 per difficulty level)
+test_cases:
+  - synthetic_001.json  # OMIP-001: 7 colors (simple)
+  - synthetic_017.json  # OMIP-017: 18 colors (medium)
+  - synthetic_058.json  # OMIP-058: 30 colors (complex)
+
+# Condition count:
+# 1 model x 3 reasoning x 3 context x 2 rag x 1 tools = 18 conditions
+# With 3 test cases: 54 API calls total
