@@ -6,6 +6,7 @@ These models define the configuration and results for hypothesis testing experim
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
@@ -120,6 +121,43 @@ class TrialInput:
     prompt: str  # Base prompt before strategy/context applied
     ground_truth: Any
     metadata: dict[str, Any] = field(default_factory=dict)
+
+    def to_dict(self, include_raw: bool = True) -> dict[str, Any]:
+        """
+        Convert to dictionary for serialization.
+
+        Args:
+            include_raw: Whether to include raw_input (may be large/complex)
+
+        Returns:
+            Serializable dictionary
+        """
+        result = {
+            "id": self.id,
+            "prompt": self.prompt,
+            "metadata": self.metadata,
+        }
+
+        # Handle raw_input - try to serialize, fall back to repr
+        if include_raw:
+            try:
+                # Try JSON serialization first
+                json.dumps(self.raw_input, default=str)
+                result["raw_input"] = self.raw_input
+            except (TypeError, ValueError):
+                # Fall back to string representation
+                result["raw_input_repr"] = repr(self.raw_input)[:1000]
+                result["raw_input_type"] = type(self.raw_input).__name__
+
+        # Handle ground_truth similarly
+        try:
+            json.dumps(self.ground_truth, default=str)
+            result["ground_truth"] = self.ground_truth
+        except (TypeError, ValueError):
+            result["ground_truth_repr"] = repr(self.ground_truth)[:1000]
+            result["ground_truth_type"] = type(self.ground_truth).__name__
+
+        return result
 
 
 @dataclass

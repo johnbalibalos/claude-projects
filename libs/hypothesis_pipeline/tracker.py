@@ -21,7 +21,7 @@ from typing import Any
 
 import yaml
 
-from .models import ExperimentResults
+from .models import ExperimentResults, TrialInput
 
 
 @dataclass
@@ -118,6 +118,11 @@ class ExperimentRecord:
     # File paths
     results_file: str = ""
     config_file: str = ""
+    inputs_file: str = ""  # Trial inputs
+
+    # Input summary
+    n_inputs: int = 0
+    input_ids: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary."""
@@ -127,6 +132,9 @@ class ExperimentRecord:
             "conclusion": asdict(self.conclusion) if self.conclusion else None,
             "results_file": self.results_file,
             "config_file": self.config_file,
+            "inputs_file": self.inputs_file,
+            "n_inputs": self.n_inputs,
+            "input_ids": self.input_ids,
         }
 
 
@@ -203,10 +211,49 @@ class ExperimentTracker:
 
         return metadata
 
+    def save_inputs(
+        self,
+        metadata: ExperimentMetadata,
+        trial_inputs: list[TrialInput],
+        include_raw: bool = True,
+    ) -> str:
+        """
+        Save trial inputs for an experiment.
+
+        Args:
+            metadata: Experiment metadata
+            trial_inputs: List of trial inputs
+            include_raw: Whether to include raw_input data (can be large)
+
+        Returns:
+            Path to saved inputs file
+        """
+        exp_dir = self.experiments_dir / metadata.experiment_id
+
+        # Convert inputs to serializable format
+        inputs_data = {
+            "n_inputs": len(trial_inputs),
+            "input_ids": [t.id for t in trial_inputs],
+            "inputs": [t.to_dict(include_raw=include_raw) for t in trial_inputs],
+        }
+
+        # Save inputs
+        inputs_file = exp_dir / "inputs.json"
+        with open(inputs_file, "w") as f:
+            json.dump(inputs_data, f, indent=2, default=str)
+
+        # Update index
+        self._index[metadata.experiment_id]["n_inputs"] = len(trial_inputs)
+        self._save_index()
+
+        return str(inputs_file)
+
     def save_results(
         self,
         metadata: ExperimentMetadata,
         results: ExperimentResults,
+        trial_inputs: list[TrialInput] | None = None,
+        include_raw_inputs: bool = True,
     ) -> ExperimentRecord:
         """
         Save experiment results.
@@ -214,11 +261,22 @@ class ExperimentTracker:
         Args:
             metadata: Experiment metadata
             results: Full experiment results
+            trial_inputs: Optional trial inputs to save alongside results
+            include_raw_inputs: Whether to include raw_input data in saved inputs
 
         Returns:
             ExperimentRecord with paths to saved files
         """
         exp_dir = self.experiments_dir / metadata.experiment_id
+
+        # Save inputs if provided
+        inputs_file = ""
+        n_inputs = 0
+        input_ids = []
+        if trial_inputs:
+            inputs_file = self.save_inputs(metadata, trial_inputs, include_raw_inputs)
+            n_inputs = len(trial_inputs)
+            input_ids = [t.id for t in trial_inputs]
 
         # Save full results
         results_file = exp_dir / "results.json"
@@ -237,6 +295,9 @@ class ExperimentTracker:
             results_summary=summary,
             results_file=str(results_file),
             config_file=str(exp_dir / "config.yaml"),
+            inputs_file=inputs_file,
+            n_inputs=n_inputs,
+            input_ids=input_ids,
         )
 
         # Save record
@@ -329,7 +390,31 @@ class ExperimentTracker:
             conclusion=ExperimentConclusion(**data["conclusion"]) if data.get("conclusion") else None,
             results_file=data.get("results_file", ""),
             config_file=data.get("config_file", ""),
+            inputs_file=data.get("inputs_file", ""),
+            n_inputs=data.get("n_inputs", 0),
+            input_ids=data.get("input_ids", []),
         )
+
+    def get_inputs(self, experiment_id: str) -> list[dict[str, Any]] | None:
+        """
+        Load trial inputs for an experiment.
+
+        Args:
+            experiment_id: Experiment ID
+
+        Returns:
+            List of input dictionaries, or None if not found
+        """
+        exp_dir = self.experiments_dir / experiment_id
+        inputs_file = exp_dir / "inputs.json"
+
+        if not inputs_file.exists():
+            return None
+
+        with open(inputs_file) as f:
+            data = json.load(f)
+
+        return data.get("inputs", [])
 
     def list_experiments(
         self,
