@@ -34,6 +34,12 @@ try:
 except ImportError:
     OpenAI = None
 
+try:
+    import httpx
+    HTTPX_AVAILABLE = True
+except ImportError:
+    HTTPX_AVAILABLE = False
+
 
 logger = logging.getLogger(__name__)
 
@@ -107,6 +113,7 @@ class ExperimentRunner:
         """Initialize API clients."""
         self.anthropic_client = None
         self.openai_client = None
+        self._ollama_client = None
 
         if Anthropic and os.environ.get("ANTHROPIC_API_KEY"):
             self.anthropic_client = Anthropic()
@@ -115,6 +122,17 @@ class ExperimentRunner:
         if OpenAI and os.environ.get("OPENAI_API_KEY"):
             self.openai_client = OpenAI()
             logger.info("OpenAI client initialized")
+
+        # Ollama configuration
+        self.ollama_base_url = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
+
+    @property
+    def ollama_client(self):
+        """Lazy initialization of Ollama HTTP client."""
+        if self._ollama_client is None and HTTPX_AVAILABLE:
+            self._ollama_client = httpx.Client(timeout=300.0)
+            logger.info(f"Ollama client initialized at {self.ollama_base_url}")
+        return self._ollama_client
 
     def run(self) -> ExperimentResult:
         """
@@ -244,7 +262,8 @@ class ExperimentRunner:
         elif "gpt" in model.lower():
             return self._call_openai(model, prompt)
         else:
-            raise ValueError(f"Unknown model: {model}")
+            # Assume Ollama for all other models (local LLMs)
+            return self._call_ollama(model, prompt)
 
     def _call_anthropic(self, model: str, prompt: str) -> str:
         """Call Anthropic API."""
@@ -273,6 +292,40 @@ class ExperimentRunner:
         )
 
         return response.choices[0].message.content
+
+    def _call_ollama(self, model: str, prompt: str) -> str:
+        """
+        Call Ollama API for local models.
+
+        Args:
+            model: Ollama model name (e.g., 'llama3.1:8b', 'qwen2.5:72b')
+            prompt: Prompt to send
+
+        Returns:
+            Model response text
+        """
+        if not HTTPX_AVAILABLE:
+            raise RuntimeError("httpx not installed. Run: pip install httpx")
+
+        if self.ollama_client is None:
+            raise RuntimeError("Ollama client not available")
+
+        response = self.ollama_client.post(
+            f"{self.ollama_base_url}/api/chat",
+            json={
+                "model": model,
+                "messages": [{"role": "user", "content": prompt}],
+                "stream": False,
+                "options": {
+                    "temperature": self.config.temperature,
+                    "num_predict": self.config.max_tokens,
+                },
+            },
+        )
+        response.raise_for_status()
+        data = response.json()
+
+        return data["message"].get("content", "")
 
     def _mock_response(self, test_case: TestCase) -> str:
         """Generate mock response for dry run."""

@@ -31,11 +31,34 @@ class ExperimentCondition:
 
 # Available models for testing
 MODELS = {
+    # Cloud models
     "claude-opus": "claude-opus-4-20250514",
     "claude-sonnet": "claude-sonnet-4-20250514",
     "claude-haiku": "claude-3-5-haiku-20241022",
     "gpt-4o": "gpt-4o",
     "gpt-4o-mini": "gpt-4o-mini",
+    # Local models (Ollama)
+    "llama3.1-8b": "llama3.1:8b",
+    "llama3.1-70b": "llama3.1:70b",
+    "qwen2.5-7b": "qwen2.5:7b",
+    "qwen2.5-72b": "qwen2.5:72b",
+    "mistral-7b": "mistral:7b",
+    "mixtral-8x7b": "mixtral:8x7b",
+    "deepseek-r1-8b": "deepseek-r1:8b",
+    "deepseek-r1-70b": "deepseek-r1:70b",
+}
+
+# Model categories
+CLOUD_MODELS = ["claude-opus", "claude-sonnet", "claude-haiku", "gpt-4o", "gpt-4o-mini"]
+LOCAL_MODELS = ["llama3.1-8b", "llama3.1-70b", "qwen2.5-7b", "qwen2.5-72b",
+                "mistral-7b", "mixtral-8x7b", "deepseek-r1-8b", "deepseek-r1-70b"]
+
+# Recommended local models for scientific reasoning
+RECOMMENDED_LOCAL_MODELS = {
+    "llama3.1:70b": "Best overall for science tasks",
+    "qwen2.5:72b": "Strong structured output, good on biology",
+    "deepseek-r1:70b": "Reasoning-focused, good for CoT",
+    "mixtral:8x7b": "Good balance of speed and quality",
 }
 
 # Context levels
@@ -145,6 +168,40 @@ def get_opus_ablation_conditions() -> list[ExperimentCondition]:
         models=["claude-opus"],
         context_levels=["minimal", "standard", "rich"],
         prompt_strategies=["direct", "cot"],
+    )
+
+
+def get_local_model_conditions(
+    models: list[str] | None = None,
+    context_levels: list[str] | None = None,
+    prompt_strategies: list[str] | None = None,
+) -> list[ExperimentCondition]:
+    """
+    Get conditions for local model comparison.
+
+    Args:
+        models: Local models to test (default: all LOCAL_MODELS)
+        context_levels: Context levels to include (default: all)
+        prompt_strategies: Prompting strategies (default: all)
+
+    Returns:
+        List of conditions for local model testing
+    """
+    if models is None:
+        models = LOCAL_MODELS
+    return get_all_conditions(models, context_levels, prompt_strategies)
+
+
+def get_local_quick_conditions() -> list[ExperimentCondition]:
+    """
+    Quick test conditions for local models.
+
+    1 model × 2 context × 1 strategy = 2 conditions
+    """
+    return get_all_conditions(
+        models=["llama3.1-8b"],
+        context_levels=["minimal", "standard"],
+        prompt_strategies=["cot"],
     )
 
 
