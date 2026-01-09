@@ -8,14 +8,16 @@
 
 This benchmark evaluates whether LLMs can predict flow cytometry gating strategies from panel information. Using 8 OMIP papers with high-concordance extractions (XML vs LLM panel concordance ≥0.95), we find that **Claude Sonnet achieves 38.4% hierarchy F1 overall, with rich_direct context reaching 46.7%**. Opus performs slightly lower at 31.8% F1 overall but has higher structure accuracy (61.0% vs 57.4%).
 
-## Key Finding: Direct Prompting Outperforms Chain-of-Thought
+## Key Finding: Direct Prompting Shows Small Advantage
 
-Contrary to expectations, **direct prompting consistently outperforms chain-of-thought (CoT)** for both models:
+Direct prompting shows a modest advantage over chain-of-thought (CoT), though the difference is smaller than initially reported:
 
 | Model | Direct F1 | CoT F1 | Difference |
 |-------|-----------|--------|------------|
-| Sonnet | 0.418 | 0.350 | **+6.8pp** |
-| Opus | 0.365 | 0.271 | **+9.4pp** |
+| Sonnet | 0.391 | 0.377 | **+1.4pp** |
+| Opus | 0.328 | 0.308 | **+2.0pp** |
+
+Note: These differences are within the noise margin given high per-test-case variance (std ~0.1-0.2).
 
 ## Results Summary
 
@@ -90,31 +92,56 @@ Contrary to expectations, **direct prompting consistently outperforms chain-of-t
 
 ## Key Findings
 
-### 1. Rich Context Improves Sonnet Performance
-Sonnet shows clear improvement with richer context:
+### 1. Rich Context Improves Performance
+Both models improve significantly with more context:
 - Sonnet: +19.7pp improvement (minimal_direct → rich_direct)
 - Opus: +18.5pp improvement (minimal_direct → standard_direct)
 
-### 2. Direct Prompting Generally Wins
-Direct prompting outperforms chain-of-thought at higher context levels:
-- Sonnet rich: Direct beats CoT by 7.2pp
-- Opus standard/rich: Direct beats CoT by 9.8pp / 10.5pp
+### 2. Direct vs CoT: Mixed Results
+The advantage of direct prompting is context-dependent:
+- **Minimal context**: CoT actually outperforms direct (Opus: +14.3pp, Sonnet: +2.6pp)
+- **Rich context**: Direct outperforms CoT (Sonnet: +7.2pp, Opus: +10.5pp)
 
-This may be because gating strategies follow domain-specific conventions that benefit from direct pattern matching rather than step-by-step reasoning.
+This suggests CoT helps when context is limited, but adds noise when context is sufficient.
 
-### 3. Sonnet Has Better Critical Gate Recall
-Sonnet correctly identifies critical gates (Singlets, Live, Lymphocytes) more often:
-- Sonnet: 83.9% critical recall
-- Opus: 79.5% critical recall
+### 3. Hallucination Rate Increases with Context
+More context leads to more hallucinated gates:
 
-### 4. Perfect Parse Rate
-Both models achieve 100% valid JSON output, indicating robust structured generation.
+| Context | Sonnet | Opus |
+|---------|--------|------|
+| minimal | 7.3% | 9.2% |
+| standard | 14.2% | 14.9% |
+| rich | 16.6% | 16.1% |
+
+Higher F1 from rich context comes at the cost of more false positives.
+
+### 4. Test Case Difficulty Varies Widely
+Performance varies dramatically by OMIP paper:
+
+| OMIP | Sonnet F1 | Opus F1 | Why? |
+|------|-----------|---------|------|
+| OMIP-077 | 0.54 | 0.30 | Standard leukocyte names (T cells, NK, B cells) |
+| OMIP-101 | 0.49 | 0.52 | Well-defined whole blood populations |
+| OMIP-083 | 0.25 | 0.21 | Specialized monocyte terminology (SLAN+/−) |
+| OMIP-074 | 0.26 | 0.31 | Unusual B-cell subsets (TLM, AM, RM) |
+
+**Key insight**: LLMs perform well on canonical population names but struggle with specialized research terminology.
+
+### 5. Task Failures in Minimal Context
+6 evaluations (6.25%) produced complete task failures where models output meta-questions instead of gate names:
+- "The research question or cell populations of interest"
+- "Which fluorochromes/channels are being used"
+
+These occurred exclusively in minimal_direct and minimal_cot conditions, indicating the minimal context prompt is ambiguous.
 
 ## Limitations
 
 1. **Small test set**: 8 OMIP papers (4 failed validation due to missing fluorophore data)
 2. **Extraction quality**: Ground truth from automated extraction, not manual curation
 3. **Single run**: No statistical significance testing
+4. **High variance**: Per-test-case std of 0.1-0.2 on means of 0.2-0.4 limits confidence in condition comparisons
+5. **Vocabulary bias**: Test set skews toward specialized terminology that may not reflect typical use cases
+6. **No semantic validation**: Parser accepts syntactically valid but semantically invalid outputs (meta-questions as gate names)
 
 ## Raw Data
 
@@ -124,11 +151,17 @@ Both models achieve 100% valid JSON output, indicating robust structured generat
 
 ## Recommendations
 
-1. **Use rich_direct prompting for Sonnet** for best F1 performance (0.467)
-2. **Use standard_direct prompting for Opus** for best F1 performance (0.390)
-3. **Use Sonnet** when critical gate recall matters (83.9% vs 79.5%)
-4. **Expand test set** by fixing fluorophore extraction for 4 failed OMIPs
-5. **Investigate CoT underperformance** - may indicate domain-specific prompting needs
+### For Users
+1. **Use rich context** - provides ~20pp F1 improvement over minimal
+2. **Use direct prompting with rich context** - best overall performance
+3. **Expect ~15% hallucination rate** - always verify predicted gates against panel markers
+
+### For Benchmark Improvement
+4. **Add semantic validation** - detect when models output meta-questions instead of gate names
+5. **Expand test set** - fix fluorophore extraction for 4 failed OMIPs; add more canonical panels
+6. **Run multiple trials** - current variance too high for reliable condition comparisons
+7. **Stratify by vocabulary type** - separate canonical (leukocyte subsets) from specialized (research-specific) terminology
+8. **Improve minimal context prompt** - clarify that output should be gate names, not questions
 
 ---
 
