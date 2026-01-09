@@ -90,13 +90,13 @@ class ReasoningTestCase:
     - Evaluation based on reasoning quality, not exact matches
     """
 
-    # Identifiers
+    # Required fields (no defaults)
     test_id: str
     test_type: ReasoningTestType
-    difficulty: str = "medium"  # easy, medium, hard
-
-    # The scenario
     prompt: str
+
+    # Optional fields with defaults
+    difficulty: str = "medium"  # easy, medium, hard
     markers: list[str] = field(default_factory=list)
     target_population: str = ""
     tissue_context: str = "PBMC"  # Default: peripheral blood
