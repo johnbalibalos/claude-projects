@@ -1,304 +1,79 @@
-# Flow Gating Benchmark: Complete Study Summary
+# Flow Gating Benchmark Summary
 
-**Project:** Flow Gating Benchmark - Gating Strategy Prediction Evaluation
-**Date:** January 7, 2026
-**Models:** Claude Sonnet 4, Claude Opus 4
-**Author:** John Balibalos
-
----
+**Project:** `projects/flow_gating_benchmark/`
+**Last Updated:** January 9, 2026
 
 ## Research Question
 
-> Given a flow cytometry panel (markers, fluorophores, sample type), can LLMs predict the appropriate gating hierarchy?
+> Can LLMs predict flow cytometry gating strategies from panel information?
 
----
+## Latest Results (Jan 9, 2026)
 
-## Executive Summary
+### Model Comparison
 
-This benchmark evaluates whether LLMs can predict flow cytometry gating strategies from panel information alone. Using 30 OMIP (Optimized Multicolor Immunofluorescence Panel) papers as ground truth, we find that **Claude achieves 67.3% hierarchy F1 with chain-of-thought prompting and rich context**, with performance strongly correlated with panel complexity.
+| Model | Hierarchy F1 | Structure Acc | Critical Gate Recall |
+|-------|-------------|---------------|---------------------|
+| **Sonnet 4** | **0.342** | **0.617** | 0.615 |
+| Opus 4 | 0.287 | 0.572 | **0.776** |
 
-**Key Finding:** Claude Sonnet achieves **67.3% hierarchy F1** on gating strategy prediction, significantly outperforming Claude Opus (41.9% F1). Surprisingly, the more expensive Opus model underperforms on this domain-specific benchmark, suggesting that gating strategy prediction relies more on specialized knowledge than general reasoning capability.
+### Best Configuration
 
-**Model Comparison:** Sonnet outperforms Opus by **+25.4pp** on hierarchy F1, with both models showing 100% parse success rate. This result inverts the typical capability ordering and suggests domain-specific benchmarks may reveal unexpected model behaviors.
+**rich_direct** (full context, direct prompting):
+- Sonnet: F1 = 0.441
+- Opus: F1 = 0.434
 
----
+### Key Finding
 
-## Methodology
+**Direct prompting outperforms chain-of-thought** for gating prediction:
+- Sonnet: +6.8pp improvement
+- Opus: +11.2pp improvement
 
-### Test Cases
-- **30 OMIP papers** from Cytometry Part A journal
-- Complexity range: 10-color (simple) to 40-color (complex)
-- Sample types: Human PBMC, whole blood, tissue
-- Ground truth: Expert-curated gating hierarchies from published figures
+## Test Set
 
-### Experimental Conditions
+8 OMIP papers with high-concordance panel extractions (XML vs LLM ≥0.95):
+
+| OMIP | Sample Type | Complexity |
+|------|-------------|------------|
+| OMIP-022 | Human blood | γδ T-cells |
+| OMIP-064 | Human PBMC | General |
+| OMIP-074 | Human PBMC | B-cells |
+| OMIP-076 | Mouse tissue | T/B/ASC |
+| OMIP-077 | Human PBMC | DCs |
+| OMIP-083 | Human PBMC | 28-color |
+| OMIP-095 | Human PBMC | Spectral |
+| OMIP-101 | Fixed blood | 27-color |
+
+## Experimental Conditions
+
 | Factor | Levels |
 |--------|--------|
 | Context | minimal, standard, rich |
-| Prompting | direct, chain-of-thought (CoT) |
+| Prompting | direct, chain-of-thought |
+| Models | Sonnet 4, Opus 4 |
 
-**6 total conditions** (3 context × 2 prompting)
+**Total evaluations:** 96 (8 × 6 × 2)
 
-### Evaluation Metrics
+## Quick Start
 
-| Metric | Description |
-|--------|-------------|
-| **Hierarchy F1** | Gate name precision/recall with fuzzy matching |
-| **Structure Accuracy** | Correct parent-child relationships |
-| **Critical Gate Recall** | Must-have gates (Time, Singlets, Live) |
-| **Hallucination Rate** | Gates referencing markers not in panel |
-| **Parse Success Rate** | Valid JSON output |
+```bash
+cd projects/flow_gating_benchmark
 
----
+# Run experiment
+python scripts/run_experiment.py --model sonnet --force
 
-## Results
-
-### Overall Performance
-
-| Metric | Mean | Std |
-|--------|------|-----|
-| Hierarchy F1 | 0.673 | 0.142 |
-| Structure Accuracy | 0.589 | 0.167 |
-| Critical Gate Recall | 0.823 | 0.134 |
-| Hallucination Rate | 0.156 | 0.089 |
-| Parse Success Rate | 94.4% | - |
-
-### Performance by Context Level
-
-| Context | Hierarchy F1 | Structure Acc | Critical Recall | Hallucination |
-|---------|-------------|---------------|-----------------|---------------|
-| Minimal | 0.542 | 0.467 | 0.712 | 0.234 |
-| Standard | 0.689 | 0.612 | 0.845 | 0.145 |
-| Rich | **0.787** | **0.689** | **0.912** | **0.089** |
-
-**Finding:** Rich context improves F1 by +24.5pp over minimal context.
-
-### Performance by Prompting Strategy
-
-| Strategy | Hierarchy F1 | Structure Acc | Critical Recall |
-|----------|-------------|---------------|-----------------|
-| Direct | 0.623 | 0.534 | 0.789 |
-| CoT | **0.723** | **0.645** | **0.856** |
-
-**Finding:** Chain-of-thought prompting improves F1 by +10.0pp.
-
-### Performance by Panel Complexity
-
-| Complexity | Panels | F1 | Structure | Critical Recall |
-|------------|--------|-------|-----------|-----------------|
-| Simple (≤15) | 12 | **0.812** | **0.756** | **0.923** |
-| Medium (16-25) | 11 | 0.678 | 0.589 | 0.834 |
-| Complex (26+) | 7 | 0.534 | 0.423 | 0.712 |
-
-**Finding:** Performance degrades with complexity. 40-color panels (OMIP-069) are particularly challenging.
-
-### Model Comparison: Sonnet vs Opus
-
-| Metric | Sonnet | Opus | Delta |
-|--------|--------|------|-------|
-| Hierarchy F1 | **0.673** | 0.419 | **+25.4pp** |
-| Structure Accuracy | **0.589** | 0.491 | +9.8pp |
-| Critical Gate Recall | 0.823 | 0.820 | +0.3pp |
-| Parse Success Rate | 94.4% | **100%** | -5.6pp |
-
-#### Opus Performance by Condition
-
-| Condition | Hierarchy F1 | Parse Rate |
-|-----------|-------------|------------|
-| minimal_direct | 0.391 | 100% |
-| minimal_cot | 0.401 | 100% |
-| standard_direct | 0.444 | 100% |
-| standard_cot | 0.414 | 100% |
-| **rich_direct** | **0.451** | 100% |
-| rich_cot | 0.412 | 100% |
-
-**Key Observations:**
-1. **Opus underperforms Sonnet by 25.4pp** on hierarchy F1 despite being the more capable model
-2. **Opus has 100% parse rate** vs Sonnet's 94.4%, showing better instruction following
-3. **Both models peak with rich context**, but context improvement is smaller for Opus
-4. **CoT hurts Opus performance**: Opus rich_direct (0.451) > rich_cot (0.412), suggesting chain-of-thought may introduce more errors for this model
-
-**Interpretation:** This unexpected result suggests gating strategy prediction relies heavily on domain-specific knowledge rather than general reasoning. Sonnet may have more relevant flow cytometry training data, or Opus's broader capability actually introduces more hallucinations in this specialized domain.
-
-### Selected OMIP Results (Rich Context + CoT)
-
-| OMIP | Colors | F1 | Critical Recall | Hallucination |
-|------|--------|------|-----------------|---------------|
-| OMIP-023 | 10 | 0.889 | 0.967 | 0.034 |
-| OMIP-030 | 10 | 0.856 | 0.945 | 0.056 |
-| OMIP-044 | 28 | 0.678 | 0.845 | 0.134 |
-| OMIP-058 | 30 | 0.645 | 0.812 | 0.156 |
-| OMIP-069 | 40 | 0.523 | 0.700 | 0.189 |
-
----
-
-## Key Findings
-
-### 1. LLMs "Know" Standard Gating Conventions
-
-Critical gate recall (82.3%) demonstrates that Claude has learned standard flow cytometry conventions:
-- Time gate for acquisition artifacts
-- Singlet gate for doublet exclusion
-- Live/Dead discrimination
-
-These are reliably predicted even with minimal context.
-
-### 2. Context Quality Matters More Than Prompting Strategy
-
-| Intervention | F1 Improvement |
-|--------------|----------------|
-| Minimal → Rich context | **+24.5pp** |
-| Direct → CoT prompting | +10.0pp |
-
-Providing sample type, species, and application context is more impactful than sophisticated prompting.
-
-### 3. Complexity Creates a Hard Ceiling
-
-```
-Simple (≤15 colors):  81.2% F1
-Medium (16-25):       67.8% F1
-Complex (26+):        53.4% F1
+# View results
+cat results/REPORT.md
 ```
 
-This isn't just more gates to predict - complex panels require tracking marker co-expression patterns Claude cannot reliably maintain.
+## Files
 
-### 4. Hallucinations are Predictable
+- **Full Report:** `projects/flow_gating_benchmark/results/REPORT.md`
+- **Raw Results:** `projects/flow_gating_benchmark/results/experiment_results_*.json`
+- **Ground Truth:** `projects/flow_gating_benchmark/data/ground_truth/`
+- **Extraction Pipeline:** `projects/flow_gating_benchmark/src/curation/`
 
-15.6% hallucination rate, concentrated in:
-- Memory markers (CD45RO) when not in panel
-- Chemokine receptors (CCR7, CXCR5)
-- Differentiation markers
+## Recommendations
 
-Claude "assumes" panels are more comprehensive than they are.
-
-### 5. Rare Populations are a Blind Spot
-
-| Population | Recall |
-|------------|--------|
-| T cells, B cells, NK | 85.6% |
-| ILCs, MAIT, pDCs | **31.2%** |
-
-Rare populations require specialized knowledge that either isn't in training data or can't be reliably retrieved.
-
----
-
-## Error Analysis
-
-### Common Failure Modes
-
-| Error Type | Frequency | Description |
-|------------|-----------|-------------|
-| Missing QC gate | 23.4% | Time gate most commonly omitted |
-| Hallucinated marker | 15.6% | Referenced markers not in panel |
-| Incorrect parent | 18.9% | Gate under wrong parent (e.g., NK under Monocytes) |
-| Depth mismatch | 14.5% | Hierarchy too shallow |
-
-### Failure by Population Type
-
-| Population Type | Recall |
-|----------------|--------|
-| QC gates (Time, Singlets, Live) | 82.3% |
-| Standard populations (T, B, NK) | 85.6% |
-| Rare populations (ILC, MAIT, pDC) | **31.2%** |
-
-### Hallucination Examples
-
-| Predicted Marker | Actual Panel | Likely Confusion |
-|-----------------|--------------|------------------|
-| CD45RO | No memory markers | Assumed memory panel |
-| CXCR5 | No Tfh markers | Over-generalized from T cell |
-| CD123 | No DC markers | Assumed full immunophenotyping |
-
----
-
-## Practical Utility Assessment
-
-| Panel Type | Recommendation |
-|------------|----------------|
-| Simple (≤15) | LLM suggestions useful, light review |
-| Medium (16-25) | LLM as starting point, expert refinement |
-| Complex (26+) | Expert-led, LLM for verification only |
-
-### Key Metric: Hallucination Rate
-
-For scientific applications, **hallucination rate is the critical safety metric**. A gating strategy that references non-existent markers would produce nonsensical results.
-
-Current 15.6% hallucination rate is **too high for unsupervised use** but acceptable with expert review.
-
----
-
-## Conclusions
-
-### What Works
-- Standard panel structures (≤15 colors)
-- Critical QC gates (Time, Singlets, Live)
-- Major lineage identification (T, B, NK, Myeloid)
-- Rich contextual prompts
-
-### What Doesn't Work
-- Complex panel structures (26+ colors)
-- Rare population identification (ILCs, MAITs)
-- Novel or unusual gating strategies
-- Minimal context prompts
-
-### The Path to Reliable Gating Prediction
-
-Based on our findings, reliable (>90% F1, <5% hallucination) gating prediction requires:
-
-1. **Rich context** (sample type, species, application) - achievable now
-2. **Panel validation** (tool to check marker existence) - needs MCP
-3. **Complexity handling** (hierarchical reasoning) - needs model improvement
-4. **Rare population knowledge** (specialized training) - needs domain fine-tuning
-
----
-
-## Limitations
-
-### Ground Truth Challenges
-- **Multiple valid strategies**: For any given panel, multiple gating strategies may be equally correct. The benchmark assumes a single "best" strategy from OMIP papers, but experts may disagree.
-- **Paper-based extraction**: Gating hierarchies are extracted from OMIP paper figures and text, not from actual .wsp workspace files. This introduces curation error.
-- **Limited .wsp validation**: Not all OMIP papers have publicly available workspace files in FlowRepository for cross-validation.
-
-### Evaluation Metric Limitations
-- **F1 uses fuzzy matching**: Gate name matching relies on heuristics (e.g., "CD3+ T cells" ≈ "T cells"). This may over- or under-estimate performance.
-- **Structure accuracy is strict**: Any parent mismatch counts as an error, even if the biological interpretation is equivalent.
-- **Hallucination detection is heuristic**: Based on string matching of marker names, may miss semantic hallucinations.
-
-### Coverage Gaps
-- **Biased toward PBMC**: Most test cases are PBMC samples; tissue-specific panels (bone marrow, lymph node) are underrepresented.
-- **Limited rare populations**: Focus on common lineages (T, B, NK, myeloid); rare populations (ILCs, MAITs) have limited coverage.
-- **No longitudinal panels**: All test cases are single-timepoint analyses.
-
-### Experimental Limitations
-- **No confidence scoring**: LLM predictions are binary (gate present/absent), no uncertainty quantification.
-- **Temperature=0 only**: No exploration of temperature or sampling effects.
-- **Single-turn only**: Does not test iterative refinement or clarification dialogues.
-- **Single model**: No comparison across Claude/GPT-4/Gemini.
-
-### Known Issues
-- Some OMIP papers have incomplete gating descriptions in text
-- FlowRepository availability varies; some .wsp files are corrupted or use incompatible formats
-- Inter-rater reliability for ground truth curation not formally assessed
-
----
-
-## Future Work
-
-1. Cross-validate against FlowRepository .wsp files
-2. Add multi-model comparison (GPT-4, Gemini Pro)
-3. Expand to 80+ OMIP panels
-4. Test with few-shot examples
-5. Evaluate tool-augmented gating prediction
-
----
-
-## Bottom Line
-
-> Claude Sonnet outperforms Opus on gating strategy prediction (67.3% vs 41.9% F1), an unexpected result that suggests domain-specific knowledge matters more than general capability for this task.
-
-For practical use: Sonnet achieves 81% accuracy on simple panels but struggles with complex panels and rare populations. Hallucination rate (15.6%) requires expert oversight regardless of model choice.
-
----
-
-*Raw data: `projects/flow_gating_benchmark/results/`*
-*Experiments run: Sonnet (complete), Opus (complete)*
+1. Use **rich_direct** prompting for best F1
+2. Use **Opus** when critical gate recall matters
+3. Avoid chain-of-thought for this domain task
