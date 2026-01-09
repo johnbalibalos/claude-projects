@@ -41,6 +41,13 @@ class RAGMode(Enum):
     NEGATIVE = "negative"  # Wrong documents (for lower-bound testing)
 
 
+class DataSource(Enum):
+    """Data source types for experiment organization."""
+    SYNTHETIC = "synthetic"  # Generated/artificial test cases
+    REAL = "real"  # Real-world dataset
+    MIXED = "mixed"  # Combination of synthetic and real
+
+
 @dataclass
 class ToolConfig:
     """Configuration for a single tool/MCP."""

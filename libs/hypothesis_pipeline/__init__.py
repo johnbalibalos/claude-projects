@@ -52,6 +52,7 @@ from .models import (
     ReasoningType,
     ContextLevel,
     RAGMode,
+    DataSource,
     ToolConfig,
     HypothesisCondition,
     TrialInput,
@@ -132,11 +133,21 @@ from .tracker import (
     ExperimentRecord,
 )
 
+# Cost estimation
+from .cost import (
+    CostEstimate,
+    ModelPricing,
+    estimate_experiment_cost,
+    confirm_experiment_cost,
+    get_model_pricing_table,
+)
+
 __all__ = [
     # Models
     "ReasoningType",
     "ContextLevel",
     "RAGMode",
+    "DataSource",
     "ToolConfig",
     "HypothesisCondition",
     "TrialInput",
@@ -194,4 +205,10 @@ __all__ = [
     "ExperimentMetadata",
     "ExperimentConclusion",
     "ExperimentRecord",
+    # Cost estimation
+    "CostEstimate",
+    "ModelPricing",
+    "estimate_experiment_cost",
+    "confirm_experiment_cost",
+    "get_model_pricing_table",
 ]

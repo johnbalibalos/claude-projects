@@ -1,0 +1,78 @@
+# Sonnet Synthetic Ablation Study
+# Tests reasoning x context x RAG dimensions on synthetic data
+# Cost estimate: ~$0.32 for 1 test case (18 conditions)
+
+name: sonnet_synthetic_ablation
+description: Ablation study on synthetic test cases across reasoning, context, and RAG dimensions
+hypothesis: Do CoT/WoT reasoning and richer context improve LLM performance on synthetic tasks?
+
+tags:
+  - ablation
+  - synthetic
+  - sonnet
+  - reasoning
+  - context
+  - rag
+
+# Data source labeling
+data_source: synthetic  # synthetic | real | mixed
+
+# Bootstrap/repetition settings
+n_bootstrap_runs: 1  # Number of times to run each condition
+
+# Model
+models:
+  - claude-sonnet-4-20250514
+
+# Reasoning strategies to test
+reasoning_types:
+  - direct      # Baseline: no explicit reasoning
+  - cot         # Chain of Thought
+  - wot         # Web/Tree of Thought
+
+# Context levels to test
+context_levels:
+  - minimal     # Bare essentials
+  - standard    # Core data + metadata
+  - rich        # All available information
+
+# RAG modes to test
+rag_modes:
+  - none        # No retrieval
+  - oracle      # Perfect retrieval (upper bound)
+
+# No tools for this test
+tool_configs:
+  - []
+
+# Model parameters
+max_tokens: 4096
+temperature: 0.0
+
+# Directories (use data_source in path for organization)
+checkpoint_dir: ./checkpoints/synthetic/sonnet_ablation
+output_dir: ./results/synthetic/sonnet_ablation
+
+# Strategy-specific configs
+strategy_configs:
+  cot:
+    reasoning_prompt: "Think through this step by step before providing your answer."
+    answer_prefix: "Answer:"
+  wot:
+    n_paths: 2
+    evaluation_criteria:
+      - correctness
+      - completeness
+      - reasoning_quality
+
+# Context-specific configs (use defaults)
+context_configs: {}
+
+# RAG-specific configs
+rag_configs:
+  oracle:
+    max_documents: 3
+
+# Condition count:
+# 1 model x 3 reasoning x 3 context x 2 rag x 1 tools = 18 conditions
+# With n_bootstrap_runs=1: 18 API calls per test case
