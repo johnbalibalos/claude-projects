@@ -73,6 +73,8 @@ Reusable utilities extracted from individual projects:
 |---------|---------|
 | `libs/checkpoint` | Resumable workflows with automatic checkpointing |
 | `libs/mcp_tester` | Generic framework for MCP/tool ablation studies |
+| `libs/paper_download` | PMC paper search and download client |
+| `libs/results_processor` | Export experiment results to CSV and summaries |
 
 ## Getting Started
 
@@ -94,8 +96,10 @@ See individual project READMEs for specific instructions.
 ├── README.md              # This file
 ├── CLAUDE.md              # Claude Code instructions
 ├── libs/                  # Shared libraries
-│   ├── checkpoint/
-│   └── mcp_tester/
+│   ├── checkpoint/        # Resumable workflow runner
+│   ├── mcp_tester/        # Tool ablation framework
+│   ├── paper_download/    # PMC paper downloader
+│   └── results_processor/ # Results export tools
 └── projects/
     ├── flow_panel_optimizer/
     ├── drugdevbench/
