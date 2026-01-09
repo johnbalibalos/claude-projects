@@ -42,6 +42,9 @@ env/
 # Jupyter
 .ipynb_checkpoints/
 
+# Docs (downloaded papers, etc.)
+docs/
+
 # Experiment artifacts
 checkpoints/
 results/
