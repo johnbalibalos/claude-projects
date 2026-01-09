@@ -1,0 +1,30 @@
+# Base configuration template
+# Other configs can extend this using: extends: base
+
+name: base_experiment
+description: Base configuration with sensible defaults
+
+# Model settings
+models:
+  - claude-sonnet-4-20250514
+max_tokens: 4096
+temperature: 0.0
+max_tool_calls: 30
+
+# Default dimensions (single values - extend for ablation)
+reasoning_types:
+  - direct
+context_levels:
+  - standard
+rag_modes:
+  - none
+tool_configs:
+  - []  # No tools
+
+# Directories (can use ${VAR} for environment variables)
+checkpoint_dir: ${OUTPUT_DIR:./checkpoints}
+output_dir: ${OUTPUT_DIR:./results}
+
+# Metadata
+tags: []
+hypothesis: ""

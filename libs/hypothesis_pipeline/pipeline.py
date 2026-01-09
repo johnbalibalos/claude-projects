@@ -40,37 +40,11 @@ from .models import (
 from .rag import RAGProvider, NoRAGProvider, get_provider_for_mode
 from .strategies import get_strategy
 
-
-@dataclass
-class PipelineConfig:
-    """Configuration for the hypothesis pipeline."""
-
-    name: str
-
-    # Dimensions to test (cartesian product)
-    models: list[str] = field(default_factory=lambda: ["claude-sonnet-4-20250514"])
-    reasoning_types: list[ReasoningType] = field(default_factory=lambda: [ReasoningType.DIRECT])
-    context_levels: list[ContextLevel] = field(default_factory=lambda: [ContextLevel.STANDARD])
-    rag_modes: list[RAGMode] = field(default_factory=lambda: [RAGMode.NONE])
-    tool_configs: list[list[str]] = field(default_factory=lambda: [[]])  # List of tool name lists
-
-    # Model parameters
-    max_tokens: int = 4096
-    temperature: float = 0.0
-    max_tool_calls: int = 30
-
-    # Pipeline settings
-    checkpoint_dir: Path = field(default_factory=lambda: Path("./checkpoints"))
-    output_dir: Path = field(default_factory=lambda: Path("./results"))
-
-    # Custom strategy configs (keyed by ReasoningType.value)
-    strategy_configs: dict[str, dict[str, Any]] = field(default_factory=dict)
-
-    # Custom context configs (keyed by ContextLevel.value)
-    context_configs: dict[str, dict[str, Any]] = field(default_factory=dict)
-
-    # Custom RAG configs (keyed by RAGMode.value)
-    rag_configs: dict[str, dict[str, Any]] = field(default_factory=dict)
+# Import PipelineConfig from config module (avoid circular import at runtime)
+# Use TYPE_CHECKING for type hints only
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from .config import PipelineConfig
 
 
 class HypothesisPipeline:

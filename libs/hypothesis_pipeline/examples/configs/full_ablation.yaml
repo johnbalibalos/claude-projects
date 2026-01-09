@@ -1,0 +1,65 @@
+# Full Ablation Study
+# Tests all combinations of dimensions
+# WARNING: This can generate many conditions (n^4 or more)
+
+name: full_ablation
+description: Comprehensive ablation across all dimensions
+hypothesis: Testing interaction effects between reasoning, context, RAG, and tools
+
+tags:
+  - ablation
+  - comprehensive
+  - benchmark
+
+# All models (expensive!)
+models:
+  - claude-sonnet-4-20250514
+  # Uncomment for multi-model comparison:
+  # - gpt-4o
+  # - claude-opus-4-20250514
+
+# All reasoning types
+reasoning_types:
+  - direct
+  - cot
+  - wot
+
+# All context levels
+context_levels:
+  - minimal
+  - standard
+  - rich
+
+# RAG modes (oracle for upper bound only)
+rag_modes:
+  - none
+  - oracle
+
+# Tool configurations
+tool_configs:
+  - []
+  # Uncomment if tools are registered:
+  # - [tool_a, tool_b]
+
+# Model parameters
+max_tokens: 4096
+temperature: 0.0
+
+# Directories
+checkpoint_dir: ./checkpoints/full_ablation
+output_dir: ./results/full_ablation
+
+# Strategy configs
+strategy_configs:
+  cot:
+    reasoning_prompt: Think step by step before answering.
+    answer_prefix: "Answer:"
+  wot:
+    n_paths: 2  # Reduced for efficiency
+    evaluation_criteria:
+      - correctness
+      - completeness
+
+# This config generates:
+# 1 model × 3 reasoning × 3 context × 2 rag × 1 tools = 18 conditions
+# With tools: 1 × 3 × 3 × 2 × 2 = 36 conditions

@@ -108,11 +108,28 @@ from .context import (
     get_context_builder,
 )
 
-# Pipeline
+# Pipeline (use config.PipelineConfig for full features)
 from .pipeline import (
-    PipelineConfig,
     HypothesisPipeline,
     create_simple_pipeline,
+)
+
+# Config
+from .config import (
+    PipelineConfig,
+    ConfigLoader,
+    parse_cli_overrides,
+    create_minimal_config,
+    create_ablation_config,
+    create_full_config,
+)
+
+# Tracker
+from .tracker import (
+    ExperimentTracker,
+    ExperimentMetadata,
+    ExperimentConclusion,
+    ExperimentRecord,
 )
 
 __all__ = [
@@ -163,7 +180,18 @@ __all__ = [
     "CallbackContextBuilder",
     "get_context_builder",
     # Pipeline
-    "PipelineConfig",
     "HypothesisPipeline",
     "create_simple_pipeline",
+    # Config
+    "PipelineConfig",
+    "ConfigLoader",
+    "parse_cli_overrides",
+    "create_minimal_config",
+    "create_ablation_config",
+    "create_full_config",
+    # Tracker
+    "ExperimentTracker",
+    "ExperimentMetadata",
+    "ExperimentConclusion",
+    "ExperimentRecord",
 ]

@@ -1,0 +1,33 @@
+# RAG Ablation Study
+# Tests different RAG approaches including oracle (upper bound) and negative (control)
+
+extends: base
+
+name: rag_ablation
+description: Compare no RAG, oracle RAG, and vector RAG
+hypothesis: RAG improves performance, with oracle providing upper bound
+
+tags:
+  - ablation
+  - rag
+  - benchmark
+
+# Test RAG modes
+rag_modes:
+  - none       # Baseline without retrieval
+  - oracle     # Perfect retrieval (upper bound)
+  - negative   # Wrong documents (control/lower bound)
+
+# Hold these constant
+reasoning_types:
+  - cot
+context_levels:
+  - standard
+
+# RAG-specific configurations
+rag_configs:
+  oracle:
+    oracle_field: oracle_context
+  negative:
+    # Use documents from different test cases
+    negative_fn: null  # Will be set programmatically
