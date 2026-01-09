@@ -34,10 +34,11 @@ env/
 *.swp
 *.swo
 
-# Test results (but allow ground truth test cases)
+# Test results (but allow ground truth test cases and claude settings)
 *.json
 !pyproject.toml
 !**/ground_truth/**/*.json
+!.claude/settings.json
 
 # Jupyter
 .ipynb_checkpoints/
