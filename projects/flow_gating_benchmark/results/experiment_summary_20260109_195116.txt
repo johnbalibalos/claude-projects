@@ -1,0 +1,49 @@
+============================================================
+EXPERIMENT SUMMARY
+============================================================
+
+Experiment: opus_gating_benchmark
+Start: 2026-01-09 19:51:16.294134
+End: 2026-01-09 20:11:11.362916
+Duration: 0:19:55.068782
+
+Total API calls: 48
+Successful: 48
+Errors: 0
+
+------------------------------------------------------------
+METRICS BY MODEL
+------------------------------------------------------------
+
+claude-opus-4-20250514:
+  Hierarchy F1: 0.287
+  Structure Accuracy: 0.572
+  Critical Gate Recall: 0.776
+
+------------------------------------------------------------
+METRICS BY CONDITION
+------------------------------------------------------------
+
+claude-opus_minimal_direct:
+  F1: 0.204
+  Parse Rate: 100.0%
+
+claude-opus_minimal_cot:
+  F1: 0.184
+  Parse Rate: 100.0%
+
+claude-opus_standard_direct:
+  F1: 0.390
+  Parse Rate: 100.0%
+
+claude-opus_standard_cot:
+  F1: 0.241
+  Parse Rate: 100.0%
+
+claude-opus_rich_direct:
+  F1: 0.434
+  Parse Rate: 100.0%
+
+claude-opus_rich_cot:
+  F1: 0.267
+  Parse Rate: 100.0%
