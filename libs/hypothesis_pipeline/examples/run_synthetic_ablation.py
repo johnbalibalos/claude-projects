@@ -8,8 +8,13 @@ Tests all combinations of:
 - RAG: none, oracle
 
 With 1 synthetic test case.
+
+Usage:
+    python run_synthetic_ablation.py           # Interactive mode (requires confirmation)
+    python run_synthetic_ablation.py --force   # Skip confirmation (use with caution)
 """
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -25,6 +30,7 @@ from hypothesis_pipeline import (
 )
 from hypothesis_pipeline.base import Evaluator
 from hypothesis_pipeline.config import ConfigLoader
+from hypothesis_pipeline.cost import confirm_experiment_cost
 from hypothesis_pipeline.rag import OracleRAGProvider
 
 
@@ -99,10 +105,47 @@ Respond with JSON in this format:
     )
 
 
-def main():
+def parse_args() -> argparse.Namespace:
+    """Parse command line arguments."""
+    parser = argparse.ArgumentParser(
+        description="Run synthetic ablation experiment on Sonnet",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+    python run_synthetic_ablation.py              # Interactive mode
+    python run_synthetic_ablation.py --force      # Skip confirmation
+    python run_synthetic_ablation.py --dry-run    # Show cost only
+        """,
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Skip cost confirmation and run immediately (use with caution)",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Show cost estimate without running the experiment",
+    )
+    parser.add_argument(
+        "--config",
+        type=str,
+        default=None,
+        help="Path to config file (default: sonnet_synthetic_ablation.yaml)",
+    )
+    return parser.parse_args()
+
+
+def main() -> int:
     """Run the synthetic ablation experiment."""
+    args = parse_args()
+
     # Load config
-    config_path = Path(__file__).parent / "configs" / "sonnet_synthetic_ablation.yaml"
+    if args.config:
+        config_path = Path(args.config)
+    else:
+        config_path = Path(__file__).parent / "configs" / "sonnet_synthetic_ablation.yaml"
+
     loader = ConfigLoader(config_path.parent)
     config = loader.load(config_path)
 
@@ -136,33 +179,24 @@ def main():
     for cond in pipeline.conditions:
         print(f"  - {cond.name}")
 
-    # Estimate cost
-    n_conditions = len(pipeline.conditions)
-    n_trials = len(trials)
-    n_runs = config.n_bootstrap_runs
-    total_calls = n_conditions * n_trials * n_runs
+    # Dry run - just show cost estimate
+    if args.dry_run:
+        from hypothesis_pipeline.cost import estimate_experiment_cost
+        estimate = estimate_experiment_cost(config, n_test_cases=len(trials))
+        print("\n" + estimate.format_summary())
+        return 0
 
-    # Sonnet pricing
-    avg_input = 1500
-    avg_output = 500
-    input_cost = (total_calls * avg_input / 1_000_000) * 3.0
-    output_cost = (total_calls * avg_output / 1_000_000) * 15.0
-    total_cost = input_cost + output_cost
-
-    print(f"\n{'='*50}")
-    print("COST ESTIMATE")
-    print(f"{'='*50}")
-    print(f"API calls: {total_calls}")
-    print(f"Est. input tokens: {total_calls * avg_input:,}")
-    print(f"Est. output tokens: {total_calls * avg_output:,}")
-    print(f"Est. cost: ${total_cost:.2f}")
-    print(f"{'='*50}\n")
-
-    # Confirm before running
-    confirm = input("Run experiment? [y/N]: ").strip().lower()
-    if confirm != "y":
-        print("Aborted.")
-        return 1
+    # Cost confirmation (unless --force is used)
+    if args.force:
+        print("\n[--force] Skipping cost confirmation...")
+    else:
+        confirmed = confirm_experiment_cost(
+            config=config,
+            n_test_cases=len(trials),
+        )
+        if not confirmed:
+            print("Aborted.")
+            return 1
 
     # Run!
     results = pipeline.run(verbose=True)

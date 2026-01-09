@@ -152,3 +152,38 @@ GOOGLE_API_KEY=...
 - Type hints encouraged
 - Each project is self-contained
 - Shared utilities go in `libs/`
+
+## Running Experiments
+
+### Cost Estimation
+
+All experiments require user confirmation before running. The cost estimator shows:
+- Number of API calls
+- Estimated token usage
+- Estimated cost in USD
+
+```python
+from hypothesis_pipeline.cost import confirm_experiment_cost, estimate_experiment_cost
+
+# Get estimate without running
+estimate = estimate_experiment_cost(config, n_test_cases=10)
+print(estimate.format_summary())
+
+# Interactive confirmation before running
+if confirm_experiment_cost(config, n_test_cases=10):
+    pipeline.run()
+```
+
+### IMPORTANT: Do Not Use --force Flag
+
+Experiment scripts have a `--force` flag that skips cost confirmation.
+
+**Claude Code should NEVER use the `--force` flag.** Always allow the user to review costs and confirm before running experiments. This prevents accidental expensive API calls.
+
+```bash
+# CORRECT: Let user confirm costs
+python run_synthetic_ablation.py
+
+# WRONG: Do not use --force
+python run_synthetic_ablation.py --force  # DO NOT USE
+```
