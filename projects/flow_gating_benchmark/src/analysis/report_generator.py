@@ -13,9 +13,9 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from ..curation.schemas import TestCase, GatingHierarchy, GateNode
-from ..curation.omip_extractor import load_test_case
-from ..evaluation.scorer import ScoringResult
+from curation.schemas import TestCase, GatingHierarchy, GateNode
+from curation.omip_extractor import load_test_case
+from evaluation.scorer import ScoringResult
 
 
 def load_benchmark_results(results_path: str | Path) -> dict:

@@ -16,7 +16,7 @@ try:
 except ImportError:
     HAS_PLOTTING = False
 
-from ..evaluation.scorer import ScoringResult, compute_metrics_by_model, compute_metrics_by_condition
+from evaluation.scorer import ScoringResult, compute_metrics_by_model, compute_metrics_by_condition
 
 
 def check_plotting_available() -> bool:
