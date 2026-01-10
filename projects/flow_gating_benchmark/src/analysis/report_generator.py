@@ -9,19 +9,128 @@ Generates:
 from __future__ import annotations
 
 import json
+from collections import Counter, defaultdict
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from statistics import mean, stdev
 
-from ..curation.schemas import TestCase, GatingHierarchy, GateNode
 from ..curation.omip_extractor import load_test_case
-from ..evaluation.scorer import ScoringResult
+from ..curation.schemas import Complexity, GateNode
 
 
 def load_benchmark_results(results_path: str | Path) -> dict:
     """Load benchmark results from JSON file."""
     with open(results_path) as f:
         return json.load(f)
+
+
+def get_test_case_complexity(
+    test_case_id: str,
+    ground_truth_dir: Path,
+) -> Complexity | None:
+    """
+    Get complexity level for a test case from ground truth.
+
+    Args:
+        test_case_id: Test case identifier (e.g., "OMIP-074")
+        ground_truth_dir: Directory containing ground truth JSON files
+
+    Returns:
+        Complexity enum or None if test case not found
+    """
+    # Convert ID to filename format (e.g., "OMIP-074" -> "omip_074.json")
+    filename = test_case_id.lower().replace("-", "_") + ".json"
+    gt_path = ground_truth_dir / filename
+
+    if not gt_path.exists():
+        return None
+
+    try:
+        test_case = load_test_case(gt_path)
+        return test_case.panel.complexity
+    except Exception:
+        return None
+
+
+def generate_complexity_breakdown(
+    results: list[dict],
+    ground_truth_dir: Path,
+) -> str:
+    """
+    Generate metrics breakdown by panel complexity level.
+
+    Args:
+        results: List of result dictionaries with evaluation data
+        ground_truth_dir: Directory containing ground truth JSON files
+
+    Returns:
+        Markdown table with per-complexity metrics
+    """
+    # Group results by complexity
+    by_complexity: dict[Complexity, list[dict]] = defaultdict(list)
+
+    for r in results:
+        if not r.get("parse_success") or not r.get("evaluation"):
+            continue
+
+        tc_id = r.get("test_case_id", "")
+        complexity = get_test_case_complexity(tc_id, ground_truth_dir)
+
+        if complexity is not None:
+            by_complexity[complexity].append(r)
+
+    if not by_complexity:
+        return "\n*No complexity data available for stratification.*\n"
+
+    # Define metrics to report
+    metrics = [
+        ("hierarchy_f1", "Hierarchy F1"),
+        ("structure_accuracy", "Structure Acc"),
+        ("critical_gate_recall", "Critical Recall"),
+        ("hallucination_rate", "Halluc Rate"),
+    ]
+
+    # Build table header
+    lines = [
+        "\n## Performance by Panel Complexity\n",
+        "| Complexity | N | " + " | ".join(m[1] for m in metrics) + " |",
+        "|------------|---|" + "|".join(["---"] * len(metrics)) + "|",
+    ]
+
+    # Compute stats per complexity level (in order: SIMPLE, MEDIUM, COMPLEX)
+    for complexity in [Complexity.SIMPLE, Complexity.MEDIUM, Complexity.COMPLEX]:
+        group = by_complexity.get(complexity, [])
+        n = len(group)
+
+        if n == 0:
+            # No test cases at this complexity
+            lines.append(
+                f"| {complexity.value.title()} | 0 | "
+                + " | ".join(["-"] * len(metrics))
+                + " |"
+            )
+            continue
+
+        # Compute mean and std for each metric
+        cells = []
+        for metric_key, _ in metrics:
+            values = [r["evaluation"].get(metric_key, 0) for r in group]
+            m = mean(values)
+            if n >= 2:
+                s = stdev(values)
+                cells.append(f"{m:.1%} ({s:.1%})")
+            else:
+                cells.append(f"{m:.1%}")
+
+        lines.append(f"| {complexity.value.title()} | {n} | " + " | ".join(cells) + " |")
+
+    # Add note about sample sizes
+    total = sum(len(g) for g in by_complexity.values())
+    lines.append("")
+    lines.append(f"*Based on {total} valid results. Values show mean (std) where N >= 2.*")
+    lines.append("")
+
+    return "\n".join(lines)
 
 
 def hierarchy_to_text(node: dict | GateNode, indent: int = 0) -> str:
@@ -77,20 +186,12 @@ def generate_summary_report(
     parse_rate = metrics.get("parse_success_rate", 0)
 
     f1_mean = metrics.get("hierarchy_f1_mean", 0)
-    f1_min = metrics.get("hierarchy_f1_min", 0)
-    f1_max = metrics.get("hierarchy_f1_max", 0)
-
     structure_mean = metrics.get("structure_accuracy_mean", 0)
     critical_mean = metrics.get("critical_gate_recall_mean", 0)
     halluc_mean = metrics.get("hallucination_rate_mean", 0)
 
-    # Find best and worst performers
+    # Find valid results for analysis
     valid_results = [r for r in results if r.get("parse_success") and r.get("evaluation")]
-    if valid_results:
-        best = max(valid_results, key=lambda r: r["evaluation"]["hierarchy_f1"])
-        worst = min(valid_results, key=lambda r: r["evaluation"]["hierarchy_f1"])
-    else:
-        best = worst = None
 
     # Collect all missing critical gates
     all_missing_critical = []
@@ -101,7 +202,6 @@ def generate_summary_report(
         all_hallucinations.extend(eval_data.get("hallucinated_gates", []))
 
     # Count frequencies
-    from collections import Counter
     missing_critical_counts = Counter(all_missing_critical)
     hallucination_counts = Counter(all_hallucinations)
 
@@ -127,6 +227,8 @@ from panel information. Key findings:
 | Hallucination Rate | {halluc_mean:.1%} | {"Low (Good)" if halluc_mean < 0.15 else "Moderate" if halluc_mean < 0.3 else "High (Concerning)"} |
 | Parse Success | {parse_rate:.1%} | {"Excellent" if parse_rate > 0.95 else "Good" if parse_rate > 0.8 else "Needs Improvement"} |
 
+---
+{generate_complexity_breakdown(results, Path(ground_truth_dir))}
 ---
 
 ## Key Conclusions
@@ -155,7 +257,7 @@ from panel information. Key findings:
     else:
         report += "- None identified\n"
 
-    report += f"""
+    report += """
 ### 5. Common Hallucinations
 """
     if hallucination_counts:
@@ -164,7 +266,7 @@ from panel information. Key findings:
     else:
         report += "- None identified (good!)\n"
 
-    report += f"""
+    report += """
 ---
 
 ## Performance by Test Case
