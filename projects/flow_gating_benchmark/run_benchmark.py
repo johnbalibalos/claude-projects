@@ -35,13 +35,14 @@ if env_file.exists():
                 key, value = line.strip().split("=", 1)
                 os.environ.setdefault(key, value)
 
-# Add src to path
-sys.path.insert(0, str(Path(__file__).parent))
+# Add src to path - use src directory directly to avoid duplicate module imports
+# This ensures curation.schemas.GatingHierarchy is always the same class
+sys.path.insert(0, str(Path(__file__).parent / "src"))
 
-from src.curation.omip_extractor import load_all_test_cases
-from src.experiments.prompts import build_prompt
-from src.evaluation.scorer import GatingScorer, compute_aggregate_metrics
-from src.analysis.detailed_report import LiveReportWriter, generate_strategy_comparison_report
+from curation.omip_extractor import load_all_test_cases
+from experiments.prompts import build_prompt
+from evaluation.scorer import GatingScorer, compute_aggregate_metrics
+from analysis.detailed_report import LiveReportWriter, generate_strategy_comparison_report
 
 try:
     from anthropic import Anthropic

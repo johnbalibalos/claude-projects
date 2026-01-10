@@ -12,8 +12,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from ..curation.schemas import TestCase, GateNode
-from ..evaluation.scorer import ScoringResult
+from curation.schemas import TestCase, GateNode
+from evaluation.scorer import ScoringResult
 
 
 def gate_to_tree_string(node: dict | GateNode, indent: int = 0, is_last: bool = True, prefix: str = "") -> list[str]:
