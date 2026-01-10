@@ -1,70 +1,104 @@
 # LLM Biology Research - TODO
 
+## Recently Completed (Jan 2026)
+
+### Flow Gating Benchmark
+- [x] Task failure detection module (`src/evaluation/task_failure.py`)
+  - Detects meta-questions, refusals, instructional responses
+  - Integrated into scorer and aggregate metrics
+- [x] Manual review report generator (`src/analysis/manual_review_report.py`)
+  - Side-by-side comparisons for outlier analysis
+  - Configurable outlier thresholds (F1, hallucination, critical recall)
+- [x] Refactored evaluation modules
+  - Split metrics.py into focused modules (normalization, hierarchy, task_failure)
+  - Clean LLM client abstraction (Anthropic, OpenAI, Ollama)
+  - Improved response parser with meta-commentary detection
+- [x] 8 OMIP test cases with ground truth hierarchies
+
+---
+
 ## High Priority
 
-### Add Significant Testing
-- [ ] Flow Panel Optimizer: Add integration tests for MCP server tools
-- [ ] Flow Panel Optimizer: Add edge case tests for spectral calculations (near-zero vectors, identical spectra)
-- [ ] Flow Gating Benchmark: Add tests for parser edge cases (malformed JSON, missing fields)
-- [ ] Flow Gating Benchmark: Add cross-validation tests against FlowJo exports
-- [ ] DrugDevBench: Add tests for each figure type evaluator
-- [ ] All projects: Add property-based testing with Hypothesis
+### Flow Gating Benchmark: Ground Truth Fluorophore Condition
+- [ ] Create experimental condition that provides exact fluorophore assignments from ground truth
+- [ ] Test whether this isolates reasoning failures from information gaps
+- [ ] Compare F1 scores: inferred vs. provided fluorophores
 
-### Download Real Figures for Figure Analysis Pipeline (DrugDevBench)
-- [ ] Curate dataset of ~100 open-access drug development figures from:
-  - [ ] PubMed Central (PMC) open access subset
-  - [ ] bioRxiv preprints
-  - [ ] FDA drug approval documents (public)
-- [ ] Figure types to include:
-  - [ ] Western blots (20+)
-  - [ ] Dose-response curves (20+)
-  - [ ] PK/PD curves (20+)
-  - [ ] ELISA results (15+)
-  - [ ] Flow cytometry plots (15+)
-  - [ ] Histology/IHC images (10+)
-- [ ] Create ground truth annotations for each figure
-- [ ] Store in `projects/drugdevbench/data/figures/`
-
-### Add Llama/DeepSeek Local Model Support
+### Expand Model Coverage
 - [ ] Add Ollama integration for local model inference
-- [ ] Supported models:
+- [ ] Test models:
   - [ ] Llama 3.2 (8B, 70B)
   - [ ] DeepSeek-V3
-  - [ ] DeepSeek-Coder
   - [ ] Qwen 2.5
-- [ ] Create unified model interface in `libs/models/`
-- [ ] Add model comparison conditions to all benchmarks
-- [ ] Test local vs API latency and cost tradeoffs
-
-## Medium Priority
-
-### Expand Benchmark Scale
-- [ ] Flow Gating: Expand to all 80+ published OMIP panels
-- [ ] Flow Panel Optimizer: Add 50+ test cases per category
-- [ ] DrugDevBench: Scale to 500+ figures
+- [ ] Run comparative experiments across all models
 
 ### Statistical Rigor
 - [ ] Add confidence intervals to all metrics
 - [ ] Implement bootstrap significance testing
-- [ ] Add power analysis for sample size requirements
+- [ ] Multi-run experiments for variance estimation
 
-### Real Data Validation
-- [ ] Flow Panel Optimizer: Validate CI predictions against real spreading matrices
-- [ ] Flow Gating: Cross-validate against FlowRepository .wsp files
-- [ ] DrugDevBench: Compare against expert annotations
+---
+
+## Medium Priority
+
+### Flow Gating Benchmark: Scale Up
+- [ ] Expand to 20+ OMIP test cases
+- [ ] Add tissue-specific panels (bone marrow, lymph node)
+- [ ] Include rare population panels (ILCs, MAITs)
+
+### MCP Server for Gating Extraction
+- [ ] Wrap extraction library as MCP server for interactive curation
+- [ ] Tools: get_paper_content, parse_marker_table, build_hierarchy, validate_hierarchy
+- [ ] Enable Claude-assisted curation sessions
+
+### Testing
+- [ ] Add integration tests for experiment runner
+- [ ] Add tests for task failure detection edge cases
+- [ ] Property-based testing with Hypothesis
+
+### DrugDevBench: Real Figures
+- [ ] Curate dataset of ~100 open-access drug development figures
+- [ ] Figure types: Western blots, dose-response, PK/PD, ELISA, flow plots
+- [ ] Create ground truth annotations
+
+---
 
 ## Low Priority
 
 ### Documentation
-- [ ] Add API documentation for all libraries
-- [ ] Create tutorial notebooks for each project
-- [ ] Write methods section drafts for publication
+- [ ] API documentation for all libraries
+- [ ] Tutorial notebooks for each project
+- [ ] Methods section drafts for publication
 
 ### Infrastructure
-- [ ] Add experiment tracking (MLflow or Weights & Biases)
-- [ ] Create reproducibility scripts (Docker, requirements pinning)
-- [ ] Add CI/CD pipeline for automated testing
+- [ ] Experiment tracking (MLflow or W&B)
+- [ ] Reproducibility scripts (Docker, requirements pinning)
+- [ ] CI/CD pipeline for automated testing
+
+### Flow Panel Optimizer
+- [ ] Validate spreading matrix predictions against real data
+- [ ] Add more spectral databases beyond BD
 
 ---
 
-*Last updated: 2026-01-07*
+## Ideas for Future Work
+
+### Multi-turn Evaluation
+- Test iterative refinement: LLM predicts, gets feedback, revises
+- Compare single-turn vs. multi-turn F1 scores
+
+### Confidence Elicitation
+- Ask models to rate confidence in predictions
+- Correlate confidence with actual F1 scores
+
+### Vision Integration
+- Extract gating figures from OMIP PDFs
+- Use vision LLMs to read gate names from plots
+
+### Cross-validation
+- Compare paper-extracted hierarchies with FlowRepository .wsp files
+- Assess ground truth reliability
+
+---
+
+*Last updated: 2026-01-10*

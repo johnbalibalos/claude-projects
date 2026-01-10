@@ -16,7 +16,7 @@ This repository contains experimental tools and benchmarks for evaluating how LL
 
 | Project | Domain | Type | Status |
 |---------|--------|------|--------|
-| [flow_gating_benchmark](projects/flow_gating_benchmark/) | Flow Cytometry | Benchmark | Experimental |
+| [flow_gating_benchmark](projects/flow_gating_benchmark/) | Flow Cytometry | Benchmark | Active |
 | [flow_panel_optimizer](projects/flow_panel_optimizer/) | Flow Cytometry | MCP Tool | Experimental |
 | [drugdevbench](projects/drugdevbench/) | Drug Development | Benchmark | Experimental |
 
@@ -24,22 +24,28 @@ This repository contains experimental tools and benchmarks for evaluating how LL
 
 **Question:** Can LLMs predict flow cytometry gating strategies from panel information?
 
-An evaluation framework testing whether LLMs can predict appropriate gating hierarchies given marker panels and experimental context. Uses OMIP (Optimized Multicolor Immunofluorescence Panel) papers as ground truth.
+An evaluation framework testing whether LLMs can predict appropriate gating hierarchies given marker panels and experimental context. Uses OMIP papers as ground truth.
+
+**Latest Results (Jan 2026):**
+- Sonnet 4: F1=0.384, Critical Gate Recall=83.9%
+- Task failure detection: Identifies when models ask questions vs. predicting
 
 ```
 projects/flow_gating_benchmark/
 ├── src/
-│   ├── curation/      # OMIP data extraction
-│   ├── evaluation/    # Metrics and scoring
-│   └── experiments/   # Experiment runner
-└── data/ground_truth/ # Curated OMIP gating hierarchies
+│   ├── curation/      # OMIP data extraction and paper parsing
+│   ├── evaluation/    # Metrics, scoring, task failure detection
+│   ├── experiments/   # Experiment runner with multi-model support
+│   └── analysis/      # Manual review reports and visualization
+├── data/ground_truth/ # 8 curated OMIP gating hierarchies
+└── scripts/           # CLI tools for running experiments
 ```
 
 ### Flow Panel Optimizer
 
 **Question:** Can an MCP server improve LLM accuracy on spectral similarity calculations?
 
-A tool server that provides flow cytometry spectral analysis capabilities. Tests whether giving LLMs access to real calculation tools improves their performance on panel design tasks compared to relying on parametric knowledge alone.
+A tool server providing flow cytometry spectral analysis capabilities. Tests whether giving LLMs access to real calculation tools improves their performance on panel design tasks.
 
 ```
 projects/flow_panel_optimizer/
@@ -54,7 +60,7 @@ projects/flow_panel_optimizer/
 
 **Question:** How well do LLMs interpret domain-specific scientific figures?
 
-A benchmark for evaluating LLM interpretation of drug development figures (Western blots, dose-response curves, PK plots, flow cytometry). Tests whether domain-specific prompting strategies (personas, skills) improve accuracy.
+A benchmark for evaluating LLM interpretation of drug development figures (Western blots, dose-response curves, PK plots). Tests whether domain-specific prompting strategies improve accuracy.
 
 ```
 projects/drugdevbench/
@@ -81,10 +87,12 @@ Reusable utilities extracted from individual projects:
 Each project is self-contained with its own dependencies:
 
 ```bash
-# Example: Set up flow_panel_optimizer
-cd projects/flow_panel_optimizer
-pip install -e ".[dev]"
-pytest
+# Example: Set up flow_gating_benchmark
+cd projects/flow_gating_benchmark
+pip install -r requirements.txt
+
+# Run an experiment
+PYTHONPATH=src python scripts/run_experiment.py --model sonnet --dry-run
 ```
 
 See individual project READMEs for specific instructions.
@@ -95,16 +103,30 @@ See individual project READMEs for specific instructions.
 /
 ├── README.md              # This file
 ├── CLAUDE.md              # Claude Code instructions
+├── TODO.md                # Cross-project task tracking
 ├── libs/                  # Shared libraries
 │   ├── checkpoint/        # Resumable workflow runner
 │   ├── mcp_tester/        # Tool ablation framework
 │   ├── paper_download/    # PMC paper downloader
 │   └── results_processor/ # Results export tools
 └── projects/
-    ├── flow_panel_optimizer/
-    ├── drugdevbench/
-    └── flow_gating_benchmark/
+    ├── flow_gating_benchmark/  # Gating prediction benchmark
+    ├── flow_panel_optimizer/   # Spectral analysis MCP server
+    └── drugdevbench/           # Figure interpretation benchmark
 ```
+
+## Recent Updates (Jan 2026)
+
+### Flow Gating Benchmark
+- Added **task failure detection** - identifies when models ask questions instead of predicting
+- Refactored evaluation into focused modules (normalization, hierarchy, task_failure)
+- Added **manual review report generator** with outlier detection
+- Multi-model LLM client supporting Anthropic, OpenAI, and Ollama
+- 8 OMIP test cases with ground truth hierarchies
+
+### Flow Panel Optimizer
+- MCP ablation studies comparing tool vs. no-tool performance
+- Spectral similarity and spreading matrix calculations
 
 ## Research Context
 

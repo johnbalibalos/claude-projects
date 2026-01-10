@@ -1,296 +1,129 @@
 # Flow Gating Benchmark - TODO
 
-## Completed
+## Recently Completed (Jan 2026)
 
-### OCR/Gating Hierarchy Extraction Library (Jan 2025)
+### Evaluation Framework Refactoring
+- [x] Split metrics.py into focused modules
+  - `normalization.py` - Gate name normalization with 200+ cell type synonyms
+  - `hierarchy.py` - Tree operations (extract names, parent maps, depth)
+  - `task_failure.py` - Meta-question/refusal detection
+- [x] Clean LLM client abstraction (`llm_client.py`)
+  - Unified interface for Anthropic, OpenAI, Ollama
+  - Protocol-based design with create_client() factory
+- [x] Improved response parser
+  - Better JSON extraction with proper brace matching
+  - Meta-term detection in gate names
+  - Stricter validation (MIN_GATES, MAX_NAME_LENGTH)
 
-- [x] `marker_logic.py` - Core algorithms for marker table → hierarchy conversion
-  - `MarkerTableEntry` dataclass for phenotype table rows
-  - `parse_marker_table()` - Parse markdown/CSV tables
-  - `infer_parent_from_markers()` - Infer hierarchy from marker subset logic
-  - `marker_table_to_hierarchy()` - Build GatingHierarchy from entries
-  - Validation functions for panels and structure
+### Task Failure Detection
+- [x] `TaskFailureType` enum: META_QUESTIONS, REFUSAL, INSTRUCTIONS, EMPTY, MALFORMED
+- [x] Pattern matching for meta-questions, refusals, instructional responses
+- [x] Integration into scorer and aggregate metrics
+- [x] Confidence scoring based on pattern matches vs. valid gates
 
-- [x] `paper_parser.py` - XML/PDF content extraction
-  - `PaperParser` class for extracting content from OMIP papers
-  - `ExtractedTable` / `ExtractedFigure` dataclasses
-  - Table classification (panel vs gating vs results)
-  - Methods section text extraction
-  - Panel entry extraction from tables
+### Manual Review Reports
+- [x] `ManualReviewReportGenerator` class
+- [x] Side-by-side comparison with ASCII tree visualization
+- [x] Configurable outlier thresholds (F1, hallucination, critical recall)
+- [x] Report levels: summary, outliers, full
+- [x] Task failure metrics in reports
 
-- [x] `auto_extractor.py` - Combined extraction pipeline
-  - `AutoExtractor` class with multiple strategies
-  - LLM-assisted extraction from methods text
-  - Confidence scoring and result combination
-  - Batch extraction for multiple papers
-
-- [x] Tests for all new modules
-
----
-
-## TODO: MCP Server Implementation
-
-### Overview
-
-Wrap the extraction library as an MCP (Model Context Protocol) server to enable interactive, LLM-assisted curation sessions. This allows Claude to iteratively extract, validate, and refine gating hierarchies with human oversight.
-
-### Why MCP?
-
-1. **Interactive curation** - Human + LLM work together to extract and validate
-2. **Self-correcting** - LLM sees validation errors and can fix them
-3. **Auditable** - Conversation shows extraction reasoning
-4. **Consistent** - Matches `flow_panel_optimizer` MCP pattern
-
-### Proposed Structure
-
-```
-projects/flow_gating_benchmark/
-├── src/
-│   ├── curation/           # Existing Python library
-│   │   ├── marker_logic.py
-│   │   ├── paper_parser.py
-│   │   └── auto_extractor.py
-│   └── mcp_server/         # NEW: MCP wrapper
-│       ├── __init__.py
-│       ├── server.py       # MCP server definition
-│       └── tools.py        # Tool implementations
-```
-
-### MCP Tools to Implement
-
-#### 1. Paper Content Extraction
-
-```python
-@server.tool("get_paper_content")
-async def get_paper_content(
-    omip_id: str,
-    include: list[str] = ["tables", "methods", "abstract"]
-) -> dict:
-    """
-    Get content from an OMIP paper.
-
-    Args:
-        omip_id: OMIP identifier (e.g., "OMIP-069")
-        include: Content types to include
-
-    Returns:
-        Dict with requested content sections
-    """
-```
-
-#### 2. Marker Table Parsing
-
-```python
-@server.tool("parse_marker_table")
-async def parse_marker_table(
-    table_text: str,
-    format: str = "auto"
-) -> list[dict]:
-    """
-    Parse a marker phenotype table into structured entries.
-
-    Args:
-        table_text: Markdown or CSV table text
-        format: 'markdown', 'csv', or 'auto'
-
-    Returns:
-        List of {population, markers, parent} entries
-    """
-```
-
-#### 3. Hierarchy Building
-
-```python
-@server.tool("build_hierarchy_from_markers")
-async def build_hierarchy_from_markers(
-    entries: list[dict],
-    panel_markers: list[str] = None,
-    infer_parents: bool = True,
-    add_standard_gates: bool = True
-) -> dict:
-    """
-    Build gating hierarchy tree from marker table entries.
-
-    Infers parent-child relationships from marker subset logic
-    when explicit parents not provided.
-
-    Args:
-        entries: List of {population, markers: {marker: '+'/'-'}, parent?}
-        panel_markers: Available markers in panel
-        infer_parents: Auto-detect hierarchy from marker subsets
-        add_standard_gates: Add Time/Singlets/Live gates
-
-    Returns:
-        GatingHierarchy as JSON
-    """
-```
-
-#### 4. Hierarchy Validation
-
-```python
-@server.tool("validate_hierarchy")
-async def validate_hierarchy(
-    hierarchy: dict,
-    panel: dict,
-    check_hipc: bool = True
-) -> dict:
-    """
-    Validate a gating hierarchy against panel and standards.
-
-    Args:
-        hierarchy: GatingHierarchy JSON
-        panel: Panel JSON with marker entries
-        check_hipc: Validate against HIPC cell type definitions
-
-    Returns:
-        {valid: bool, errors: list[str], warnings: list[str]}
-    """
-```
-
-#### 5. HIPC Reference Lookup
-
-```python
-@server.tool("lookup_cell_type")
-async def lookup_cell_type(
-    cell_type: str
-) -> dict | None:
-    """
-    Look up HIPC-standardized definition for a cell type.
-
-    Args:
-        cell_type: Cell type name (e.g., "CD4+ T cells", "NK cells")
-
-    Returns:
-        Dict with positive_markers, negative_markers, parent, etc.
-    """
-```
-
-#### 6. Test Case Management
-
-```python
-@server.tool("save_test_case")
-async def save_test_case(
-    test_case: dict,
-    output_dir: str = "real"
-) -> str:
-    """
-    Save a validated test case to ground truth directory.
-
-    Args:
-        test_case: TestCase JSON
-        output_dir: 'real' or 'synthetic'
-
-    Returns:
-        Path to saved file
-    """
-
-@server.tool("load_test_case")
-async def load_test_case(
-    test_case_id: str
-) -> dict | None:
-    """Load an existing test case by ID."""
-```
-
-### Server Configuration
-
-Add to `.mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "gating-extractor": {
-      "command": "python",
-      "args": ["-m", "src.mcp_server"],
-      "cwd": "projects/flow_gating_benchmark"
-    }
-  }
-}
-```
-
-### Example Curation Session
-
-```
-Human: "Extract gating hierarchy from OMIP-069"
-
-Claude: [calls get_paper_content(omip_id="OMIP-069", include=["tables", "methods"])]
-        → Gets XML text, tables from paper
-
-Claude: "I found a panel table and methods section. Let me parse the panel first."
-        [calls parse_marker_table(table_text="...", format="markdown")]
-        → Gets structured MarkerTableEntry list
-
-Claude: "I found 8 populations in the gating table. Building hierarchy..."
-        [calls build_hierarchy_from_markers(entries=[...], infer_parents=True)]
-        → Gets draft GatingHierarchy
-
-Claude: [calls validate_hierarchy(hierarchy=..., panel=...)]
-        → Gets validation errors: "CD127 referenced but not in panel"
-
-Claude: "I found an issue - CD127 is mentioned in the gating but not in the
-         panel table. Should I:
-         1. Remove CD127 from the hierarchy
-         2. Add CD127 to the panel (need fluorophore info)
-         3. Skip this population"
-
-Human: "Add it to panel, fluorophore is BV785"
-
-Claude: [calls save_test_case(test_case={...})]
-        → Saves OMIP-069.json to data/ground_truth/real/
-
-Claude: "Done\! Test case saved. The hierarchy has 15 gates total."
-```
-
-### Dependencies
-
-- `mcp` - MCP Python SDK (pip install mcp)
-- Existing curation library (marker_logic, paper_parser, auto_extractor)
-- OMIP papers downloaded to data/papers/pmc/
-
-### Implementation Phases
-
-#### Phase 1: Core Tools
-- [ ] Set up MCP server boilerplate
-- [ ] Implement get_paper_content tool
-- [ ] Implement parse_marker_table tool
-- [ ] Implement build_hierarchy_from_markers tool
-
-#### Phase 2: Validation & Reference
-- [ ] Implement validate_hierarchy tool
-- [ ] Implement lookup_cell_type tool
-- [ ] Add HIPC compliance checking
-
-#### Phase 3: Persistence
-- [ ] Implement save_test_case tool
-- [ ] Implement load_test_case tool
-- [ ] Add batch operations
-
-#### Phase 4: Vision Support (Optional)
-- [ ] Implement figure extraction from PDF
-- [ ] Add vision LLM integration for gating figures
-- [ ] OCR fallback for non-vision models
+### Data Curation
+- [x] 8 OMIP test cases with ground truth hierarchies
+- [x] OCR/extraction library (marker_logic, paper_parser, auto_extractor)
+- [x] Panel entry extraction from XML tables
 
 ---
 
-## Future Work
+## High Priority
 
-### Vision LLM Extraction
+### Ground Truth Fluorophore Condition
+Create experimental condition that provides exact fluorophore assignments:
+- [ ] Add `fluorophore_provided` condition to experiments
+- [ ] Compare F1 scores: inferred vs. provided fluorophores
+- [ ] Isolate reasoning failures from information gaps
 
-For papers without explicit marker tables, use vision models to:
-1. Identify gating figures in PDF
-2. Extract gate names and relationships from plots
-3. Infer marker expressions from axis labels
+### Expand Model Coverage
+- [ ] Complete Ollama integration testing
+- [ ] Run experiments with:
+  - [ ] Llama 3.2 (8B, 70B)
+  - [ ] DeepSeek-V3
+  - [ ] Qwen 2.5
+- [ ] Create model comparison report
 
-### FlowRepository Integration
+### Statistical Rigor
+- [ ] Add confidence intervals to aggregate metrics
+- [ ] Implement bootstrap significance testing
+- [ ] Multi-run experiments for variance estimation
 
-Automatic download and parsing of WSP files from FlowRepository:
-1. Look up FlowRepository ID from OMIP paper
-2. Download workspace file
-3. Extract hierarchy using FlowKit
-4. Cross-validate with paper-extracted hierarchy
+---
 
-### Batch Curation Pipeline
+## Medium Priority
 
-Script to process all OMIP papers:
-```bash
-python -m src.scripts.batch_curate --start 1 --end 100 --output data/ground_truth/real/
-```
+### Scale Up Test Set
+- [ ] Expand to 20+ OMIP test cases
+- [ ] Add tissue-specific panels (bone marrow, lymph node)
+- [ ] Include rare population panels (ILCs, MAITs)
+- [ ] Target diverse difficulty levels
+
+### MCP Server for Interactive Curation
+Wrap extraction library as MCP server:
+- [ ] `get_paper_content` - Extract XML/PDF content
+- [ ] `parse_marker_table` - Parse phenotype tables
+- [ ] `build_hierarchy` - Build hierarchy from markers
+- [ ] `validate_hierarchy` - Check against panel and HIPC
+- [ ] `save_test_case` - Persist validated test cases
+
+### Testing
+- [ ] Integration tests for experiment runner
+- [ ] Edge case tests for task failure detection
+- [ ] Property-based testing with Hypothesis
+- [ ] Cross-validation against FlowRepository .wsp files
+
+---
+
+## Low Priority
+
+### Documentation
+- [ ] API documentation for evaluation modules
+- [ ] Tutorial notebook: "Running Your First Experiment"
+- [ ] Methods section draft for publication
+
+### Infrastructure
+- [ ] Experiment tracking (MLflow or W&B)
+- [ ] Docker container for reproducibility
+- [ ] CI/CD pipeline
+
+### Analysis Improvements
+- [ ] Failure pattern categorization
+- [ ] Per-population difficulty analysis
+- [ ] Vocabulary familiarity correlation
+
+---
+
+## Future Work Ideas
+
+### Multi-turn Evaluation
+- Test iterative refinement: predict → feedback → revise
+- Compare single-turn vs. multi-turn F1 scores
+- Design feedback strategies (specific vs. general)
+
+### Confidence Elicitation
+- Ask models to rate prediction confidence
+- Correlate confidence with actual F1 scores
+- Test calibration across difficulty levels
+
+### Vision Integration
+- Extract gating figures from OMIP PDFs
+- Use vision LLMs to read gate names from plots
+- OCR fallback for non-vision models
+
+### FlowRepository Cross-validation
+- Automatic download of .wsp files
+- Parse hierarchies using FlowKit
+- Compare paper-extracted vs. .wsp hierarchies
+- Assess ground truth reliability
+
+---
+
+*Last updated: 2026-01-10*
