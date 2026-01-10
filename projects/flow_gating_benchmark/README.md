@@ -1,37 +1,19 @@
-# FlowRepository Gating Benchmark
+# Flow Gating Benchmark
 
 An evaluation framework for testing LLM capabilities in predicting flow cytometry gating strategies from panel information and experimental context.
 
-## Project Goal
+## Research Question
 
-Build a benchmark that measures whether LLMs can predict appropriate flow cytometry gating hierarchies given:
-- Panel information (markers, fluorophores, clones)
-- Experimental context (sample type, species, application)
-- Optional reference protocols (OMIP papers)
+> Can LLMs predict flow cytometry gating hierarchies given marker panels?
 
-## Why This Matters
+## Latest Results
 
-- Demonstrates evaluation methodology design for scientific AI
-- Tests domain-specific reasoning capabilities
-- Provides quantifiable metrics for scientific task performance
+| Model | Hierarchy F1 | Structure Acc | Critical Recall | Task Failure |
+|-------|-------------|---------------|-----------------|--------------|
+| **Sonnet 4** | **0.384** | 0.574 | **0.839** | ~5% |
+| Opus 4 | 0.318 | **0.610** | 0.795 | ~8% |
 
-## Project Structure
-
-```
-flow_gating_benchmark/
-├── src/
-│   ├── validation/       # Phase 0: Feasibility validation
-│   ├── curation/         # Phase 1: Data curation tools
-│   ├── evaluation/       # Phase 2: Metrics and scoring
-│   ├── experiments/      # Phase 3: Experiment runner
-│   └── analysis/         # Phase 4: Results analysis
-├── data/
-│   ├── ground_truth/     # Curated test cases with gold standard hierarchies
-│   ├── raw/              # Downloaded .wsp and .fcs files
-│   └── extracted/        # Parsed hierarchies from flowkit
-├── results/              # Experiment outputs and logs
-└── docs/                 # Additional documentation
-```
+**Key Finding:** Rich context with direct prompting yields best results (F1=0.467).
 
 ## Quick Start
 
@@ -39,189 +21,209 @@ flow_gating_benchmark/
 # Install dependencies
 pip install -r requirements.txt
 
-# Run Phase 0 validation
-python -m src.validation.run_validation
+# Run experiment
+PYTHONPATH=src python scripts/run_experiment.py --model sonnet --dry-run
 
-# Run experiments (after curation complete)
-python -m src.experiments.runner
+# Generate manual review report
+PYTHONPATH=src python scripts/generate_review_report.py results/experiment_results_*.json --level outliers
 ```
 
-## Key Dependencies
+## Project Structure
 
-- `flowkit` - .wsp parsing and FCS reading
-- `anthropic`, `openai` - LLM APIs
-- `pandas` - Data wrangling
-- `matplotlib`, `seaborn` - Visualization
+```
+flow_gating_benchmark/
+├── src/
+│   ├── curation/           # Data extraction from OMIP papers
+│   │   ├── schemas.py      # TestCase, Panel, GatingHierarchy models
+│   │   ├── paper_parser.py # XML/PDF content extraction
+│   │   ├── marker_logic.py # Marker table → hierarchy conversion
+│   │   ├── omip_extractor.py
+│   │   └── auto_extractor.py
+│   ├── evaluation/         # Scoring and metrics
+│   │   ├── metrics.py      # F1, structure, hallucination metrics
+│   │   ├── normalization.py # Gate name normalization (200+ synonyms)
+│   │   ├── hierarchy.py    # Tree operations (extract, depth, paths)
+│   │   ├── task_failure.py # Meta-question/refusal detection
+│   │   ├── response_parser.py # LLM output parsing (JSON, markdown, indented)
+│   │   └── scorer.py       # Combined scoring interface
+│   ├── experiments/        # Experiment runner
+│   │   ├── runner.py       # ExperimentRunner with checkpointing
+│   │   ├── llm_client.py   # Unified Anthropic/OpenAI/Ollama client
+│   │   ├── conditions.py   # Experimental conditions
+│   │   └── prompts.py      # Prompt templates
+│   └── analysis/           # Results analysis
+│       ├── manual_review_report.py  # Side-by-side comparisons
+│       ├── failure_analysis.py
+│       └── visualization.py
+├── data/
+│   ├── ground_truth/       # 8 curated OMIP test cases
+│   ├── raw/                # Downloaded papers and .wsp files
+│   └── papers/             # OMIP paper PDFs/XMLs
+├── scripts/
+│   ├── run_experiment.py   # Main experiment CLI
+│   └── generate_review_report.py  # Report generation CLI
+├── results/                # Experiment outputs
+└── tests/                  # Unit tests
+```
 
-## Test Case Sources
+## Core Modules
 
-### OMIP Papers (Primary)
-| OMIP | Description | FlowRepository ID | Colors |
-|------|-------------|-------------------|--------|
-| OMIP-069 | 40-color spectral PBMC | FR-FCM-Z7YM | 40 |
-| OMIP-058 | 30-color T/NK/iNKT | FR-FCM-ZYRN | 30 |
-| OMIP-044 | 28-color DC compartment | FR-FCM-ZYC2 | 28 |
-| OMIP-043 | Antibody secreting cells | FR-FCM-ZYBP | 25 |
-| OMIP-023 | 10-color leukocyte | FR-FCM-ZZ74 | 10 |
+### Evaluation (`src/evaluation/`)
+
+| Module | Purpose |
+|--------|---------|
+| `metrics.py` | Hierarchy F1, structure accuracy, hallucination rate |
+| `normalization.py` | Gate name normalization with 200+ cell type synonyms |
+| `hierarchy.py` | Tree operations: extract names, parent maps, depth |
+| `task_failure.py` | Detect meta-questions, refusals, instructions |
+| `response_parser.py` | Parse JSON, markdown, or indented text hierarchies |
+| `scorer.py` | Combined scoring with task failure integration |
+
+### Experiments (`src/experiments/`)
+
+| Module | Purpose |
+|--------|---------|
+| `runner.py` | ExperimentRunner with checkpointing and multi-run support |
+| `llm_client.py` | Unified interface for Anthropic, OpenAI, Ollama |
+| `conditions.py` | Experimental conditions (context level, prompting strategy) |
+| `prompts.py` | Prompt templates for different strategies |
+
+### Analysis (`src/analysis/`)
+
+| Module | Purpose |
+|--------|---------|
+| `manual_review_report.py` | Generate side-by-side comparison reports |
+| `failure_analysis.py` | Categorize and analyze prediction failures |
 
 ## Metrics
 
-| Metric | Definition | Why It Matters |
-|--------|------------|----------------|
-| Hierarchy F1 | Precision/recall on gate names | Did LLM identify correct populations? |
-| Structure Accuracy | % of parent-child relationships correct | Does logical flow match? |
-| Critical Gate Recall | % of "must-have" gates present | Missed live/dead = fundamental error |
-| Hallucination Rate | Gates predicted that don't match markers | Identifies confabulation |
+| Metric | Definition |
+|--------|------------|
+| **Hierarchy F1** | Precision/recall on gate names with fuzzy matching |
+| **Structure Accuracy** | % of parent-child relationships correct |
+| **Critical Gate Recall** | % of must-have gates (live, singlets) present |
+| **Hallucination Rate** | Gates referencing markers not in panel |
+| **Task Failure Rate** | Meta-questions, refusals, or instructions instead of predictions |
 
-### Detailed Metric Definitions
+### Task Failure Detection
 
-#### Hierarchy F1 Score
+The benchmark detects when models fail to complete the task:
 
-**What it measures:** Whether the predicted gating hierarchy contains the correct gate populations.
+```python
+from evaluation.task_failure import detect_task_failure, TaskFailureType
 
-**How it's computed:**
-
-```
-Precision = |Predicted ∩ Ground Truth| / |Predicted|
-Recall = |Predicted ∩ Ground Truth| / |Ground Truth|
-F1 = 2 × (Precision × Recall) / (Precision + Recall)
-```
-
-**Fuzzy matching:** Gate names are normalized before comparison:
-- Case-insensitive (`CD3+ T Cells` → `cd3+ t cells`)
-- Suffix normalization (`positive` → `+`, `negative` → `-`)
-- Common abbreviations (`lymphocytes` → `lymphs`, `monocytes` → `monos`)
-- Whitespace normalization
-
-**Example:**
-```
-Ground Truth: {All Events, Singlets, Live, CD3+ T cells, CD4+ T cells}
-Predicted:    {All Events, Singlets, Live, T cells, CD4+, B cells}
-
-Matching (after normalization): {All Events, Singlets, Live, CD4+} = 4
-Missing: {CD3+ T cells} = 1 (T cells doesn't match CD3+ T cells)
-Extra: {B cells} = 1
-
-Precision = 4/6 = 0.667
-Recall = 4/5 = 0.800
-F1 = 2 × (0.667 × 0.800) / (0.667 + 0.800) = 0.727
+result = detect_task_failure("What markers are you using?")
+# result.is_failure = True
+# result.failure_type = TaskFailureType.META_QUESTIONS
 ```
 
-#### Structure Accuracy
+| Failure Type | Example |
+|--------------|---------|
+| META_QUESTIONS | "What markers are you using?" |
+| REFUSAL | "I cannot predict without more information" |
+| INSTRUCTIONS | "Here's how you would create a hierarchy..." |
+| EMPTY | No response content |
 
-**What it measures:** Whether predicted gates have correct parent-child relationships.
+## Gate Name Normalization
 
-**How it's computed:**
-1. Extract parent-child map from both hierarchies: `{gate: parent}`
-2. Find gates that exist in both predictions (common gates)
-3. Compare parent assignments for common gates
-4. Accuracy = correct assignments / total common gates
+The benchmark uses fuzzy matching with 200+ cell type synonyms:
 
-**Example:**
-```
-Ground Truth:
-  All Events → Singlets → Live → CD3+ → CD4+
+```python
+from evaluation.normalization import are_gates_equivalent
 
-Predicted:
-  All Events → Singlets → Live → CD4+  (CD3+ missing, CD4+ parent is Live)
-
-Common gates: {All Events, Singlets, Live, CD4+}
-- All Events: parent=None ✓
-- Singlets: parent=All Events ✓
-- Live: parent=Singlets ✓
-- CD4+: parent=Live ✗ (should be CD3+)
-
-Structure Accuracy = 3/4 = 0.75
+are_gates_equivalent("CD3+ T cells", "T cells")  # True
+are_gates_equivalent("NK cells", "natural killer cells")  # True
+are_gates_equivalent("classical monocytes", "classical monos")  # True
 ```
 
-#### Critical Gate Recall
+## Test Cases
 
-**What it measures:** Whether essential quality control gates are present.
+8 OMIP papers with validated ground truth:
 
-**Default critical gates:**
-- `singlets` - Doublet exclusion
-- `live` / `live/dead` - Viability discrimination
-- `lymphocytes` / `lymphs` - Lymphocyte gate
-- `cd45+` - Leukocyte marker
+| OMIP | Focus | Colors | Difficulty |
+|------|-------|--------|------------|
+| OMIP-077 | Leukocyte populations | 14 | Easy |
+| OMIP-101 | Fixed whole blood | 27 | Easy |
+| OMIP-022 | gamma-delta T-cells | 15 | Medium |
+| OMIP-076 | Murine T/B/ASC | 19 | Medium |
+| OMIP-074 | B-cell subsets | 19 | Hard |
+| OMIP-083 | Monocyte phenotyping | 21 | Hard |
+| OMIP-064 | PBMC general | - | Variable |
+| OMIP-095 | Spectral PBMC | - | Variable |
 
-**How it's computed:**
-1. Identify which critical gates appear in ground truth
-2. Check if each is present in prediction (with fuzzy matching)
-3. Recall = present critical gates / total critical gates in ground truth
+## Running Experiments
 
-**Why it matters:** Missing a live/dead gate means analyzing dead cells, invalidating all downstream analysis. This metric catches fundamental methodological errors.
+### Basic Usage
 
-#### Hallucination Rate
+```bash
+# Single model run
+PYTHONPATH=src python scripts/run_experiment.py --model sonnet
 
-**What it measures:** Gates that reference markers not present in the panel.
+# Dry run (mock API calls)
+PYTHONPATH=src python scripts/run_experiment.py --model sonnet --dry-run
 
-**How it's computed:**
-1. Build set of valid markers from panel definition
-2. Add common non-marker dimensions: `FSC-A`, `FSC-H`, `SSC-A`, `SSC-H`, `Time`
-3. For each predicted gate:
-   - Skip generic gates (singlets, live, all events, etc.)
-   - If gate contains `+` or `-` (marker reference) but no valid marker found → hallucination
-4. Rate = hallucinated gates / total predicted gates
-
-**Example:**
-```
-Panel markers: {CD3, CD4, CD8, CD19}
-
-Predicted gates: {All Events, Singlets, Live, CD3+, CD4+, CCR7+}
-
-CCR7 not in panel but CCR7+ gate predicted → Hallucination
-
-Hallucination Rate = 1/6 = 0.167
+# With manual review report
+PYTHONPATH=src python scripts/run_experiment.py --model sonnet --report outliers
 ```
 
-**Why it matters:** A hallucinated gate referencing a marker not in the panel would produce empty or nonsensical results. This directly measures confabulation in domain-specific contexts.
+### Report Generation
 
-#### Depth Accuracy (Secondary)
-
-**What it measures:** Whether the hierarchy has appropriate depth/complexity.
-
-**How it's computed:**
+```bash
+# From existing results
+PYTHONPATH=src python scripts/generate_review_report.py \
+  results/experiment_results_*.json \
+  --level outliers \
+  --output results/review.md
 ```
-Accuracy = max(0, 1 - |predicted_depth - ground_truth_depth| / ground_truth_depth)
-```
 
-A prediction with depth 3 against ground truth depth 5 would score:
-```
-Accuracy = max(0, 1 - |3-5|/5) = max(0, 1 - 0.4) = 0.6
+Report levels:
+- `summary` - Overall metrics table only
+- `outliers` - Details for outlier results
+- `full` - All results with side-by-side comparisons
+
+## Programmatic Usage
+
+```python
+from curation.omip_extractor import load_test_case
+from evaluation.scorer import GatingScorer
+
+# Load test case
+test_case = load_test_case("data/ground_truth/omip_077.json")
+
+# Score a prediction
+scorer = GatingScorer()
+result = scorer.score(
+    response=llm_response,
+    test_case=test_case,
+    model="claude-sonnet-4",
+    condition="rich_direct"
+)
+
+print(f"F1: {result.hierarchy_f1:.2f}")
+print(f"Task failure: {result.is_task_failure}")
 ```
 
 ## Limitations
 
-### Ground Truth Challenges
-- **Multiple valid strategies**: For any given panel, multiple gating strategies may be equally correct. The benchmark assumes a single "best" strategy from OMIP papers, but experts may disagree.
-- **Paper-based extraction**: Gating hierarchies are extracted from OMIP paper figures and text, not from actual .wsp workspace files. This introduces curation error.
-- **Limited .wsp validation**: Not all OMIP papers have publicly available workspace files in FlowRepository for cross-validation.
+### Ground Truth
+- Multiple valid strategies may exist for any panel
+- Paper-based extraction introduces curation error
+- Limited .wsp validation availability
 
-### Evaluation Metric Limitations
-- **F1 uses fuzzy matching**: Gate name matching relies on heuristics (e.g., "CD3+ T cells" ≈ "T cells"). This may over- or under-estimate performance.
-- **Structure accuracy is strict**: Any parent mismatch counts as an error, even if the biological interpretation is equivalent.
-- **Hallucination detection is heuristic**: Based on string matching of marker names, may miss semantic hallucinations.
+### Evaluation
+- Fuzzy matching may over/under-estimate performance
+- Structure accuracy is strict (any mismatch = error)
+- Hallucination detection is heuristic-based
 
-### Coverage Gaps
-- **Biased toward PBMC**: Most test cases are PBMC samples; tissue-specific panels (bone marrow, lymph node) are underrepresented.
-- **Limited rare populations**: Focus on common lineages (T, B, NK, myeloid); rare populations (ILCs, MAITs) have limited coverage.
-- **No longitudinal panels**: All test cases are single-timepoint analyses.
-
-### Experimental Limitations
-- **No confidence scoring**: LLM predictions are binary (gate present/absent), no uncertainty quantification.
-- **Temperature=0 only**: No exploration of temperature or sampling effects.
-- **Single-turn only**: Does not test iterative refinement or clarification dialogues.
-
-### Known Issues
-- Some OMIP papers have incomplete gating descriptions in text
-- FlowRepository availability varies; some .wsp files are corrupted or use incompatible formats
-- Inter-rater reliability for ground truth curation not formally assessed
+### Coverage
+- Biased toward PBMC samples
+- Limited rare populations (ILCs, MAITs)
+- Single-timepoint only
 
 ## Related Projects
 
-This benchmark complements the [Flow Panel Optimizer](../flow_panel_optimizer/) MCP project:
-- **Gating Benchmark**: Tests "Can LLMs predict gating strategies?" (structure)
-- **Panel Optimizer**: Tests "Can LLMs optimize fluorophore selection?" (panel design)
+- **[Flow Panel Optimizer](../flow_panel_optimizer/)** - MCP tools for spectral analysis
+- Tests complementary capability: panel design vs. gating strategy
 
 ## License
 
