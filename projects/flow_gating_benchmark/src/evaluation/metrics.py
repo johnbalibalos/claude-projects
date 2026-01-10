@@ -576,7 +576,8 @@ def derive_panel_critical_gates(panel: Panel | list[dict]) -> list[str]:
         List of critical gate names relevant to this panel
     """
     # Get panel markers
-    if isinstance(panel, Panel):
+    # Use hasattr instead of isinstance to avoid module path mismatch issues
+    if hasattr(panel, 'markers'):
         panel_markers = {m.lower() for m in panel.markers}
     else:
         panel_markers = {entry["marker"].lower() for entry in panel}
@@ -705,7 +706,8 @@ def compute_hallucination_rate(
         Tuple of (hallucination_rate, list of hallucinated gates)
     """
     # Get panel markers
-    if isinstance(panel, Panel):
+    # Use hasattr instead of isinstance to avoid module path mismatch issues
+    if hasattr(panel, 'markers'):
         panel_markers = {m.lower() for m in panel.markers}
     else:
         panel_markers = {entry["marker"].lower() for entry in panel}
