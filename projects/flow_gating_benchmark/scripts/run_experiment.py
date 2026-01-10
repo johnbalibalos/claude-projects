@@ -7,19 +7,26 @@ across different context levels and prompting strategies.
 
 Usage:
     python scripts/run_experiment.py --model opus
-    python scripts/run_experiment.py --model sonnet
+    python scripts/run_experiment.py --model sonnet --report outliers
     python scripts/run_experiment.py --model sonnet --context standard --strategy cot
-    python scripts/run_experiment.py --model haiku --dry-run
+    python scripts/run_experiment.py --model haiku --dry-run --report full
 """
 
 import argparse
+import json
 import os
 import sys
+from datetime import datetime
 from pathlib import Path
 
 # Add project to path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
+from analysis.manual_review_report import (
+    OutlierThresholds,
+    generate_manual_review_report,
+)
+from curation.schemas import TestCase
 from experiments.conditions import (
     CONTEXT_LEVELS,
     MODELS,
@@ -58,8 +65,14 @@ def parse_args():
         description="Run gating strategy prediction benchmark",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
+Report Levels:
+    summary   - Overall metrics table + worst performers (default)
+    outliers  - Summary + detailed reports for outliers (F1 < 30%, halluc > 20%)
+    full      - Detailed report for every test case
+
 Examples:
     python scripts/run_experiment.py --model opus
+    python scripts/run_experiment.py --model sonnet --report outliers
     python scripts/run_experiment.py --model sonnet --context standard
     python scripts/run_experiment.py --model haiku --strategy cot --dry-run
         """,
@@ -83,6 +96,24 @@ Examples:
         help="Prompting strategy (default: all)",
     )
     parser.add_argument(
+        "--report",
+        choices=["summary", "outliers", "full", "none"],
+        default="summary",
+        help="Report detail level (default: summary)",
+    )
+    parser.add_argument(
+        "--outlier-f1",
+        type=float,
+        default=0.3,
+        help="F1 threshold for outlier detection (default: 0.3)",
+    )
+    parser.add_argument(
+        "--outlier-halluc",
+        type=float,
+        default=0.2,
+        help="Hallucination threshold for outlier detection (default: 0.2)",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Print configuration without running",
@@ -93,6 +124,27 @@ Examples:
         help="Skip cost confirmation (for hooks)",
     )
     return parser.parse_args()
+
+
+def load_test_cases(test_cases_dir: Path) -> dict[str, TestCase]:
+    """Load all test cases into a dictionary."""
+    test_cases = {}
+    for path in test_cases_dir.glob("omip_*.json"):
+        with open(path) as f:
+            data = json.load(f)
+
+        # Fix null fluorophores
+        for entry in data.get("panel", {}).get("entries", []):
+            if entry.get("fluorophore") is None:
+                entry["fluorophore"] = "Unknown"
+
+        try:
+            tc = TestCase(**data)
+            test_cases[tc.omip_id] = tc
+        except Exception as e:
+            print(f"Warning: Could not load {path.name}: {e}")
+
+    return test_cases
 
 
 def main():
@@ -137,7 +189,7 @@ def main():
     print()
 
     print(f"Model: {MODELS[model_key]}")
-    print(f"Max concurrent: {config['max_concurrent']}")
+    print(f"Report level: {args.report}")
     print()
 
     if args.dry_run:
@@ -170,8 +222,8 @@ def main():
         if successful:
             avg_f1 = sum(r.hierarchy_f1 for r in successful) / len(successful)
             avg_structure = sum(r.structure_accuracy for r in successful) / len(successful)
-            avg_critical = sum(getattr(r, 'critical_gate_recall', 0) for r in successful) / len(successful)
-            avg_hallucination = sum(getattr(r, 'hallucination_rate', 0) for r in successful) / len(successful)
+            avg_critical = sum(r.critical_gate_recall for r in successful) / len(successful)
+            avg_hallucination = sum(r.hallucination_rate for r in successful) / len(successful)
             parse_rate = len(successful) / len(result.results)
 
             print("\nOverall Metrics:")
@@ -188,6 +240,39 @@ def main():
                 if cond_results:
                     cond_f1 = sum(r.hierarchy_f1 for r in cond_results) / len(cond_results)
                     print(f"  {cond.name}: F1={cond_f1:.3f} (n={len(cond_results)})")
+
+    # Generate manual review report
+    if args.report != "none" and result.results:
+        print("\nGenerating manual review report...")
+
+        # Load test cases for report
+        test_cases = load_test_cases(test_cases_dir)
+
+        # Set up outlier thresholds
+        thresholds = OutlierThresholds(
+            min_f1=args.outlier_f1,
+            max_hallucination=args.outlier_halluc,
+        )
+
+        # Generate report
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        report_path = output_dir / f"manual_review_{args.model}_{timestamp}.md"
+
+        generate_manual_review_report(
+            results=result.results,
+            test_cases=test_cases,
+            level=args.report,
+            output_path=report_path,
+            thresholds=thresholds,
+        )
+
+        print(f"Report saved to: {report_path}")
+
+        # Count outliers for info
+        from analysis.manual_review_report import is_outlier
+        outliers = [r for r in result.results if is_outlier(r, thresholds)]
+        if outliers:
+            print(f"Found {len(outliers)} outlier(s) (F1 < {args.outlier_f1:.0%} or halluc > {args.outlier_halluc:.0%})")
 
     print(f"\nResults saved to: {output_dir}")
 

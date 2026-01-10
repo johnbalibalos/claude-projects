@@ -2,9 +2,9 @@
 LLM response parser for gating hierarchy predictions.
 
 Handles various output formats:
-- JSON hierarchy
+- JSON hierarchy (code blocks or raw)
 - Markdown nested lists
-- Free text descriptions
+- Indented text hierarchies
 """
 
 from __future__ import annotations
@@ -12,7 +12,6 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass
-from typing import Any
 
 
 @dataclass
@@ -24,15 +23,29 @@ class ParseResult:
     format_detected: str | None = None
     error: str | None = None
     raw_response: str | None = None
+    validation_warnings: list[str] | None = None
+
+
+# Terms that indicate meta-commentary rather than gate names
+META_TERMS = frozenset([
+    "here", "the following", "this", "would", "could", "should",
+    "based on", "given", "assuming", "typically", "usually",
+    "research question", "populations of interest", "fluorochromes",
+])
+
+# Minimum requirements for a valid hierarchy
+MIN_GATES = 3
+MAX_NAME_LENGTH = 100
+MIN_NAME_LENGTH = 2
 
 
 def parse_llm_response(response: str) -> ParseResult:
     """
     Parse LLM response into a hierarchy dict.
 
-    Tries multiple parsing strategies:
-    1. JSON in code blocks
-    2. Raw JSON
+    Tries multiple parsing strategies in order:
+    1. JSON in code blocks (most reliable)
+    2. Raw JSON object
     3. Markdown nested lists
     4. Indented text hierarchy
 
@@ -43,26 +56,27 @@ def parse_llm_response(response: str) -> ParseResult:
         ParseResult with parsed hierarchy or error
     """
     if not response or not response.strip():
-        return ParseResult(
-            success=False,
-            error="Empty response",
-            raw_response=response,
-        )
+        return ParseResult(success=False, error="Empty response", raw_response=response)
 
-    # Try JSON parsing first (most reliable)
-    json_result = _try_parse_json(response)
-    if json_result.success:
-        return json_result
-
-    # Try markdown list parsing
-    markdown_result = _try_parse_markdown(response)
-    if markdown_result.success:
-        return markdown_result
-
-    # Try indented text parsing
-    indented_result = _try_parse_indented(response)
-    if indented_result.success:
-        return indented_result
+    # Try each parser in order
+    for parser, format_name in [
+        (_parse_json_code_block, "json_code_block"),
+        (_parse_json_raw, "json_raw"),
+        (_parse_markdown_list, "markdown_list"),
+        (_parse_indented_text, "indented_text"),
+    ]:
+        result = parser(response)
+        if result is not None:
+            # Validate the parsed hierarchy
+            is_valid, warnings = validate_hierarchy(result)
+            if is_valid:
+                return ParseResult(
+                    success=True,
+                    hierarchy=result,
+                    format_detected=format_name,
+                    raw_response=response,
+                    validation_warnings=warnings if warnings else None,
+                )
 
     return ParseResult(
         success=False,
@@ -71,62 +85,82 @@ def parse_llm_response(response: str) -> ParseResult:
     )
 
 
-def _try_parse_json(response: str) -> ParseResult:
-    """Try to parse JSON from response."""
-
-    # Look for JSON in code blocks
-    code_block_patterns = [
-        r"```json\s*\n?([\s\S]*?)\n?```",  # ```json ... ```
-        r"```\s*\n?([\s\S]*?)\n?```",  # ``` ... ```
+def _parse_json_code_block(response: str) -> dict | None:
+    """Extract JSON from code blocks."""
+    patterns = [
+        r"```json\s*\n?([\s\S]*?)\n?```",
+        r"```\s*\n?([\s\S]*?)\n?```",
     ]
 
-    for pattern in code_block_patterns:
+    for pattern in patterns:
         match = re.search(pattern, response, re.IGNORECASE)
         if match:
             try:
                 hierarchy = json.loads(match.group(1).strip())
-                return ParseResult(
-                    success=True,
-                    hierarchy=_normalize_hierarchy(hierarchy),
-                    format_detected="json_code_block",
-                    raw_response=response,
-                )
+                return _normalize_hierarchy(hierarchy)
             except json.JSONDecodeError:
                 continue
-
-    # Try to find raw JSON object
-    json_patterns = [
-        r"(\{[\s\S]*\})",  # Any JSON object
-    ]
-
-    for pattern in json_patterns:
-        matches = re.findall(pattern, response)
-        for match in matches:
-            try:
-                hierarchy = json.loads(match)
-                # Validate it looks like a hierarchy
-                if "name" in hierarchy or "root" in hierarchy:
-                    return ParseResult(
-                        success=True,
-                        hierarchy=_normalize_hierarchy(hierarchy),
-                        format_detected="json_raw",
-                        raw_response=response,
-                    )
-            except json.JSONDecodeError:
-                continue
-
-    return ParseResult(success=False, raw_response=response)
+    return None
 
 
-def _try_parse_markdown(response: str) -> ParseResult:
-    """Try to parse markdown nested list into hierarchy."""
+def _parse_json_raw(response: str) -> dict | None:
+    """Extract raw JSON object from response."""
+    # Find the outermost JSON object
+    brace_start = response.find("{")
+    if brace_start == -1:
+        return None
 
+    # Find matching closing brace
+    depth = 0
+    in_string = False
+    escape = False
+
+    for i, char in enumerate(response[brace_start:], start=brace_start):
+        if escape:
+            escape = False
+            continue
+        if char == "\\":
+            escape = True
+            continue
+        if char == '"':
+            in_string = not in_string
+            continue
+        if in_string:
+            continue
+        if char == "{":
+            depth += 1
+        elif char == "}":
+            depth -= 1
+            if depth == 0:
+                try:
+                    json_str = response[brace_start : i + 1]
+                    hierarchy = json.loads(json_str)
+                    if _looks_like_hierarchy(hierarchy):
+                        return _normalize_hierarchy(hierarchy)
+                except json.JSONDecodeError:
+                    pass
+                break
+    return None
+
+
+def _looks_like_hierarchy(obj: dict) -> bool:
+    """Check if a dict looks like a gating hierarchy."""
+    if not isinstance(obj, dict):
+        return False
+    # Must have name or be a root wrapper
+    if "name" in obj:
+        return True
+    if "root" in obj and isinstance(obj["root"], dict):
+        return True
+    return False
+
+
+def _parse_markdown_list(response: str) -> dict | None:
+    """Parse markdown nested list into hierarchy."""
     lines = response.split("\n")
+    items = []
 
-    # Look for lines that look like markdown list items
-    list_items = []
     for line in lines:
-        # Match: "- Gate Name" or "* Gate Name" or "1. Gate Name"
         match = re.match(r"^(\s*)([-*]|\d+\.)\s+(.+)$", line)
         if match:
             indent = len(match.group(1))
@@ -136,44 +170,32 @@ def _try_parse_markdown(response: str) -> ParseResult:
             name = re.sub(r"\*\*([^*]+)\*\*", r"\1", name)  # Remove bold
             name = re.sub(r"\(.*?\)", "", name).strip()  # Remove parentheticals
 
-            list_items.append({"indent": indent, "name": name})
+            if _is_valid_gate_name(name):
+                items.append({"indent": indent, "name": name})
 
-    if not list_items:
-        return ParseResult(success=False, raw_response=response)
+    if len(items) < MIN_GATES:
+        return None
 
-    # Convert to hierarchy
     try:
-        hierarchy = _list_items_to_hierarchy(list_items)
-        return ParseResult(
-            success=True,
-            hierarchy=hierarchy,
-            format_detected="markdown_list",
-            raw_response=response,
-        )
-    except Exception as e:
-        return ParseResult(
-            success=False,
-            error=f"Failed to convert markdown list: {e}",
-            raw_response=response,
-        )
+        return _items_to_hierarchy(items)
+    except Exception:
+        return None
 
 
-def _try_parse_indented(response: str) -> ParseResult:
-    """Try to parse indented text into hierarchy."""
-
+def _parse_indented_text(response: str) -> dict | None:
+    """Parse indented text into hierarchy."""
     lines = response.split("\n")
-
     items = []
+
     for line in lines:
-        # Skip empty lines
         if not line.strip():
             continue
 
-        # Skip lines that don't look like gate names
-        if any(skip in line.lower() for skip in ["here", "the", "this", "would", "could"]):
+        # Skip meta-commentary lines
+        line_lower = line.lower()
+        if any(term in line_lower for term in META_TERMS):
             continue
 
-        # Calculate indent level
         stripped = line.lstrip()
         indent = len(line) - len(stripped)
 
@@ -182,38 +204,41 @@ def _try_parse_indented(response: str) -> ParseResult:
         name = re.sub(r"^[-*•→>]\s*", "", name)  # Remove bullets
         name = re.sub(r":.*$", "", name)  # Remove descriptions after colon
 
-        if name and len(name) > 1 and len(name) < 50:
+        if _is_valid_gate_name(name):
             items.append({"indent": indent, "name": name})
 
-    if len(items) < 3:  # Need at least a few items
-        return ParseResult(success=False, raw_response=response)
+    if len(items) < MIN_GATES:
+        return None
 
     try:
-        hierarchy = _list_items_to_hierarchy(items)
-        return ParseResult(
-            success=True,
-            hierarchy=hierarchy,
-            format_detected="indented_text",
-            raw_response=response,
-        )
+        return _items_to_hierarchy(items)
     except Exception:
-        return ParseResult(success=False, raw_response=response)
+        return None
 
 
-def _list_items_to_hierarchy(items: list[dict]) -> dict:
+def _is_valid_gate_name(name: str) -> bool:
+    """Check if a string looks like a valid gate name."""
+    if not name or len(name) < MIN_NAME_LENGTH or len(name) > MAX_NAME_LENGTH:
+        return False
+
+    # Reject if contains meta-commentary phrases
+    name_lower = name.lower()
+    if any(term in name_lower for term in META_TERMS):
+        return False
+
+    return True
+
+
+def _items_to_hierarchy(items: list[dict]) -> dict:
     """Convert list of items with indents to hierarchy dict."""
-
     if not items:
-        return {"name": "root", "children": []}
-
-    # Find minimum indent to use as base
-    min_indent = min(item["indent"] for item in items)
+        return {"name": "All Events", "children": []}
 
     # Normalize indents
+    min_indent = min(item["indent"] for item in items)
     for item in items:
         item["indent"] -= min_indent
 
-    # Build hierarchy using stack
     root = {"name": items[0]["name"], "children": []}
     stack = [(root, items[0]["indent"])]
 
@@ -227,7 +252,6 @@ def _list_items_to_hierarchy(items: list[dict]) -> dict:
         if stack:
             stack[-1][0]["children"].append(node)
         else:
-            # Item is at root level - this shouldn't happen normally
             root["children"].append(node)
 
         stack.append((node, item["indent"]))
@@ -237,28 +261,91 @@ def _list_items_to_hierarchy(items: list[dict]) -> dict:
 
 def _normalize_hierarchy(hierarchy: dict) -> dict:
     """Normalize hierarchy structure to standard format."""
-
-    # Handle case where root is wrapped
+    # Unwrap root wrapper
     if "root" in hierarchy and isinstance(hierarchy["root"], dict):
         hierarchy = hierarchy["root"]
 
-    # Ensure required fields
+    # Ensure name field
     if "name" not in hierarchy:
         if "gate_name" in hierarchy:
             hierarchy["name"] = hierarchy["gate_name"]
         else:
             hierarchy["name"] = "All Events"
 
-    # Normalize children
+    # Ensure children field
     if "children" not in hierarchy:
         hierarchy["children"] = []
 
     # Recursively normalize children
-    hierarchy["children"] = [
-        _normalize_hierarchy(child) for child in hierarchy["children"]
-    ]
+    hierarchy["children"] = [_normalize_hierarchy(child) for child in hierarchy["children"]]
 
     return hierarchy
+
+
+def validate_hierarchy(hierarchy: dict) -> tuple[bool, list[str]]:
+    """
+    Validate that a hierarchy has valid structure.
+
+    Returns:
+        Tuple of (is_valid, list of warnings/issues)
+    """
+    warnings = []
+
+    if not isinstance(hierarchy, dict):
+        return False, ["Hierarchy is not a dictionary"]
+
+    if "name" not in hierarchy:
+        warnings.append("Root missing 'name' field")
+
+    def validate_node(node: dict, path: str = "root") -> bool:
+        nonlocal warnings
+
+        if not isinstance(node, dict):
+            warnings.append(f"{path}: Node is not a dictionary")
+            return False
+
+        if "name" not in node:
+            warnings.append(f"{path}: Missing 'name' field")
+            return False
+
+        name = node.get("name", "")
+        if not _is_valid_gate_name(name):
+            warnings.append(f"{path}: Invalid gate name '{name}'")
+
+        children = node.get("children", [])
+        if not isinstance(children, list):
+            warnings.append(f"{path}: 'children' is not a list")
+            return False
+
+        for i, child in enumerate(children):
+            validate_node(child, f"{path}.children[{i}]")
+
+        return True
+
+    validate_node(hierarchy)
+
+    # Count total gates
+    def count_gates(node: dict) -> int:
+        return 1 + sum(count_gates(c) for c in node.get("children", []))
+
+    total_gates = count_gates(hierarchy)
+    if total_gates < MIN_GATES:
+        warnings.append(f"Hierarchy has only {total_gates} gates (minimum {MIN_GATES})")
+        return False, warnings
+
+    # Check for meta-commentary in gate names
+    def check_meta_terms(node: dict) -> None:
+        name = node.get("name", "").lower()
+        for term in META_TERMS:
+            if term in name:
+                warnings.append(f"Gate name '{node.get('name')}' contains meta-commentary")
+                break
+        for child in node.get("children", []):
+            check_meta_terms(child)
+
+    check_meta_terms(hierarchy)
+
+    return len(warnings) == 0 or all("meta-commentary" in w for w in warnings), warnings
 
 
 def extract_markers_from_response(response: str) -> list[str]:
@@ -268,53 +355,16 @@ def extract_markers_from_response(response: str) -> list[str]:
     Useful for identifying what markers the LLM thinks are relevant
     even if parsing fails.
     """
-    # Common marker patterns
-    marker_patterns = [
-        r"\bCD\d+\w*",  # CD markers (CD3, CD4, CD45RO, etc.)
+    patterns = [
+        r"\bCD\d+\w*",  # CD markers
         r"\bHLA-[A-Z]+",  # HLA markers
         r"\bFSC-[AHW]",  # Forward scatter
         r"\bSSC-[AHW]",  # Side scatter
     ]
 
     markers = set()
-    for pattern in marker_patterns:
+    for pattern in patterns:
         matches = re.findall(pattern, response, re.IGNORECASE)
         markers.update(m.upper() for m in matches)
 
     return sorted(markers)
-
-
-def validate_hierarchy_structure(hierarchy: dict) -> tuple[bool, list[str]]:
-    """
-    Validate that a hierarchy has valid structure.
-
-    Returns:
-        Tuple of (is_valid, list of issues)
-    """
-    issues = []
-
-    if not isinstance(hierarchy, dict):
-        return False, ["Hierarchy is not a dictionary"]
-
-    if "name" not in hierarchy:
-        issues.append("Root missing 'name' field")
-
-    def validate_node(node: dict, path: str = "root") -> None:
-        if not isinstance(node, dict):
-            issues.append(f"{path}: Node is not a dictionary")
-            return
-
-        if "name" not in node:
-            issues.append(f"{path}: Missing 'name' field")
-
-        children = node.get("children", [])
-        if not isinstance(children, list):
-            issues.append(f"{path}: 'children' is not a list")
-            return
-
-        for i, child in enumerate(children):
-            validate_node(child, f"{path}.children[{i}]")
-
-    validate_node(hierarchy)
-
-    return len(issues) == 0, issues
