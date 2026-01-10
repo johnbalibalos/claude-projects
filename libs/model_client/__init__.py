@@ -29,6 +29,7 @@ from typing import Any
 
 from .protocols import ModelClient, ModelResponse, Provider, TokenUsage
 from .retry import with_retry, with_retry_async
+from .cache import CachedClient, ResponseCache, get_global_cache
 
 __all__ = [
     "ModelRegistry",
@@ -38,6 +39,9 @@ __all__ = [
     "Provider",
     "with_retry",
     "with_retry_async",
+    "CachedClient",
+    "ResponseCache",
+    "get_global_cache",
 ]
 
 logger = logging.getLogger(__name__)

@@ -7,6 +7,7 @@ a single entry point for evaluation.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
@@ -44,6 +45,9 @@ class ScoringResult:
     raw_response: str | None = None
     parsed_hierarchy: dict | None = None
 
+    # Schema version for compatibility checking
+    schema_version: str = "1.0.0"
+
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for serialization."""
         task_failure_dict = None
@@ -57,6 +61,7 @@ class ScoringResult:
             }
 
         return {
+            "schema_version": self.schema_version,
             "test_case_id": self.test_case_id,
             "model": self.model,
             "condition": self.condition,
@@ -153,6 +158,8 @@ class GatingScorer:
                 raw_response=response,
             )
 
+        # parse_result.success is True here, so hierarchy should be set
+        assert parse_result.hierarchy is not None
         evaluation = evaluate_prediction(
             predicted=parse_result.hierarchy,
             ground_truth=test_case.gating_hierarchy,
@@ -275,7 +282,7 @@ def compute_aggregate_metrics(results: list[ScoringResult]) -> dict[str, Any]:
 
 def _group_results(
     results: list[ScoringResult],
-    key_fn: callable,
+    key_fn: Callable[[ScoringResult], str],
 ) -> dict[str, list[ScoringResult]]:
     """Group results by a key function."""
     grouped: dict[str, list[ScoringResult]] = {}
