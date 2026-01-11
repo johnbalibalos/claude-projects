@@ -7,12 +7,20 @@
   "has_wsp": false,
   "wsp_validated": false,
   "context": {
-    "sample_type": "unknown",
+    "sample_type": "Freshly isolated splenocytes (murine tissues containing lymphocyte populations)",
     "species": "mouse",
-    "application": "OMIP 076: High-dimensional  immunophenotyping of murine T-cell, B-cell, and antibody secreting cell subsets",
+    "application": "Comprehensive immunophenotyping of T-cell, B-cell, and ASC subsets",
     "tissue": null,
     "disease_state": null,
-    "additional_notes": null
+    "additional_notes": "19-parameter, 18-color panel optimized for 5-laser BD LSRFortessa. Identifies 2 B-cell subsets (memory, activated), 2 ASC subsets (plasma cells, plasmablasts), and 7 CD4+ T-cell subsets (naive, central memory, effector memory, helper, regulatory, follicular helper, follicular regulatory). CD4 and CD19 share same fluorochrome (BV786) as co-expression absent. Tested on BALB/c mice but applicable across murine models.",
+    "cross_references": [
+      "OMIP-031",
+      "OMIP-032",
+      "OMIP-054",
+      "OMIP-061"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/CYTO-99-888.pdf"
   },
   "panel": {
     "entries": [
@@ -180,31 +188,31 @@
         {
           "name": "Singlets",
           "markers": [],
-          "marker_logic": [],
+          "marker_logic": "FSC-A vs FSC-H",
           "gate_type": "Unknown",
           "children": [
             {
               "name": "Live cells",
               "markers": [],
-              "marker_logic": [],
+              "marker_logic": "Live/Dead-",
               "gate_type": "Unknown",
               "children": [
                 {
                   "name": "Lymphocytes",
                   "markers": [],
-                  "marker_logic": [],
+                  "marker_logic": "FSC vs SSC, CD45+",
                   "gate_type": "Unknown",
                   "children": [
                     {
                       "name": "B cells",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "TCR\u03b2- CD19+",
                       "gate_type": "Unknown",
                       "children": [
                         {
                           "name": "Plasma cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD138+ B220-",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -212,7 +220,7 @@
                         {
                           "name": "Plasmablasts",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD138+ B220+",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -220,7 +228,7 @@
                         {
                           "name": "Activated B cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD80+",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -228,7 +236,7 @@
                         {
                           "name": "Memory B cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "PD-L2+ IgD-",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -239,13 +247,13 @@
                     {
                       "name": "T cells",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "TCR\u03b2+ CD4+",
                       "gate_type": "Unknown",
                       "children": [
                         {
                           "name": "Naive T cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD44- CD62L+",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -253,7 +261,7 @@
                         {
                           "name": "Effector memory T cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD44+ CD62L-",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -261,7 +269,7 @@
                         {
                           "name": "Central memory T cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD44+ CD62L+",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -269,13 +277,13 @@
                         {
                           "name": "Regulatory T cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD25+ Foxp3+",
                           "gate_type": "Unknown",
                           "children": [
                             {
                               "name": "ICOS+ Treg",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "ICOS+ CD44+",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -283,7 +291,7 @@
                             {
                               "name": "Follicular regulatory T cells",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "CXCR5+ PD-1+",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -294,7 +302,7 @@
                         {
                           "name": "T follicular helper cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CXCR5+ PD-1+ ICOS+",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -305,7 +313,7 @@
                     {
                       "name": "ASC subsets",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "TCR\u03b2- CD4/CD19-",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false

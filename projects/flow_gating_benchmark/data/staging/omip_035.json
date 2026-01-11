@@ -7,12 +7,19 @@
   "has_wsp": false,
   "wsp_validated": false,
   "context": {
-    "sample_type": "unknown",
+    "sample_type": "721.221 stimulated PBMC",
     "species": "unknown",
-    "application": "OMIP-035: Functional Analysis of Natural Killer Cell Subsets in Macaques",
+    "application": "Define the functional capability of various NK cell subsets",
     "tissue": null,
     "disease_state": null,
-    "additional_notes": null
+    "additional_notes": "Functional analysis of Natural Killer cell subsets in rhesus macaques using 721.221 target cell stimulation.",
+    "cross_references": [
+      "OMIP-007",
+      "OMIP-027",
+      "OMIP-028"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms866639.pdf"
   },
   "panel": {
     "entries": [
@@ -60,37 +67,37 @@
         {
           "name": "Singlets",
           "markers": [],
-          "marker_logic": [],
+          "marker_logic": "FSC-A vs FSC-H",
           "gate_type": "Unknown",
           "children": [
             {
               "name": "Live cells",
               "markers": [],
-              "marker_logic": [],
+              "marker_logic": "Viability-",
               "gate_type": "Unknown",
               "children": [
                 {
                   "name": "Lymphocytes",
                   "markers": [],
-                  "marker_logic": [],
+                  "marker_logic": "FSC vs SSC",
                   "gate_type": "Unknown",
                   "children": [
                     {
                       "name": "NK cells",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD56+ and/or CD16+",
                       "gate_type": "Unknown",
                       "children": [
                         {
                           "name": "Mamu-KIR3DL01+ NK cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "Mamu-KIR3DL01+",
                           "gate_type": "Unknown",
                           "children": [
                             {
                               "name": "Mamu-KIR3DL01+ KIR3DL05+ NK cells",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "Mamu-KIR3DL01+ Mamu-KIR3DL05+",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -98,7 +105,7 @@
                             {
                               "name": "Mamu-KIR3DL01+ KIR3DL05- NK cells",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "Mamu-KIR3DL01+ Mamu-KIR3DL05-",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -109,13 +116,13 @@
                         {
                           "name": "Mamu-KIR3DL01- NK cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "Mamu-KIR3DL01-",
                           "gate_type": "Unknown",
                           "children": [
                             {
                               "name": "Mamu-KIR3DL01- KIR3DL05+ NK cells",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "Mamu-KIR3DL01- Mamu-KIR3DL05+",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -123,7 +130,7 @@
                             {
                               "name": "Mamu-KIR3DL01- KIR3DL05- NK cells",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "Mamu-KIR3DL01- Mamu-KIR3DL05-",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -134,7 +141,7 @@
                         {
                           "name": "CD16+ CD56+ NK cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD16+ CD56+",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -142,7 +149,7 @@
                         {
                           "name": "CD16+ CD56- NK cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD16+ CD56-",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -150,7 +157,7 @@
                         {
                           "name": "CD16- CD56+ NK cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD16- CD56+",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false

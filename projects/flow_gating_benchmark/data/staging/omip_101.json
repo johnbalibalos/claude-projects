@@ -9,10 +9,19 @@
   "context": {
     "sample_type": "whole blood",
     "species": "unknown",
-    "application": "OMIP-101: 27-color flow cytometry panel for immunophenotyping of major leukocyte populations in fixed whole blood",
+    "application": "Broad immunophenotyping of leukocytes including myeloid and lymphoid cell lineages",
     "tissue": null,
     "disease_state": null,
-    "additional_notes": null
+    "additional_notes": "27-color flow cytometry panel for immunophenotyping of major leukocyte populations in fixed whole blood.",
+    "cross_references": [
+      "OMIP-062",
+      "OMIP-063",
+      "OMIP-069",
+      "OMIP-077",
+      "OMIP-078"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms-1964512.pdf"
   },
   "panel": {
     "entries": [
@@ -244,61 +253,61 @@
         {
           "name": "Time gate",
           "markers": [],
-          "marker_logic": [],
+          "marker_logic": "Consistent fluorescence over time",
           "gate_type": "Unknown",
           "children": [
             {
               "name": "Singlets",
               "markers": [],
-              "marker_logic": [],
+              "marker_logic": "FSC-A vs FSC-H",
               "gate_type": "Unknown",
               "children": [
                 {
                   "name": "Non-beads",
                   "markers": [],
-                  "marker_logic": [],
+                  "marker_logic": "Exclude reference beads",
                   "gate_type": "Unknown",
                   "children": [
                     {
                       "name": "Leukocytes",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD45+ SSC/FSC",
                       "gate_type": "Unknown",
                       "children": [
                         {
                           "name": "Non-aggregates",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD14 vs CD33 (exclude extremes)",
                           "gate_type": "Unknown",
                           "children": [
                             {
                               "name": "Non-granulocytes",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "CD66-",
                               "gate_type": "Unknown",
                               "children": [
                                 {
                                   "name": "Myeloid cells",
                                   "markers": [],
-                                  "marker_logic": [],
+                                  "marker_logic": "CD33+",
                                   "gate_type": "Unknown",
                                   "children": [
                                     {
                                       "name": "Non-T/B/NK contamination",
                                       "markers": [],
-                                      "marker_logic": [],
+                                      "marker_logic": "CD19- CD3- CD56-",
                                       "gate_type": "Unknown",
                                       "children": [
                                         {
                                           "name": "HLA-DR+ myeloid",
                                           "markers": [],
-                                          "marker_logic": [],
+                                          "marker_logic": "HLA-DR+",
                                           "gate_type": "Unknown",
                                           "children": [
                                             {
                                               "name": "Classical monocytes",
                                               "markers": [],
-                                              "marker_logic": [],
+                                              "marker_logic": "CD14+ CD16-",
                                               "gate_type": "Unknown",
                                               "children": [],
                                               "is_critical": false
@@ -306,7 +315,7 @@
                                             {
                                               "name": "Intermediate monocytes",
                                               "markers": [],
-                                              "marker_logic": [],
+                                              "marker_logic": "CD14+ CD16+/low",
                                               "gate_type": "Unknown",
                                               "children": [],
                                               "is_critical": false
@@ -314,7 +323,7 @@
                                             {
                                               "name": "Non-classical monocytes",
                                               "markers": [],
-                                              "marker_logic": [],
+                                              "marker_logic": "CD14- CD16+",
                                               "gate_type": "Unknown",
                                               "children": [],
                                               "is_critical": false
@@ -322,7 +331,7 @@
                                             {
                                               "name": "mDCs",
                                               "markers": [],
-                                              "marker_logic": [],
+                                              "marker_logic": "CD14- CD16- HLA-DR+ CD11c+",
                                               "gate_type": "Unknown",
                                               "children": [],
                                               "is_critical": false
@@ -339,19 +348,19 @@
                                 {
                                   "name": "Lymphocytes",
                                   "markers": [],
-                                  "marker_logic": [],
+                                  "marker_logic": "CD33- SSC low",
                                   "gate_type": "Unknown",
                                   "children": [
                                     {
                                       "name": "B cells",
                                       "markers": [],
-                                      "marker_logic": [],
+                                      "marker_logic": "CD3- CD4- CD56- CD19+",
                                       "gate_type": "Unknown",
                                       "children": [
                                         {
                                           "name": "Plasmablasts",
                                           "markers": [],
-                                          "marker_logic": [],
+                                          "marker_logic": "CD38high CD27high",
                                           "gate_type": "Unknown",
                                           "children": [],
                                           "is_critical": false
@@ -359,7 +368,7 @@
                                         {
                                           "name": "Naive B cells",
                                           "markers": [],
-                                          "marker_logic": [],
+                                          "marker_logic": "IgD+ CD27-",
                                           "gate_type": "Unknown",
                                           "children": [],
                                           "is_critical": false
@@ -367,7 +376,7 @@
                                         {
                                           "name": "Memory B cells",
                                           "markers": [],
-                                          "marker_logic": [],
+                                          "marker_logic": "IgD- CD27+",
                                           "gate_type": "Unknown",
                                           "children": [],
                                           "is_critical": false
@@ -378,13 +387,13 @@
                                     {
                                       "name": "NK cells",
                                       "markers": [],
-                                      "marker_logic": [],
+                                      "marker_logic": "CD3- CD4- CD19- CD56+",
                                       "gate_type": "Unknown",
                                       "children": [
                                         {
                                           "name": "CD56dim NK cells",
                                           "markers": [],
-                                          "marker_logic": [],
+                                          "marker_logic": "CD56dim CD16+",
                                           "gate_type": "Unknown",
                                           "children": [],
                                           "is_critical": false
@@ -392,7 +401,7 @@
                                         {
                                           "name": "CD56bright NK cells",
                                           "markers": [],
-                                          "marker_logic": [],
+                                          "marker_logic": "CD56bright",
                                           "gate_type": "Unknown",
                                           "children": [],
                                           "is_critical": false
@@ -403,13 +412,13 @@
                                     {
                                       "name": "T cells",
                                       "markers": [],
-                                      "marker_logic": [],
+                                      "marker_logic": "CD3+",
                                       "gate_type": "Unknown",
                                       "children": [
                                         {
                                           "name": "Conventional CD4+ T cells",
                                           "markers": [],
-                                          "marker_logic": [],
+                                          "marker_logic": "CD4+ \u03b3\u03b4TCR- TRAV1.2-",
                                           "gate_type": "Unknown",
                                           "children": [],
                                           "is_critical": false
@@ -417,7 +426,7 @@
                                         {
                                           "name": "Conventional CD8+ T cells",
                                           "markers": [],
-                                          "marker_logic": [],
+                                          "marker_logic": "CD8+ \u03b3\u03b4TCR- TRAV1.2-",
                                           "gate_type": "Unknown",
                                           "children": [],
                                           "is_critical": false
@@ -425,13 +434,13 @@
                                         {
                                           "name": "\u03b3\u03b4 T cells",
                                           "markers": [],
-                                          "marker_logic": [],
+                                          "marker_logic": "\u03b3\u03b4TCR+",
                                           "gate_type": "Unknown",
                                           "children": [
                                             {
                                               "name": "V\u03b42+ \u03b3\u03b4 T cells",
                                               "markers": [],
-                                              "marker_logic": [],
+                                              "marker_logic": "V\u03b42+",
                                               "gate_type": "Unknown",
                                               "children": [],
                                               "is_critical": false
@@ -439,7 +448,7 @@
                                             {
                                               "name": "V\u03b42- \u03b3\u03b4 T cells",
                                               "markers": [],
-                                              "marker_logic": [],
+                                              "marker_logic": "V\u03b42-",
                                               "gate_type": "Unknown",
                                               "children": [],
                                               "is_critical": false
@@ -450,7 +459,7 @@
                                         {
                                           "name": "MAIT cells",
                                           "markers": [],
-                                          "marker_logic": [],
+                                          "marker_logic": "TRAV1.2+ CD161+",
                                           "gate_type": "Unknown",
                                           "children": [],
                                           "is_critical": false
@@ -458,7 +467,7 @@
                                         {
                                           "name": "NKT-like cells",
                                           "markers": [],
-                                          "marker_logic": [],
+                                          "marker_logic": "CD3+ CD56+",
                                           "gate_type": "Unknown",
                                           "children": [],
                                           "is_critical": false
@@ -469,7 +478,7 @@
                                     {
                                       "name": "ILCs",
                                       "markers": [],
-                                      "marker_logic": [],
+                                      "marker_logic": "CD3- CD4- CD19- CD16- CD56- CD127+",
                                       "gate_type": "Unknown",
                                       "children": [],
                                       "is_critical": false
@@ -483,7 +492,7 @@
                             {
                               "name": "Granulocytes",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "CD66+",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false

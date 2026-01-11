@@ -7,12 +7,21 @@
   "has_wsp": false,
   "wsp_validated": false,
   "context": {
-    "sample_type": "unknown",
+    "sample_type": "Leukocytes from human WB (anticoagulated, erythrocyte-depleted)",
     "species": "human",
-    "application": "OMIP 077: Definition of all principal human leukocyte populations using a broadly applicable 14-color panel",
+    "application": "Comprehensive phenotyping of leukocyte subsets in WB using flow cytometry with just 14 colors",
     "tissue": null,
     "disease_state": null,
-    "additional_notes": null
+    "additional_notes": "Optimized for whole blood analysis including polymorphonuclear cells. No viability dye used - dead cells excluded by FSC/SSC. Supports absolute cell counting. Detects CD34+ progenitors and mDC subsets (CD1c+ vs CD141+).",
+    "cross_references": [
+      "OMIP-023",
+      "OMIP-024",
+      "OMIP-042",
+      "OMIP-051",
+      "OMIP-063"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/CYTO-101-15.pdf"
   },
   "panel": {
     "entries": [
@@ -140,31 +149,31 @@
         {
           "name": "Singlets",
           "markers": [],
-          "marker_logic": [],
+          "marker_logic": "FSC-A vs FSC-H",
           "gate_type": "Unknown",
           "children": [
             {
               "name": "Live cells",
               "markers": [],
-              "marker_logic": [],
+              "marker_logic": "Viability-",
               "gate_type": "Unknown",
               "children": [
                 {
                   "name": "Leukocytes",
                   "markers": [],
-                  "marker_logic": [],
+                  "marker_logic": "CD45+",
                   "gate_type": "Unknown",
                   "children": [
                     {
                       "name": "T cells",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD3+",
                       "gate_type": "Unknown",
                       "children": [
                         {
                           "name": "NK-T cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD3+ CD56+",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -175,7 +184,7 @@
                     {
                       "name": "NK cells",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD3- CD56+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -183,13 +192,13 @@
                     {
                       "name": "B cells",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD19+ CD38-",
                       "gate_type": "Unknown",
                       "children": [
                         {
                           "name": "Marginal Zone B cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD19+ CD1c+",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -200,7 +209,7 @@
                     {
                       "name": "Plasma cells",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD19+ CD38+ HLA-DR+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -208,7 +217,7 @@
                     {
                       "name": "Classical monocytes",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD14+ CD16- HLA-DR+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -216,7 +225,7 @@
                     {
                       "name": "Intermediate monocytes",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD14+ CD16+ HLA-DR+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -224,7 +233,7 @@
                     {
                       "name": "Non-classical monocytes",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD14- CD16+ HLA-DR+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -232,7 +241,7 @@
                     {
                       "name": "CD1c+ mDCs",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD14- CD19- CD1c+ HLA-DR+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -240,7 +249,7 @@
                     {
                       "name": "CD141+ mDCs",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD14- CD19- CD141+ HLA-DR+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -248,7 +257,7 @@
                     {
                       "name": "pDCs",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD14- CD19- CD123+ HLA-DR+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -256,7 +265,7 @@
                     {
                       "name": "Neutrophils",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD16+ CD15+ HLA-DR-",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -264,7 +273,7 @@
                     {
                       "name": "Eosinophils",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD15+ CD193+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -272,7 +281,7 @@
                     {
                       "name": "Basophils",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD123+ CD38+ CD193+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -280,7 +289,7 @@
                     {
                       "name": "Progenitor cells",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD34+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false

@@ -7,12 +7,22 @@
   "has_wsp": false,
   "wsp_validated": false,
   "context": {
-    "sample_type": "unknown",
+    "sample_type": "PBMCs",
     "species": "human",
-    "application": "OMIP 083: A 21-marker 18-color flow cytometry panel for in-depth phenotyping of human peripheral monocytes",
+    "application": "Delineation of peripheral monocyte subsets and deep phenotyping of monocyte function",
     "tissue": null,
     "disease_state": null,
-    "additional_notes": null
+    "additional_notes": "21-marker 18-color panel. Multiple FITC markers (CD3, CD19, CD56, CD123) used as exclusion lineage dump channel. TLR2 used for monocyte identification. Defines classical, intermediate, and nonclassical monocytes with SLAN subdivision. Includes functional markers: chemokine receptors (CCR2, CX3CR1, CXCR4), PRR (TLR2), co-stimulatory (CD86), and checkpoint (PD-1).",
+    "cross_references": [
+      "OMIP-023",
+      "OMIP-024",
+      "OMIP-034",
+      "OMIP-038",
+      "OMIP-042",
+      "OMIP-069"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/OMIP_083__A_21\u0442\u0410\u0420marker_18\u0442\u0410\u0420color_flow_cytometry_panel_for_in\u0442\u0410\u0420depth_phenotyping_of_human.pdf"
   },
   "panel": {
     "entries": [
@@ -196,31 +206,31 @@
         {
           "name": "Cleaned Events",
           "markers": [],
-          "marker_logic": [],
+          "marker_logic": "Exclude variable flow rate, doublets, debris, antibody aggregates",
           "gate_type": "Unknown",
           "children": [
             {
               "name": "Leukocytes",
               "markers": [],
-              "marker_logic": [],
+              "marker_logic": "CD45+",
               "gate_type": "Unknown",
               "children": [
                 {
                   "name": "Non-granulocytes",
                   "markers": [],
-                  "marker_logic": [],
+                  "marker_logic": "CD66b-",
                   "gate_type": "Unknown",
                   "children": [
                     {
                       "name": "Monocytes",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD3- CD19- CD56- CD123- TLR2+",
                       "gate_type": "Unknown",
                       "children": [
                         {
                           "name": "Classical Monocytes",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD14++ CD16-",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -228,13 +238,13 @@
                         {
                           "name": "Other Monocyte Subsets",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD14var CD16var",
                           "gate_type": "Unknown",
                           "children": [
                             {
                               "name": "Intermediate Monocytes",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "CCR2+ SLAN-",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -242,7 +252,7 @@
                             {
                               "name": "SLAN+ Nonclassical Monocytes",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "CCR2- SLAN+",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -250,7 +260,7 @@
                             {
                               "name": "SLAN- Nonclassical Monocytes",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "CCR2- SLAN-",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false

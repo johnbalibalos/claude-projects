@@ -7,12 +7,25 @@
   "has_wsp": false,
   "wsp_validated": false,
   "context": {
-    "sample_type": "unknown",
+    "sample_type": "Spleen, Blood, Bone Marrow, Thymus, Inguinal Lymph Nodes, Peyer's Patches",
     "species": "mouse",
-    "application": "OMIP-095: 40-Color spectral flow cytometry delineates all major leukocyte populations in murine lymphoid tissues",
+    "application": "Deep immunophenotyping of all major leukocyte populations in murine lymphoid tissues",
     "tissue": null,
     "disease_state": null,
-    "additional_notes": null
+    "additional_notes": "40-color spectral flow cytometry panel for comprehensive characterization of murine leukocyte populations across multiple lymphoid tissues.",
+    "cross_references": [
+      "OMIP-031",
+      "OMIP-032",
+      "OMIP-054",
+      "OMIP-057",
+      "OMIP-059",
+      "OMIP-061",
+      "OMIP-076",
+      "OMIP-079",
+      "OMIP-093"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms-1926997.pdf"
   },
   "panel": {
     "entries": []
@@ -27,31 +40,31 @@
         {
           "name": "Singlets",
           "markers": [],
-          "marker_logic": [],
+          "marker_logic": "FSC-A vs FSC-H",
           "gate_type": "Unknown",
           "children": [
             {
               "name": "Live cells",
               "markers": [],
-              "marker_logic": [],
+              "marker_logic": "Viability-",
               "gate_type": "Unknown",
               "children": [
                 {
                   "name": "Leukocytes",
                   "markers": [],
-                  "marker_logic": [],
+                  "marker_logic": "FSC vs SSC",
                   "gate_type": "Unknown",
                   "children": [
                     {
                       "name": "T cells",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD3+",
                       "gate_type": "Unknown",
                       "children": [
                         {
                           "name": "CD4+ T cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD4+ CD8-",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -59,7 +72,7 @@
                         {
                           "name": "CD8+ T cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD4- CD8+",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -70,7 +83,7 @@
                     {
                       "name": "B cells",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD19+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -78,7 +91,7 @@
                     {
                       "name": "Natural killer cells",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "NK1.1+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -86,7 +99,7 @@
                     {
                       "name": "Innate lymphoid cells",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "Lineage- NK1.1-",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -94,7 +107,7 @@
                     {
                       "name": "Monocytes",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD11b+ Ly6C+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -102,7 +115,7 @@
                     {
                       "name": "Macrophages",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "F4/80+ CD11b+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -110,7 +123,7 @@
                     {
                       "name": "Dendritic cells",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD11c+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -118,7 +131,7 @@
                     {
                       "name": "Basophils",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "Fc\u03b5RI+ CD200R3+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -126,7 +139,7 @@
                     {
                       "name": "Neutrophils",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "Ly6G+ CD11b+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -134,7 +147,7 @@
                     {
                       "name": "Eosinophils",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "Siglec-F+ CD11c-",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false
@@ -142,7 +155,7 @@
                     {
                       "name": "Progenitors",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "Lineage- c-Kit+",
                       "gate_type": "Unknown",
                       "children": [],
                       "is_critical": false

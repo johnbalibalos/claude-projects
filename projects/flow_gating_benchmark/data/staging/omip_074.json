@@ -7,12 +7,21 @@
   "has_wsp": false,
   "wsp_validated": false,
   "context": {
-    "sample_type": "unknown",
+    "sample_type": "Fresh or cryopreserved PBMC",
     "species": "human",
-    "application": "OMIP 074: Phenotypic analysis of  IgG  and  IgA  subclasses on human B cells",
+    "application": "Phenotyping IgA and IgG subclasses on B cells",
     "tissue": null,
     "disease_state": null,
-    "additional_notes": null
+    "additional_notes": null,
+    "cross_references": [
+      "OMIP-003",
+      "OMIP-033",
+      "OMIP-043",
+      "OMIP-047",
+      "OMIP-051"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/CYTO-99-880.pdf"
   },
   "panel": {
     "entries": [
@@ -180,37 +189,37 @@
         {
           "name": "Time gate",
           "markers": [],
-          "marker_logic": [],
+          "marker_logic": "Time-gated events",
           "gate_type": "Unknown",
           "children": [
             {
               "name": "Singlets",
               "markers": [],
-              "marker_logic": [],
+              "marker_logic": "Single events",
               "gate_type": "Unknown",
               "children": [
                 {
                   "name": "Lymphocytes",
                   "markers": [],
-                  "marker_logic": [],
+                  "marker_logic": "FSC vs SSC",
                   "gate_type": "Unknown",
                   "children": [
                     {
                       "name": "Live cells",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "Dead Cells-",
                       "gate_type": "Unknown",
                       "children": [
                         {
                           "name": "B cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD19+ CD20+",
                           "gate_type": "Unknown",
                           "children": [
                             {
                               "name": "Naive B cells",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "CD21+ CD27-",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -218,7 +227,7 @@
                             {
                               "name": "Resting Memory (RM)",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "CD21+ CD27+",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -226,7 +235,7 @@
                             {
                               "name": "Activated Memory (AM)",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "CD21- CD27+",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -234,7 +243,7 @@
                             {
                               "name": "Tissue-like Memory (TLM)",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "CD21- CD27-",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -242,13 +251,13 @@
                             {
                               "name": "Class-switched B cells",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "IgD- IgM-",
                               "gate_type": "Unknown",
                               "children": [
                                 {
                                   "name": "IgE+ B cells",
                                   "markers": [],
-                                  "marker_logic": [],
+                                  "marker_logic": "IgE+ IgG-",
                                   "gate_type": "Unknown",
                                   "children": [],
                                   "is_critical": false
@@ -256,13 +265,13 @@
                                 {
                                   "name": "IgA+ B cells",
                                   "markers": [],
-                                  "marker_logic": [],
+                                  "marker_logic": "IgA+",
                                   "gate_type": "Unknown",
                                   "children": [
                                     {
                                       "name": "IgA1+ B cells",
                                       "markers": [],
-                                      "marker_logic": [],
+                                      "marker_logic": "IgA1+",
                                       "gate_type": "Unknown",
                                       "children": [],
                                       "is_critical": false
@@ -270,7 +279,7 @@
                                     {
                                       "name": "IgA2+ B cells",
                                       "markers": [],
-                                      "marker_logic": [],
+                                      "marker_logic": "IgA2+",
                                       "gate_type": "Unknown",
                                       "children": [],
                                       "is_critical": false
@@ -281,13 +290,13 @@
                                 {
                                   "name": "IgG+ B cells",
                                   "markers": [],
-                                  "marker_logic": [],
+                                  "marker_logic": "IgG+",
                                   "gate_type": "Unknown",
                                   "children": [
                                     {
                                       "name": "IgG1+ B cells",
                                       "markers": [],
-                                      "marker_logic": [],
+                                      "marker_logic": "IgG1+",
                                       "gate_type": "Unknown",
                                       "children": [],
                                       "is_critical": false
@@ -295,7 +304,7 @@
                                     {
                                       "name": "IgG2+ B cells",
                                       "markers": [],
-                                      "marker_logic": [],
+                                      "marker_logic": "IgG2+",
                                       "gate_type": "Unknown",
                                       "children": [],
                                       "is_critical": false
@@ -303,7 +312,7 @@
                                     {
                                       "name": "IgG3+ B cells",
                                       "markers": [],
-                                      "marker_logic": [],
+                                      "marker_logic": "IgG3+",
                                       "gate_type": "Unknown",
                                       "children": [],
                                       "is_critical": false
@@ -311,7 +320,7 @@
                                     {
                                       "name": "IgG4+ B cells",
                                       "markers": [],
-                                      "marker_logic": [],
+                                      "marker_logic": "IgG4+",
                                       "gate_type": "Unknown",
                                       "children": [],
                                       "is_critical": false
@@ -325,7 +334,7 @@
                             {
                               "name": "Kappa+ B cells",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "IgKappa+",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -333,7 +342,7 @@
                             {
                               "name": "Lambda+ B cells",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "IgLambda+",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false

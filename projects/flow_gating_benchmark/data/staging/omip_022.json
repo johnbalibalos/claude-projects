@@ -7,12 +7,20 @@
   "has_wsp": false,
   "wsp_validated": false,
   "context": {
-    "sample_type": "unknown",
+    "sample_type": "Cryopreserved PBMC (adult and infant)",
     "species": "human",
-    "application": "OMIP-022: Comprehensive assessment of antigen-specific human T-cell functionality and memory",
+    "application": "T-cell phenotyping, memory categorization, cytokine production, and function following in vitro stimulation",
     "tissue": null,
     "disease_state": null,
-    "additional_notes": null
+    "additional_notes": "Panel for comprehensive assessment of antigen-specific human T-cell functionality and memory. Developed for TB vaccine research. Includes memory markers (CCR7, CD45RO), Th1/Th17/Th22 cytokines, degranulation (CD107a), and activation (CD154).",
+    "cross_references": [
+      "OMIP-001",
+      "OMIP-008",
+      "OMIP-009",
+      "OMIP-014"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "/home/jb/claude-projects/docs/papers/omip022.pdf"
   },
   "panel": {
     "entries": [
@@ -148,43 +156,43 @@
         {
           "name": "Time Gate",
           "markers": [],
-          "marker_logic": [],
+          "marker_logic": "Time vs Events",
           "gate_type": "Unknown",
           "children": [
             {
               "name": "Singlets",
               "markers": [],
-              "marker_logic": [],
+              "marker_logic": "FSC-A vs FSC-H",
               "gate_type": "Unknown",
               "children": [
                 {
                   "name": "Live cells",
                   "markers": [],
-                  "marker_logic": [],
+                  "marker_logic": "Viability-",
                   "gate_type": "Unknown",
                   "children": [
                     {
                       "name": "Lymphocytes",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD14- CD19-",
                       "gate_type": "Unknown",
                       "children": [
                         {
                           "name": "T cells",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "CD3+",
                           "gate_type": "Unknown",
                           "children": [
                             {
                               "name": "CD4+ T cells",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "CD4+ CD8-",
                               "gate_type": "Unknown",
                               "children": [
                                 {
                                   "name": "Memory Subsets",
                                   "markers": [],
-                                  "marker_logic": [],
+                                  "marker_logic": "CCR7 vs CD45RO",
                                   "gate_type": "Unknown",
                                   "children": [],
                                   "is_critical": false
@@ -192,7 +200,7 @@
                                 {
                                   "name": "Functional Analysis",
                                   "markers": [],
-                                  "marker_logic": [],
+                                  "marker_logic": "IFN-\u03b3, IL-2, TNF, IL-17A, IL-22, CD107a, CD154",
                                   "gate_type": "Unknown",
                                   "children": [],
                                   "is_critical": false
@@ -203,13 +211,13 @@
                             {
                               "name": "CD8+ T cells",
                               "markers": [],
-                              "marker_logic": [],
+                              "marker_logic": "CD4- CD8+",
                               "gate_type": "Unknown",
                               "children": [
                                 {
                                   "name": "Memory Subsets",
                                   "markers": [],
-                                  "marker_logic": [],
+                                  "marker_logic": "CCR7 vs CD45RO",
                                   "gate_type": "Unknown",
                                   "children": [],
                                   "is_critical": false
@@ -217,7 +225,7 @@
                                 {
                                   "name": "Functional Analysis",
                                   "markers": [],
-                                  "marker_logic": [],
+                                  "marker_logic": "IFN-\u03b3, IL-2, TNF, IL-17A, IL-22, CD107a, CD154",
                                   "gate_type": "Unknown",
                                   "children": [],
                                   "is_critical": false

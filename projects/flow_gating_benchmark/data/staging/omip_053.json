@@ -7,12 +7,19 @@
   "has_wsp": false,
   "wsp_validated": false,
   "context": {
-    "sample_type": "unknown",
+    "sample_type": "PBMC, long-term cultured Treg",
     "species": "human",
-    "application": "OMIP-053 Identification, Classification, and Isolation of Major FoxP3 Expressing Human CD4 +  Treg Subsets",
+    "application": "Human CD4+ Treg identification, enumeration, sorting, and classification",
     "tissue": null,
     "disease_state": null,
-    "additional_notes": null
+    "additional_notes": "Inter-convertible panel with ATREG (intra-nuclear markers including FoxP3, HELIOS, Ki67) and BTREG (surface markers only for sorting including TIGIT, CD226, CD38, CD39). Identifies 3 Treg-defining populations: TDP-1 (CD127lo/CD25hi/FoxP3+), TDP-2 (resting vs activated Treg by CD45RA/FoxP3), TDP-3 (thymic Treg by FoxP3/HELIOS). NOTE: Current panel extraction incomplete - full panel has 17 markers across both sub-panels.",
+    "cross_references": [
+      "OMIP-004",
+      "OMIP-006",
+      "OMIP-015"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms-1017368.pdf"
   },
   "panel": {
     "entries": [
@@ -44,31 +51,31 @@
         {
           "name": "Singlets",
           "markers": [],
-          "marker_logic": [],
+          "marker_logic": "FSC-A vs FSC-H",
           "gate_type": "Unknown",
           "children": [
             {
               "name": "Live cells",
               "markers": [],
-              "marker_logic": [],
+              "marker_logic": "Viability-",
               "gate_type": "Unknown",
               "children": [
                 {
                   "name": "Lymphocytes",
                   "markers": [],
-                  "marker_logic": [],
+                  "marker_logic": "FSC vs SSC",
                   "gate_type": "Unknown",
                   "children": [
                     {
                       "name": "CD4+ T cells",
                       "markers": [],
-                      "marker_logic": [],
+                      "marker_logic": "CD4+",
                       "gate_type": "Unknown",
                       "children": [
                         {
                           "name": "FoxP3+ Treg",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "FoxP3+",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -76,7 +83,7 @@
                         {
                           "name": "FoxP3- non-Treg",
                           "markers": [],
-                          "marker_logic": [],
+                          "marker_logic": "FoxP3-",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
