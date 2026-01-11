@@ -32,12 +32,17 @@ class ExperimentCondition:
 
 # Available models for testing
 MODELS = {
-    # Cloud models
+    # Cloud models - Anthropic
     "claude-opus": "claude-opus-4-20250514",
     "claude-sonnet": "claude-sonnet-4-20250514",
     "claude-haiku": "claude-3-5-haiku-20241022",
+    # Cloud models - OpenAI
     "gpt-4o": "gpt-4o",
     "gpt-4o-mini": "gpt-4o-mini",
+    # Cloud models - Google Gemini
+    "gemini-2.0-flash": "gemini-2.0-flash",
+    "gemini-2.5-flash": "gemini-2.5-flash-preview-05-20",
+    "gemini-2.5-pro": "gemini-2.5-pro-preview-05-06",
     # Local models (Ollama)
     "llama3.1-8b": "llama3.1:8b",
     "llama3.1-70b": "llama3.1:70b",
@@ -50,7 +55,8 @@ MODELS = {
 }
 
 # Model categories
-CLOUD_MODELS = ["claude-opus", "claude-sonnet", "claude-haiku", "gpt-4o", "gpt-4o-mini"]
+GEMINI_MODELS = ["gemini-2.0-flash", "gemini-2.5-flash", "gemini-2.5-pro"]
+CLOUD_MODELS = ["claude-opus", "claude-sonnet", "claude-haiku", "gpt-4o", "gpt-4o-mini"] + GEMINI_MODELS
 LOCAL_MODELS = ["llama3.1-8b", "llama3.1-70b", "qwen2.5-7b", "qwen2.5-72b",
                 "mistral-7b", "mixtral-8x7b", "deepseek-r1-8b", "deepseek-r1-70b"]
 
@@ -215,6 +221,32 @@ def get_local_quick_conditions() -> list[ExperimentCondition]:
     )
 
 
+def get_gemini_conditions() -> list[ExperimentCondition]:
+    """
+    Get conditions for Gemini model comparison.
+
+    3 models × 3 context × 2 strategies = 18 conditions
+    """
+    return get_all_conditions(
+        models=GEMINI_MODELS,
+        context_levels=["minimal", "standard", "rich"],
+        prompt_strategies=["direct", "cot"],
+    )
+
+
+def get_gemini_quick_conditions() -> list[ExperimentCondition]:
+    """
+    Quick test conditions for Gemini (2.0 Flash only).
+
+    1 model × 3 context × 2 strategies = 6 conditions
+    """
+    return get_all_conditions(
+        models=["gemini-2.0-flash"],
+        context_levels=["minimal", "standard", "rich"],
+        prompt_strategies=["direct", "cot"],
+    )
+
+
 def print_conditions(conditions: list[ExperimentCondition]) -> None:
     """Print conditions in a readable format."""
     print(f"\nExperimental Conditions ({len(conditions)} total)")
@@ -238,3 +270,6 @@ if __name__ == "__main__":
 
     print("\n=== Ablation Conditions ===")
     print_conditions(get_ablation_conditions())
+
+    print("\n=== Gemini Conditions ===")
+    print_conditions(get_gemini_conditions())
