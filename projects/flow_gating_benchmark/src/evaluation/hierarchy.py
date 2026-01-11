@@ -53,6 +53,10 @@ def extract_parent_map(hierarchy: GatingHierarchy | dict) -> dict[str, str | Non
     """
     Extract parent-child relationships from hierarchy.
 
+    WARNING: If hierarchy has duplicate gate names, later occurrences overwrite
+    earlier ones. Use extract_all_parent_relationships() for hierarchies with
+    potential duplicates.
+
     Args:
         hierarchy: GatingHierarchy object or dict
 
@@ -80,6 +84,45 @@ def extract_parent_map(hierarchy: GatingHierarchy | dict) -> dict[str, str | Non
         traverse_dict(hierarchy)
 
     return parent_map
+
+
+def extract_all_parent_relationships(
+    hierarchy: GatingHierarchy | dict,
+) -> list[tuple[str, str | None, int]]:
+    """
+    Extract ALL parent-child relationships from hierarchy, preserving duplicates.
+
+    Unlike extract_parent_map(), this preserves all relationships even when
+    gate names are duplicated (e.g., "Singlets (FSC)" and "Singlets (SSC)").
+
+    Args:
+        hierarchy: GatingHierarchy object or dict
+
+    Returns:
+        List of (gate_name, parent_name, depth) tuples. Depth helps disambiguate
+        gates with the same name at different levels.
+    """
+    relationships: list[tuple[str, str | None, int]] = []
+
+    def traverse_node(node: GateNode, parent: str | None = None, depth: int = 0) -> None:
+        relationships.append((node.name, parent, depth))
+        for child in node.children:
+            traverse_node(child, node.name, depth + 1)
+
+    def traverse_dict(node: dict, parent: str | None = None, depth: int = 0) -> None:
+        if "name" in node:
+            relationships.append((node["name"], parent, depth))
+            for child in node.get("children", []):
+                traverse_dict(child, node["name"], depth + 1)
+
+    if hasattr(hierarchy, 'root'):
+        traverse_node(hierarchy.root)
+    elif isinstance(hierarchy, dict) and "root" in hierarchy:
+        traverse_dict(hierarchy["root"])
+    elif isinstance(hierarchy, dict) and "name" in hierarchy:
+        traverse_dict(hierarchy)
+
+    return relationships
 
 
 def get_hierarchy_depth(hierarchy: GatingHierarchy | dict) -> int:

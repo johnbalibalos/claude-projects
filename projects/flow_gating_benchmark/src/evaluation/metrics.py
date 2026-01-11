@@ -17,8 +17,8 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
 from .hierarchy import (
+    extract_all_parent_relationships,
     extract_gate_names,
-    extract_parent_map,
     get_hierarchy_depth,
 )
 from .normalization import (
@@ -160,13 +160,37 @@ def compute_hierarchy_f1(
             pred_gates, gt_gates, equivalence_registry, annotation_capture, test_case_id
         )
     elif fuzzy_match:
-        pred_normalized = {normalize_gate_name(g): g for g in pred_gates}
-        gt_normalized = {normalize_gate_name(g): g for g in gt_gates}
+        # Build mappings that preserve ALL gates, even when normalized forms collide
+        # Previously: dict comprehension silently dropped duplicates
+        from collections import defaultdict
 
-        matching_keys = set(pred_normalized.keys()) & set(gt_normalized.keys())
-        matching = [pred_normalized[k] for k in matching_keys]
-        missing = [gt_normalized[k] for k in set(gt_normalized.keys()) - matching_keys]
-        extra = [pred_normalized[k] for k in set(pred_normalized.keys()) - matching_keys]
+        pred_by_norm: dict[str, list[str]] = defaultdict(list)
+        gt_by_norm: dict[str, list[str]] = defaultdict(list)
+
+        for g in pred_gates:
+            pred_by_norm[normalize_gate_name(g)].append(g)
+        for g in gt_gates:
+            gt_by_norm[normalize_gate_name(g)].append(g)
+
+        matching = []
+        missing = []
+        extra = []
+
+        # For each normalized form, match as many gates as possible
+        all_norm_keys = set(pred_by_norm.keys()) | set(gt_by_norm.keys())
+        for norm_key in all_norm_keys:
+            pred_list = pred_by_norm.get(norm_key, [])
+            gt_list = gt_by_norm.get(norm_key, [])
+
+            # Match min(len(pred), len(gt)) gates
+            n_matched = min(len(pred_list), len(gt_list))
+            matching.extend(pred_list[:n_matched])
+
+            # Remaining predicted are extra
+            extra.extend(pred_list[n_matched:])
+
+            # Remaining ground truth are missing
+            missing.extend(gt_list[n_matched:])
     else:
         matching = list(pred_gates & gt_gates)
         missing = list(gt_gates - pred_gates)
@@ -227,6 +251,9 @@ def compute_structure_accuracy(
     """
     Compute accuracy of parent-child relationships.
 
+    Uses extract_all_parent_relationships() to handle hierarchies with
+    duplicate gate names correctly (e.g., "Singlets (FSC)" and "Singlets (SSC)").
+
     Args:
         predicted: Predicted hierarchy
         ground_truth: Ground truth hierarchy
@@ -235,32 +262,52 @@ def compute_structure_accuracy(
     Returns:
         Tuple of (accuracy, correct_count, total_count, errors)
     """
-    pred_parents = extract_parent_map(predicted)
-    gt_parents = extract_parent_map(ground_truth)
+    # Get all relationships, preserving duplicates
+    pred_rels = extract_all_parent_relationships(predicted)
+    gt_rels = extract_all_parent_relationships(ground_truth)
 
-    common_gates = set(pred_parents.keys()) & set(gt_parents.keys())
-    if not common_gates:
-        return 0.0, 0, 0, ["No common gates to compare"]
+    if not gt_rels:
+        return 0.0, 0, 0, ["No ground truth relationships to compare"]
 
     normalize_fn = normalize_gate_semantic if use_semantic_matching else normalize_gate_name
+
+    # Build normalized relationship sets for comparison
+    # Use (normalized_gate, normalized_parent, depth) for matching
+    def normalize_rel(rel: tuple[str, str | None, int]) -> tuple[str, str | None, int]:
+        gate, parent, depth = rel
+        return (normalize_fn(gate), normalize_fn(parent) if parent else None, depth)
+
+    pred_normalized = {normalize_rel(r) for r in pred_rels}
+    gt_normalized = [normalize_rel(r) for r in gt_rels]
 
     correct = 0
     errors = []
 
-    for gate in common_gates:
-        pred_parent = pred_parents.get(gate)
-        gt_parent = gt_parents.get(gate)
-
-        pred_norm = normalize_fn(pred_parent) if pred_parent else None
-        gt_norm = normalize_fn(gt_parent) if gt_parent else None
-
-        if pred_norm == gt_norm:
+    for gt_rel in gt_normalized:
+        gt_gate, gt_parent, gt_depth = gt_rel
+        if gt_rel in pred_normalized:
             correct += 1
         else:
-            errors.append(f"Gate '{gate}': predicted parent='{pred_parent}', expected='{gt_parent}'")
+            # Find what the prediction has for this gate (if anything)
+            pred_for_gate = [
+                (g, p, d) for g, p, d in pred_normalized
+                if g == gt_gate and d == gt_depth
+            ]
+            if pred_for_gate:
+                _, pred_parent, _ = pred_for_gate[0]
+                errors.append(
+                    f"Gate '{gt_gate}' (depth {gt_depth}): "
+                    f"predicted parent='{pred_parent}', expected='{gt_parent}'"
+                )
+            else:
+                errors.append(
+                    f"Gate '{gt_gate}' (depth {gt_depth}): "
+                    f"not found in prediction"
+                )
 
-    accuracy = correct / len(common_gates)
-    return accuracy, correct, len(common_gates), errors
+    total = len(gt_normalized)
+    accuracy = correct / total if total > 0 else 0.0
+    return accuracy, correct, total, errors
 
 
 def derive_panel_critical_gates(panel: Panel | list[dict[str, Any]]) -> list[str]:

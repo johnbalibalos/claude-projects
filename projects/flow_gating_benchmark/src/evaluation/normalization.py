@@ -280,17 +280,22 @@ CELL_TYPE_SYNONYMS: dict[str, str] = {
 }
 
 
-def normalize_gate_name(name: str) -> str:
+def normalize_gate_name(name: str, preserve_parentheticals: bool = False) -> str:
     """
     Normalize gate name for comparison.
 
     Handles common variations in gate naming conventions:
-    - Parenthetical qualifiers: "Singlets (FSC)" -> "singlets"
+    - Parenthetical qualifiers: "Singlets (FSC)" -> "singlets" (unless preserve_parentheticals=True)
     - Positive/negative notation: "CD4 positive" -> "cd4+"
     - Common abbreviations: "lymphocytes" -> "lymphs"
 
+    NOTE: By default, parentheticals are removed for matching. This means
+    "Singlets (FSC)" and "Singlets (SSC)" normalize to the same value.
+    Set preserve_parentheticals=True if you need to distinguish these.
+
     Args:
         name: Raw gate name
+        preserve_parentheticals: If True, keep parenthetical content (e.g., "(FSC)")
 
     Returns:
         Normalized gate name for comparison
@@ -298,7 +303,9 @@ def normalize_gate_name(name: str) -> str:
     normalized = name.lower().strip()
 
     # Remove parenthetical qualifiers like "(FSC)", "(SSC-A vs SSC-H)", etc.
-    normalized = re.sub(r'\s*\([^)]*\)\s*', ' ', normalized)
+    # unless explicitly preserving them
+    if not preserve_parentheticals:
+        normalized = re.sub(r'\s*\([^)]*\)\s*', ' ', normalized)
 
     # Common replacements
     replacements = [
@@ -322,6 +329,34 @@ def normalize_gate_name(name: str) -> str:
     return normalized
 
 
+def extract_parenthetical(name: str) -> tuple[str, str | None]:
+    """
+    Extract parenthetical qualifier from a gate name.
+
+    Useful for distinguishing gates like "Singlets (FSC)" vs "Singlets (SSC)"
+    that normalize to the same base name.
+
+    Args:
+        name: Raw gate name
+
+    Returns:
+        Tuple of (base_name, parenthetical_content or None)
+
+    Examples:
+        >>> extract_parenthetical("Singlets (FSC-A vs FSC-H)")
+        ('Singlets', 'FSC-A vs FSC-H')
+        >>> extract_parenthetical("CD4+ T cells")
+        ('CD4+ T cells', None)
+    """
+    match = re.search(r'\(([^)]+)\)', name)
+    if match:
+        parenthetical = match.group(1)
+        base = re.sub(r'\s*\([^)]*\)\s*', ' ', name).strip()
+        base = " ".join(base.split())  # Normalize whitespace
+        return base, parenthetical
+    return name.strip(), None
+
+
 def normalize_gate_semantic(name: str) -> str:
     """
     Normalize gate name with semantic synonym matching.
@@ -336,20 +371,32 @@ def normalize_gate_semantic(name: str) -> str:
     Returns:
         Canonical form if synonym found, otherwise basic normalized form
     """
+    # First, check synonyms against the ORIGINAL lowercased name
+    # This catches "T cells" -> "t_cells" before normalize_gate_name removes " cells"
+    original_lower = name.lower().strip()
+
+    # Check for exact match in synonyms against original
+    if original_lower in CELL_TYPE_SYNONYMS:
+        return CELL_TYPE_SYNONYMS[original_lower]
+
+    # Check word-boundary matches against original (catches "T cells", "B cells", etc.)
+    for synonym, canonical in CELL_TYPE_SYNONYMS.items():
+        pattern = r'(^|[^a-z0-9])' + re.escape(synonym) + r'($|[^a-z0-9])'
+        if re.search(pattern, original_lower):
+            return canonical
+
+    # If no match on original, try the fully normalized form
     normalized = normalize_gate_name(name)
 
-    # Check for exact match in synonyms
+    # Check for exact match in synonyms against normalized
     if normalized in CELL_TYPE_SYNONYMS:
         return CELL_TYPE_SYNONYMS[normalized]
 
-    # Check if normalized name contains a known synonym pattern
+    # Check word-boundary matches against normalized
+    # This catches abbreviated forms like "cd3+" after normalization
     for synonym, canonical in CELL_TYPE_SYNONYMS.items():
-        if len(synonym) <= 2:
-            # Short synonyms need word boundaries
-            pattern = r'(^|[^a-z])' + re.escape(synonym) + r'($|[^a-z])'
-            if re.search(pattern, normalized):
-                return canonical
-        elif synonym in normalized:
+        pattern = r'(^|[^a-z0-9])' + re.escape(synonym) + r'($|[^a-z0-9])'
+        if re.search(pattern, normalized):
             return canonical
 
     return normalized
