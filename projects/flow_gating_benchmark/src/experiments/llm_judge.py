@@ -49,6 +49,10 @@ class JudgeResult:
     timestamp: datetime
     error: str | None = None
 
+    # Full prompt/response for manual review
+    judge_prompt: str = ""
+    judge_raw_response: str = ""
+
     @property
     def key(self) -> tuple:
         """Unique key for deduplication."""
@@ -71,6 +75,8 @@ class JudgeResult:
             "tokens_used": self.tokens_used,
             "timestamp": self.timestamp.isoformat(),
             "error": self.error,
+            "judge_prompt": self.judge_prompt,
+            "judge_raw_response": self.judge_raw_response,
         }
 
     @classmethod
@@ -96,6 +102,8 @@ class JudgeResult:
             tokens_used=data.get("tokens_used", 0),
             timestamp=datetime.fromisoformat(data["timestamp"]) if "timestamp" in data else datetime.now(),
             error=data.get("error"),
+            judge_prompt=data.get("judge_prompt", ""),
+            judge_raw_response=data.get("judge_raw_response", ""),
         )
 
 
@@ -442,6 +450,8 @@ class LLMJudge:
                     judge_model=self.config.model,
                     tokens_used=response.tokens_used,
                     timestamp=datetime.now(),
+                    judge_prompt=prompt,
+                    judge_raw_response=response.content,
                 )
             else:
                 return JudgeResult(
@@ -459,6 +469,8 @@ class LLMJudge:
                     tokens_used=response.tokens_used,
                     timestamp=datetime.now(),
                     error=f"Failed to parse judge response: {response.content[:100]}",
+                    judge_prompt=prompt,
+                    judge_raw_response=response.content,
                 )
 
         except Exception as e:
@@ -477,6 +489,7 @@ class LLMJudge:
                 tokens_used=0,
                 timestamp=datetime.now(),
                 error=str(e),
+                judge_prompt=prompt,
             )
 
     def _mock_judge_all(self, scoring_results: list) -> list[JudgeResult]:
