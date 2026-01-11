@@ -22,11 +22,12 @@ class ExperimentCondition:
     model: str
     context_level: Literal["minimal", "standard", "rich"]
     prompt_strategy: Literal["direct", "cot"]
+    rag_mode: Literal["none", "oracle"] = "none"
 
     @property
     def condition_id(self) -> str:
         """Unique identifier for this condition."""
-        return f"{self.model}_{self.context_level}_{self.prompt_strategy}"
+        return f"{self.model}_{self.context_level}_{self.prompt_strategy}_{self.rag_mode}"
 
 
 # Available models for testing
@@ -67,11 +68,15 @@ CONTEXT_LEVELS = ["minimal", "standard", "rich"]
 # Prompting strategies
 PROMPT_STRATEGIES = ["direct", "cot"]
 
+# RAG modes
+RAG_MODES = ["none", "oracle"]
+
 
 def get_all_conditions(
     models: list[str] | None = None,
     context_levels: list[str] | None = None,
     prompt_strategies: list[str] | None = None,
+    rag_modes: list[str] | None = None,
 ) -> list[ExperimentCondition]:
     """
     Generate all experimental conditions.
@@ -80,6 +85,7 @@ def get_all_conditions(
         models: Models to include (default: all)
         context_levels: Context levels to include (default: all)
         prompt_strategies: Prompting strategies (default: all)
+        rag_modes: RAG modes to include (default: ["none"] for backward compat)
 
     Returns:
         List of all condition combinations
@@ -93,13 +99,17 @@ def get_all_conditions(
     if prompt_strategies is None:
         prompt_strategies = PROMPT_STRATEGIES
 
+    if rag_modes is None:
+        rag_modes = ["none"]  # Default to no RAG for backward compatibility
+
     conditions = []
-    for model, context, strategy in product(models, context_levels, prompt_strategies):
+    for model, context, strategy, rag in product(models, context_levels, prompt_strategies, rag_modes):
         condition = ExperimentCondition(
-            name=f"{model}_{context}_{strategy}",
+            name=f"{model}_{context}_{strategy}_{rag}",
             model=MODELS.get(model, model),
             context_level=context,
             prompt_strategy=strategy,
+            rag_mode=rag,
         )
         conditions.append(condition)
 

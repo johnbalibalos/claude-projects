@@ -198,6 +198,9 @@ class TrialResult:
     context_used: str = ""
     rag_documents: list[str] = field(default_factory=list)
 
+    # Schema version for compatibility checking
+    schema_version: str = "1.0.0"
+
     @property
     def success(self) -> bool:
         return self.error is None
@@ -205,6 +208,7 @@ class TrialResult:
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for serialization."""
         return {
+            "schema_version": self.schema_version,
             "trial_id": self.trial_id,
             "condition_name": self.condition_name,
             "start_time": self.start_time.isoformat(),
@@ -236,6 +240,9 @@ class ExperimentResults:
     # Aggregated metrics
     metrics_by_condition: dict[str, dict[str, float]] = field(default_factory=dict)
 
+    # Schema version for compatibility checking
+    schema_version: str = "1.0.0"
+
     def filter_by_condition(self, condition_name: str) -> list[TrialResult]:
         """Get trials for a specific condition."""
         return [t for t in self.trials if t.condition_name == condition_name]
@@ -256,6 +263,7 @@ class ExperimentResults:
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for serialization."""
         return {
+            "schema_version": self.schema_version,
             "experiment_name": self.experiment_name,
             "started_at": self.started_at.isoformat(),
             "completed_at": self.completed_at.isoformat() if self.completed_at else None,

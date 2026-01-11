@@ -4,6 +4,7 @@ Prompt templates for gating hierarchy prediction.
 Defines different prompting strategies:
 - Direct: Simple instruction
 - Chain-of-thought: Encourages step-by-step reasoning
+- RAG modes: none, oracle (HIPC definitions)
 """
 
 from __future__ import annotations
@@ -12,6 +13,60 @@ from dataclasses import dataclass
 from typing import Literal
 
 from curation.schemas import TestCase
+
+# =============================================================================
+# HIPC RAG CONTEXT (Oracle mode)
+# =============================================================================
+
+HIPC_RAG_CONTEXT = """## Reference: HIPC 2016 Standardized Cell Definitions
+Source: https://www.nature.com/articles/srep20686
+
+### Quality Control Gates (Required)
+- **Time Gate**: Exclude acquisition artifacts
+- **Singlets**: FSC-A vs FSC-H diagonal gate
+- **Live cells**: Viability dye negative (e.g., Zombie, Live/Dead)
+
+### Major Lineage Definitions
+| Population | Markers | Parent |
+|------------|---------|--------|
+| T cells | CD3+ CD19- | Lymphocytes |
+| CD4+ T cells | CD3+ CD4+ CD8- | T cells |
+| CD8+ T cells | CD3+ CD4- CD8+ | T cells |
+| B cells | CD3- CD19+ (or CD20+) | Lymphocytes |
+| NK cells | CD3- CD56+ | Lymphocytes |
+| Monocytes | CD14+ | Leukocytes |
+
+### T Cell Memory Subsets (if CD45RA/CCR7 in panel)
+| Subset | Phenotype |
+|--------|-----------|
+| Naive | CD45RA+ CCR7+ |
+| Central Memory (CM) | CD45RA- CCR7+ |
+| Effector Memory (EM) | CD45RA- CCR7- |
+| TEMRA | CD45RA+ CCR7- |
+
+### B Cell Subsets (if CD27/IgD in panel)
+| Subset | Phenotype |
+|--------|-----------|
+| Naive B | CD19+ IgD+ CD27- |
+| Memory B | CD19+ CD27+ |
+| Transitional B | CD19+ CD24hi CD38hi |
+| Plasmablasts | CD19+ CD27++ CD38++ |
+
+### NK Cell Subsets (if CD16 in panel)
+| Subset | Phenotype |
+|--------|-----------|
+| CD56bright NK | CD3- CD56bright CD16dim/- |
+| CD56dim NK | CD3- CD56dim CD16+ |
+
+### Monocyte Subsets (if CD16 in panel)
+| Subset | Phenotype |
+|--------|-----------|
+| Classical | CD14++ CD16- |
+| Intermediate | CD14++ CD16+ |
+| Non-classical | CD14dim CD16++ |
+
+**Note**: HIPC recommends gating directly on lineage markers rather than FSC/SSC lymphocyte gates to reduce variability.
+"""
 
 
 @dataclass
@@ -179,6 +234,7 @@ def build_prompt(
     test_case: TestCase,
     template_name: str = "direct",
     context_level: str = "standard",
+    rag_mode: str = "none",
 ) -> str:
     """
     Build a complete prompt for a test case.
@@ -187,6 +243,7 @@ def build_prompt(
         test_case: TestCase with panel and context
         template_name: Which prompt template to use
         context_level: How much context to include
+        rag_mode: RAG mode - "none" or "oracle" (HIPC definitions)
 
     Returns:
         Complete prompt string
@@ -200,6 +257,10 @@ def build_prompt(
         raise ValueError(f"Unknown context level: {context_level}")
 
     context = formatter(test_case)
+
+    # Inject HIPC reference for oracle RAG mode
+    if rag_mode == "oracle":
+        context = HIPC_RAG_CONTEXT + "\n\n" + context
 
     return template.template.format(
         context=context,

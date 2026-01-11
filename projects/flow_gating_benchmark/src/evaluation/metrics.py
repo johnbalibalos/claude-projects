@@ -64,9 +64,13 @@ class EvaluationResult:
     parse_success: bool = True
     parse_error: str | None = None
 
+    # Schema version for compatibility checking
+    schema_version: str = "1.0.0"
+
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary."""
         return {
+            "schema_version": self.schema_version,
             "hierarchy_f1": self.hierarchy_f1,
             "hierarchy_precision": self.hierarchy_precision,
             "hierarchy_recall": self.hierarchy_recall,
@@ -259,12 +263,12 @@ def compute_structure_accuracy(
     return accuracy, correct, len(common_gates), errors
 
 
-def derive_panel_critical_gates(panel: Panel | list[dict]) -> list[str]:
+def derive_panel_critical_gates(panel: Panel | list[dict[str, Any]]) -> list[str]:
     """Derive critical gates based on panel markers."""
     if hasattr(panel, 'markers'):
-        panel_markers = {m.lower() for m in panel.markers}
+        panel_markers = {m.lower() for m in panel.markers}  # type: ignore[union-attr]
     else:
-        panel_markers = {entry["marker"].lower() for entry in panel}
+        panel_markers = {entry["marker"].lower() for entry in panel}  # type: ignore[index]
 
     critical = ["singlets", "live"]
 
@@ -299,7 +303,7 @@ def compute_critical_gate_recall(
 
     if critical_gates is None:
         if hasattr(ground_truth, 'get_critical_gates'):
-            critical_gates = ground_truth.get_critical_gates()
+            critical_gates = ground_truth.get_critical_gates()  # type: ignore[union-attr]
         else:
             critical_gates = []
 
@@ -329,8 +333,8 @@ def compute_critical_gate_recall(
 
 
 def compute_hallucination_rate(
-    predicted: GatingHierarchy | dict,
-    panel: Panel | list[dict],
+    predicted: GatingHierarchy | dict[str, Any],
+    panel: Panel | list[dict[str, Any]],
 ) -> tuple[float, list[str]]:
     """
     Compute rate of hallucinated gates (markers not in panel).
@@ -343,9 +347,9 @@ def compute_hallucination_rate(
         Tuple of (hallucination_rate, list of hallucinated gates)
     """
     if hasattr(panel, 'markers'):
-        panel_markers = {m.lower() for m in panel.markers}
+        panel_markers = {m.lower() for m in panel.markers}  # type: ignore[union-attr]
     else:
-        panel_markers = {entry["marker"].lower() for entry in panel}
+        panel_markers = {entry["marker"].lower() for entry in panel}  # type: ignore[index]
 
     # Add common non-marker dimensions
     panel_markers.update(["fsc-a", "fsc-h", "ssc-a", "ssc-h", "time", "fsc", "ssc"])

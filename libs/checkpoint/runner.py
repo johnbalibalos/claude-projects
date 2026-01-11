@@ -6,12 +6,11 @@ after interruption without losing completed work.
 """
 
 import json
-import hashlib
-import time
-from pathlib import Path
+from collections.abc import Callable, Iterator
+from dataclasses import asdict, dataclass
 from datetime import datetime
-from typing import Any, Callable, Iterator, Optional, TypeVar, Generic
-from dataclasses import dataclass, asdict
+from pathlib import Path
+from typing import Any, Generic, TypeVar
 
 T = TypeVar('T')
 R = TypeVar('R')
@@ -26,12 +25,16 @@ class CheckpointMetadata:
     total_items: int
     completed_items: int
     failed_items: int
+    schema_version: str = "1.0.0"
 
     def to_dict(self) -> dict:
         return asdict(self)
 
     @classmethod
     def from_dict(cls, data: dict) -> "CheckpointMetadata":
+        # Handle old checkpoints without schema_version
+        if "schema_version" not in data:
+            data = {**data, "schema_version": "0.0.0"}
         return cls(**data)
 
 
@@ -55,7 +58,7 @@ class CheckpointedRunner(Generic[T, R]):
     def __init__(
         self,
         experiment_name: str,
-        checkpoint_dir: Optional[Path] = None,
+        checkpoint_dir: Path | None = None,
         auto_save: bool = True
     ):
         self.experiment_name = experiment_name
@@ -73,7 +76,7 @@ class CheckpointedRunner(Generic[T, R]):
         self._results: dict[str, Any] = {}
         self._errors: dict[str, str] = {}
         self._total_items = 0
-        self._started_at: Optional[str] = None
+        self._started_at: str | None = None
 
         # Load existing checkpoint if present
         self._load_checkpoint()
@@ -193,7 +196,7 @@ class CheckpointedRunner(Generic[T, R]):
         """Check if an item has been completed."""
         return str(key) in self._completed_keys
 
-    def get_result(self, key: str) -> Optional[Any]:
+    def get_result(self, key: str) -> Any | None:
         """Get result for a specific key."""
         return self._results.get(str(key))
 
