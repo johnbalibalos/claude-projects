@@ -12,6 +12,7 @@ Cost estimate: ~$31 (all Anthropic via CLI = $0)
 Usage:
     python scripts/run_full_benchmark.py --dry-run  # Test without API calls
     python scripts/run_full_benchmark.py --estimate  # Just show cost estimate
+    python scripts/run_full_benchmark.py --resume  # Resume from checkpoint
     python scripts/run_full_benchmark.py  # Full run (requires confirmation)
 """
 
@@ -19,7 +20,9 @@ import argparse
 import json
 import os
 import sys
-from dataclasses import asdict, dataclass, field
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -72,6 +75,9 @@ class BenchmarkConfig:
 
     # Rate limiting
     cli_delay_seconds: float = 2.0
+
+    # Parallelization
+    parallel_workers: int = 5  # For Gemini API calls
 
     @property
     def conditions_per_model(self) -> int:
@@ -230,10 +236,138 @@ def verify_api_keys():
     return has_google
 
 
-def run_benchmark(config: BenchmarkConfig, test_cases_dir: Path, dry_run: bool = False):
-    """Run the full benchmark."""
+def load_checkpoint(config: BenchmarkConfig) -> tuple[list[dict], set[tuple]]:
+    """Load the most recent checkpoint(s) and return results + completed keys.
+
+    Handles both old format (checkpoint_run_N.json) and new format
+    (checkpoint_cli.json, checkpoint_api.json).
+    """
+    results = []
+    completed = set()
+
+    # Check for new format checkpoints first
+    cli_checkpoint = config.output_dir / "checkpoint_cli.json"
+    api_checkpoint = config.output_dir / "checkpoint_api.json"
+
+    loaded_files = []
+
+    if cli_checkpoint.exists():
+        with open(cli_checkpoint) as f:
+            cli_results = json.load(f)
+            results.extend(cli_results)
+            loaded_files.append(cli_checkpoint.name)
+
+    if api_checkpoint.exists():
+        with open(api_checkpoint) as f:
+            api_results = json.load(f)
+            # Merge, avoiding duplicates
+            existing_keys = {
+                (r["bootstrap_run"], r["test_case_id"], r["model"], r["condition"])
+                for r in results
+            }
+            for r in api_results:
+                key = (r["bootstrap_run"], r["test_case_id"], r["model"], r["condition"])
+                if key not in existing_keys:
+                    results.append(r)
+            loaded_files.append(api_checkpoint.name)
+
+    # Fall back to old format if no new format found
+    if not loaded_files:
+        checkpoint_files = sorted(config.output_dir.glob("checkpoint_run_*.json"))
+        if checkpoint_files:
+            latest_checkpoint = checkpoint_files[-1]
+            with open(latest_checkpoint) as f:
+                results = json.load(f)
+            loaded_files.append(latest_checkpoint.name)
+
+    if not loaded_files:
+        print("\nNo checkpoints found")
+        return results, completed
+
+    print(f"\nLoading checkpoint(s): {', '.join(loaded_files)}")
+
+    # Build set of completed (bootstrap_run, test_case_id, model, condition)
+    for r in results:
+        key = (r["bootstrap_run"], r["test_case_id"], r["model"], r["condition"])
+        completed.add(key)
+
+    print(f"  Loaded {len(results)} results, {len(completed)} unique completions")
+    return results, completed
+
+
+def run_single_call(
+    test_case,
+    condition,
+    bootstrap_run: int,
+    build_prompt_fn,
+    scorer,
+    dry_run: bool,
+) -> dict:
+    """Execute a single benchmark call. Used for parallel execution."""
+    from experiments.llm_client import create_client
+
+    client = create_client(condition.model, dry_run=dry_run)
+
+    try:
+        prompt = build_prompt_fn(
+            test_case,
+            template_name=condition.prompt_strategy,
+            context_level=condition.context_level,
+            rag_mode=condition.rag_mode,
+        )
+
+        response = client.call(prompt)
+
+        score_result = scorer.score(
+            response=response.content,
+            test_case=test_case,
+            model=condition.model,
+            condition=condition.name,
+        )
+
+        return {
+            "bootstrap_run": bootstrap_run,
+            "test_case_id": test_case.test_case_id,
+            "model": condition.model,
+            "condition": condition.name,
+            "hierarchy_f1": score_result.hierarchy_f1,
+            "structure_accuracy": score_result.structure_accuracy,
+            "critical_gate_recall": score_result.critical_gate_recall,
+            "parse_success": score_result.parse_success,
+            "raw_response": response.content[:500],
+            "tokens_used": response.tokens_used,
+        }
+
+    except Exception as e:
+        return {
+            "bootstrap_run": bootstrap_run,
+            "test_case_id": test_case.test_case_id,
+            "model": condition.model,
+            "condition": condition.name,
+            "error": str(e),
+        }
+
+
+def run_benchmark(
+    config: BenchmarkConfig,
+    test_cases_dir: Path,
+    dry_run: bool = False,
+    resume: bool = False,
+):
+    """
+    Run the full benchmark with parallelization and checkpoint resume.
+
+    Optimized for prompt caching:
+    - Iterates condition -> test_case -> bootstrap_runs
+    - All bootstrap runs for same (condition, test_case) use identical prompts
+    - Runs 2+ hit the prompt cache for significant cost savings
+
+    Parallelization:
+    - CLI models: Sequential with rate limiting (Claude Max subscription)
+    - API models: Parallel with ThreadPoolExecutor (Gemini, Anthropic API)
+    """
     from curation.omip_extractor import load_all_test_cases
-    from experiments.conditions import get_all_conditions, MODELS
+    from experiments.conditions import get_all_conditions
     from experiments.llm_client import create_client
     from experiments.prompts import build_prompt
     from evaluation.scorer import GatingScorer
@@ -250,79 +384,193 @@ def run_benchmark(config: BenchmarkConfig, test_cases_dir: Path, dry_run: bool =
     )
     print(f"Generated {len(conditions)} conditions")
 
+    # Split conditions into CLI (sequential) and API (parallel)
+    cli_conditions = [c for c in conditions if c.model.endswith("-cli")]
+    api_conditions = [c for c in conditions if not c.model.endswith("-cli")]
+    print(f"  CLI conditions: {len(cli_conditions)} (sequential)")
+    print(f"  API conditions: {len(api_conditions)} (parallel, {config.parallel_workers} workers)")
+
     # Initialize
     scorer = GatingScorer()
-    results = []
-
     config.output_dir.mkdir(parents=True, exist_ok=True)
 
-    total_calls = len(test_cases) * len(conditions) * config.n_bootstrap
-    current_call = 0
+    # Load checkpoint if resuming
+    if resume:
+        results, completed = load_checkpoint(config)
+    else:
+        results = []
+        completed = set()
 
-    for bootstrap_run in range(1, config.n_bootstrap + 1):
+    total_calls = len(test_cases) * len(conditions) * config.n_bootstrap
+    completed_count = len(completed)
+
+    if completed_count > 0:
+        print(f"\nResuming: {completed_count}/{total_calls} already completed")
+
+    # Track progress with thread-safe counter
+    import threading
+    progress_lock = threading.Lock()
+    progress_counter = [completed_count]  # Use list for mutability in closure
+
+    def update_progress():
+        with progress_lock:
+            progress_counter[0] += 1
+            return progress_counter[0]
+
+    # === CLI CONDITIONS (Sequential, cache-optimized order) ===
+    # Order: condition -> test_case -> bootstrap_runs (maximizes cache hits)
+    if cli_conditions:
         print(f"\n{'='*60}")
-        print(f"BOOTSTRAP RUN {bootstrap_run}/{config.n_bootstrap}")
+        print("CLI MODELS (sequential, cache-optimized)")
         print('='*60)
 
-        for condition in conditions:
+        for condition in cli_conditions:
+            print(f"\n--- {condition.model} | {condition.name} ---")
             client = create_client(condition.model, dry_run=dry_run)
 
             for test_case in test_cases:
-                current_call += 1
-                progress = f"[{current_call}/{total_calls}]"
+                # Build prompt once for all bootstrap runs (cache optimization)
+                prompt = build_prompt(
+                    test_case,
+                    template_name=condition.prompt_strategy,
+                    context_level=condition.context_level,
+                    rag_mode=condition.rag_mode,
+                )
 
-                print(f"{progress} {condition.model} | {condition.name} | {test_case.test_case_id}")
+                for bootstrap_run in range(1, config.n_bootstrap + 1):
+                    key = (bootstrap_run, test_case.test_case_id, condition.model, condition.name)
 
-                try:
-                    # Build prompt
-                    prompt = build_prompt(
-                        test_case,
-                        template_name=condition.prompt_strategy,
-                        context_level=condition.context_level,
-                        rag_mode=condition.rag_mode,
-                    )
+                    if key in completed:
+                        update_progress()
+                        continue
 
-                    # Get prediction
-                    response = client.call(prompt)
+                    current = update_progress()
+                    progress = f"[{current}/{total_calls}]"
+                    print(f"{progress} {test_case.test_case_id} run={bootstrap_run}")
 
-                    # Score
-                    score_result = scorer.score(
-                        response=response.content,
-                        test_case=test_case,
-                        model=condition.model,
-                        condition=condition.name,
-                    )
+                    try:
+                        response = client.call(prompt)
 
-                    results.append({
-                        "bootstrap_run": bootstrap_run,
-                        "test_case_id": test_case.test_case_id,
-                        "model": condition.model,
-                        "condition": condition.name,
-                        "hierarchy_f1": score_result.hierarchy_f1,
-                        "structure_accuracy": score_result.structure_accuracy,
-                        "critical_gate_recall": score_result.critical_gate_recall,
-                        "parse_success": score_result.parse_success,
-                        "raw_response": response.content[:500],  # Truncate for storage
-                        "tokens_used": response.tokens_used,
-                    })
+                        score_result = scorer.score(
+                            response=response.content,
+                            test_case=test_case,
+                            model=condition.model,
+                            condition=condition.name,
+                        )
 
-                    print(f"         F1={score_result.hierarchy_f1:.3f} | Struct={score_result.structure_accuracy:.3f}")
+                        result = {
+                            "bootstrap_run": bootstrap_run,
+                            "test_case_id": test_case.test_case_id,
+                            "model": condition.model,
+                            "condition": condition.name,
+                            "hierarchy_f1": score_result.hierarchy_f1,
+                            "structure_accuracy": score_result.structure_accuracy,
+                            "critical_gate_recall": score_result.critical_gate_recall,
+                            "parse_success": score_result.parse_success,
+                            "raw_response": response.content[:500],
+                            "tokens_used": response.tokens_used,
+                        }
+                        results.append(result)
+                        completed.add(key)
 
-                except Exception as e:
-                    print(f"         ERROR: {e}")
-                    results.append({
-                        "bootstrap_run": bootstrap_run,
-                        "test_case_id": test_case.test_case_id,
-                        "model": condition.model,
-                        "condition": condition.name,
-                        "error": str(e),
-                    })
+                        print(f"         F1={score_result.hierarchy_f1:.3f} | Struct={score_result.structure_accuracy:.3f}")
 
-        # Checkpoint after each bootstrap run
-        checkpoint_file = config.output_dir / f"checkpoint_run_{bootstrap_run}.json"
-        with open(checkpoint_file, "w") as f:
-            json.dump(results, f, indent=2)
-        print(f"\nCheckpoint saved: {checkpoint_file}")
+                        # Rate limit for CLI
+                        time.sleep(config.cli_delay_seconds)
+
+                    except Exception as e:
+                        print(f"         ERROR: {e}")
+                        results.append({
+                            "bootstrap_run": bootstrap_run,
+                            "test_case_id": test_case.test_case_id,
+                            "model": condition.model,
+                            "condition": condition.name,
+                            "error": str(e),
+                        })
+                        completed.add(key)
+
+            # Checkpoint after each CLI condition
+            checkpoint_file = config.output_dir / "checkpoint_cli.json"
+            with open(checkpoint_file, "w") as f:
+                json.dump(results, f, indent=2)
+            print(f"  Checkpoint saved: {checkpoint_file.name}")
+
+    # === API CONDITIONS (Parallel, all bootstrap runs at once) ===
+    if api_conditions:
+        print(f"\n{'='*60}")
+        print(f"API MODELS (parallel, {config.parallel_workers} workers)")
+        print('='*60)
+
+        # Build all pending tasks
+        # Group by (condition, test_case) to maximize cache hits within batches
+        pending_tasks = []
+        for condition in api_conditions:
+            for test_case in test_cases:
+                for bootstrap_run in range(1, config.n_bootstrap + 1):
+                    key = (bootstrap_run, test_case.test_case_id, condition.model, condition.name)
+                    if key not in completed:
+                        pending_tasks.append((test_case, condition, bootstrap_run))
+
+        if not pending_tasks:
+            print("\n  All API calls already completed")
+        else:
+            print(f"\n  {len(pending_tasks)} pending API calls")
+
+            # Process in parallel
+            results_lock = threading.Lock()
+
+            with ThreadPoolExecutor(max_workers=config.parallel_workers) as executor:
+                futures = {
+                    executor.submit(
+                        run_single_call,
+                        task[0],  # test_case
+                        task[1],  # condition
+                        task[2],  # bootstrap_run
+                        build_prompt,
+                        scorer,
+                        dry_run,
+                    ): task
+                    for task in pending_tasks
+                }
+
+                for future in as_completed(futures):
+                    task = futures[future]
+                    test_case, condition, bootstrap_run = task
+                    current = update_progress()
+                    progress = f"[{current}/{total_calls}]"
+
+                    try:
+                        result = future.result()
+
+                        with results_lock:
+                            results.append(result)
+                            key = (bootstrap_run, test_case.test_case_id, condition.model, condition.name)
+                            completed.add(key)
+
+                        if "error" in result:
+                            print(f"{progress} {condition.model} | {test_case.test_case_id} run={bootstrap_run}")
+                            print(f"         ERROR: {result['error']}")
+                        else:
+                            print(f"{progress} {condition.model} | {test_case.test_case_id} run={bootstrap_run}")
+                            print(f"         F1={result['hierarchy_f1']:.3f} | Struct={result['structure_accuracy']:.3f}")
+
+                    except Exception as e:
+                        print(f"{progress} {condition.model} | {test_case.test_case_id} run={bootstrap_run}")
+                        print(f"         FUTURE ERROR: {e}")
+                        with results_lock:
+                            results.append({
+                                "bootstrap_run": bootstrap_run,
+                                "test_case_id": test_case.test_case_id,
+                                "model": condition.model,
+                                "condition": condition.name,
+                                "error": str(e),
+                            })
+
+            # Checkpoint after API batch
+            checkpoint_file = config.output_dir / "checkpoint_api.json"
+            with open(checkpoint_file, "w") as f:
+                json.dump(results, f, indent=2)
+            print(f"\nCheckpoint saved: {checkpoint_file.name}")
 
     # Save final results
     final_file = config.output_dir / f"results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
@@ -355,6 +603,10 @@ def main():
                         help="Number of bootstrap runs")
     parser.add_argument("--no-judge", action="store_true",
                         help="Skip judge evaluation")
+    parser.add_argument("--resume", action="store_true",
+                        help="Resume from latest checkpoint")
+    parser.add_argument("--parallel-workers", type=int, default=5,
+                        help="Number of parallel workers for API calls")
     parser.add_argument("--yes", "-y", action="store_true",
                         help="Skip confirmation")
     args = parser.parse_args()
@@ -362,6 +614,7 @@ def main():
     config = BenchmarkConfig(
         n_bootstrap=args.n_bootstrap,
         enable_judge=not args.no_judge,
+        parallel_workers=args.parallel_workers,
     )
 
     # Count test cases
@@ -383,6 +636,10 @@ def main():
         print("\n✗ Missing required API keys.")
         return
 
+    # Show resume info
+    if args.resume:
+        print("\n📂 Resume mode: Will load from latest checkpoint")
+
     # Confirm
     if not args.dry_run and not args.yes:
         print()
@@ -392,7 +649,7 @@ def main():
             return
 
     # Run
-    run_benchmark(config, test_cases_dir, dry_run=args.dry_run)
+    run_benchmark(config, test_cases_dir, dry_run=args.dry_run, resume=args.resume)
 
 
 if __name__ == "__main__":

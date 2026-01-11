@@ -191,7 +191,8 @@ def format_context_standard(test_case: TestCase) -> str:
     ]
 
     for entry in test_case.panel.entries:
-        line = f"- {entry.marker}: {entry.fluorophore}"
+        fluor = entry.fluorophore or "unknown"
+        line = f"- {entry.marker}: {fluor}"
         if entry.clone:
             line += f" (clone: {entry.clone})"
         lines.append(line)
