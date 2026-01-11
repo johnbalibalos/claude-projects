@@ -1,7 +1,6 @@
 """Phase 2: Evaluation framework - metrics and scoring for gating predictions."""
 
 from .metrics import (
-    CELL_TYPE_SYNONYMS,
     POPULATION_REQUIRED_MARKERS,
     EvaluationResult,
     compute_critical_gate_recall,
@@ -11,6 +10,7 @@ from .metrics import (
     normalize_gate_name,
     normalize_gate_semantic,
 )
+from .normalization import CELL_TYPE_SYNONYMS
 from .response_parser import ParseResult, parse_llm_response
 from .scorer import GatingScorer, score_prediction
 from .task_failure import (

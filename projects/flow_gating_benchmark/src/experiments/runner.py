@@ -272,6 +272,7 @@ class ExperimentRunner:
             test_case=test_case,
             template_name=condition.prompt_strategy,
             context_level=condition.context_level,
+            rag_mode=condition.rag_mode,
         )
 
         client = self._get_client(condition.model)

@@ -27,9 +27,9 @@ import time
 from dataclasses import dataclass
 from typing import Any
 
+from .cache import CachedClient, ResponseCache, get_global_cache
 from .protocols import ModelClient, ModelResponse, Provider, TokenUsage
 from .retry import with_retry, with_retry_async
-from .cache import CachedClient, ResponseCache, get_global_cache
 
 __all__ = [
     "ModelRegistry",
