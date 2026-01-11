@@ -83,7 +83,15 @@
         "notes": null
       }
     },
-    "context": {}
+    "context": {
+      "sample_type": "PBMC, T cell clones/lines, tumor-resident T cell lines",
+      "species": "human",
+      "application": "T cell cytokine production following in vitro stimulation",
+      "cross_references": ["OMIP-001"],
+      "notes": "Panel for measuring Th1 and Th2 cytokine polyfunctionality in T cells.",
+      "pdf_verified": true,
+      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms363148.pdf"
+    }
   },
   "concordance": {
     "panel": [],

@@ -83,7 +83,15 @@
         "notes": null
       }
     },
-    "context": {}
+    "context": {
+      "sample_type": "PBMC, long-term cultured Treg",
+      "species": "human",
+      "application": "Human CD4+ Treg identification, enumeration, sorting, and classification",
+      "cross_references": ["OMIP-004", "OMIP-006", "OMIP-015"],
+      "notes": "Inter-convertible panel with ATREG (intra-nuclear markers including FoxP3, HELIOS, Ki67) and BTREG (surface markers only for sorting including TIGIT, CD226, CD38, CD39). Identifies 3 Treg-defining populations: TDP-1 (CD127lo/CD25hi/FoxP3+), TDP-2 (resting vs activated Treg by CD45RA/FoxP3), TDP-3 (thymic Treg by FoxP3/HELIOS). NOTE: Current panel extraction incomplete - full panel has 17 markers across both sub-panels.",
+      "pdf_verified": true,
+      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms-1017368.pdf"
+    }
   },
   "concordance": {
     "panel": [],

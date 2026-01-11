@@ -393,7 +393,14 @@
         "notes": null
       }
     },
-    "context": {}
+    "context": {
+      "sample_type": "Fresh or cryopreserved PBMC",
+      "species": "human",
+      "application": "Phenotyping IgA and IgG subclasses on B cells",
+      "cross_references": ["OMIP-003", "OMIP-033", "OMIP-043", "OMIP-047", "OMIP-051"],
+      "pdf_verified": true,
+      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/CYTO-99-880.pdf"
+    }
   },
   "concordance": {
     "panel": [

@@ -294,7 +294,15 @@
         "notes": null
       }
     },
-    "context": {}
+    "context": {
+      "sample_type": "Cryopreserved PBMC (adult and infant)",
+      "species": "human",
+      "application": "T-cell phenotyping, memory categorization, cytokine production, and function following in vitro stimulation",
+      "cross_references": ["OMIP-001", "OMIP-008", "OMIP-009", "OMIP-014"],
+      "notes": "Panel for comprehensive assessment of antigen-specific human T-cell functionality and memory. Developed for TB vaccine research. Includes memory markers (CCR7, CD45RO), Th1/Th17/Th22 cytokines, degranulation (CD107a), and activation (CD154).",
+      "pdf_verified": true,
+      "pdf_source": "/home/jb/claude-projects/docs/papers/omip022.pdf"
+    }
   },
   "concordance": {
     "panel": [

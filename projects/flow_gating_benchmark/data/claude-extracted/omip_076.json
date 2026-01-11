@@ -438,7 +438,15 @@
         "notes": null
       }
     },
-    "context": {}
+    "context": {
+      "sample_type": "Freshly isolated splenocytes (murine tissues containing lymphocyte populations)",
+      "species": "mouse",
+      "application": "Comprehensive immunophenotyping of T-cell, B-cell, and ASC subsets",
+      "cross_references": ["OMIP-031", "OMIP-032", "OMIP-054", "OMIP-061"],
+      "notes": "19-parameter, 18-color panel optimized for 5-laser BD LSRFortessa. Identifies 2 B-cell subsets (memory, activated), 2 ASC subsets (plasma cells, plasmablasts), and 7 CD4+ T-cell subsets (naive, central memory, effector memory, helper, regulatory, follicular helper, follicular regulatory). CD4 and CD19 share same fluorochrome (BV786) as co-expression absent. Tested on BALB/c mice but applicable across murine models.",
+      "pdf_verified": true,
+      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/CYTO-99-888.pdf"
+    }
   },
   "concordance": {
     "panel": [

@@ -122,7 +122,15 @@
         "notes": null
       }
     },
-    "context": {}
+    "context": {
+      "sample_type": "Spleen, Blood, Bone Marrow, Thymus, Inguinal Lymph Nodes, Peyer's Patches",
+      "species": "mouse (C57BL/6)",
+      "application": "Deep immunophenotyping of all major leukocyte populations in murine lymphoid tissues",
+      "cross_references": ["OMIP-031", "OMIP-032", "OMIP-054", "OMIP-057", "OMIP-059", "OMIP-061", "OMIP-076", "OMIP-079", "OMIP-093"],
+      "notes": "40-color spectral flow cytometry panel for comprehensive characterization of murine leukocyte populations across multiple lymphoid tissues.",
+      "pdf_verified": true,
+      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms-1926997.pdf"
+    }
   },
   "concordance": {
     "panel": [],

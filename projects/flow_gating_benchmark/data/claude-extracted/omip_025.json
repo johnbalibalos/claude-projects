@@ -201,7 +201,15 @@
         "notes": null
       }
     },
-    "context": {}
+    "context": {
+      "sample_type": "Cryopreserved PBMC",
+      "species": "human",
+      "application": "Characterization of antigen-specific T cells, TFH-like cells and NK cells",
+      "cross_references": ["OMIP-014"],
+      "notes": "Evaluation of human T- and NK-cell responses including memory and follicular helper phenotype by intracellular cytokine staining.",
+      "pdf_verified": true,
+      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms694613.pdf"
+    }
   },
   "concordance": {
     "panel": [],
