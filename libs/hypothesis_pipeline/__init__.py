@@ -246,6 +246,14 @@ from .llm_judge import (
     quick_evaluate,
 )
 
+# CLI-based judges (for Max subscription)
+from .cli_judge import (
+    CLIJudgeConfig,
+    create_cli_judge,
+    create_cli_pairwise_judge,
+    create_cli_ensemble_judge,
+)
+
 # Experiment tracking
 from .experiment_tracking import (
     MLflowTracker,
@@ -493,6 +501,11 @@ __all__ = [
     "calibrate_judge",
     "create_default_judge",
     "quick_evaluate",
+    # CLI-based judges (for Max subscription)
+    "CLIJudgeConfig",
+    "create_cli_judge",
+    "create_cli_pairwise_judge",
+    "create_cli_ensemble_judge",
     # Experiment tracking
     "MLflowTracker",
     "WandBTracker",

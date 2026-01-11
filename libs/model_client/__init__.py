@@ -28,6 +28,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from .cache import CachedClient, ResponseCache, get_global_cache
+from .cli_client import CLIConfig, CLIError, ClaudeCLIClient
 from .protocols import ModelClient, ModelResponse, Provider, TokenUsage
 from .retry import with_retry, with_retry_async
 
@@ -42,6 +43,10 @@ __all__ = [
     "CachedClient",
     "ResponseCache",
     "get_global_cache",
+    # CLI client (for Max subscription)
+    "ClaudeCLIClient",
+    "CLIConfig",
+    "CLIError",
 ]
 
 logger = logging.getLogger(__name__)
