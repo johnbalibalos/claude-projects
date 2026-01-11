@@ -280,7 +280,7 @@ def main():
         output_path = PROJECT_ROOT / "results" / f"full_review_{timestamp}.md"
 
     # Generate report
-    print(f"\nGenerating full review report...")
+    print("\nGenerating full review report...")
     report = generate_full_review_report(
         predictions=predictions,
         scoring_results=scoring_results,
