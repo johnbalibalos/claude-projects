@@ -32,10 +32,14 @@ class ExperimentCondition:
 
 # Available models for testing
 MODELS = {
-    # Cloud models - Anthropic
+    # Cloud models - Anthropic (API)
     "claude-opus": "claude-opus-4-20250514",
     "claude-sonnet": "claude-sonnet-4-20250514",
     "claude-haiku": "claude-3-5-haiku-20241022",
+    # Cloud models - Anthropic (CLI - uses Max subscription, no API cost)
+    "claude-opus-cli": "claude-opus-4-20250514-cli",
+    "claude-sonnet-cli": "claude-sonnet-4-20250514-cli",
+    "claude-haiku-cli": "claude-3-5-haiku-20241022-cli",
     # Cloud models - OpenAI
     "gpt-4o": "gpt-4o",
     "gpt-4o-mini": "gpt-4o-mini",
@@ -56,7 +60,8 @@ MODELS = {
 
 # Model categories
 GEMINI_MODELS = ["gemini-2.0-flash", "gemini-2.5-flash", "gemini-2.5-pro"]
-CLOUD_MODELS = ["claude-opus", "claude-sonnet", "claude-haiku", "gpt-4o", "gpt-4o-mini"] + GEMINI_MODELS
+ANTHROPIC_CLI_MODELS = ["claude-opus-cli", "claude-sonnet-cli", "claude-haiku-cli"]
+CLOUD_MODELS = ["claude-opus", "claude-sonnet", "claude-haiku", "gpt-4o", "gpt-4o-mini"] + GEMINI_MODELS + ANTHROPIC_CLI_MODELS
 LOCAL_MODELS = ["llama3.1-8b", "llama3.1-70b", "qwen2.5-7b", "qwen2.5-72b",
                 "mistral-7b", "mixtral-8x7b", "deepseek-r1-8b", "deepseek-r1-70b"]
 
