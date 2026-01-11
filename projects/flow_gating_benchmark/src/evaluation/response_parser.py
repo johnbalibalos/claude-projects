@@ -58,6 +58,10 @@ def parse_llm_response(response: str) -> ParseResult:
     if not response or not response.strip():
         return ParseResult(success=False, error="Empty response", raw_response=response)
 
+    # Track best parse result in case all fail validation
+    # This prevents falling back to garbage parsers when we have valid structure
+    best_parse: tuple[dict, str, list[str]] | None = None
+
     # Try each parser in order
     for parser, format_name in [
         (_parse_json_code_block, "json_code_block"),
@@ -77,6 +81,23 @@ def parse_llm_response(response: str) -> ParseResult:
                     raw_response=response,
                     validation_warnings=warnings if warnings else None,
                 )
+
+            # Track JSON parses that fail validation - prefer these over garbage
+            # from fallback parsers (indented_text can produce nonsense from JSON)
+            if format_name in ("json_code_block", "json_raw") and best_parse is None:
+                best_parse = (result, format_name, warnings)
+
+    # If we got a valid JSON parse but it failed validation, return it anyway
+    # with warnings. This is better than returning garbage from indented_text.
+    if best_parse is not None:
+        result, format_name, warnings = best_parse
+        return ParseResult(
+            success=True,
+            hierarchy=result,
+            format_detected=format_name,
+            raw_response=response,
+            validation_warnings=warnings if warnings else None,
+        )
 
     return ParseResult(
         success=False,
@@ -184,6 +205,12 @@ def _parse_markdown_list(response: str) -> dict | None:
 
 def _parse_indented_text(response: str) -> dict | None:
     """Parse indented text into hierarchy."""
+    # Don't try to parse JSON-like content as indented text
+    # This prevents garbage parses when JSON validation fails
+    stripped = response.strip()
+    if stripped.startswith("{") or stripped.startswith("["):
+        return None
+
     lines = response.split("\n")
     items = []
 
@@ -196,11 +223,11 @@ def _parse_indented_text(response: str) -> dict | None:
         if any(term in line_lower for term in META_TERMS):
             continue
 
-        stripped = line.lstrip()
-        indent = len(line) - len(stripped)
+        stripped_line = line.lstrip()
+        indent = len(line) - len(stripped_line)
 
         # Clean up the name
-        name = stripped.strip()
+        name = stripped_line.strip()
         name = re.sub(r"^[-*•→>]\s*", "", name)  # Remove bullets
         name = re.sub(r":.*$", "", name)  # Remove descriptions after colon
 
