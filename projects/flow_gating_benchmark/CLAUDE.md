@@ -145,6 +145,29 @@ flow_gating_benchmark/
 
 ---
 
+## Ground Truth OMIPs
+
+12 curated OMIP panels with manually verified gating hierarchies:
+
+| OMIP | Species | Focus | Description |
+|------|---------|-------|-------------|
+| 008 | Human | T cells | Th1/Th2 cytokine polyfunctionality |
+| 022 | Human | T cells | Antigen-specific T-cell functionality and memory |
+| 025 | Human | T/NK | T- and NK-cell responses including memory and Tfh |
+| 035 | Macaque | NK | Functional analysis of NK cell subsets |
+| 053 | Human | Tregs | Identification/classification of FoxP3+ populations |
+| 064 | Human | NK | 27-color panel for NK cell characterization |
+| 074 | Human | B cells | IgG and IgA subclass phenotyping |
+| 076 | Murine | Pan | High-dimensional T-cell, B-cell, and APC phenotyping |
+| 077 | Human | Pan | All principal leukocyte populations (broad panel) |
+| 083 | Human | Pan | 21-marker 18-color in-depth phenotyping |
+| 095 | Human | Pan | 40-color spectral - all major leukocyte populations |
+| 101 | Human | Pan | 27-color whole blood leukocyte immunophenotyping |
+
+**Coverage**: 10 human, 1 macaque, 1 murine. Mix of focused (T/NK/B) and pan-leukocyte panels. Complexity ranges from 18 to 40 colors.
+
+---
+
 ## Key Concepts
 
 ### Gating Hierarchy
