@@ -19,7 +19,7 @@
       {
         "marker": "Viability Dye",
         "fluorophore": "AViD",
-        "clone": "\u2013",
+        "clone": "-",
         "channel": null,
         "vendor": null,
         "cat_number": null
@@ -91,7 +91,7 @@
       {
         "marker": "IL-2",
         "fluorophore": "PE",
-        "clone": "MQ1\u201317H12",
+        "clone": "MQ1-17H12",
         "channel": null,
         "vendor": null,
         "cat_number": null

@@ -396,12 +396,20 @@ def create_client(model: str, dry_run: bool = False, use_cli: bool = False) -> L
 
 
 # Model registry for easy lookup
+#
+# NOTE: The "-cli" suffix distinguishes API vs CLI routing:
+#   - "claude-opus"     → AnthropicClient (API, billed per token)
+#   - "claude-opus-cli" → ClaudeCLIClient (OAuth, Max subscription)
+#
+# The create_client() function checks for "-cli" suffix to route appropriately.
+# See conditions.py for the authoritative model list with full IDs.
+#
 MODEL_REGISTRY = {
-    # Anthropic (API)
+    # Anthropic API (these map to base model IDs without -cli suffix)
     "claude-opus": "claude-opus-4-20250514",
     "claude-sonnet": "claude-sonnet-4-20250514",
     "claude-haiku": "claude-3-5-haiku-20241022",
-    # Anthropic (CLI - uses Claude Max OAuth)
+    # Anthropic CLI (same base IDs - the -cli suffix is in the key, not value)
     "claude-opus-cli": "claude-opus-4-20250514",
     "claude-sonnet-cli": "claude-sonnet-4-20250514",
     "claude-haiku-cli": "claude-3-5-haiku-20241022",

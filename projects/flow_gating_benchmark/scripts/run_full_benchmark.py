@@ -334,7 +334,7 @@ def run_single_call(
             "structure_accuracy": score_result.structure_accuracy,
             "critical_gate_recall": score_result.critical_gate_recall,
             "parse_success": score_result.parse_success,
-            "raw_response": response.content[:500],
+            "raw_response": response.content,  # Full response for judge
             "tokens_used": response.tokens_used,
         }
 
@@ -346,6 +346,203 @@ def run_single_call(
             "condition": condition.name,
             "error": str(e),
         }
+
+
+def run_cli_batch(
+    cli_conditions,
+    test_cases,
+    config: BenchmarkConfig,
+    scorer,
+    completed: set,
+    total_calls: int,
+    update_progress,
+    results_lock,
+    dry_run: bool,
+) -> list[dict]:
+    """Run CLI conditions sequentially with rate limiting.
+
+    Returns list of results from CLI calls.
+    """
+    from experiments.llm_client import create_client
+    from experiments.prompts import build_prompt
+
+    cli_results = []
+
+    print(f"\n{'='*60}")
+    print("CLI MODELS (sequential, cache-optimized)")
+    print('='*60)
+
+    for condition in cli_conditions:
+        print(f"\n--- {condition.model} | {condition.name} ---")
+        client = create_client(condition.model, dry_run=dry_run)
+
+        for test_case in test_cases:
+            # Build prompt once for all bootstrap runs (cache optimization)
+            prompt = build_prompt(
+                test_case,
+                template_name=condition.prompt_strategy,
+                context_level=condition.context_level,
+                rag_mode=condition.rag_mode,
+            )
+
+            for bootstrap_run in range(1, config.n_bootstrap + 1):
+                key = (bootstrap_run, test_case.test_case_id, condition.model, condition.name)
+
+                with results_lock:
+                    if key in completed:
+                        update_progress()
+                        continue
+
+                current = update_progress()
+                progress = f"[{current}/{total_calls}]"
+                print(f"{progress} {test_case.test_case_id} run={bootstrap_run}")
+
+                try:
+                    response = client.call(prompt)
+
+                    score_result = scorer.score(
+                        response=response.content,
+                        test_case=test_case,
+                        model=condition.model,
+                        condition=condition.name,
+                    )
+
+                    result = {
+                        "bootstrap_run": bootstrap_run,
+                        "test_case_id": test_case.test_case_id,
+                        "model": condition.model,
+                        "condition": condition.name,
+                        "hierarchy_f1": score_result.hierarchy_f1,
+                        "structure_accuracy": score_result.structure_accuracy,
+                        "critical_gate_recall": score_result.critical_gate_recall,
+                        "parse_success": score_result.parse_success,
+                        "raw_response": response.content,  # Full response for judge
+                        "tokens_used": response.tokens_used,
+                    }
+                    cli_results.append(result)
+                    with results_lock:
+                        completed.add(key)
+
+                    print(f"         F1={score_result.hierarchy_f1:.3f} | Struct={score_result.structure_accuracy:.3f}")
+
+                    # Rate limit for CLI
+                    time.sleep(config.cli_delay_seconds)
+
+                except Exception as e:
+                    print(f"         ERROR: {e}")
+                    result = {
+                        "bootstrap_run": bootstrap_run,
+                        "test_case_id": test_case.test_case_id,
+                        "model": condition.model,
+                        "condition": condition.name,
+                        "error": str(e),
+                    }
+                    cli_results.append(result)
+                    with results_lock:
+                        completed.add(key)
+
+        # Checkpoint after each CLI condition
+        checkpoint_file = config.output_dir / "checkpoint_cli.json"
+        with open(checkpoint_file, "w") as f:
+            json.dump(cli_results, f, indent=2)
+        print(f"  Checkpoint saved: {checkpoint_file.name}")
+
+    return cli_results
+
+
+def run_api_batch(
+    api_conditions,
+    test_cases,
+    config: BenchmarkConfig,
+    scorer,
+    completed: set,
+    total_calls: int,
+    update_progress,
+    results_lock,
+    dry_run: bool,
+) -> list[dict]:
+    """Run API conditions in parallel with ThreadPoolExecutor.
+
+    Returns list of results from API calls.
+    """
+    from experiments.prompts import build_prompt
+
+    api_results = []
+
+    print(f"\n{'='*60}")
+    print(f"API MODELS (parallel, {config.parallel_workers} workers)")
+    print('='*60)
+
+    # Build all pending tasks
+    pending_tasks = []
+    with results_lock:
+        for condition in api_conditions:
+            for test_case in test_cases:
+                for bootstrap_run in range(1, config.n_bootstrap + 1):
+                    key = (bootstrap_run, test_case.test_case_id, condition.model, condition.name)
+                    if key not in completed:
+                        pending_tasks.append((test_case, condition, bootstrap_run))
+
+    if not pending_tasks:
+        print("\n  All API calls already completed")
+        return api_results
+
+    print(f"\n  {len(pending_tasks)} pending API calls")
+
+    with ThreadPoolExecutor(max_workers=config.parallel_workers) as executor:
+        futures = {
+            executor.submit(
+                run_single_call,
+                task[0],  # test_case
+                task[1],  # condition
+                task[2],  # bootstrap_run
+                build_prompt,
+                scorer,
+                dry_run,
+            ): task
+            for task in pending_tasks
+        }
+
+        for future in as_completed(futures):
+            task = futures[future]
+            test_case, condition, bootstrap_run = task
+            current = update_progress()
+            progress = f"[{current}/{total_calls}]"
+
+            try:
+                result = future.result()
+                api_results.append(result)
+
+                with results_lock:
+                    key = (bootstrap_run, test_case.test_case_id, condition.model, condition.name)
+                    completed.add(key)
+
+                if "error" in result:
+                    print(f"{progress} {condition.model} | {test_case.test_case_id} run={bootstrap_run}")
+                    print(f"         ERROR: {result['error']}")
+                else:
+                    print(f"{progress} {condition.model} | {test_case.test_case_id} run={bootstrap_run}")
+                    print(f"         F1={result['hierarchy_f1']:.3f} | Struct={result['structure_accuracy']:.3f}")
+
+            except Exception as e:
+                print(f"{progress} {condition.model} | {test_case.test_case_id} run={bootstrap_run}")
+                print(f"         FUTURE ERROR: {e}")
+                result = {
+                    "bootstrap_run": bootstrap_run,
+                    "test_case_id": test_case.test_case_id,
+                    "model": condition.model,
+                    "condition": condition.name,
+                    "error": str(e),
+                }
+                api_results.append(result)
+
+    # Checkpoint after API batch
+    checkpoint_file = config.output_dir / "checkpoint_api.json"
+    with open(checkpoint_file, "w") as f:
+        json.dump(api_results, f, indent=2)
+    print(f"\nCheckpoint saved: {checkpoint_file.name}")
+
+    return api_results
 
 
 def run_benchmark(
@@ -365,12 +562,13 @@ def run_benchmark(
     Parallelization:
     - CLI models: Sequential with rate limiting (Claude Max subscription)
     - API models: Parallel with ThreadPoolExecutor (Gemini, Anthropic API)
+    - CLI and API run CONCURRENTLY (API in background thread)
     """
+    import threading
+
     from curation.omip_extractor import load_all_test_cases
-    from experiments.conditions import get_all_conditions
-    from experiments.llm_client import create_client
-    from experiments.prompts import build_prompt
     from evaluation.scorer import GatingScorer
+    from experiments.conditions import get_all_conditions
 
     # Load test cases
     test_cases = load_all_test_cases(test_cases_dir)
@@ -390,6 +588,9 @@ def run_benchmark(
     print(f"  CLI conditions: {len(cli_conditions)} (sequential)")
     print(f"  API conditions: {len(api_conditions)} (parallel, {config.parallel_workers} workers)")
 
+    if cli_conditions and api_conditions:
+        print("  Execution: CONCURRENT (CLI + API run simultaneously)")
+
     # Initialize
     scorer = GatingScorer()
     config.output_dir.mkdir(parents=True, exist_ok=True)
@@ -407,170 +608,73 @@ def run_benchmark(
     if completed_count > 0:
         print(f"\nResuming: {completed_count}/{total_calls} already completed")
 
-    # Track progress with thread-safe counter
-    import threading
+    # Thread-safe progress tracking
     progress_lock = threading.Lock()
-    progress_counter = [completed_count]  # Use list for mutability in closure
+    progress_counter = [completed_count]
+    results_lock = threading.Lock()
 
     def update_progress():
         with progress_lock:
             progress_counter[0] += 1
             return progress_counter[0]
 
-    # === CLI CONDITIONS (Sequential, cache-optimized order) ===
-    # Order: condition -> test_case -> bootstrap_runs (maximizes cache hits)
-    if cli_conditions:
-        print(f"\n{'='*60}")
-        print("CLI MODELS (sequential, cache-optimized)")
-        print('='*60)
+    # === CONCURRENT EXECUTION: CLI + API ===
+    cli_results = []
+    api_results = []
+    api_future = None
 
-        for condition in cli_conditions:
-            print(f"\n--- {condition.model} | {condition.name} ---")
-            client = create_client(condition.model, dry_run=dry_run)
+    # Start API calls in background thread immediately (if any)
+    if api_conditions:
+        with ThreadPoolExecutor(max_workers=1) as background_executor:
+            api_future = background_executor.submit(
+                run_api_batch,
+                api_conditions,
+                test_cases,
+                config,
+                scorer,
+                completed,
+                total_calls,
+                update_progress,
+                results_lock,
+                dry_run,
+            )
 
-            for test_case in test_cases:
-                # Build prompt once for all bootstrap runs (cache optimization)
-                prompt = build_prompt(
-                    test_case,
-                    template_name=condition.prompt_strategy,
-                    context_level=condition.context_level,
-                    rag_mode=condition.rag_mode,
+            # Run CLI calls in foreground while API runs in background
+            if cli_conditions:
+                cli_results = run_cli_batch(
+                    cli_conditions,
+                    test_cases,
+                    config,
+                    scorer,
+                    completed,
+                    total_calls,
+                    update_progress,
+                    results_lock,
+                    dry_run,
                 )
 
-                for bootstrap_run in range(1, config.n_bootstrap + 1):
-                    key = (bootstrap_run, test_case.test_case_id, condition.model, condition.name)
+            # Wait for API to complete
+            print(f"\n{'='*60}")
+            print("Waiting for API calls to complete...")
+            print('='*60)
+            api_results = api_future.result()
 
-                    if key in completed:
-                        update_progress()
-                        continue
+    elif cli_conditions:
+        # Only CLI conditions, no API
+        cli_results = run_cli_batch(
+            cli_conditions,
+            test_cases,
+            config,
+            scorer,
+            completed,
+            total_calls,
+            update_progress,
+            results_lock,
+            dry_run,
+        )
 
-                    current = update_progress()
-                    progress = f"[{current}/{total_calls}]"
-                    print(f"{progress} {test_case.test_case_id} run={bootstrap_run}")
-
-                    try:
-                        response = client.call(prompt)
-
-                        score_result = scorer.score(
-                            response=response.content,
-                            test_case=test_case,
-                            model=condition.model,
-                            condition=condition.name,
-                        )
-
-                        result = {
-                            "bootstrap_run": bootstrap_run,
-                            "test_case_id": test_case.test_case_id,
-                            "model": condition.model,
-                            "condition": condition.name,
-                            "hierarchy_f1": score_result.hierarchy_f1,
-                            "structure_accuracy": score_result.structure_accuracy,
-                            "critical_gate_recall": score_result.critical_gate_recall,
-                            "parse_success": score_result.parse_success,
-                            "raw_response": response.content[:500],
-                            "tokens_used": response.tokens_used,
-                        }
-                        results.append(result)
-                        completed.add(key)
-
-                        print(f"         F1={score_result.hierarchy_f1:.3f} | Struct={score_result.structure_accuracy:.3f}")
-
-                        # Rate limit for CLI
-                        time.sleep(config.cli_delay_seconds)
-
-                    except Exception as e:
-                        print(f"         ERROR: {e}")
-                        results.append({
-                            "bootstrap_run": bootstrap_run,
-                            "test_case_id": test_case.test_case_id,
-                            "model": condition.model,
-                            "condition": condition.name,
-                            "error": str(e),
-                        })
-                        completed.add(key)
-
-            # Checkpoint after each CLI condition
-            checkpoint_file = config.output_dir / "checkpoint_cli.json"
-            with open(checkpoint_file, "w") as f:
-                json.dump(results, f, indent=2)
-            print(f"  Checkpoint saved: {checkpoint_file.name}")
-
-    # === API CONDITIONS (Parallel, all bootstrap runs at once) ===
-    if api_conditions:
-        print(f"\n{'='*60}")
-        print(f"API MODELS (parallel, {config.parallel_workers} workers)")
-        print('='*60)
-
-        # Build all pending tasks
-        # Group by (condition, test_case) to maximize cache hits within batches
-        pending_tasks = []
-        for condition in api_conditions:
-            for test_case in test_cases:
-                for bootstrap_run in range(1, config.n_bootstrap + 1):
-                    key = (bootstrap_run, test_case.test_case_id, condition.model, condition.name)
-                    if key not in completed:
-                        pending_tasks.append((test_case, condition, bootstrap_run))
-
-        if not pending_tasks:
-            print("\n  All API calls already completed")
-        else:
-            print(f"\n  {len(pending_tasks)} pending API calls")
-
-            # Process in parallel
-            results_lock = threading.Lock()
-
-            with ThreadPoolExecutor(max_workers=config.parallel_workers) as executor:
-                futures = {
-                    executor.submit(
-                        run_single_call,
-                        task[0],  # test_case
-                        task[1],  # condition
-                        task[2],  # bootstrap_run
-                        build_prompt,
-                        scorer,
-                        dry_run,
-                    ): task
-                    for task in pending_tasks
-                }
-
-                for future in as_completed(futures):
-                    task = futures[future]
-                    test_case, condition, bootstrap_run = task
-                    current = update_progress()
-                    progress = f"[{current}/{total_calls}]"
-
-                    try:
-                        result = future.result()
-
-                        with results_lock:
-                            results.append(result)
-                            key = (bootstrap_run, test_case.test_case_id, condition.model, condition.name)
-                            completed.add(key)
-
-                        if "error" in result:
-                            print(f"{progress} {condition.model} | {test_case.test_case_id} run={bootstrap_run}")
-                            print(f"         ERROR: {result['error']}")
-                        else:
-                            print(f"{progress} {condition.model} | {test_case.test_case_id} run={bootstrap_run}")
-                            print(f"         F1={result['hierarchy_f1']:.3f} | Struct={result['structure_accuracy']:.3f}")
-
-                    except Exception as e:
-                        print(f"{progress} {condition.model} | {test_case.test_case_id} run={bootstrap_run}")
-                        print(f"         FUTURE ERROR: {e}")
-                        with results_lock:
-                            results.append({
-                                "bootstrap_run": bootstrap_run,
-                                "test_case_id": test_case.test_case_id,
-                                "model": condition.model,
-                                "condition": condition.name,
-                                "error": str(e),
-                            })
-
-            # Checkpoint after API batch
-            checkpoint_file = config.output_dir / "checkpoint_api.json"
-            with open(checkpoint_file, "w") as f:
-                json.dump(results, f, indent=2)
-            print(f"\nCheckpoint saved: {checkpoint_file.name}")
+    # Merge results (checkpoint results + new CLI + new API)
+    all_results = results + cli_results + api_results
 
     # Save final results
     final_file = config.output_dir / f"results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
@@ -582,12 +686,13 @@ def run_benchmark(
                 "prompt_strategies": config.prompt_strategies,
                 "n_bootstrap": config.n_bootstrap,
             },
-            "results": results,
+            "results": all_results,
             "timestamp": datetime.now().isoformat(),
         }, f, indent=2)
 
     print(f"\n✓ Results saved: {final_file}")
-    return results
+    print(f"  Total results: {len(all_results)}")
+    return all_results
 
 
 def main():

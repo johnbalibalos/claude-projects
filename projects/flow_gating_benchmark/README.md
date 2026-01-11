@@ -124,6 +124,47 @@ result = detect_task_failure("What markers are you using?")
 | INSTRUCTIONS | "Here's how you would create a hierarchy..." |
 | EMPTY | No response content |
 
+## LLM Judge
+
+The benchmark includes an LLM-based judge (Gemini 2.5 Pro) for qualitative assessment beyond automated metrics. The judge scores predictions on:
+
+| Dimension | Description |
+|-----------|-------------|
+| **Completeness** | Are all expected gates present? |
+| **Accuracy** | Are gate names and relationships correct? |
+| **Scientific** | Is the reasoning biologically sound? |
+| **Overall** | Holistic quality score |
+
+### Hierarchy Flattening for Judge Prompts
+
+Ground truth hierarchies are stored as nested JSON:
+
+```json
+{"root": {"name": "All Events", "children": [
+  {"name": "Singlets", "children": [
+    {"name": "Live", "children": [...]}
+  ]}
+]}}
+```
+
+For judge prompts, hierarchies are **flattened to arrow notation**:
+
+```
+All Events > Singlets > Live > CD45+ > T cells
+All Events > Singlets > Live > CD45+ > B cells
+```
+
+**Why flatten?**
+
+| Benefit | Rationale |
+|---------|-----------|
+| **Token efficiency** | Nested JSON is 10-20x more verbose; flattening reduces prompt size significantly |
+| **Reduced parsing errors** | LLMs can misinterpret nested structure; flat paths are unambiguous |
+| **Semantic clarity** | Judge needs to compare *relationships*, not parse syntax |
+| **Garbage detection** | Truncated JSON produces artifacts (`"name"`, `"children"` as gate names); flattening exposes these |
+
+**Tradeoff:** Gate metadata (`marker_logic`, `gate_type`, `is_critical`) is discarded. This is acceptable because the judge evaluates structural correctness, not gate definitions. For benchmarks requiring marker logic evaluation, preserve the full structure.
+
 ## Gate Name Normalization
 
 The benchmark uses fuzzy matching with 200+ cell type synonyms:

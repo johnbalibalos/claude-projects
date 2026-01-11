@@ -9,7 +9,7 @@
   "context": {
     "sample_type": "unknown",
     "species": "mouse",
-    "application": "OMIP 076: High\u2010dimensional  immunophenotyping of murine T\u2010cell, B\u2010cell, and antibody secreting cell subsets",
+    "application": "OMIP 076: High-dimensional  immunophenotyping of murine T-cell, B-cell, and antibody secreting cell subsets",
     "tissue": null,
     "disease_state": null,
     "additional_notes": null
@@ -17,7 +17,7 @@
   "panel": {
     "entries": [
       {
-        "marker": "PD\u2010L2 (CD273)",
+        "marker": "PD-L2 (CD273)",
         "fluorophore": "BUV395",
         "clone": "TY25",
         "channel": null,
@@ -49,7 +49,7 @@
         "cat_number": null
       },
       {
-        "marker": "PD\u20101 (CD279)",
+        "marker": "PD-1 (CD279)",
         "fluorophore": "BV480",
         "clone": "J43",
         "channel": null,
@@ -67,7 +67,7 @@
       {
         "marker": "CD80",
         "fluorophore": "BV650",
-        "clone": "16\u201010A1",
+        "clone": "16-10A1",
         "channel": null,
         "vendor": null,
         "cat_number": null
@@ -83,7 +83,7 @@
       {
         "marker": "CD4",
         "fluorophore": "BV786",
-        "clone": "RM4\u20105",
+        "clone": "RM4-5",
         "channel": null,
         "vendor": null,
         "cat_number": null
@@ -97,9 +97,9 @@
         "cat_number": null
       },
       {
-        "marker": "Synd\u20101 (CD138)",
+        "marker": "Synd-1 (CD138)",
         "fluorophore": "BB515",
-        "clone": "281\u20102",
+        "clone": "281-2",
         "channel": null,
         "vendor": null,
         "cat_number": null
@@ -107,7 +107,7 @@
       {
         "marker": "TCR\u03b2",
         "fluorophore": "BB700",
-        "clone": "H57\u2010597",
+        "clone": "H57-597",
         "channel": null,
         "vendor": null,
         "cat_number": null
@@ -115,22 +115,22 @@
       {
         "marker": "Foxp3",
         "fluorophore": "PE",
-        "clone": "FJK\u201016s",
+        "clone": "FJK-16s",
         "channel": null,
         "vendor": null,
         "cat_number": null
       },
       {
         "marker": "B220 (CD45R)",
-        "fluorophore": "PE\u2010CF594",
-        "clone": "RA3\u20106B2",
+        "fluorophore": "PE-CF594",
+        "clone": "RA3-6B2",
         "channel": null,
         "vendor": null,
         "cat_number": null
       },
       {
         "marker": "CD25",
-        "fluorophore": "PE\u2010Cy5",
+        "fluorophore": "PE-Cy5",
         "clone": "PC61",
         "channel": null,
         "vendor": null,
@@ -138,14 +138,14 @@
       },
       {
         "marker": "CXCR5 (CD185)",
-        "fluorophore": "PE\u2010Cy7",
+        "fluorophore": "PE-Cy7",
         "clone": "2G8",
         "channel": null,
         "vendor": null,
         "cat_number": null
       },
       {
-        "marker": "MHC class II (I\u2010A/I\u2010E)",
+        "marker": "MHC class II (I-A/I-E)",
         "fluorophore": "AF647",
         "clone": "M5/114.15.2",
         "channel": null,
@@ -154,16 +154,16 @@
       },
       {
         "marker": "CD62L",
-        "fluorophore": "APC\u2010R700",
-        "clone": "MEL\u201014",
+        "fluorophore": "APC-R700",
+        "clone": "MEL-14",
         "channel": null,
         "vendor": null,
         "cat_number": null
       },
       {
         "marker": "CD45",
-        "fluorophore": "APC\u2010Cy7",
-        "clone": "30\u2010F11",
+        "fluorophore": "APC-Cy7",
+        "clone": "30-F11",
         "channel": null,
         "vendor": null,
         "cat_number": null

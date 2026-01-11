@@ -9,7 +9,7 @@
   "context": {
     "sample_type": "unknown",
     "species": "human",
-    "application": "OMIP 083: A 21\u2010marker 18\u2010color flow cytometry panel for in\u2010depth phenotyping of human peripheral monocytes",
+    "application": "OMIP 083: A 21-marker 18-color flow cytometry panel for in-depth phenotyping of human peripheral monocytes",
     "tissue": null,
     "disease_state": null,
     "additional_notes": null
@@ -26,7 +26,7 @@
       },
       {
         "marker": "CD66b",
-        "fluorophore": "PE\u2010Dazzle 594",
+        "fluorophore": "PE-Dazzle 594",
         "clone": "G10F5",
         "channel": null,
         "vendor": null,
@@ -91,14 +91,14 @@
       {
         "marker": "SLAN",
         "fluorophore": "VioBlue",
-        "clone": "DD\u20101",
+        "clone": "DD-1",
         "channel": null,
         "vendor": null,
         "cat_number": null
       },
       {
         "marker": "CCR2",
-        "fluorophore": "APC\u2010Fire 750",
+        "fluorophore": "APC-Fire 750",
         "clone": "K036C2",
         "channel": null,
         "vendor": null,
@@ -106,8 +106,8 @@
       },
       {
         "marker": "CX3CR1",
-        "fluorophore": "PerCP\u2010Cy5.5",
-        "clone": "2A9\u20101",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": "2A9-1",
         "channel": null,
         "vendor": null,
         "cat_number": null
@@ -130,7 +130,7 @@
       },
       {
         "marker": "CD11c",
-        "fluorophore": "PE\u2010Cy5",
+        "fluorophore": "PE-Cy5",
         "clone": "3.9",
         "channel": null,
         "vendor": null,
@@ -145,16 +145,16 @@
         "cat_number": null
       },
       {
-        "marker": "HLA\u2010DR",
+        "marker": "HLA-DR",
         "fluorophore": "BV480",
-        "clone": "G46\u20106",
+        "clone": "G46-6",
         "channel": null,
         "vendor": null,
         "cat_number": null
       },
       {
         "marker": "CD86",
-        "fluorophore": "PE\u2010Cy7",
+        "fluorophore": "PE-Cy7",
         "clone": "BU63",
         "channel": null,
         "vendor": null,
@@ -177,7 +177,7 @@
         "cat_number": null
       },
       {
-        "marker": "PD\u20101",
+        "marker": "PD-1",
         "fluorophore": "BV750",
         "clone": "EH12.2H7",
         "channel": null,

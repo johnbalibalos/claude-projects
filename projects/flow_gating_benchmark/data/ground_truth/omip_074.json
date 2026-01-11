@@ -18,7 +18,7 @@
     "entries": [
       {
         "marker": "CD19",
-        "fluorophore": "PE\u2010Dazzle 594",
+        "fluorophore": "PE-Dazzle 594",
         "clone": "HIB19",
         "channel": null,
         "vendor": null,
@@ -43,7 +43,7 @@
       {
         "marker": "CD21",
         "fluorophore": "BV605",
-        "clone": "B\u2010ly4",
+        "clone": "B-ly4",
         "channel": null,
         "vendor": null,
         "cat_number": null
@@ -58,24 +58,24 @@
       },
       {
         "marker": "IgD",
-        "fluorophore": "PE\u2010Cy5.5",
-        "clone": "IADB6 (IA6\u20102)",
+        "fluorophore": "PE-Cy5.5",
+        "clone": "IADB6 (IA6-2)",
         "channel": null,
         "vendor": null,
         "cat_number": null
       },
       {
         "marker": "IgE",
-        "fluorophore": "APC\u2010Fire 750",
-        "clone": "MHE\u201018",
+        "fluorophore": "APC-Fire 750",
+        "clone": "MHE-18",
         "channel": null,
         "vendor": null,
         "cat_number": null
       },
       {
         "marker": "IgG",
-        "fluorophore": "PE\u2010Cy5",
-        "clone": "G18\u2010145",
+        "fluorophore": "PE-Cy5",
+        "clone": "G18-145",
         "channel": null,
         "vendor": null,
         "cat_number": null
@@ -83,14 +83,14 @@
       {
         "marker": "IgM",
         "fluorophore": "BV570",
-        "clone": "MHM\u201088",
+        "clone": "MHM-88",
         "channel": null,
         "vendor": null,
         "cat_number": null
       },
       {
         "marker": "IgA1",
-        "fluorophore": "PerCP\u2010Cy5.5",
+        "fluorophore": "PerCP-Cy5.5",
         "clone": "B3506B4",
         "channel": null,
         "vendor": null,
@@ -98,8 +98,8 @@
       },
       {
         "marker": "IgA2",
-        "fluorophore": "PE\u2010Vio770",
-        "clone": "IS11\u201021E11",
+        "fluorophore": "PE-Vio770",
+        "clone": "IS11-21E11",
         "channel": null,
         "vendor": null,
         "cat_number": null
@@ -122,7 +122,7 @@
       },
       {
         "marker": "Biotin",
-        "fluorophore": "Streptavidin\u2010BV750",
+        "fluorophore": "Streptavidin-BV750",
         "clone": null,
         "channel": null,
         "vendor": null,
@@ -147,7 +147,7 @@
       {
         "marker": "IgKappa",
         "fluorophore": "BV711",
-        "clone": "G20\u2010193",
+        "clone": "G20-193",
         "channel": null,
         "vendor": null,
         "cat_number": null
@@ -155,7 +155,7 @@
       {
         "marker": "IgLambda",
         "fluorophore": "BV786",
-        "clone": "JDC\u201012",
+        "clone": "JDC-12",
         "channel": null,
         "vendor": null,
         "cat_number": null

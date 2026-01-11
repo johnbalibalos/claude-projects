@@ -9,7 +9,7 @@
   "context": {
     "sample_type": "unknown",
     "species": "human",
-    "application": "OMIP 077: Definition of all principal human leukocyte populations using a broadly applicable 14\u2010color panel",
+    "application": "OMIP 077: Definition of all principal human leukocyte populations using a broadly applicable 14-color panel",
     "tissue": null,
     "disease_state": null,
     "additional_notes": null
@@ -19,7 +19,7 @@
       {
         "marker": "CD1c",
         "fluorophore": "PE",
-        "clone": "AD5\u20108E7",
+        "clone": "AD5-8E7",
         "channel": null,
         "vendor": null,
         "cat_number": null
@@ -42,7 +42,7 @@
       },
       {
         "marker": "CD15",
-        "fluorophore": "PerCP\u2010Cy5.5",
+        "fluorophore": "PerCP-Cy5.5",
         "clone": "HI98",
         "channel": null,
         "vendor": null,
@@ -50,7 +50,7 @@
       },
       {
         "marker": "CD16",
-        "fluorophore": "APC\u2010efluor780",
+        "fluorophore": "APC-efluor780",
         "clone": "ebioCB16",
         "channel": null,
         "vendor": null,
@@ -58,7 +58,7 @@
       },
       {
         "marker": "CD19",
-        "fluorophore": "APC\u2010R700",
+        "fluorophore": "APC-R700",
         "clone": "HIB19",
         "channel": null,
         "vendor": null,
@@ -67,7 +67,7 @@
       {
         "marker": "CD34",
         "fluorophore": "FITC",
-        "clone": "HPCA\u20102",
+        "clone": "HPCA-2",
         "channel": null,
         "vendor": null,
         "cat_number": null
@@ -90,7 +90,7 @@
       },
       {
         "marker": "CD56",
-        "fluorophore": "PE\u2010Cy7",
+        "fluorophore": "PE-Cy7",
         "clone": "NCAM16.2",
         "channel": null,
         "vendor": null,
@@ -107,23 +107,23 @@
       {
         "marker": "CD141",
         "fluorophore": "APC",
-        "clone": "AD5\u201014H12",
+        "clone": "AD5-14H12",
         "channel": null,
         "vendor": null,
         "cat_number": null
       },
       {
         "marker": "CD193",
-        "fluorophore": "PE\u2010CF594",
+        "fluorophore": "PE-CF594",
         "clone": "5E8",
         "channel": null,
         "vendor": null,
         "cat_number": null
       },
       {
-        "marker": "HLA\u2010DR",
+        "marker": "HLA-DR",
         "fluorophore": "BV786",
-        "clone": "G46\u20106",
+        "clone": "G46-6",
         "channel": null,
         "vendor": null,
         "cat_number": null

@@ -31,12 +31,20 @@ class ExperimentCondition:
 
 
 # Available models for testing
+#
+# NAMING CONVENTION:
+#   - "claude-*"     → Uses Anthropic API (requires ANTHROPIC_API_KEY, billed per token)
+#   - "claude-*-cli" → Uses Claude CLI with OAuth (Max subscription, no API cost)
+#
+# The "-cli" suffix in the model ID (e.g., "claude-sonnet-4-20250514-cli") is used by
+# llm_client.py to route to ClaudeCLIClient instead of AnthropicClient.
+#
 MODELS = {
-    # Cloud models - Anthropic (API)
+    # Anthropic API (billed per token, requires ANTHROPIC_API_KEY)
     "claude-opus": "claude-opus-4-20250514",
     "claude-sonnet": "claude-sonnet-4-20250514",
     "claude-haiku": "claude-3-5-haiku-20241022",
-    # Cloud models - Anthropic (CLI - uses Max subscription, no API cost)
+    # Anthropic CLI via OAuth (uses Max subscription, no API cost, rate-limited)
     "claude-opus-cli": "claude-opus-4-20250514-cli",
     "claude-sonnet-cli": "claude-sonnet-4-20250514-cli",
     "claude-haiku-cli": "claude-3-5-haiku-20241022-cli",
