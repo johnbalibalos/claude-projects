@@ -22,9 +22,9 @@ HIPC_RAG_CONTEXT = """## Reference: HIPC 2016 Standardized Cell Definitions
 Source: https://www.nature.com/articles/srep20686
 
 ### Quality Control Gates (Required)
-- **Time Gate**: Exclude acquisition artifacts
-- **Singlets**: FSC-A vs FSC-H diagonal gate
-- **Live cells**: Viability dye negative (e.g., Zombie, Live/Dead)
+- **Time Gate**: Exclude acquisition artifacts (if applicable)
+- **Singlets**: Doublet exclusion (FSC-A vs FSC-H for flow cytometry; event length for mass cytometry)
+- **Live cells**: Viability dye negative (e.g., Zombie, Live/Dead, cisplatin for CyTOF)
 
 ### Major Lineage Definitions
 | Population | Markers | Parent |
@@ -65,7 +65,7 @@ Source: https://www.nature.com/articles/srep20686
 | Intermediate | CD14++ CD16+ |
 | Non-classical | CD14dim CD16++ |
 
-**Note**: HIPC recommends gating directly on lineage markers rather than FSC/SSC lymphocyte gates to reduce variability.
+**Note**: HIPC recommends gating directly on lineage markers rather than scatter-based lymphocyte gates to reduce variability. For mass cytometry (CyTOF), scatter parameters are not available - use CD45 or other lineage markers instead.
 """
 
 
@@ -92,13 +92,13 @@ OUTPUT_SCHEMA = """{
 }"""
 
 
-DIRECT_TEMPLATE = """You are an expert flow cytometrist. Given the following flow cytometry panel information, predict the gating hierarchy that an expert would use for data analysis.
+DIRECT_TEMPLATE = """You are an expert cytometrist. Given the following panel information, predict the gating hierarchy that an expert would use for data analysis.
 
 {context}
 
 ## Task
 
-Predict the complete gating hierarchy, starting from "All Events" through quality control gates (time, singlets, live/dead) to final cell population identification.
+Predict the complete gating hierarchy, starting from "All Events" through appropriate quality control gates to final cell population identification. For flow cytometry, include doublet exclusion (singlets) and viability gates. For mass cytometry (CyTOF), adapt the QC strategy accordingly (no FSC/SSC scatter).
 
 Return your answer as a JSON object with this structure:
 {schema}
@@ -106,7 +106,7 @@ Return your answer as a JSON object with this structure:
 Provide only the JSON hierarchy in your final answer."""
 
 
-COT_TEMPLATE = """You are an expert flow cytometrist. Given the following flow cytometry panel information, predict the gating hierarchy that an expert would use for data analysis.
+COT_TEMPLATE = """You are an expert cytometrist. Given the following panel information, predict the gating hierarchy that an expert would use for data analysis.
 
 {context}
 
@@ -115,11 +115,12 @@ COT_TEMPLATE = """You are an expert flow cytometrist. Given the following flow c
 Predict the complete gating hierarchy, starting from "All Events" through quality control gates to final cell population identification.
 
 Before providing your final answer, briefly consider:
-- What quality control gates are needed for this specific panel?
+- What technology is this (flow cytometry or mass cytometry/CyTOF)? Check if fluorophores are metal isotopes (e.g., 145Nd, 176Yb) vs standard fluorophores (e.g., PE, APC, FITC).
+- What quality control gates are needed? (Scatter-based singlets for flow cytometry; alternative QC for mass cytometry)
 - What populations can this panel's markers identify?
 - How should gates be organized hierarchically?
 
-Use your expertise to determine the best approach for this specific panel. Different panels may require different gating strategies.
+Use your expertise to determine the best approach for this specific panel. Different panels and technologies may require different gating strategies.
 
 After your reasoning, provide the final hierarchy as a JSON object with this structure:
 {schema}
@@ -128,7 +129,7 @@ End with only the JSON hierarchy."""
 
 
 # New: Explanation-capturing template for debugging model decisions
-EXPLANATION_TEMPLATE = """You are an expert flow cytometrist. Given the following flow cytometry panel information, predict the gating hierarchy that an expert would use for data analysis.
+EXPLANATION_TEMPLATE = """You are an expert cytometrist. Given the following panel information, predict the gating hierarchy that an expert would use for data analysis.
 
 {context}
 

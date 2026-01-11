@@ -352,10 +352,26 @@ equivalence_classes:
       - "single cells"
       - "singlet"
       - "non-doublets"
-      - "fsc-a vs fsc-h"
       - "fsc singlets"
+      - "ssc singlets"
+      # FSC-based singlet detection (FSC-A vs FSC-H are semantically equivalent)
+      - "fsc-a vs fsc-h"
+      - "fsc-h vs fsc-a"
+      - "fsc-a/fsc-h"
+      - "fsc-h/fsc-a"
+      - "singlets (fsc)"
+      - "singlets (fsc-a vs fsc-h)"
+      - "singlets (fsc-h vs fsc-a)"
+      # SSC-based singlet detection (SSC-A vs SSC-H are semantically equivalent)
+      - "ssc-a vs ssc-h"
+      - "ssc-h vs ssc-a"
+      - "ssc-a/ssc-h"
+      - "ssc-h/ssc-a"
+      - "singlets (ssc)"
+      - "singlets (ssc-a vs ssc-h)"
+      - "singlets (ssc-h vs ssc-a)"
     domain: "qc_gates"
-    notes: "Doublet exclusion gate"
+    notes: "Doublet exclusion gate. FSC-A vs FSC-H and SSC-A vs SSC-H are equivalent methods for singlet detection."
 
   - canonical: "live cells"
     variants:

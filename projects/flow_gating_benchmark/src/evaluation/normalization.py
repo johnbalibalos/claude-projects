@@ -84,16 +84,24 @@ CELL_TYPE_SYNONYMS: dict[str, str] = {
     # Lymphocyte variations
     "lymphocytes": "lymphocytes",
     "lymphs": "lymphocytes",
-    # Singlet variations
+    # Singlet variations (FSC-A vs FSC-H and SSC-A vs SSC-H are semantically equivalent)
     "singlets": "singlets",
     "singlets (fsc)": "singlets",
     "singlets (ssc)": "singlets",
     "singlets (fsc-a vs fsc-h)": "singlets",
+    "singlets (fsc-h vs fsc-a)": "singlets",
     "singlets (ssc-a vs ssc-h)": "singlets",
+    "singlets (ssc-h vs ssc-a)": "singlets",
     "fsc singlets": "singlets",
     "ssc singlets": "singlets",
+    "fsc-a vs fsc-h": "singlets",
+    "fsc-h vs fsc-a": "singlets",
+    "ssc-a vs ssc-h": "singlets",
+    "ssc-h vs ssc-a": "singlets",
     "singlet": "singlets",
     "non-aggregates": "singlets",
+    "single cells": "singlets",
+    "non-doublets": "singlets",
     # Live/Dead variations
     "live cells": "live",
     "live": "live",

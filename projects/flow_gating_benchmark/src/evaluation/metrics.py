@@ -94,8 +94,14 @@ class EvaluationResult:
         }
 
 
-# Default critical gates for PBMC samples
+# Default critical gates for PBMC samples (flow cytometry)
 DEFAULT_CRITICAL_GATES = ["singlets", "live", "live/dead", "lymphocytes", "lymphs", "cd45+"]
+
+# Default critical gates for mass cytometry (no scatter gates)
+DEFAULT_CRITICAL_GATES_CYTOF = ["live", "live/dead", "lymphocytes", "lymphs", "cd45+"]
+
+# Mass cytometry isotope patterns (metal labels instead of fluorophores)
+CYTOF_ISOTOPE_PATTERN = r"^\d{2,3}[A-Za-z]{1,2}$"  # e.g., "89Y", "145Nd", "176Yb"
 
 # Panel-specific critical gates based on markers present
 MARKER_CRITICAL_GATES: dict[str, list[str]] = {
@@ -311,14 +317,72 @@ def compute_structure_accuracy(
     return accuracy, correct, total, errors
 
 
-def derive_panel_critical_gates(panel: Panel | list[dict[str, Any]]) -> list[str]:
-    """Derive critical gates based on panel markers."""
+def is_mass_cytometry_panel(panel: Panel | list[dict[str, Any]]) -> bool:
+    """
+    Detect if a panel is mass cytometry (CyTOF) based on fluorophore patterns.
+
+    Mass cytometry uses metal isotopes (e.g., "89Y", "145Nd", "176Yb") instead
+    of fluorophores (e.g., "FITC", "PE", "APC").
+    """
+    import re
+
+    if hasattr(panel, 'entries'):
+        entries = panel.entries  # type: ignore[union-attr]
+    else:
+        entries = panel  # type: ignore[assignment]
+
+    isotope_count = 0
+    total_with_fluor = 0
+
+    for entry in entries:
+        fluor = entry.get("fluorophore") if isinstance(entry, dict) else getattr(entry, "fluorophore", None)
+        if fluor:
+            total_with_fluor += 1
+            # Check if it matches isotope pattern (e.g., "89Y", "145Nd")
+            if re.match(CYTOF_ISOTOPE_PATTERN, str(fluor)):
+                isotope_count += 1
+
+    # If majority of fluorophores are isotopes, it's mass cytometry
+    return total_with_fluor > 0 and (isotope_count / total_with_fluor) > 0.5
+
+
+def derive_panel_critical_gates(
+    panel: Panel | list[dict[str, Any]],
+    technology: str | None = None,
+) -> list[str]:
+    """
+    Derive critical gates based on panel markers.
+
+    Args:
+        panel: Panel definition
+        technology: Optional override ("flow_cytometry" or "mass_cytometry")
+                   If not provided, auto-detected from panel fluorophores.
+
+    Returns:
+        List of critical gate names expected in the hierarchy.
+
+    Notes:
+        - Flow cytometry: includes singlets (scatter-based doublet exclusion)
+        - Mass cytometry (CyTOF): no scatter gates (singlets not required)
+    """
     if hasattr(panel, 'markers'):
         panel_markers = {m.lower() for m in panel.markers}  # type: ignore[union-attr]
     else:
         panel_markers = {entry["marker"].lower() for entry in panel}  # type: ignore[index]
 
-    critical = ["singlets", "live"]
+    # Auto-detect technology if not provided
+    if technology is None:
+        is_cytof = is_mass_cytometry_panel(panel)
+    else:
+        is_cytof = technology.lower() in ("mass_cytometry", "cytof", "mass cytometry")
+
+    # Start with technology-appropriate base gates
+    if is_cytof:
+        # Mass cytometry: no scatter gates
+        critical = ["live"]
+    else:
+        # Flow cytometry: includes singlets
+        critical = ["singlets", "live"]
 
     for marker, gates in MARKER_CRITICAL_GATES.items():
         if marker in panel_markers:
@@ -332,6 +396,7 @@ def compute_critical_gate_recall(
     ground_truth: GatingHierarchy | dict,
     critical_gates: list[str] | None = None,
     panel: Panel | list[dict] | None = None,
+    technology: str | None = None,
 ) -> tuple[float, list[str]]:
     """
     Compute recall of critical/must-have gates.
@@ -341,6 +406,8 @@ def compute_critical_gate_recall(
         ground_truth: Ground truth hierarchy
         critical_gates: List of critical gate names
         panel: Panel definition for deriving panel-specific critical gates
+        technology: Optional technology type ("flow_cytometry" or "mass_cytometry")
+                   Affects which gates are considered critical (e.g., singlets for flow only)
 
     Returns:
         Tuple of (recall, list of missing critical gates)
@@ -357,11 +424,14 @@ def compute_critical_gate_recall(
 
     if not critical_gates:
         if panel is not None:
-            critical_gates = derive_panel_critical_gates(panel)
+            critical_gates = derive_panel_critical_gates(panel, technology=technology)
         else:
             gt_gates = extract_gate_names(ground_truth)
             gt_normalized = {normalize_gate_name(g): g for g in gt_gates}
-            critical_gates = [gt_normalized[norm] for norm in DEFAULT_CRITICAL_GATES if norm in gt_normalized]
+            # Use technology-appropriate defaults
+            is_cytof = technology and technology.lower() in ("mass_cytometry", "cytof", "mass cytometry")
+            default_gates = DEFAULT_CRITICAL_GATES_CYTOF if is_cytof else DEFAULT_CRITICAL_GATES
+            critical_gates = [gt_normalized[norm] for norm in default_gates if norm in gt_normalized]
 
     if not critical_gates:
         return 1.0, []

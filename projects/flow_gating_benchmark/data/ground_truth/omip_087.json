@@ -1,0 +1,112 @@
+{
+  "test_case_id": "OMIP-087",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-087",
+  "doi": "10.1002/cyto.a.24707",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "technology": "mass_cytometry",
+  "context": {
+    "sample_type": "PBMC",
+    "species": "human",
+    "application": "OMIP-087: 32-parameter mass cytometry panel for CD4/CD8 T cell activation, memory subsets, and helper subsets",
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Mass cytometry (CyTOF) panel - no FSC/SSC scatter gates. Uses metal isotope labels instead of fluorophores."
+  },
+  "panel": {
+    "entries": [
+      {"marker": "CD45", "fluorophore": "89Y", "clone": "HI30"},
+      {"marker": "CD45", "fluorophore": "111Cd", "clone": "HI30"},
+      {"marker": "CD56", "fluorophore": "176Yb", "clone": "N901"},
+      {"marker": "CD16", "fluorophore": "209Bi", "clone": "3G8"},
+      {"marker": "CD11c", "fluorophore": "146Nd", "clone": "3.9"},
+      {"marker": "CD14", "fluorophore": "151Eu", "clone": "M5E2"},
+      {"marker": "CD19", "fluorophore": "142Nd", "clone": "HIB19"},
+      {"marker": "CD3", "fluorophore": "115In", "clone": "UCHT1"},
+      {"marker": "TCRgd", "fluorophore": "173Yb", "clone": "B1"},
+      {"marker": "CD4", "fluorophore": "145Nd", "clone": "RPA-T4"},
+      {"marker": "CD8a", "fluorophore": "168Er", "clone": "SK1"},
+      {"marker": "CD45RA", "fluorophore": "143Nd", "clone": "HI100"},
+      {"marker": "CCR7", "fluorophore": "167Er", "clone": "G043H7"},
+      {"marker": "CD28", "fluorophore": "160Gd", "clone": "CD28.2"},
+      {"marker": "CD27", "fluorophore": "158Gd", "clone": "L128"},
+      {"marker": "CD95", "fluorophore": "164Dy", "clone": "DX2"},
+      {"marker": "CD99", "fluorophore": "147Sm", "clone": "3B2/TA8"},
+      {"marker": "CD127", "fluorophore": "165Ho", "clone": "A019D5"},
+      {"marker": "CCR6", "fluorophore": "141Pr", "clone": "11A9"},
+      {"marker": "CCR4", "fluorophore": "149Sm", "clone": "L291H4"},
+      {"marker": "CXCR5", "fluorophore": "153Eu", "clone": "RF8B2"},
+      {"marker": "CXCR3", "fluorophore": "156Gd", "clone": "G025H7"},
+      {"marker": "CCR5", "fluorophore": "171Yb", "clone": "NP-6G4"},
+      {"marker": "CCR10", "fluorophore": "175Lu", "clone": "314,305"},
+      {"marker": "FoxP3", "fluorophore": "159Tb", "clone": "259D/C7"},
+      {"marker": "Bcl-2", "fluorophore": "152Sm", "clone": "100"},
+      {"marker": "PD-1", "fluorophore": "155Gd", "clone": "EH12.2H7"},
+      {"marker": "Ki-67", "fluorophore": "162Dy", "clone": "B56"},
+      {"marker": "CD57", "fluorophore": "166Er", "clone": "HCD57"},
+      {"marker": "CD25", "fluorophore": "169Tm", "clone": "2A3"},
+      {"marker": "HLA-DR", "fluorophore": "170Er", "clone": "L243"},
+      {"marker": "CD38", "fluorophore": "172Yb", "clone": "HIT2"},
+      {"marker": "CD31", "fluorophore": "144Nd", "clone": "Wm59"}
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "marker_logic": null,
+      "children": [
+        {
+          "name": "Leukocytes",
+          "marker_logic": "CD45+",
+          "children": [
+            {
+              "name": "T cells",
+              "marker_logic": "CD3+",
+              "children": [
+                {
+                  "name": "CD4+ T cells",
+                  "marker_logic": "CD4+",
+                  "children": [
+                    {"name": "Naive CD4 T cells", "marker_logic": "CD45RA+ CCR7+ CD28+ CD95-", "children": []},
+                    {"name": "Stem cell memory CD4 T cells", "marker_logic": "CD45RA+ CCR7+ CD28+ CD95+", "children": []},
+                    {"name": "Central memory CD4 T cells", "marker_logic": "CD45RA- CCR7+ CD28+ CD95+", "children": []},
+                    {"name": "Transitional memory CD4 T cells", "marker_logic": "CD45RA- CCR7- CD28+ CD95+", "children": []},
+                    {"name": "Effector memory CD4 T cells", "marker_logic": "CD45RA- CCR7- CD28- CD95+", "children": []},
+                    {"name": "Terminal effector CD4 T cells", "marker_logic": "CD45RA+ CCR7- CD28- CD95+", "children": []},
+                    {"name": "T regulatory cells", "marker_logic": "CD25+ CD127- FoxP3+", "children": []},
+                    {"name": "T follicular helper cells", "marker_logic": "CXCR5+", "children": []}
+                  ]
+                },
+                {
+                  "name": "CD8+ T cells",
+                  "marker_logic": "CD8+",
+                  "children": [
+                    {"name": "Naive CD8 T cells", "marker_logic": "CD45RA+ CCR7+ CD28+ CD95-", "children": []},
+                    {"name": "Stem cell memory CD8 T cells", "marker_logic": "CD45RA+ CCR7+ CD28+ CD95+", "children": []},
+                    {"name": "Central memory CD8 T cells", "marker_logic": "CD45RA- CCR7+ CD28+ CD95+", "children": []},
+                    {"name": "Transitional memory CD8 T cells", "marker_logic": "CD45RA- CCR7- CD28+ CD95+", "children": []},
+                    {"name": "Effector memory CD8 T cells", "marker_logic": "CD45RA- CCR7- CD28- CD95+", "children": []},
+                    {"name": "Terminal effector CD8 T cells", "marker_logic": "CD45RA+ CCR7- CD28- CD95+", "children": []}
+                  ]
+                },
+                {"name": "TCRgd T cells", "marker_logic": "TCRgd+", "children": []}
+              ]
+            },
+            {"name": "NK cells", "marker_logic": "CD3- CD14- CD19- CD16+ CD56+", "children": []},
+            {"name": "B cells", "marker_logic": "CD3- CD14- CD19+", "children": []},
+            {"name": "Monocytes", "marker_logic": "CD3- CD19- CD14+", "children": []},
+            {"name": "Dendritic cells", "marker_logic": "CD14- CD19- CD3- HLA-DR+ CD11c+", "children": []}
+          ]
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "curation_date": "2026-01-11",
+    "curator": "Claude",
+    "extraction_method": "llm",
+    "notes": "Mass cytometry panel - scatter gates not applicable"
+  }
+}

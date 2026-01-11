@@ -147,24 +147,27 @@ flow_gating_benchmark/
 
 ## Ground Truth OMIPs
 
-12 curated OMIP panels with manually verified gating hierarchies:
+13 curated OMIP panels with manually verified gating hierarchies:
 
-| OMIP | Species | Focus | Description |
-|------|---------|-------|-------------|
-| 008 | Human | T cells | Th1/Th2 cytokine polyfunctionality |
-| 022 | Human | T cells | Antigen-specific T-cell functionality and memory |
-| 025 | Human | T/NK | T- and NK-cell responses including memory and Tfh |
-| 035 | Macaque | NK | Functional analysis of NK cell subsets |
-| 053 | Human | Tregs | Identification/classification of FoxP3+ populations |
-| 064 | Human | NK | 27-color panel for NK cell characterization |
-| 074 | Human | B cells | IgG and IgA subclass phenotyping |
-| 076 | Murine | Pan | High-dimensional T-cell, B-cell, and APC phenotyping |
-| 077 | Human | Pan | All principal leukocyte populations (broad panel) |
-| 083 | Human | Pan | 21-marker 18-color in-depth phenotyping |
-| 095 | Human | Pan | 40-color spectral - all major leukocyte populations |
-| 101 | Human | Pan | 27-color whole blood leukocyte immunophenotyping |
+| OMIP | Species | Focus | Technology | Description |
+|------|---------|-------|------------|-------------|
+| 008 | Human | T cells | Flow | Th1/Th2 cytokine polyfunctionality |
+| 022 | Human | T cells | Flow | Antigen-specific T-cell functionality and memory |
+| 025 | Human | T/NK | Flow | T- and NK-cell responses including memory and Tfh |
+| 035 | Macaque | NK | Flow | Functional analysis of NK cell subsets |
+| 053 | Human | Tregs | Flow | Identification/classification of FoxP3+ populations |
+| 064 | Human | NK | Flow | 27-color panel for NK cell characterization |
+| 074 | Human | B cells | Flow | IgG and IgA subclass phenotyping |
+| 076 | Murine | Pan | Flow | High-dimensional T-cell, B-cell, and APC phenotyping |
+| 077 | Human | Pan | Flow | All principal leukocyte populations (broad panel) |
+| 083 | Human | Pan | Flow | 21-marker 18-color in-depth phenotyping |
+| **087** | **Human** | **T cells** | **CyTOF** | **32-parameter mass cytometry for CD4/CD8 memory subsets** |
+| 095 | Human | Pan | Flow | 40-color spectral - all major leukocyte populations |
+| 101 | Human | Pan | Flow | 27-color whole blood leukocyte immunophenotyping |
 
-**Coverage**: 10 human, 1 macaque, 1 murine. Mix of focused (T/NK/B) and pan-leukocyte panels. Complexity ranges from 18 to 40 colors.
+**Coverage**: 11 human, 1 macaque, 1 murine. Mix of focused (T/NK/B) and pan-leukocyte panels. Complexity ranges from 18 to 40 colors. Includes 1 mass cytometry (CyTOF) panel for technology diversity.
+
+**Technology handling**: The evaluation metrics automatically detect mass cytometry panels (metal isotope labels like 145Nd, 176Yb) and skip scatter-based critical gates (singlets) that don't apply to CyTOF.
 
 ---
 
