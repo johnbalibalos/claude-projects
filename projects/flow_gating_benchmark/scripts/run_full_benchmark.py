@@ -275,7 +275,12 @@ def run_benchmark(config: BenchmarkConfig, test_cases_dir: Path, dry_run: bool =
 
                 try:
                     # Build prompt
-                    prompt = build_prompt(test_case, condition)
+                    prompt = build_prompt(
+                        test_case,
+                        template_name=condition.prompt_strategy,
+                        context_level=condition.context_level,
+                        rag_mode=condition.rag_mode,
+                    )
 
                     # Get prediction
                     response = client.call(prompt)
