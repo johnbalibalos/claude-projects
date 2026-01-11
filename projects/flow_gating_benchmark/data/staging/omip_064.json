@@ -1,0 +1,57 @@
+{
+  "test_case_id": "OMIP-064",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-064",
+  "doi": "10.1002/cyto.a.24031",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "PBMC",
+    "species": "human",
+    "application": "OMIP-064: A 27-Color Flow Cytometry Panel to Detect and Characterize Human NK Cells and Other Innate Lymphoid Cell Subsets, MAIT Cells, and γδ T Cells",
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Extensive phenotyping of NK cells, ILCs, MAIT cells, and γδ T cells",
+    "cross_references": ["OMIP-029", "OMIP-039", "OMIP-044", "OMIP-055", "OMIP-056", "OMIP-058"]
+  },
+  "panel": {
+    "entries": [
+      {"marker": "CD16", "fluorophore": null, "clone": null},
+      {"marker": "Viability", "fluorophore": null, "clone": null},
+      {"marker": "CD3", "fluorophore": null, "clone": null},
+      {"marker": "CD19", "fluorophore": null, "clone": null},
+      {"marker": "HLA-DR", "fluorophore": null, "clone": null},
+      {"marker": "CD27", "fluorophore": null, "clone": null},
+      {"marker": "CD8", "fluorophore": null, "clone": null},
+      {"marker": "TCRgammadelta", "fluorophore": null, "clone": null},
+      {"marker": "NKG2D", "fluorophore": null, "clone": null},
+      {"marker": "CD56", "fluorophore": null, "clone": null},
+      {"marker": "Vd2 TCR", "fluorophore": null, "clone": null},
+      {"marker": "CD38", "fluorophore": null, "clone": null},
+      {"marker": "CD57", "fluorophore": null, "clone": null},
+      {"marker": "CD4", "fluorophore": null, "clone": null},
+      {"marker": "TCRva7.2", "fluorophore": null, "clone": null},
+      {"marker": "FcER1g", "fluorophore": null, "clone": null},
+      {"marker": "Ki67", "fluorophore": null, "clone": null},
+      {"marker": "CD14", "fluorophore": null, "clone": null},
+      {"marker": "CD127", "fluorophore": null, "clone": null},
+      {"marker": "NKp46", "fluorophore": null, "clone": null},
+      {"marker": "CRTh2", "fluorophore": null, "clone": null},
+      {"marker": "CD33", "fluorophore": null, "clone": null},
+      {"marker": "c-kit", "fluorophore": null, "clone": null},
+      {"marker": "NKG2A", "fluorophore": null, "clone": null},
+      {"marker": "CD337/NKp30", "fluorophore": null, "clone": null},
+      {"marker": "NKG2C", "fluorophore": null, "clone": null},
+      {"marker": "CD161", "fluorophore": null, "clone": null}
+    ]
+  },
+  "gating_hierarchy": {
+    "root": null
+  },
+  "metadata": {
+    "curation_date": "2026-01-11",
+    "curator": "manual",
+    "notes": "Panel markers added; hierarchy pending curation"
+  }
+}

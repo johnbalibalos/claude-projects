@@ -19,7 +19,6 @@ from typing import TYPE_CHECKING, Any
 from .hierarchy import (
     extract_all_parent_relationships,
     extract_gate_names,
-    extract_parent_map,  # Re-exported for backward compatibility
     get_hierarchy_depth,
 )
 from .normalization import (

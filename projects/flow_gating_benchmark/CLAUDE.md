@@ -147,25 +147,27 @@ flow_gating_benchmark/
 
 ## Ground Truth OMIPs
 
-13 curated OMIP panels with manually verified gating hierarchies:
+Ground truth folder is currently **empty** - all OMIPs pending manual verification.
 
-| OMIP | Species | Focus | Technology | Description |
-|------|---------|-------|------------|-------------|
-| 008 | Human | T cells | Flow | Th1/Th2 cytokine polyfunctionality |
-| 022 | Human | T cells | Flow | Antigen-specific T-cell functionality and memory |
-| 025 | Human | T/NK | Flow | T- and NK-cell responses including memory and Tfh |
-| 035 | Macaque | NK | Flow | Functional analysis of NK cell subsets |
-| 053 | Human | Tregs | Flow | Identification/classification of FoxP3+ populations |
-| 064 | Human | NK | Flow | 27-color panel for NK cell characterization |
-| 074 | Human | B cells | Flow | IgG and IgA subclass phenotyping |
-| 076 | Murine | Pan | Flow | High-dimensional T-cell, B-cell, and APC phenotyping |
-| 077 | Human | Pan | Flow | All principal leukocyte populations (broad panel) |
-| 083 | Human | Pan | Flow | 21-marker 18-color in-depth phenotyping |
-| **087** | **Human** | **T cells** | **CyTOF** | **32-parameter mass cytometry for CD4/CD8 memory subsets** |
-| 095 | Human | Pan | Flow | 40-color spectral - all major leukocyte populations |
-| 101 | Human | Pan | Flow | 27-color whole blood leukocyte immunophenotyping |
+### Staging (`data/staging/`) - 13 OMIPs pending verification
 
-**Coverage**: 11 human, 1 macaque, 1 murine. Mix of focused (T/NK/B) and pan-leukocyte panels. Complexity ranges from 18 to 40 colors. Includes 1 mass cytometry (CyTOF) panel for technology diversity.
+| OMIP | Species | Focus | Technology | Description | Hierarchy |
+|------|---------|-------|------------|-------------|-----------|
+| 008 | Human | T cells | Flow | Th1/Th2 cytokine polyfunctionality | 7 gates |
+| 022 | Human | T cells | Flow | Antigen-specific T-cell functionality and memory | 12 gates |
+| 025 | Human | T/NK | Flow | T- and NK-cell responses including memory and Tfh | 14 gates |
+| 035 | Macaque | NK | Flow | Functional analysis of NK cell subsets | 14 gates |
+| 053 | Human | Tregs | Flow | Identification/classification of FoxP3+ populations | 7 gates |
+| 064 | Human | NK/ILC | Flow | 27-color NK cells, ILCs, MAIT, γδ T cells | **empty** |
+| 074 | Human | B cells | Flow | IgG and IgA subclass phenotyping | 22 gates |
+| 076 | Murine | Pan | Flow | High-dimensional T-cell, B-cell, and APC phenotyping | 18 gates |
+| 077 | Human | Pan | Flow | All principal leukocyte populations (broad panel) | 20 gates |
+| 083 | Human | Pan | Flow | 21-marker 18-color in-depth phenotyping | 10 gates |
+| 087 | Human | T cells | CyTOF | 32-parameter mass cytometry for CD4/CD8 memory subsets | 24 gates |
+| 095 | Human | Pan | Flow | 40-color spectral - all major leukocyte populations | 17 gates |
+| 101 | Human | Pan | Flow | 27-color whole blood leukocyte immunophenotyping | 32 gates |
+
+To activate an OMIP for benchmarking, manually verify the hierarchy and move to `data/ground_truth/`.
 
 **Technology handling**: The evaluation metrics automatically detect mass cytometry panels (metal isotope labels like 145Nd, 176Yb) and skip scatter-based critical gates (singlets) that don't apply to CyTOF.
 
