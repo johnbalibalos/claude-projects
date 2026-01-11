@@ -30,3 +30,11 @@ checkpoints/
 
 # Local config
 .claude/settings.local.json
+
+# CI/workflow files (require special OAuth scope)
+.github/
+.pre-commit-config.yaml
+pytest.ini
+
+# Test artifacts
+.hypothesis/
