@@ -45,6 +45,7 @@ from experiments.prediction_collector import (  # noqa: E402
     Prediction,
     PredictionCollector,
 )
+from utils.provenance import ExperimentContext  # noqa: E402
 
 
 def print_phase(name: str):
@@ -291,6 +292,21 @@ def main():
 
     # Create output directory
     args.output.mkdir(parents=True, exist_ok=True)
+
+    # Create and save experiment context for provenance tracking
+    experiment_config = {
+        "phase": args.phase,
+        "models": args.models,
+        "n_bootstrap": args.n_bootstrap,
+        "dry_run": args.dry_run,
+        "test_cases_dir": str(args.test_cases),
+    }
+    ctx = ExperimentContext.create(
+        ground_truth_dir=args.test_cases,
+        config=experiment_config,
+    )
+    ctx.save(args.output)
+    ctx.print_summary()
 
     predictions = None
     scoring_results = None
