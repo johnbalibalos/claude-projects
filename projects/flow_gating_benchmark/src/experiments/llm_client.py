@@ -194,6 +194,13 @@ class GeminiClient:
             )
 
         content = response.text if response.text else ""
+
+        # Handle empty response (likely safety filtering that didn't trigger finish_reason)
+        if not content.strip():
+            # Try to get more info from the response
+            finish_reason = candidate.finish_reason.name if candidate.finish_reason else "UNKNOWN"
+            content = f"[EMPTY_RESPONSE: finish_reason={finish_reason}]"
+
         tokens = 0
         if response.usage_metadata:
             tokens = (response.usage_metadata.prompt_token_count or 0) + \
@@ -219,7 +226,7 @@ class ClaudeCLIClient:
     def __init__(
         self,
         model: str = "claude-sonnet-4-20250514",
-        delay_seconds: float = 2.0,
+        delay_seconds: float = 0.5,
     ):
         self.model = model
         self.delay_seconds = delay_seconds
@@ -395,21 +402,23 @@ def create_client(model: str, dry_run: bool = False, use_cli: bool = False) -> L
         return OllamaClient(model)
 
 
-# Model registry for easy lookup
+# Model registry for shorthand → full model ID resolution
 #
 # NOTE: The "-cli" suffix distinguishes API vs CLI routing:
 #   - "claude-opus"     → AnthropicClient (API, billed per token)
 #   - "claude-opus-cli" → ClaudeCLIClient (OAuth, Max subscription)
 #
-# The create_client() function checks for "-cli" suffix to route appropriately.
-# See conditions.py for the authoritative model list with full IDs.
+# The create_client() function strips "-cli" suffix BEFORE calling resolve_model(),
+# so the -cli entries below are only for documentation/test consistency.
+# See conditions.py:MODELS for the authoritative experiment condition list.
 #
 MODEL_REGISTRY = {
-    # Anthropic API (these map to base model IDs without -cli suffix)
+    # Anthropic API
     "claude-opus": "claude-opus-4-20250514",
     "claude-sonnet": "claude-sonnet-4-20250514",
     "claude-haiku": "claude-3-5-haiku-20241022",
-    # Anthropic CLI (same base IDs - the -cli suffix is in the key, not value)
+    # Anthropic CLI (these keys exist for test coverage but are never looked up -
+    # create_client() strips -cli suffix before resolution)
     "claude-opus-cli": "claude-opus-4-20250514",
     "claude-sonnet-cli": "claude-sonnet-4-20250514",
     "claude-haiku-cli": "claude-3-5-haiku-20241022",

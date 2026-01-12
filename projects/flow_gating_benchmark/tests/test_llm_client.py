@@ -94,8 +94,8 @@ class TestClaudeCLIClient:
         assert mock_cli_client._cli_model == "sonnet"
 
     def test_default_delay(self, mock_cli_client):
-        """Default delay should be 2 seconds."""
-        assert mock_cli_client.delay_seconds == 2.0
+        """Default delay should be 0.5 seconds."""
+        assert mock_cli_client.delay_seconds == 0.5
 
     def test_custom_delay(self):
         """Should accept custom delay."""

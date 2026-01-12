@@ -68,19 +68,55 @@ python scripts/run_full_benchmark.py --resume --n-bootstrap 3 -y
 
 ### Run Modular Pipeline (Recommended for Development)
 
+The modular pipeline runs in decoupled phases, enabling checkpointing and re-running individual steps.
+
 ```bash
-# Phase 1: Collect predictions only
-python scripts/run_modular_pipeline.py --phase predict --dry-run
+# Full run on staging data with Gemini
+python scripts/run_modular_pipeline.py \
+    --phase all \
+    --models gemini-2.0-flash \
+    --test-cases data/staging \
+    --n-bootstrap 1 \
+    --force
 
-# Phase 2: Score predictions
-python scripts/run_modular_pipeline.py --phase score
-
-# Phase 3: Run LLM judge
-python scripts/run_modular_pipeline.py --phase judge
-
-# All phases
-python scripts/run_modular_pipeline.py --phase all --models claude-sonnet-cli --n-bootstrap 1
+# Run phases independently
+python scripts/run_modular_pipeline.py --phase predict --dry-run  # Collect predictions
+python scripts/run_modular_pipeline.py --phase score              # Score cached predictions
+python scripts/run_modular_pipeline.py --phase judge              # Run LLM judge
 ```
+
+#### Parameters
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `--phase` | `all` | Which phase to run: `predict`, `score`, `judge`, or `all` |
+| `--models` | `claude-sonnet-cli` | Models to test (space-separated). Options: `gemini-2.0-flash`, `gemini-2.5-pro`, `claude-sonnet-cli`, `claude-opus-cli`, `gpt-4o` |
+| `--test-cases` | `data/ground_truth` | Directory with test case JSON files |
+| `--n-bootstrap` | `1` | Number of runs per condition (for variance estimation) |
+| `--max-cases` | None | Limit number of test cases (for quick testing) |
+| `--dry-run` | False | Use mock LLM client (no API calls, no cost) |
+| `--force` | False | Skip cost confirmation hook |
+| `--resume` | False | Resume from checkpoint |
+| `--output` | `results/modular_pipeline` | Output directory |
+
+#### Conditions Generated
+
+Each model runs with 4 conditions (cartesian product):
+- **Context levels:** `minimal` (markers only), `standard` (+ sample type, species, application)
+- **Prompt strategies:** `direct` (output JSON), `cot` (chain-of-thought reasoning first)
+
+Total calls = `n_models × n_test_cases × 4 conditions × n_bootstrap`
+
+#### Cost Estimation
+
+```
+gemini-2.0-flash:  ~$0.01 per test case (4 conditions)
+gemini-2.5-pro:    ~$0.10 per test case (used for judge)
+claude-sonnet:     ~$0.05 per test case
+claude-opus:       ~$0.50 per test case
+```
+
+Example: 13 test cases × gemini-2.0-flash ≈ $0.15 + judge ($1.30) ≈ **$1.50 total**
 
 ### Run Tests
 
@@ -248,10 +284,27 @@ MODELS = {
 
 ## Debugging
 
-### Quick Validation
+### Quick Testing (Real API, Minimal Cost)
+
+For testing bug fixes or code changes, use the cheapest model with minimal cases:
 
 ```bash
-# Single test case, dry run
+# Real API test (~$0.01) - validates prompts and parsing work
+python scripts/run_modular_pipeline.py \
+    --phase all \
+    --models gemini-2.0-flash \
+    --test-cases data/staging \
+    --n-bootstrap 1 \
+    --max-cases 1 \
+    --force
+```
+
+Requires `GOOGLE_API_KEY`. Use `--dry-run` instead of `--force` to test pipeline mechanics without API calls.
+
+### Quick Validation (Dry Run)
+
+```bash
+# Mock API calls - tests pipeline mechanics only
 python scripts/run_modular_pipeline.py \
     --phase all \
     --models claude-sonnet-cli \
@@ -333,10 +386,39 @@ for model, stats in data['stats']['by_model'].items():
 
 See `docs/UTILITIES.md` for detailed analysis. Key issues:
 
-1. **Duplicate model registries** in 3 locations
-2. **Duplicate serialization** (to_dict/from_dict) across 6 dataclasses
-3. **Duplicate checkpoint logic** in 4 modules
+1. **Duplicate model registries** in 2 locations (conditions.py:MODELS, llm_client.py:MODEL_REGISTRY)
+   - conditions.py is authoritative for experiments
+   - llm_client.py provides shorthand resolution
+2. **Duplicate serialization** (to_dict/from_dict) across 6+ dataclasses
+3. **Duplicate checkpoint logic** - CheckpointManager in utils/checkpoint.py, provenance in utils/provenance.py
 4. **Multiple normalization functions** with different behavior
+5. **Dead code candidates** (verify before removing):
+   - `src/experiments/experiment_conditions.py` - Legacy A/B testing conditions (381 lines)
+   - `src/experiments/runner.py` - Legacy runner, replaced by modular pipeline
+
+---
+
+## Known Model Limitations
+
+### Token Usage in Reasoning Models
+
+**Issue:** High-reasoning models (gemini-2.5-pro, claude-opus, o1) use significantly more tokens for "thinking" before generating output. This can cause `MAX_TOKENS` failures on complex panels even when the actual response fits within limits.
+
+**Observed:** In initial benchmarks, gemini-2.5-pro hit token limits on 12% of predictions (61/520), specifically on complex panels:
+- OMIP-064: 27-color NK panel
+- OMIP-083: 21-marker panel
+- OMIP-095: 40-color spectral panel
+
+Meanwhile, gemini-2.0-flash and gemini-2.5-flash completed 100% of predictions successfully.
+
+**Current settings:** `max_tokens=6000` in `CollectorConfig`
+
+**Recommendations:**
+1. Increase `max_tokens` to 10000+ for reasoning models on complex panels
+2. Track token breakdown (thinking vs response) when APIs support it
+3. Consider model-specific token limits in `CollectorConfig`
+
+**TODO:** Add per-model token configuration. The Gemini API may eventually expose thinking token counts separately - monitor for this capability to better understand token allocation.
 
 ---
 
