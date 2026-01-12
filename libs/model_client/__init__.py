@@ -251,22 +251,23 @@ class GeminiClient:
         )
 
         # Relaxed safety settings for biomedical/scientific content
+        # pyright: ignore - google.genai types not properly stubbed
         safety_settings = [
-            types.SafetySetting(  # type: ignore[call-arg]
-                category="HARM_CATEGORY_DANGEROUS_CONTENT",
-                threshold="BLOCK_ONLY_HIGH",
+            types.SafetySetting(
+                category="HARM_CATEGORY_DANGEROUS_CONTENT",  # pyright: ignore
+                threshold="BLOCK_ONLY_HIGH",  # pyright: ignore
             ),
-            types.SafetySetting(  # type: ignore[call-arg]
-                category="HARM_CATEGORY_HARASSMENT",
-                threshold="BLOCK_ONLY_HIGH",
+            types.SafetySetting(
+                category="HARM_CATEGORY_HARASSMENT",  # pyright: ignore
+                threshold="BLOCK_ONLY_HIGH",  # pyright: ignore
             ),
-            types.SafetySetting(  # type: ignore[call-arg]
-                category="HARM_CATEGORY_HATE_SPEECH",
-                threshold="BLOCK_ONLY_HIGH",
+            types.SafetySetting(
+                category="HARM_CATEGORY_HATE_SPEECH",  # pyright: ignore
+                threshold="BLOCK_ONLY_HIGH",  # pyright: ignore
             ),
-            types.SafetySetting(  # type: ignore[call-arg]
-                category="HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                threshold="BLOCK_ONLY_HIGH",
+            types.SafetySetting(
+                category="HARM_CATEGORY_SEXUALLY_EXPLICIT",  # pyright: ignore
+                threshold="BLOCK_ONLY_HIGH",  # pyright: ignore
             ),
         ]
 
