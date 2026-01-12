@@ -422,6 +422,72 @@ Meanwhile, gemini-2.0-flash and gemini-2.5-flash completed 100% of predictions s
 
 ---
 
+## Hypothesis Testing Framework
+
+The project includes a rigorous hypothesis testing framework to distinguish between different failure modes:
+
+### Available Tests
+
+| Test | Question Answered | Key Metric |
+|------|-------------------|------------|
+| **Frequency Confound** | Is failure due to token frequency or reasoning? | R² correlation |
+| **Alien Cell** | Does model reason from markers or memorize population names? | F1 delta |
+| **Format Ablation** | Is failure due to prose parsing or reasoning? | Format variance |
+| **CoT Mechanistic** | Does CoT cause prior hallucinations? | Hallucination rate |
+| **Cognitive Refusal** | Is model blind to context or over-cautious? | Forcing effect |
+
+### Running Hypothesis Tests
+
+```bash
+# Analyze existing benchmark results
+python run_hypothesis_tests.py --results results/benchmark_results.json
+
+# Run specific tests
+python run_hypothesis_tests.py --tests frequency_confound alien_cell
+
+# Estimate cost before running live tests
+python run_hypothesis_tests.py --estimate-cost --tests alien_cell format_ablation
+
+# Run tests
+pytest tests/test_hypothesis_tests.py -v
+```
+
+### Key Findings Template
+
+When presenting results, use this framework:
+
+> "Is this a failure of reasoning or just a lack of training data frequency?
+>
+> To rule out the frequency confound, I designed an 'Alien Cell' ablation: I provide
+> the model with valid marker logic (e.g., CD3+ CD4+) but label the target population
+> with a nonsense word like 'Glorp Cells'.
+>
+> If the model relies on retrieval, it will fail to gate 'Glorp Cells' because it has
+> no prior association with that token. If it relies on first-principles logic, it
+> should solve it perfectly."
+
+### Hypothesis Test Interpretation
+
+| R² | Interpretation |
+|----|----------------|
+| > 0.8 | Frequency explains performance (memorization) |
+| 0.5-0.8 | Mixed - both frequency and reasoning |
+| < 0.5 | Reasoning deficit (not just frequency) |
+
+| Alien Cell Delta | Interpretation |
+|------------------|----------------|
+| < 0.05 | Model reasons from markers |
+| 0.05-0.20 | Mixed evidence |
+| > 0.20 | Model relies on population name tokens |
+
+## Related Projects
+
+- **flow_panel_optimizer**: Tests spectral calculations (complements this project)
+- Uses shared `libs/mcp_tester` for ablation framework
+- Uses shared `libs/hypothesis_pipeline` for statistical analysis
+
+---
+
 ## Related Resources
 
 - HIPC Gating Standards: https://www.nature.com/articles/srep20686
