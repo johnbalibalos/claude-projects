@@ -1,0 +1,323 @@
+{
+  "test_case_id": "OMIP-077",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-077",
+  "doi": "10.1002/cyto.a.24481",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Leukocytes from human WB (anticoagulated, erythrocyte-depleted)",
+    "species": "human",
+    "application": "Comprehensive phenotyping of leukocyte subsets in WB using flow cytometry with just 14 colors",
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Optimized for whole blood analysis including polymorphonuclear cells. No viability dye used - dead cells excluded by FSC/SSC. Supports absolute cell counting. Detects CD34+ progenitors and mDC subsets (CD1c+ vs CD141+).",
+    "cross_references": [
+      "OMIP-023",
+      "OMIP-024",
+      "OMIP-042",
+      "OMIP-051",
+      "OMIP-063"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/CYTO-101-15.pdf"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD1c",
+        "fluorophore": "PE",
+        "clone": "AD5-8E7",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "BV605",
+        "clone": "OKT3",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "BV711",
+        "clone": "M\u03a6P9",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD15",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": "HI98",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "APC-efluor780",
+        "clone": "ebioCB16",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "APC-R700",
+        "clone": "HIB19",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD34",
+        "fluorophore": "FITC",
+        "clone": "HPCA-2",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "BV421",
+        "clone": "HIT2",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "BV480",
+        "clone": "HI30",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "PE-Cy7",
+        "clone": "NCAM16.2",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD123",
+        "fluorophore": "BV650",
+        "clone": "7G3",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD141",
+        "fluorophore": "APC",
+        "clone": "AD5-14H12",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD193",
+        "fluorophore": "PE-CF594",
+        "clone": "5E8",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "BV786",
+        "clone": "G46-6",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": [],
+      "gate_type": "Unknown",
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [],
+          "marker_logic": "FSC-A vs FSC-H",
+          "gate_type": "Unknown",
+          "children": [
+            {
+              "name": "Live cells",
+              "markers": [],
+              "marker_logic": "Viability-",
+              "gate_type": "Unknown",
+              "children": [
+                {
+                  "name": "Leukocytes",
+                  "markers": [],
+                  "marker_logic": "CD45+",
+                  "gate_type": "Unknown",
+                  "children": [
+                    {
+                      "name": "T cells",
+                      "markers": [],
+                      "marker_logic": "CD3+",
+                      "gate_type": "Unknown",
+                      "children": [
+                        {
+                          "name": "NK-T cells",
+                          "markers": [],
+                          "marker_logic": "CD3+ CD56+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        }
+                      ],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "NK cells",
+                      "markers": [],
+                      "marker_logic": "CD3- CD56+",
+                      "gate_type": "Unknown",
+                      "children": [],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "B cells",
+                      "markers": [],
+                      "marker_logic": "CD19+ CD38-",
+                      "gate_type": "Unknown",
+                      "children": [
+                        {
+                          "name": "Marginal Zone B cells",
+                          "markers": [],
+                          "marker_logic": "CD19+ CD1c+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        }
+                      ],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "Plasma cells",
+                      "markers": [],
+                      "marker_logic": "CD19+ CD38+ HLA-DR+",
+                      "gate_type": "Unknown",
+                      "children": [],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "Classical monocytes",
+                      "markers": [],
+                      "marker_logic": "CD14+ CD16- HLA-DR+",
+                      "gate_type": "Unknown",
+                      "children": [],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "Intermediate monocytes",
+                      "markers": [],
+                      "marker_logic": "CD14+ CD16+ HLA-DR+",
+                      "gate_type": "Unknown",
+                      "children": [],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "Non-classical monocytes",
+                      "markers": [],
+                      "marker_logic": "CD14- CD16+ HLA-DR+",
+                      "gate_type": "Unknown",
+                      "children": [],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "CD1c+ mDCs",
+                      "markers": [],
+                      "marker_logic": "CD14- CD19- CD1c+ HLA-DR+",
+                      "gate_type": "Unknown",
+                      "children": [],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "CD141+ mDCs",
+                      "markers": [],
+                      "marker_logic": "CD14- CD19- CD141+ HLA-DR+",
+                      "gate_type": "Unknown",
+                      "children": [],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "pDCs",
+                      "markers": [],
+                      "marker_logic": "CD14- CD19- CD123+ HLA-DR+",
+                      "gate_type": "Unknown",
+                      "children": [],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "Neutrophils",
+                      "markers": [],
+                      "marker_logic": "CD16+ CD15+ HLA-DR-",
+                      "gate_type": "Unknown",
+                      "children": [],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "Eosinophils",
+                      "markers": [],
+                      "marker_logic": "CD15+ CD193+",
+                      "gate_type": "Unknown",
+                      "children": [],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "Basophils",
+                      "markers": [],
+                      "marker_logic": "CD123+ CD38+ CD193+",
+                      "gate_type": "Unknown",
+                      "children": [],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "Progenitor cells",
+                      "markers": [],
+                      "marker_logic": "CD34+",
+                      "gate_type": "Unknown",
+                      "children": [],
+                      "is_critical": false
+                    }
+                  ],
+                  "is_critical": false
+                }
+              ],
+              "is_critical": true
+            }
+          ],
+          "is_critical": true
+        }
+      ],
+      "is_critical": true
+    }
+  },
+  "validation": {
+    "paper_source": null,
+    "wsp_extraction_match": null,
+    "discrepancies": [],
+    "curator_notes": null,
+    "validation_date": null
+  },
+  "metadata": {
+    "curation_date": "2026-01-09",
+    "curator": "claude-extraction",
+    "flowkit_version": null,
+    "last_updated": "2026-01-09"
+  }
+}

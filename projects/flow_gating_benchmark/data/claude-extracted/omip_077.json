@@ -352,7 +352,15 @@
         "notes": null
       }
     },
-    "context": {}
+    "context": {
+      "sample_type": "Leukocytes from human WB (anticoagulated, erythrocyte-depleted)",
+      "species": "human",
+      "application": "Comprehensive phenotyping of leukocyte subsets in WB using flow cytometry with just 14 colors",
+      "cross_references": ["OMIP-023", "OMIP-024", "OMIP-042", "OMIP-051", "OMIP-063"],
+      "notes": "Optimized for whole blood analysis including polymorphonuclear cells. No viability dye used - dead cells excluded by FSC/SSC. Supports absolute cell counting. Detects CD34+ progenitors and mDC subsets (CD1c+ vs CD141+).",
+      "pdf_verified": true,
+      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/CYTO-101-15.pdf"
+    }
   },
   "concordance": {
     "panel": [

@@ -149,6 +149,7 @@ def detect_task_failure(
     total_failure_signals = meta_score + refusal_score + instruction_score
 
     # Strong positive signal from gates reduces failure confidence
+    # If we have enough valid gates, meta-commentary is likely just preamble
     if gate_count >= 5 and total_failure_signals <= 1:
         return TaskFailureResult(
             is_failure=False,
@@ -158,14 +159,39 @@ def detect_task_failure(
             gate_count=gate_count,
         )
 
+    # Even stronger: many gates override moderate meta-commentary
+    # A response with 10+ gates and meta-phrases is likely a valid hierarchy
+    # with explanatory text, not a task failure
+    if gate_count >= 10:
+        return TaskFailureResult(
+            is_failure=False,
+            failure_type=TaskFailureType.NONE,
+            confidence=0.0,
+            evidence=[],
+            gate_count=gate_count,
+        )
+
     # Determine primary failure type
-    if meta_score >= 2 or (meta_score >= 1 and gate_count < 3):
+    # Require BOTH high meta_score AND low gate count to classify as failure
+    # Previously: meta_score >= 2 alone triggered failure, ignoring valid content
+    if meta_score >= 2 and gate_count < 5:
         confidence = min(1.0, meta_score / 3 + (0.3 if gate_count < 3 else 0))
         return TaskFailureResult(
             is_failure=True,
             failure_type=TaskFailureType.META_QUESTIONS,
             confidence=confidence,
             evidence=evidence[:5],  # Limit evidence
+            gate_count=gate_count,
+        )
+
+    # Low gate count with any meta signal is suspicious
+    if meta_score >= 1 and gate_count < 3:
+        confidence = min(1.0, meta_score / 3 + 0.3)
+        return TaskFailureResult(
+            is_failure=True,
+            failure_type=TaskFailureType.META_QUESTIONS,
+            confidence=confidence,
+            evidence=evidence[:5],
             gate_count=gate_count,
         )
 

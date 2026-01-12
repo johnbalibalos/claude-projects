@@ -130,7 +130,15 @@
         "notes": null
       }
     },
-    "context": {}
+    "context": {
+      "sample_type": "721.221 stimulated PBMC",
+      "species": "Macaca mulatta",
+      "application": "Define the functional capability of various NK cell subsets",
+      "cross_references": ["OMIP-007", "OMIP-027", "OMIP-028"],
+      "notes": "Functional analysis of Natural Killer cell subsets in rhesus macaques using 721.221 target cell stimulation.",
+      "pdf_verified": true,
+      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms866639.pdf"
+    }
   },
   "concordance": {
     "panel": [],

@@ -386,7 +386,15 @@
         "notes": null
       }
     },
-    "context": {}
+    "context": {
+      "sample_type": "PBMCs",
+      "species": "human",
+      "application": "Delineation of peripheral monocyte subsets and deep phenotyping of monocyte function",
+      "cross_references": ["OMIP-023", "OMIP-024", "OMIP-034", "OMIP-038", "OMIP-042", "OMIP-069"],
+      "notes": "21-marker 18-color panel. Multiple FITC markers (CD3, CD19, CD56, CD123) used as exclusion lineage dump channel. TLR2 used for monocyte identification. Defines classical, intermediate, and nonclassical monocytes with SLAN subdivision. Includes functional markers: chemokine receptors (CCR2, CX3CR1, CXCR4), PRR (TLR2), co-stimulatory (CD86), and checkpoint (PD-1).",
+      "pdf_verified": true,
+      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/OMIP_083__A_21тАРmarker_18тАРcolor_flow_cytometry_panel_for_inтАРdepth_phenotyping_of_human.pdf"
+    }
   },
   "concordance": {
     "panel": [

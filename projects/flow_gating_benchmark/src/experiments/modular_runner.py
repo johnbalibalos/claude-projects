@@ -113,7 +113,8 @@ class GatingContextBuilder(RichContextBuilder):
         parts.append("## Panel")
         parts.append("")
         for entry in test_case.panel.entries:
-            line = f"- {entry.marker}: {entry.fluorophore}"
+            fluor = entry.fluorophore or "unknown"
+            line = f"- {entry.marker}: {fluor}"
             if entry.clone:
                 line += f" (clone: {entry.clone})"
             parts.append(line)

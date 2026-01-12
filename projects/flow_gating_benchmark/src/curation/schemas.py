@@ -47,7 +47,7 @@ class PanelEntry(BaseModel):
     """A single marker in the flow cytometry panel."""
 
     marker: str = Field(..., description="Target marker (e.g., CD3, CD4)")
-    fluorophore: str = Field(..., description="Fluorophore conjugate (e.g., BUV395, PE)")
+    fluorophore: str | None = Field(None, description="Fluorophore conjugate (e.g., BUV395, PE)")
     clone: str | None = Field(None, description="Antibody clone (e.g., UCHT1)")
     channel: str | None = Field(None, description="Detector channel name")
     vendor: str | None = Field(None, description="Antibody vendor")
@@ -62,7 +62,7 @@ class Panel(BaseModel):
     @property
     def n_colors(self) -> int:
         """Number of fluorescent markers (excluding scatter)."""
-        return len([e for e in self.entries if e.fluorophore not in ["FSC", "SSC"]])
+        return len([e for e in self.entries if e.fluorophore and e.fluorophore not in ["FSC", "SSC"]])
 
     @property
     def markers(self) -> list[str]:
@@ -277,7 +277,8 @@ class TestCase(BaseModel):
         ]
 
         for entry in self.panel.entries:
-            line = f"  - {entry.marker}: {entry.fluorophore}"
+            fluor = entry.fluorophore or "unknown"
+            line = f"  - {entry.marker}: {fluor}"
             if entry.clone:
                 line += f" (clone: {entry.clone})"
             lines.append(line)

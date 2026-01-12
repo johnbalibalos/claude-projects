@@ -545,7 +545,15 @@
         "notes": null
       }
     },
-    "context": {}
+    "context": {
+      "sample_type": "Fresh or fixed, cryopreserved whole blood",
+      "species": "human",
+      "application": "Broad immunophenotyping of leukocytes including myeloid and lymphoid cell lineages",
+      "cross_references": ["OMIP-062", "OMIP-063", "OMIP-069", "OMIP-077", "OMIP-078"],
+      "notes": "27-color flow cytometry panel for immunophenotyping of major leukocyte populations in fixed whole blood.",
+      "pdf_verified": true,
+      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms-1964512.pdf"
+    }
   },
   "concordance": {
     "panel": [

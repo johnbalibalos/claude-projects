@@ -1,6 +1,6 @@
 {
   "include": ["projects", "libs"],
-  "exclude": ["**/node_modules", "**/__pycache__", "**/.*"],
+  "exclude": ["**/node_modules", "**/__pycache__", "**/.*", "**/scripts/**"],
   "pythonVersion": "3.11",
   "typeCheckingMode": "basic",
   "reportMissingImports": true,

@@ -94,7 +94,15 @@
         "notes": null
       }
     },
-    "context": {}
+    "context": {
+      "sample_type": "PBMC",
+      "species": "human",
+      "application": "Extensive phenotyping of NK cells, ILCs, MAIT cells, and γδ T cells",
+      "cross_references": ["OMIP-029", "OMIP-039", "OMIP-044", "OMIP-055", "OMIP-056", "OMIP-058"],
+      "notes": "27-color panel for malaria vaccine trial immune monitoring. Focus on innate lymphoid cells (ILC1/2/3), NK cell subsets and activation (CD56dim/bright, adaptive NK via NKG2C/CD57/FCεRIγ), MAIT cells (CD161+TCRvα7.2+), and γδ T cells (including Vδ2 subset). Extensive NK phenotyping markers: NKG2A, NKG2C, NKG2D, NKp30, NKp46, CD38, CD57, CD27. Ki67 for proliferation. NOTE: Current panel extraction incomplete - full panel has 27 markers.",
+      "pdf_verified": true,
+      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms-1684062.pdf"
+    }
   },
   "concordance": {
     "panel": [],
