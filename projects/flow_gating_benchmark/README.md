@@ -2,19 +2,23 @@
 
 Evaluate LLM capabilities in predicting flow cytometry gating strategies from panel information.
 
+## Why This Matters
+
+Gating is foundational to flow cytometry analysis, but can LLMs actually reason about marker biology, or are they pattern-matching from literature? This benchmark tests whether models can predict gating hierarchies from panel information alone, using established [OMIPs](https://onlinelibrary.wiley.com/page/journal/19365912/homepage/omip-resources) (Optimized Multicolor Immunofluorescence Panels) as ground truth. By comparing performance across context levels and prompt strategies, we can begin to disentangle genuine biological reasoning from retrieval-based recall.
+
 ## Latest Results
 
 See **[results/BENCHMARK_RESULTS_SUMMARY.md](results/BENCHMARK_RESULTS_SUMMARY.md)** for full analysis.
 
 | Model | Hierarchy F1 | Notes |
 |-------|--------------|-------|
-| gemini-2.0-flash | **0.393** | Best performer |
-| claude-sonnet-4 | 0.325 | Solid second |
+| gemini-2.0-flash | 0.393 | Highest F1 |
+| claude-sonnet-4 | 0.325 | |
 | gemini-2.5-pro | 0.196 | Token exhaustion issues |
 | gemini-2.5-flash | 0.119 | High failure rate |
 | claude-opus-4 | *Running...* | |
 
-**Key Finding:** Simpler models outperform "reasoning" models on this task. Standard context (sample type, species, application) improves F1 by 25%+.
+**Preliminary Observations:** Simpler models outperform "reasoning" models on this task. Standard context (sample type, species, application) improves F1 by 25%+. These findings suggest task-specific tuning may matter more than raw model capability for structured biological outputs.
 
 ---
 
@@ -56,12 +60,50 @@ python scripts/run_modular_pipeline.py \
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
-### Recent Additions
+---
 
-- **Multi-Judge Cross-Validation**: Multiple prompt styles for LLM judge reliability
+## Multi-Judge Cross-Validation
+
+A key methodological contribution of this benchmark is the multi-judge evaluation system, designed to address known issues with LLM-as-judge approaches.
+
+### Rationale
+
+Single-judge LLM evaluation suffers from several biases:
+- **Self-serving bias**: Models may rate their own outputs more favorably
+- **Prompt sensitivity**: Small changes in judge instructions can shift scores significantly
+- **Inter-rater reliability**: Without multiple perspectives, it's unclear if scores are stable
+
+### Implementation
+
+The benchmark runs multiple judge configurations in parallel:
+- **Strict judge**: Penalizes any deviation from ground truth hierarchy
+- **Lenient judge**: Accepts biologically equivalent alternatives
+- **Structural judge**: Focuses on parent-child relationships over naming
+
+Agreement across judge styles provides confidence in qualitative assessments. Disagreement flags cases requiring human review.
+
+```bash
+# Run with multi-judge (default)
+python scripts/run_modular_pipeline.py --phase judge --judge-styles all
+```
+
+### Other Recent Additions
+
 - **Token Breakdown Analysis**: Track thinking vs response tokens for reasoning models
 - **Blocked Prediction Recovery**: `scripts/rerun_blocked.py` for MAX_TOKENS failures
 - **Per-Provider Rate Limits**: Parallel workers configurable per API provider
+
+---
+
+## Limitations
+
+This benchmark has several known limitations that should inform interpretation:
+
+- **Low n per condition**: Current results use n=10 bootstrap samples. Statistical power is limited for detecting small effect sizes.
+- **Training contamination risk**: OMIPs are well-documented in published literature. Models may have seen these exact panels during training, inflating apparent "reasoning" performance.
+- **No novel panel testing**: All test cases use established protocols. True generalization to novel marker combinations remains untested.
+- **Synonym coverage**: Despite 200+ synonyms in normalization, biologically equivalent gates may still be scored as mismatches.
+- **Single domain**: Results may not generalize to other cytometry applications (mass cytometry, imaging cytometry) or other biological domains.
 
 ---
 
@@ -88,7 +130,7 @@ python scripts/run_modular_pipeline.py [OPTIONS]
 
 | Model | Provider | Cost/Case | Notes |
 |-------|----------|-----------|-------|
-| `gemini-2.0-flash` | Google | ~$0.01 | **Recommended** - best F1 |
+| `gemini-2.0-flash` | Google | ~$0.01 | **Recommended** - highest F1 |
 | `gemini-2.5-flash` | Google | ~$0.02 | High failure rate |
 | `gemini-2.5-pro` | Google | ~$0.10 | Needs max_tokens=20000 |
 | `claude-sonnet-cli` | Anthropic | ~$0.05 | Uses Max subscription |
@@ -202,6 +244,8 @@ flow_gating_benchmark/
 ---
 
 ## Test Cases (13 OMIPs)
+
+[OMIPs](https://onlinelibrary.wiley.com/page/journal/19365912/homepage/omip-resources) (Optimized Multicolor Immunofluorescence Panels) are peer-reviewed, standardized flow cytometry protocols published in *Cytometry Part A*. They provide validated marker panels and gating strategies for specific immunological questions.
 
 | OMIP | Species | Focus | Markers | Difficulty |
 |------|---------|-------|---------|------------|
