@@ -16,6 +16,10 @@ from statistics import mean, stdev
 
 from ..curation.omip_extractor import load_test_case
 from ..curation.schemas import Complexity, GateNode
+from ..curation.test_case_validation import (
+    filter_complete_results,
+    KNOWN_INCOMPLETE_TEST_CASES,
+)
 
 
 def load_benchmark_results(results_path: str | Path) -> dict:
@@ -55,6 +59,7 @@ def get_test_case_complexity(
 def generate_complexity_breakdown(
     results: list[dict],
     ground_truth_dir: Path,
+    exclude_incomplete: bool = True,
 ) -> str:
     """
     Generate metrics breakdown by panel complexity level.
@@ -62,10 +67,18 @@ def generate_complexity_breakdown(
     Args:
         results: List of result dictionaries with evaluation data
         ground_truth_dir: Directory containing ground truth JSON files
+        exclude_incomplete: If True, exclude incomplete test cases from statistics
 
     Returns:
         Markdown table with per-complexity metrics
     """
+    # Filter out incomplete test cases if requested
+    if exclude_incomplete:
+        results, excluded = filter_complete_results(results)
+        n_excluded = len(excluded)
+    else:
+        n_excluded = 0
+
     # Group results by complexity
     by_complexity: dict[Complexity, list[dict]] = defaultdict(list)
 
@@ -128,6 +141,8 @@ def generate_complexity_breakdown(
     total = sum(len(g) for g in by_complexity.values())
     lines.append("")
     lines.append(f"*Based on {total} valid results. Values show mean (std) where N >= 2.*")
+    if n_excluded > 0:
+        lines.append(f"*Note: {n_excluded} results from incomplete test cases excluded from statistics.*")
     lines.append("")
 
     return "\n".join(lines)
@@ -160,6 +175,7 @@ def generate_summary_report(
     results_path: str | Path,
     ground_truth_dir: str | Path,
     output_path: str | Path | None = None,
+    exclude_incomplete: bool = True,
 ) -> str:
     """
     Generate summary report with conclusions and highlights.
@@ -168,6 +184,7 @@ def generate_summary_report(
         results_path: Path to benchmark results JSON
         ground_truth_dir: Directory with ground truth test cases
         output_path: Optional path to save report
+        exclude_incomplete: If True, exclude incomplete test cases from statistics
 
     Returns:
         Report as markdown string
@@ -178,20 +195,41 @@ def generate_summary_report(
     metrics = data.get("metrics", {})
     token_usage = data.get("token_usage", {})
     cost = data.get("cost_usd", 0)
-    results = data.get("results", [])
+    all_results = data.get("results", [])
 
-    # Calculate additional stats
-    n_total = metrics.get("total", 0)
-    n_valid = metrics.get("valid", 0)
-    parse_rate = metrics.get("parse_success_rate", 0)
+    # Filter incomplete test cases for statistics
+    if exclude_incomplete:
+        results, incomplete_results = filter_complete_results(all_results)
+        incomplete_ids = {r.get("test_case_id") for r in incomplete_results}
+    else:
+        results = all_results
+        incomplete_results = []
+        incomplete_ids = set()
 
-    f1_mean = metrics.get("hierarchy_f1_mean", 0)
-    structure_mean = metrics.get("structure_accuracy_mean", 0)
-    critical_mean = metrics.get("critical_gate_recall_mean", 0)
-    halluc_mean = metrics.get("hallucination_rate_mean", 0)
-
-    # Find valid results for analysis
+    # Find valid results for analysis (complete test cases only)
     valid_results = [r for r in results if r.get("parse_success") and r.get("evaluation")]
+
+    # Recalculate metrics from complete test cases only
+    if valid_results:
+        f1_values = [r["evaluation"].get("hierarchy_f1", 0) for r in valid_results]
+        struct_values = [r["evaluation"].get("structure_accuracy", 0) for r in valid_results]
+        crit_values = [r["evaluation"].get("critical_gate_recall", 0) for r in valid_results]
+        halluc_values = [r["evaluation"].get("hallucination_rate", 0) for r in valid_results]
+
+        f1_mean = mean(f1_values) if f1_values else 0
+        structure_mean = mean(struct_values) if struct_values else 0
+        critical_mean = mean(crit_values) if crit_values else 0
+        halluc_mean = mean(halluc_values) if halluc_values else 0
+        n_valid = len(valid_results)
+        parse_rate = len(valid_results) / len(results) if results else 0
+    else:
+        f1_mean = structure_mean = critical_mean = halluc_mean = 0
+        n_valid = 0
+        parse_rate = 0
+
+    n_total = len(all_results)
+    n_complete = len(results)
+    n_incomplete = len(incomplete_results)
 
     # Collect all missing critical gates
     all_missing_critical = []
@@ -206,11 +244,15 @@ def generate_summary_report(
     hallucination_counts = Counter(all_hallucinations)
 
     # Build report
+    incomplete_note = ""
+    if n_incomplete > 0:
+        incomplete_note = f" ({n_incomplete} incomplete test cases excluded from statistics)"
+
     report = f"""# Flow Cytometry Gating Benchmark Report
 
 **Generated:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 **Model:** {data.get("model", "Unknown")}
-**Test Cases:** {n_total}
+**Test Cases:** {n_complete} complete{incomplete_note}
 
 ---
 
@@ -288,6 +330,30 @@ from panel information. Key findings:
             report += f"| {tc_id} | - | {f1:.1%} | {struct:.1%} | {crit:.1%} | {notes} |\n"
         else:
             report += f"| {tc_id} | - | - | - | - | Parse failed |\n"
+
+    # Add incomplete test cases section if any exist
+    if incomplete_results:
+        report += """
+---
+
+## Incomplete Test Cases (Excluded from Statistics)
+
+These test cases have incomplete panel definitions (empty marker lists).
+Results shown for exploratory analysis only - not included in aggregate metrics.
+
+| Test Case | F1 | Structure | Critical | Issue |
+|-----------|-----|-----------|----------|-------|
+"""
+        for r in incomplete_results:
+            tc_id = r.get("test_case_id", "Unknown")
+            if r.get("parse_success") and r.get("evaluation"):
+                e = r["evaluation"]
+                f1 = e.get("hierarchy_f1", 0)
+                struct = e.get("structure_accuracy", 0)
+                crit = e.get("critical_gate_recall", 0)
+                report += f"| {tc_id} | {f1:.1%} | {struct:.1%} | {crit:.1%} | Empty panel |\n"
+            else:
+                report += f"| {tc_id} | - | - | - | Empty panel, parse failed |\n"
 
     report += f"""
 ---
