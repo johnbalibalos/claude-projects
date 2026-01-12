@@ -343,6 +343,16 @@ from .prompt_sensitivity import (
     comprehensive_prompt_analysis,
 )
 
+# Temperature bootstrap / Best-of-N selection
+from .temperature_bootstrap import (
+    TemperatureCandidate,
+    BestOfNResult,
+    BestOfNSelector,
+    group_trials_by_base_condition,
+    analyze_temperature_bootstrap,
+    create_gating_rubric,
+)
+
 __all__ = [
     # Models
     "ReasoningType",
@@ -580,4 +590,11 @@ __all__ = [
     "optimize_prompt_simple",
     "ComprehensivePromptAnalysis",
     "comprehensive_prompt_analysis",
+    # Temperature bootstrap / Best-of-N selection
+    "TemperatureCandidate",
+    "BestOfNResult",
+    "BestOfNSelector",
+    "group_trials_by_base_condition",
+    "analyze_temperature_bootstrap",
+    "create_gating_rubric",
 ]
