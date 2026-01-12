@@ -97,10 +97,10 @@ def run_predict(
     config = CollectorConfig(
         n_bootstrap=n_bootstrap,
         cli_delay_seconds=0.5,
-        parallel_workers=5,
         checkpoint_dir=output_dir / "checkpoints",
         dry_run=dry_run,
         run_id=run_id,  # Link predictions to experiment context
+        # Per-provider parallelism (defaults: gemini=50, anthropic=50, openai=50)
     )
 
     collector = PredictionCollector(test_cases, conditions, config)
