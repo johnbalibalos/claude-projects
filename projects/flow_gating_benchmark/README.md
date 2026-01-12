@@ -11,7 +11,7 @@ See **[results/BENCHMARK_RESULTS_SUMMARY.md](results/BENCHMARK_RESULTS_SUMMARY.m
 | **gemini-2.0-flash** | **0.393** | 0.268 | 0.891 | 100% |
 | claude-opus-4 | 0.349 | 0.229 | **0.856** | 100% |
 | claude-sonnet-4 | 0.325 | 0.204 | 0.791 | 99.2% |
-| gemini-2.5-pro | 0.196 | 0.127 | 0.661 | 88% |
+| gemini-2.5-pro | 0.240 | 0.092 | 0.631 | 99.5% |
 | gemini-2.5-flash | 0.119 | 0.078 | 0.489 | 31% |
 
 **Key Findings:**
