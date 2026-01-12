@@ -10,16 +10,14 @@ Creates publication-ready figures showing:
 """
 
 import json
-import sys
-from pathlib import Path
 from collections import defaultdict
 from dataclasses import dataclass
-import math
+from pathlib import Path
 
 # Try to import visualization libraries
 try:
-    import matplotlib.pyplot as plt
     import matplotlib.patches as mpatches
+    import matplotlib.pyplot as plt
     HAS_MATPLOTLIB = True
 except ImportError:
     HAS_MATPLOTLIB = False
@@ -316,11 +314,11 @@ def matplotlib_visualization(populations: list[PopulationData], output_dir: Path
         [p.detection_rate for p in by_freq.get(level, [])]
         for level in range(1, 6)
     ]
-    labels = ['Rare\n(n={})'.format(len(by_freq.get(1, []))),
-              'Uncommon\n(n={})'.format(len(by_freq.get(2, []))),
-              'Moderate\n(n={})'.format(len(by_freq.get(3, []))),
-              'Common\n(n={})'.format(len(by_freq.get(4, []))),
-              'Very Common\n(n={})'.format(len(by_freq.get(5, [])))]
+    labels = [f'Rare\n(n={len(by_freq.get(1, []))})',
+              f'Uncommon\n(n={len(by_freq.get(2, []))})',
+              f'Moderate\n(n={len(by_freq.get(3, []))})',
+              f'Common\n(n={len(by_freq.get(4, []))})',
+              f'Very Common\n(n={len(by_freq.get(5, []))})']
 
     bp = ax.boxplot([d if d else [0] for d in box_data], labels=labels, patch_artist=True)
     colors = plt.cm.RdYlGn([0.2, 0.35, 0.5, 0.65, 0.8])
@@ -382,8 +380,8 @@ def matplotlib_visualization(populations: list[PopulationData], output_dir: Path
             transform=ax.get_yaxis_transform(), fontsize=10, fontweight='bold')
 
     # Legend
-    legend_elements = [mpatches.Patch(facecolor=plt.cm.RdYlGn(i/4), label=l)
-                       for i, l in enumerate(['Rare', 'Uncommon', 'Moderate', 'Common', 'V.Common'])]
+    legend_elements = [mpatches.Patch(facecolor=plt.cm.RdYlGn(i/4), label=lbl)
+                       for i, lbl in enumerate(['Rare', 'Uncommon', 'Moderate', 'Common', 'V.Common'])]
     ax.legend(handles=legend_elements, loc='lower right', title='Frequency')
 
     plt.tight_layout()

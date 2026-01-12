@@ -78,8 +78,8 @@ class ClaudeCLIClient:
             )
             if result.returncode != 0:
                 raise CLIError(f"Claude CLI error: {result.stderr}")
-        except FileNotFoundError:
-            raise CLIError("Claude CLI not found")
+        except FileNotFoundError as err:
+            raise CLIError("Claude CLI not found") from err
 
     def generate(
         self,
@@ -145,8 +145,8 @@ class ClaudeCLIClient:
 
             return self._parse_response(result.stdout)
 
-        except subprocess.TimeoutExpired:
-            raise CLIError(f"Timeout after {self.config.timeout_seconds}s")
+        except subprocess.TimeoutExpired as err:
+            raise CLIError(f"Timeout after {self.config.timeout_seconds}s") from err
 
     def _parse_response(self, stdout: str) -> str:
         """Parse JSON response from CLI."""

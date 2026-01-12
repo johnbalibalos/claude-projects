@@ -7,9 +7,9 @@ without requiring actual LLM calls.
 
 from __future__ import annotations
 
-import pytest
 from datetime import date
 
+import pytest
 from curation.schemas import (
     CurationMetadata,
     ExperimentContext,
@@ -21,36 +21,32 @@ from curation.schemas import (
     SourceType,
     TestCase,
 )
-
-# Import hypothesis test modules
-from hypothesis_tests.frequency_confound import (
-    AlienCellTest,
-    AlienCellMapping,
-    FrequencyCorrelation,
-    _pearson_correlation,
-    _safe_log,
+from hypothesis_tests.cognitive_refusal import (
+    PROMPT_VARIANTS,
+    CognitiveRefusalTest,
+    RefusalType,
+)
+from hypothesis_tests.cot_mechanistic import (
+    CoTAnnotator,
+    InferenceTag,
 )
 from hypothesis_tests.format_ablation import (
     FormatAblationResult,
     FormatAblationTest,
     PromptFormat,
 )
-from hypothesis_tests.cot_mechanistic import (
-    CoTAnnotator,
-    InferenceTag,
-    ReasoningStep,
-)
-from hypothesis_tests.cognitive_refusal import (
-    CognitiveRefusalTest,
-    RefusalType,
-    PROMPT_VARIANTS,
+
+# Import hypothesis test modules
+from hypothesis_tests.frequency_confound import (
+    AlienCellTest,
+    _pearson_correlation,
+    _safe_log,
 )
 from hypothesis_tests.runner import (
     AblationConfig,
     HypothesisTestRunner,
     HypothesisType,
 )
-
 
 # =============================================================================
 # FIXTURES
@@ -529,7 +525,7 @@ class TestIntegration:
         alien_case = alien_test.create_alien_test_case(sample_test_case)
 
         # Verify the modified test case has alien names
-        modified_gates = alien_case.modified_test_case.gating_hierarchy.get_all_gates()
+        _modified_gates = alien_case.modified_test_case.gating_hierarchy.get_all_gates()
 
         # At least some gates should be renamed (excluding preserved ones)
         renamed_count = sum(
@@ -545,7 +541,7 @@ class TestIntegration:
             PromptFormat.TABLE,
         ])
 
-        formats = test.generate_all_formats(sample_test_case)
+        _formats = test.generate_all_formats(sample_test_case)
 
         # Create mock results
         results = {
