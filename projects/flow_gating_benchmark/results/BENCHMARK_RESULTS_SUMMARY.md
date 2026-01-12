@@ -16,20 +16,38 @@ We evaluated 5 LLMs on their ability to predict flow cytometry gating hierarchie
 
 ## Overall Model Performance
 
-| Model | Hierarchy F1 | Status |
-|-------|--------------|--------|
-| **gemini-2.0-flash** | **0.393 ± 0.163** | Best performer |
-| claude-sonnet-4 | 0.325 ± 0.212 | Solid second |
-| gemini-2.5-pro | 0.196 ± 0.217 | Underperformed |
-| gemini-2.5-flash | 0.119 ± 0.199 | High failure rate |
-| claude-opus-4 | N/A | Running... |
+| Model | Hierarchy F1 | Structure Acc | Critical Recall | Parse Rate |
+|-------|--------------|---------------|-----------------|------------|
+| **gemini-2.0-flash** | **0.393 ± 0.163** | 0.268 ± 0.185 | 0.891 ± 0.189 | 100% |
+| claude-opus-4 | 0.349 ± 0.196 | 0.229 ± 0.193 | **0.856 ± 0.210** | 100% |
+| claude-sonnet-4 | 0.325 ± 0.212 | 0.204 ± 0.191 | 0.791 ± 0.252 | 99.2% |
+| gemini-2.5-pro | 0.196 ± 0.217 | 0.127 ± 0.152 | 0.661 ± 0.312 | 88% |
+| gemini-2.5-flash | 0.119 ± 0.199 | 0.078 ± 0.131 | 0.489 ± 0.389 | 31% |
 
-### Key Observation: Reasoning Models Underperform
+### Key Observations
+
+**1. Reasoning Models Underperform**
 
 The "thinking" models (gemini-2.5-pro, gemini-2.5-flash) performed worse than the simpler gemini-2.0-flash. Two hypotheses:
+- **Token budget exhaustion**: Reasoning tokens consume output budget, truncating responses
+- **Overthinking**: Extended reasoning leads to more complex (incorrect) hierarchies
 
-1. **Token budget exhaustion**: Reasoning tokens consume output budget, truncating responses
-2. **Overthinking**: Extended reasoning leads to more complex (incorrect) hierarchies
+**2. Claude Models Excel at Critical Gates**
+
+Both Claude models show high critical gate recall (85-86%), meaning they reliably include essential QC gates like singlets, live cells, and CD45+ leukocytes. This is crucial for practical utility - missing these gates renders an analysis invalid.
+
+**3. Opus vs Sonnet Trade-offs**
+
+| Metric | Opus | Sonnet | Δ |
+|--------|------|--------|---|
+| Hierarchy F1 | 0.349 | 0.325 | +7% |
+| Structure Accuracy | 0.229 | 0.204 | +12% |
+| Critical Recall | 0.856 | 0.791 | +8% |
+| Parse Rate | 100% | 99.2% | +0.8% |
+| Cost (CLI) | $0 | $0 | - |
+| Time (520 calls) | ~4 hrs | ~4 hrs | - |
+
+Opus provides modest improvements across all metrics with no additional cost when using the CLI.
 
 ---
 
@@ -40,6 +58,7 @@ Context level and prompt strategy significantly affect performance:
 | Model | minimal_direct | minimal_cot | standard_direct | standard_cot |
 |-------|----------------|-------------|-----------------|--------------|
 | gemini-2.0-flash | 0.355 | 0.323 | **0.455** | 0.440 |
+| claude-opus-4 | 0.337 | 0.315 | **0.371** | 0.370 |
 | claude-sonnet-4 | 0.304 | 0.308 | **0.341** | **0.347** |
 | gemini-2.5-pro | 0.182 | 0.212 | 0.199 | 0.192 |
 | gemini-2.5-flash | 0.145 | 0.114 | 0.134 | 0.083 |
@@ -138,10 +157,10 @@ gemini-2.5-pro initially had 61/520 (12%) predictions blocked due to MAX_TOKENS.
 
 ```
 gemini-2.0-flash  ████████████████████████████████████████  0.393
-claude-sonnet-4   ████████████████████████████████▌         0.325
+claude-opus-4     ███████████████████████████████████▌      0.349
+claude-sonnet-4   █████████████████████████████████         0.325
 gemini-2.5-pro    ████████████████████                      0.196
 gemini-2.5-flash  ████████████                              0.119
-claude-opus-4     [Running...]
 ```
 
 ### Condition Effect (gemini-2.0-flash)
@@ -156,14 +175,14 @@ cot               0.323  →   0.440  (+36%)
 ### Test Case Heatmap (Avg F1)
 
 ```
-             gem-2.0  sonnet  gem-2.5p  gem-2.5f
-OMIP-008     ■■■■■    ■■■■    ■■■       ■■
-OMIP-053     ■■■■     ■■■■    ■■■       ■■
-OMIP-035     ■■■      ■■■     ■■        ■
-OMIP-025     ■■■      ■■      ■■        ■
-OMIP-074     ■■■      ■■      ■         □
+             gem-2.0  opus    sonnet  gem-2.5p  gem-2.5f
+OMIP-008     ■■■■■    ■■■■■   ■■■■    ■■■       ■■
+OMIP-053     ■■■■     ■■■■    ■■■■    ■■■       ■■
+OMIP-035     ■■■      ■■■     ■■■     ■■        ■
+OMIP-025     ■■■      ■■■     ■■      ■■        ■
+OMIP-074     ■■■      ■■■     ■■      ■         □
 ...
-OMIP-087     ■■       ■       ■         □
+OMIP-087     ■■       ■■      ■       ■         □
 
 Legend: ■■■■■ >0.5  ■■■■ >0.4  ■■■ >0.3  ■■ >0.2  ■ >0.1  □ <0.1
 ```
@@ -208,7 +227,9 @@ Adding HIPC standardized cell definitions to prompts improves performance:
 
 ## Next Steps
 
-- [ ] Complete claude-opus-4 benchmark run
+- [x] ~~Complete claude-opus-4 benchmark run~~ Done - F1=0.349, 2nd place behind gemini-2.0-flash
 - [ ] Implement multi-judge cross-validation for reliability
 - [ ] Analyze synonym handling failure modes
 - [x] ~~Test RAG augmentation with OMIP paper context~~ Done - +17% improvement
+- [ ] Run remaining Gemini models with 50 parallel workers
+- [ ] Add GPT-4o comparison

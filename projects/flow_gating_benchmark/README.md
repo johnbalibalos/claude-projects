@@ -6,15 +6,18 @@ Evaluate LLM capabilities in predicting flow cytometry gating strategies from pa
 
 See **[results/BENCHMARK_RESULTS_SUMMARY.md](results/BENCHMARK_RESULTS_SUMMARY.md)** for full analysis.
 
-| Model | Hierarchy F1 | Notes |
-|-------|--------------|-------|
-| gemini-2.0-flash | **0.393** | Best performer |
-| claude-sonnet-4 | 0.325 | Solid second |
-| gemini-2.5-pro | 0.196 | Token exhaustion issues |
-| gemini-2.5-flash | 0.119 | High failure rate |
-| claude-opus-4 | *Running...* | |
+| Model | Hierarchy F1 | Structure Acc | Critical Recall | Parse Rate |
+|-------|--------------|---------------|-----------------|------------|
+| **gemini-2.0-flash** | **0.393** | 0.268 | 0.891 | 100% |
+| claude-opus-4 | 0.349 | 0.229 | **0.856** | 100% |
+| claude-sonnet-4 | 0.325 | 0.204 | 0.791 | 99.2% |
+| gemini-2.5-pro | 0.196 | 0.127 | 0.661 | 88% |
+| gemini-2.5-flash | 0.119 | 0.078 | 0.489 | 31% |
 
-**Key Finding:** Simpler models outperform "reasoning" models on this task. Standard context (sample type, species, application) improves F1 by 25%+.
+**Key Findings:**
+- Simpler models (gemini-2.0-flash) outperform reasoning models
+- Claude models have high critical gate recall (important QC gates)
+- Standard context improves F1 by 25%+
 
 ---
 
