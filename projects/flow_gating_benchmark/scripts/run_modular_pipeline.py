@@ -35,6 +35,7 @@ from experiments.batch_scorer import (  # noqa: E402
 )
 from experiments.conditions import get_all_conditions  # noqa: E402
 from experiments.llm_judge import (  # noqa: E402
+    JUDGE_STYLES,
     JudgeConfig,
     JudgeResult,
     LLMJudge,
@@ -72,12 +73,16 @@ def run_predict(
     n_bootstrap: int,
     dry_run: bool,
     resume: bool,
+    max_cases: int | None = None,
+    run_id: str = "",
 ) -> list[Prediction]:
     """Phase 1: Collect predictions from LLMs."""
     print_phase("PREDICTION COLLECTION")
 
     # Load test cases
     test_cases = load_all_test_cases(test_cases_dir)
+    if max_cases is not None:
+        test_cases = test_cases[:max_cases]
     print(f"Loaded {len(test_cases)} test cases")
 
     # Generate conditions
@@ -91,10 +96,11 @@ def run_predict(
     # Configure collector
     config = CollectorConfig(
         n_bootstrap=n_bootstrap,
-        cli_delay_seconds=2.0,
+        cli_delay_seconds=0.5,
         parallel_workers=5,
         checkpoint_dir=output_dir / "checkpoints",
         dry_run=dry_run,
+        run_id=run_id,  # Link predictions to experiment context
     )
 
     collector = PredictionCollector(test_cases, conditions, config)
@@ -179,6 +185,8 @@ def run_judge(
     output_dir: Path,
     scoring_results: list[ScoringResult] | None = None,
     dry_run: bool = False,
+    judge_model: str = "gemini-2.5-pro",
+    judge_style: str = "default",
 ) -> list[JudgeResult]:
     """Phase 3: LLM judge evaluation."""
     print_phase("LLM JUDGE EVALUATION")
@@ -197,16 +205,18 @@ def run_judge(
 
     # Configure judge
     config = JudgeConfig(
-        model="gemini-2.5-pro",
+        model=judge_model,
         parallel_workers=3,
         checkpoint_dir=output_dir / "checkpoints",
         dry_run=dry_run,
+        prompt_style=judge_style,
     )
 
     judge = LLMJudge(test_cases_dir, config)
 
     print(f"Judging {len(scoring_results)} results...")
     print(f"  Model: {config.model}")
+    print(f"  Style: {config.prompt_style}")
     print(f"  Dry run: {dry_run}")
 
     results = judge.judge_all(scoring_results, progress_callback=progress_callback)
@@ -220,24 +230,28 @@ def run_judge(
     overall = stats.get("overall", {})
     for key in ["completeness", "accuracy", "scientific", "overall"]:
         s = overall.get(key, {})
-        print(f"  {key}: {s.get('mean', 0):.1f}/10 ± {s.get('std', 0):.1f}")
+        print(f"  {key}: {s.get('mean', 0):.3f} ± {s.get('std', 0):.3f}")
 
     print("\nBy Model:")
     for model, model_stats in stats.get("by_model", {}).items():
         s = model_stats.get("overall", {})
-        print(f"  {model}: {s.get('mean', 0):.1f}/10 (n={model_stats.get('n', 0)})")
+        print(f"  {model}: {s.get('mean', 0):.3f} (n={model_stats.get('n', 0)})")
 
     if stats.get("common_issues"):
         print("\nCommon Issues:")
         for issue in stats["common_issues"][:5]:
             print(f"  - {issue[:60]}...")
 
-    # Save results
-    output_file = output_dir / "judge_results.json"
+    # Save results - include style in filename for multi-judge comparison
+    if judge_style == "default":
+        output_file = output_dir / "judge_results.json"
+    else:
+        output_file = output_dir / f"judge_results_{judge_style}.json"
     with open(output_file, "w") as f:
         json.dump({
             "results": [r.to_dict() for r in results],
             "stats": stats,
+            "judge_style": judge_style,
             "timestamp": datetime.now().isoformat(),
         }, f, indent=2)
     print(f"\nSaved to: {output_file}")
@@ -287,6 +301,30 @@ def main():
         action="store_true",
         help="Resume from checkpoint",
     )
+    parser.add_argument(
+        "--max-cases",
+        type=int,
+        default=None,
+        help="Limit number of test cases (for quick testing)",
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Skip cost confirmation hook",
+    )
+    parser.add_argument(
+        "--judge-model",
+        type=str,
+        default="gemini-2.5-pro",
+        help="Model to use for LLM judge (default: gemini-2.5-pro)",
+    )
+    parser.add_argument(
+        "--judge-style",
+        type=str,
+        choices=JUDGE_STYLES,
+        default="default",
+        help=f"Judge prompt style: {', '.join(JUDGE_STYLES)} (default: default)",
+    )
 
     args = parser.parse_args()
 
@@ -296,14 +334,16 @@ def main():
     # Create and save experiment context for provenance tracking
     experiment_config = {
         "phase": args.phase,
-        "models": args.models,
-        "n_bootstrap": args.n_bootstrap,
         "dry_run": args.dry_run,
         "test_cases_dir": str(args.test_cases),
+        "judge_model": args.judge_model,
+        "judge_style": args.judge_style,
     }
     ctx = ExperimentContext.create(
         ground_truth_dir=args.test_cases,
         config=experiment_config,
+        models=args.models,
+        n_bootstrap=args.n_bootstrap,
     )
     ctx.save(args.output)
     ctx.print_summary()
@@ -311,32 +351,55 @@ def main():
     predictions = None
     scoring_results = None
 
-    if args.phase in ["predict", "all"]:
-        predictions = run_predict(
-            test_cases_dir=args.test_cases,
-            output_dir=args.output,
-            models=args.models,
-            n_bootstrap=args.n_bootstrap,
-            dry_run=args.dry_run,
-            resume=args.resume,
-        )
+    try:
+        if args.phase in ["predict", "all"]:
+            predictions = run_predict(
+                test_cases_dir=args.test_cases,
+                output_dir=args.output,
+                models=args.models,
+                n_bootstrap=args.n_bootstrap,
+                dry_run=args.dry_run,
+                resume=args.resume,
+                max_cases=args.max_cases,
+                run_id=ctx.run_id,  # Pass run_id for provenance
+            )
 
-    if args.phase in ["score", "all"]:
-        scoring_results = run_score(
-            test_cases_dir=args.test_cases,
-            output_dir=args.output,
-            predictions=predictions,
-        )
+        if args.phase in ["score", "all"]:
+            scoring_results = run_score(
+                test_cases_dir=args.test_cases,
+                output_dir=args.output,
+                predictions=predictions,
+            )
 
-    if args.phase in ["judge", "all"]:
-        run_judge(
-            test_cases_dir=args.test_cases,
-            output_dir=args.output,
-            scoring_results=scoring_results,
-            dry_run=args.dry_run,
-        )
+        if args.phase in ["judge", "all"]:
+            run_judge(
+                test_cases_dir=args.test_cases,
+                output_dir=args.output,
+                scoring_results=scoring_results,
+                dry_run=args.dry_run,
+                judge_model=args.judge_model,
+                judge_style=args.judge_style,
+            )
 
-    print("\n✓ Pipeline complete!")
+        # Mark experiment as completed with prediction stats
+        if predictions is not None:
+            errors = len([p for p in predictions if p.error])
+            ctx.mark_completed(
+                total=len(predictions),
+                successful=len(predictions) - errors,
+                failed=errors,
+                output_dir=args.output,
+            )
+        else:
+            # For score/judge-only runs, just mark completed
+            ctx.mark_completed(0, 0, 0, args.output)
+
+        print("\n✓ Pipeline complete!")
+
+    except Exception as e:
+        ctx.mark_failed(args.output, str(e))
+        print(f"\n✗ Pipeline failed: {e}")
+        raise
 
 
 if __name__ == "__main__":

@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import re
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from datetime import datetime
@@ -107,16 +108,22 @@ class JudgeResult:
         )
 
 
+# Available judge prompt styles
+JUDGE_STYLES = ["default", "validation", "qualitative", "orthogonal", "binary"]
+
+
 @dataclass
 class JudgeConfig:
     """Configuration for LLM judge."""
 
     model: str = "gemini-2.5-pro"
-    max_tokens: int = 2000
+    max_tokens: int = 10000  # High to accommodate thinking tokens
     temperature: float = 0.0
-    parallel_workers: int = 3
+    parallel_workers: int = 50  # High parallelism for Gemini paid tier
+    delay_seconds: float = 0.0  # No delay needed on paid tier
     checkpoint_dir: Path | None = None
     dry_run: bool = False
+    prompt_style: str = "default"  # One of JUDGE_STYLES
 
 
 def flatten_hierarchy(hierarchy: dict, path: str = "") -> str:
@@ -251,6 +258,175 @@ SUMMARY: [one sentence explanation]
     return prompt
 
 
+def build_validation_prompt(
+    test_case_id: str,
+    predicted_response: str,
+    ground_truth: dict,
+    metrics: dict,
+) -> str:
+    """Validation judge: Estimate auto metrics without seeing them."""
+    gt_hierarchy = ground_truth.get("gating_hierarchy", {})
+    gt_flat = flatten_hierarchy(gt_hierarchy)
+    gt_lines = gt_flat.split("\n")[:8]
+    gt_summary = "\n".join(gt_lines)
+    if len(gt_flat.split("\n")) > 8:
+        gt_summary += f"\n... (+{len(gt_flat.split(chr(10))) - 8} more paths)"
+
+    context = ground_truth.get("context", {})
+    pred_formatted = format_prediction_for_judge(predicted_response)
+
+    return f"""You are evaluating a flow cytometry gating hierarchy prediction.
+
+TEST CASE: {test_case_id}
+SAMPLE: {context.get('sample_type', 'unknown')} ({context.get('species', 'unknown')})
+
+EXPECTED HIERARCHY (ground truth):
+{gt_summary}
+
+PREDICTED HIERARCHY:
+{pred_formatted}
+
+WITHOUT seeing the automated metrics, estimate what these metrics would be:
+
+Reply in this EXACT format:
+ESTIMATED_F1: [0.0-1.0] (what fraction of gates match?)
+ESTIMATED_STRUCTURE: [0.0-1.0] (what fraction of parent-child relationships are correct?)
+ESTIMATED_CRITICAL_RECALL: [0.0-1.0] (are singlets/live/lineage gates present?)
+CONFIDENCE: [high/medium/low]
+REASONING: [one sentence explaining your estimates]
+"""
+
+
+def build_qualitative_prompt(
+    test_case_id: str,
+    predicted_response: str,
+    ground_truth: dict,
+    metrics: dict,
+) -> str:
+    """Qualitative judge: No scores, just structured feedback."""
+    gt_hierarchy = ground_truth.get("gating_hierarchy", {})
+    gt_flat = flatten_hierarchy(gt_hierarchy)
+    gt_lines = gt_flat.split("\n")[:8]
+    gt_summary = "\n".join(gt_lines)
+    if len(gt_flat.split("\n")) > 8:
+        gt_summary += f"\n... (+{len(gt_flat.split(chr(10))) - 8} more paths)"
+
+    context = ground_truth.get("context", {})
+    pred_formatted = format_prediction_for_judge(predicted_response)
+
+    return f"""Analyze this flow cytometry gating hierarchy prediction.
+
+TEST CASE: {test_case_id}
+SAMPLE: {context.get('sample_type', 'unknown')} ({context.get('species', 'unknown')})
+
+EXPECTED HIERARCHY (ground truth):
+{gt_summary}
+
+PREDICTED HIERARCHY:
+{pred_formatted}
+
+Provide structured feedback (no numerical scores):
+
+Reply in this EXACT format:
+ERRORS: [comma-separated list of specific errors, or "none"]
+MISSING_GATES: [comma-separated list of missing gates, or "none"]
+EXTRA_GATES: [comma-separated list of hallucinated/extra gates, or "none"]
+STRUCTURE_VALID: [yes/no] [one sentence explanation]
+ACCEPT_FOR_ANALYSIS: [yes/no] [one sentence explanation]
+"""
+
+
+def build_orthogonal_prompt(
+    test_case_id: str,
+    predicted_response: str,
+    ground_truth: dict,
+    metrics: dict,
+) -> str:
+    """Orthogonal judge: Rate dimensions auto metrics can't capture."""
+    gt_hierarchy = ground_truth.get("gating_hierarchy", {})
+    gt_flat = flatten_hierarchy(gt_hierarchy)
+    gt_lines = gt_flat.split("\n")[:8]
+    gt_summary = "\n".join(gt_lines)
+    if len(gt_flat.split("\n")) > 8:
+        gt_summary += f"\n... (+{len(gt_flat.split(chr(10))) - 8} more paths)"
+
+    context = ground_truth.get("context", {})
+    application = context.get("application", "immunophenotyping")
+    pred_formatted = format_prediction_for_judge(predicted_response)
+
+    return f"""You are a flow cytometry expert evaluating a gating hierarchy prediction.
+
+TEST CASE: {test_case_id}
+SAMPLE: {context.get('sample_type', 'unknown')} ({context.get('species', 'unknown')})
+APPLICATION: {application}
+
+EXPECTED HIERARCHY (ground truth):
+{gt_summary}
+
+PREDICTED HIERARCHY:
+{pred_formatted}
+
+Rate on dimensions that automated metrics CANNOT capture (0-10 each):
+
+Reply in this EXACT format:
+CLINICAL_UTILITY: [0-10] [Would this hierarchy work for the stated application?]
+BIOLOGICAL_PLAUSIBILITY: [0-10] [Are parent-child relationships biologically sensible?]
+HALLUCINATION_SEVERITY: [0-10] [0=no hallucinations, 10=severe invented gates]
+MARKER_LOGIC: [0-10] [Are marker combinations used correctly for each gate?]
+SUMMARY: [one sentence overall assessment]
+"""
+
+
+def build_binary_prompt(
+    test_case_id: str,
+    predicted_response: str,
+    ground_truth: dict,
+    metrics: dict,
+) -> str:
+    """Binary judge: Accept/reject with specific issues."""
+    gt_hierarchy = ground_truth.get("gating_hierarchy", {})
+    gt_flat = flatten_hierarchy(gt_hierarchy)
+    gt_lines = gt_flat.split("\n")[:8]
+    gt_summary = "\n".join(gt_lines)
+    if len(gt_flat.split("\n")) > 8:
+        gt_summary += f"\n... (+{len(gt_flat.split(chr(10))) - 8} more paths)"
+
+    context = ground_truth.get("context", {})
+    pred_formatted = format_prediction_for_judge(predicted_response)
+
+    return f"""Evaluate whether this flow cytometry gating hierarchy prediction is acceptable.
+
+TEST CASE: {test_case_id}
+SAMPLE: {context.get('sample_type', 'unknown')} ({context.get('species', 'unknown')})
+
+EXPECTED HIERARCHY (ground truth):
+{gt_summary}
+
+PREDICTED HIERARCHY:
+{pred_formatted}
+
+Reply in this EXACT format:
+ACCEPTABLE: [yes/no]
+CRITICAL_ERRORS: [comma-separated list of blocking issues, or "none"]
+MISSING_GATES: [comma-separated list by name, or "none"]
+EXTRA_GATES: [comma-separated list of hallucinated gates, or "none"]
+CONFIDENCE: [high/medium/low]
+RECOMMENDATION: [one sentence: what would make this acceptable?]
+"""
+
+
+def get_prompt_builder(style: str):
+    """Get the prompt builder function for a given style."""
+    builders = {
+        "default": build_judge_prompt,
+        "validation": build_validation_prompt,
+        "qualitative": build_qualitative_prompt,
+        "orthogonal": build_orthogonal_prompt,
+        "binary": build_binary_prompt,
+    }
+    return builders.get(style, build_judge_prompt)
+
+
 def parse_judge_response(content: str) -> dict | None:
     """Parse flat-format judge response.
 
@@ -284,6 +460,152 @@ def parse_judge_response(content: str) -> dict | None:
     if "overall" in result:
         return result
     return None
+
+
+def parse_validation_response(content: str) -> dict | None:
+    """Parse validation judge response (estimated metrics)."""
+    result = {}
+
+    patterns = {
+        "estimated_f1": r"ESTIMATED_F1:\s*([0-9.]+)",
+        "estimated_structure": r"ESTIMATED_STRUCTURE:\s*([0-9.]+)",
+        "estimated_critical_recall": r"ESTIMATED_CRITICAL_RECALL:\s*([0-9.]+)",
+        "confidence": r"CONFIDENCE:\s*(\w+)",
+        "reasoning": r"REASONING:\s*(.+)",
+    }
+
+    for key, pattern in patterns.items():
+        match = re.search(pattern, content, re.IGNORECASE)
+        if match:
+            value = match.group(1).strip()
+            if key.startswith("estimated_"):
+                try:
+                    result[key] = float(value)
+                except ValueError:
+                    pass
+            else:
+                result[key] = value
+
+    # Map to standard fields for JudgeResult
+    if "estimated_f1" in result:
+        result["overall"] = result["estimated_f1"]
+        result["completeness"] = result.get("estimated_critical_recall", 0)
+        result["accuracy"] = result.get("estimated_structure", 0)
+        result["scientific"] = result.get("estimated_f1", 0)
+        result["summary"] = result.get("reasoning", "")
+        result["issues"] = f"confidence: {result.get('confidence', 'unknown')}"
+        return result
+    return None
+
+
+def parse_qualitative_response(content: str) -> dict | None:
+    """Parse qualitative judge response (no scores, structured feedback)."""
+    result = {}
+
+    patterns = {
+        "errors": r"ERRORS:\s*(.+)",
+        "missing_gates": r"MISSING_GATES:\s*(.+)",
+        "extra_gates": r"EXTRA_GATES:\s*(.+)",
+        "structure_valid": r"STRUCTURE_VALID:\s*(.+)",
+        "accept_for_analysis": r"ACCEPT_FOR_ANALYSIS:\s*(.+)",
+    }
+
+    for key, pattern in patterns.items():
+        match = re.search(pattern, content, re.IGNORECASE)
+        if match:
+            result[key] = match.group(1).strip()
+
+    # Convert to JudgeResult fields
+    if "accept_for_analysis" in result:
+        accept = result["accept_for_analysis"].lower().startswith("yes")
+        result["overall"] = 1.0 if accept else 0.0
+        result["completeness"] = 1.0 if result.get("missing_gates", "").lower() == "none" else 0.5
+        result["accuracy"] = 1.0 if result.get("structure_valid", "").lower().startswith("yes") else 0.0
+        result["scientific"] = 1.0 if result.get("extra_gates", "").lower() == "none" else 0.5
+        result["issues"] = result.get("errors", "none")
+        result["summary"] = result.get("accept_for_analysis", "")
+        return result
+    return None
+
+
+def parse_orthogonal_response(content: str) -> dict | None:
+    """Parse orthogonal judge response (different dimensions)."""
+    result = {}
+
+    patterns = {
+        "clinical_utility": r"CLINICAL_UTILITY:\s*(\d+)",
+        "biological_plausibility": r"BIOLOGICAL_PLAUSIBILITY:\s*(\d+)",
+        "hallucination_severity": r"HALLUCINATION_SEVERITY:\s*(\d+)",
+        "marker_logic": r"MARKER_LOGIC:\s*(\d+)",
+        "summary": r"SUMMARY:\s*(.+)",
+    }
+
+    for key, pattern in patterns.items():
+        match = re.search(pattern, content, re.IGNORECASE)
+        if match:
+            value = match.group(1).strip()
+            if key != "summary":
+                try:
+                    result[key] = int(value) / 10.0  # Normalize to 0-1
+                except ValueError:
+                    pass
+            else:
+                result[key] = value
+
+    # Map to standard fields
+    if "clinical_utility" in result:
+        # Invert hallucination (0=good, 10=bad -> 1=good, 0=bad)
+        halluc = result.get("hallucination_severity", 0)
+        result["overall"] = result.get("clinical_utility", 0)
+        result["completeness"] = result.get("marker_logic", 0)
+        result["accuracy"] = result.get("biological_plausibility", 0)
+        result["scientific"] = 1.0 - halluc  # Invert: low hallucination = high scientific
+        result["issues"] = f"hallucination_severity: {halluc:.1f}"
+        return result
+    return None
+
+
+def parse_binary_response(content: str) -> dict | None:
+    """Parse binary judge response (accept/reject with issues)."""
+    result = {}
+
+    patterns = {
+        "acceptable": r"ACCEPTABLE:\s*(\w+)",
+        "critical_errors": r"CRITICAL_ERRORS:\s*(.+)",
+        "missing_gates": r"MISSING_GATES:\s*(.+)",
+        "extra_gates": r"EXTRA_GATES:\s*(.+)",
+        "confidence": r"CONFIDENCE:\s*(\w+)",
+        "recommendation": r"RECOMMENDATION:\s*(.+)",
+    }
+
+    for key, pattern in patterns.items():
+        match = re.search(pattern, content, re.IGNORECASE)
+        if match:
+            result[key] = match.group(1).strip()
+
+    # Convert to JudgeResult fields
+    if "acceptable" in result:
+        accept = result["acceptable"].lower() in ["yes", "true"]
+        result["overall"] = 1.0 if accept else 0.0
+        result["completeness"] = 1.0 if result.get("missing_gates", "").lower() == "none" else 0.0
+        result["accuracy"] = 1.0 if result.get("critical_errors", "").lower() == "none" else 0.0
+        result["scientific"] = 1.0 if result.get("extra_gates", "").lower() == "none" else 0.0
+        result["issues"] = result.get("critical_errors", "none")
+        result["summary"] = result.get("recommendation", "")
+        return result
+    return None
+
+
+def get_response_parser(style: str):
+    """Get the response parser function for a given style."""
+    parsers = {
+        "default": parse_judge_response,
+        "validation": parse_validation_response,
+        "qualitative": parse_qualitative_response,
+        "orthogonal": parse_orthogonal_response,
+        "binary": parse_binary_response,
+    }
+    return parsers.get(style, parse_judge_response)
 
 
 class LLMJudge:
@@ -419,7 +741,9 @@ class LLMJudge:
             "critical_gate_recall": scoring_result.critical_gate_recall,
         }
 
-        prompt = build_judge_prompt(
+        # Use configured prompt style
+        prompt_builder = get_prompt_builder(self.config.prompt_style)
+        prompt = prompt_builder(
             test_case_id=scoring_result.test_case_id,
             predicted_response=scoring_result.raw_response,
             ground_truth=gt,
@@ -433,7 +757,13 @@ class LLMJudge:
                 temperature=self.config.temperature,
             )
 
-            parsed = parse_judge_response(response.content)
+            # Rate limit delay
+            if self.config.delay_seconds > 0:
+                time.sleep(self.config.delay_seconds)
+
+            # Use configured response parser
+            response_parser = get_response_parser(self.config.prompt_style)
+            parsed = response_parser(response.content)
 
             if parsed:
                 return JudgeResult(
