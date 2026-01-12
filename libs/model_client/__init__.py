@@ -28,7 +28,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from .cache import CachedClient, ResponseCache, get_global_cache
-from .cli_client import CLIConfig, CLIError, ClaudeCLIClient
+from .cli_client import ClaudeCLIClient, CLIConfig, CLIError
 from .protocols import ModelClient, ModelResponse, Provider, TokenUsage
 from .retry import with_retry, with_retry_async
 
@@ -43,6 +43,12 @@ __all__ = [
     "CachedClient",
     "ResponseCache",
     "get_global_cache",
+    # API clients
+    "AnthropicClient",
+    "OpenAIClient",
+    "GeminiClient",
+    "LiteLLMClient",
+    "ClientConfig",
     # CLI client (for Max subscription)
     "ClaudeCLIClient",
     "CLIConfig",
@@ -207,6 +213,123 @@ class LiteLLMClient:
         )
 
 
+class GeminiClient:
+    """Google Gemini API client wrapper."""
+
+    def __init__(self, config: ClientConfig):
+        self.config = config
+        self._client = None
+
+    def _get_client(self):
+        if self._client is None:
+            from google import genai  # type: ignore[import-not-found]
+
+            api_key = self.config.api_key or os.environ.get("GOOGLE_API_KEY")
+            if not api_key:
+                raise ValueError("GOOGLE_API_KEY not set")
+            self._client = genai.Client(api_key=api_key)
+        return self._client
+
+    @with_retry(max_attempts=3, initial_delay=2.0, max_delay=60.0)
+    def generate(
+        self,
+        messages: list[dict[str, str]],
+        model: str = "gemini-2.0-flash",
+        max_tokens: int = 1024,
+        temperature: float = 0.0,
+        **_kwargs: Any,
+    ) -> ModelResponse:
+        from google.genai import types  # type: ignore[import-not-found]
+
+        start_time = time.time()
+        client = self._get_client()
+
+        # Convert messages to Gemini format (simple concatenation for now)
+        prompt = "\n".join(
+            f"{m['role'].upper()}: {m['content']}" if m["role"] != "user" else m["content"]
+            for m in messages
+        )
+
+        # Relaxed safety settings for biomedical/scientific content
+        safety_settings = [
+            types.SafetySetting(  # type: ignore[call-arg]
+                category="HARM_CATEGORY_DANGEROUS_CONTENT",
+                threshold="BLOCK_ONLY_HIGH",
+            ),
+            types.SafetySetting(  # type: ignore[call-arg]
+                category="HARM_CATEGORY_HARASSMENT",
+                threshold="BLOCK_ONLY_HIGH",
+            ),
+            types.SafetySetting(  # type: ignore[call-arg]
+                category="HARM_CATEGORY_HATE_SPEECH",
+                threshold="BLOCK_ONLY_HIGH",
+            ),
+            types.SafetySetting(  # type: ignore[call-arg]
+                category="HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                threshold="BLOCK_ONLY_HIGH",
+            ),
+        ]
+
+        generation_config = types.GenerateContentConfig(
+            temperature=temperature,
+            max_output_tokens=max_tokens,
+            safety_settings=safety_settings,
+        )
+
+        response = client.models.generate_content(
+            model=model,
+            contents=prompt,
+            config=generation_config,
+        )
+
+        latency_ms = (time.time() - start_time) * 1000
+
+        # Handle blocked responses
+        if not response.candidates:
+            return ModelResponse(
+                content="[BLOCKED: No candidates returned]",
+                model=model,
+                usage=TokenUsage(input_tokens=0, output_tokens=0),
+                finish_reason="blocked",
+                latency_ms=latency_ms,
+                raw_response=response,
+            )
+
+        candidate = response.candidates[0]
+        finish_reason = "stop"
+        if candidate.finish_reason:
+            finish_reason = candidate.finish_reason.name.lower()
+            if finish_reason not in ("stop", "max_tokens"):
+                return ModelResponse(
+                    content=f"[BLOCKED: {candidate.finish_reason.name}]",
+                    model=model,
+                    usage=TokenUsage(input_tokens=0, output_tokens=0),
+                    finish_reason=finish_reason,
+                    latency_ms=latency_ms,
+                    raw_response=response,
+                )
+
+        content = response.text if response.text else ""
+
+        input_tokens = 0
+        output_tokens = 0
+        if response.usage_metadata:
+            input_tokens = response.usage_metadata.prompt_token_count or 0
+            output_tokens = response.usage_metadata.candidates_token_count or 0
+
+        return ModelResponse(
+            content=content,
+            model=model,
+            usage=TokenUsage(
+                input_tokens=input_tokens,
+                output_tokens=output_tokens,
+            ),
+            finish_reason=finish_reason,
+            latency_ms=latency_ms,
+            raw_response=response,
+        )
+
+
 class ModelRegistry:
     """
     Factory for creating model clients with consistent configuration.
@@ -224,18 +347,18 @@ class ModelRegistry:
         api_key: str | None = None,
         timeout: float = 120.0,
         max_retries: int = 3,
-        **kwargs: Any,
+        **_kwargs: Any,
     ) -> Any:
         """
         Get or create a client for the specified provider.
 
         Args:
-            provider: LLM provider ("anthropic", "openai", "litellm")
+            provider: LLM provider ("anthropic", "openai", "gemini", "litellm")
             model: Model name (used for cache key)
             api_key: Optional API key (defaults to env var)
             timeout: Request timeout in seconds
             max_retries: Maximum retry attempts
-            **kwargs: Additional provider-specific options
+            **_kwargs: Additional provider-specific options (reserved for future use)
 
         Returns:
             Configured client instance
@@ -253,6 +376,8 @@ class ModelRegistry:
                 cls._clients[cache_key] = AnthropicClient(config)
             elif provider == "openai":
                 cls._clients[cache_key] = OpenAIClient(config)
+            elif provider == "gemini":
+                cls._clients[cache_key] = GeminiClient(config)
             elif provider == "litellm":
                 cls._clients[cache_key] = LiteLLMClient(config)
             else:

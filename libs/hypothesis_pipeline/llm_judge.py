@@ -13,11 +13,11 @@ from __future__ import annotations
 
 import json
 import re
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
-from typing import Any, Literal, Protocol, Sequence
+from typing import Any, Literal, Protocol
 
 import numpy as np
-
 
 # =============================================================================
 # PROTOCOLS
@@ -96,7 +96,7 @@ class EvaluationRubric:
         return "\n".join(lines)
 
     @classmethod
-    def default_qa_rubric(cls) -> "EvaluationRubric":
+    def default_qa_rubric(cls) -> EvaluationRubric:
         """Create default rubric for Q&A evaluation."""
         return cls(
             name="Q&A Evaluation",
@@ -150,7 +150,7 @@ class EvaluationRubric:
         )
 
     @classmethod
-    def scientific_analysis_rubric(cls) -> "EvaluationRubric":
+    def scientific_analysis_rubric(cls) -> EvaluationRubric:
         """Create rubric for scientific analysis evaluation."""
         return cls(
             name="Scientific Analysis",
@@ -410,7 +410,7 @@ Evaluate now:"""
         # Handle case where no scores were parsed
         if not criterion_scores:
             max_total = sum(
-                max(l.score for l in c.levels) * c.weight
+                max(level.score for level in c.levels) * c.weight
                 for c in self.rubric.criteria
             )
 
@@ -660,7 +660,7 @@ def compute_inter_judge_agreement(
         item_scores = judgments_array[:, i]
         # Round to nearest integer for majority calculation
         rounded = np.round(item_scores)
-        unique, counts = np.unique(rounded, return_counts=True)
+        _unique, counts = np.unique(rounded, return_counts=True)
         if np.max(counts) > n_judges / 2:
             majority_agreements += 1
     majority_agreement_rate = majority_agreements / n_items
@@ -951,3 +951,216 @@ def quick_evaluate(
     judge = create_default_judge(model_client)
     result = judge.evaluate(question, response, ground_truth)
     return result.normalized_score
+
+
+# =============================================================================
+# PLUGGABLE JUDGE (For domain-specific prompts)
+# =============================================================================
+
+
+@dataclass
+class PluggableJudgeConfig:
+    """Configuration for pluggable judge."""
+
+    max_tokens: int = 2048
+    temperature: float = 0.0
+    parallel_workers: int = 4
+    delay_seconds: float = 0.0
+
+
+@dataclass
+class PluggableJudgeResult:
+    """Generic result from pluggable judge.
+
+    The parsed_data dict contains whatever the response_parser returns.
+    Domain-specific code can interpret this as needed.
+    """
+
+    item_id: str
+    parsed_data: dict[str, Any]
+    raw_prompt: str
+    raw_response: str
+    success: bool
+    error: str | None = None
+
+
+class PluggableJudge:
+    """
+    LLM judge with pluggable prompt building and response parsing.
+
+    Separates the domain-specific logic (prompts, parsing) from the
+    infrastructure (parallel execution, retry, rate limiting).
+
+    Usage:
+        from hypothesis_pipeline.llm_judge import PluggableJudge, PluggableJudgeConfig
+
+        # Define domain-specific prompt builder
+        def my_prompt_builder(item: MyItem, **kwargs) -> str:
+            return f"Evaluate: {item.text}"
+
+        # Define domain-specific response parser
+        def my_response_parser(response: str) -> dict | None:
+            # Parse response, return dict or None on failure
+            return {"score": parse_score(response)}
+
+        judge = PluggableJudge(
+            model=my_model_client,
+            prompt_builder=my_prompt_builder,
+            response_parser=my_response_parser,
+        )
+
+        results = judge.evaluate_batch(items)
+    """
+
+    def __init__(
+        self,
+        model: JudgeModel,
+        prompt_builder: Callable[..., str],
+        response_parser: Callable[[str], dict[str, Any] | None],
+        config: PluggableJudgeConfig | None = None,
+        model_name: str = "unknown",
+    ):
+        """
+        Initialize pluggable judge.
+
+        Args:
+            model: Model client implementing JudgeModel protocol
+            prompt_builder: Callable that builds prompts from items
+            response_parser: Callable that parses model responses to dicts
+            config: Optional configuration
+            model_name: Name of model for logging
+        """
+        self.model = model
+        self.prompt_builder = prompt_builder
+        self.response_parser = response_parser
+        self.config = config or PluggableJudgeConfig()
+        self.model_name = model_name
+
+    def evaluate_one(
+        self,
+        item: Any,
+        item_id: str,
+        **prompt_kwargs: Any,
+    ) -> PluggableJudgeResult:
+        """
+        Evaluate a single item.
+
+        Args:
+            item: The item to evaluate (passed to prompt_builder)
+            item_id: Unique identifier for this item
+            **prompt_kwargs: Additional kwargs passed to prompt_builder
+
+        Returns:
+            PluggableJudgeResult with parsed data or error
+        """
+        try:
+            # Build prompt
+            prompt = self.prompt_builder(item, **prompt_kwargs)
+
+            # Call model
+            raw_response = self.model.generate(
+                prompt,
+                max_tokens=self.config.max_tokens,
+                temperature=self.config.temperature,
+            )
+
+            # Parse response
+            parsed = self.response_parser(raw_response)
+
+            if parsed is not None:
+                return PluggableJudgeResult(
+                    item_id=item_id,
+                    parsed_data=parsed,
+                    raw_prompt=prompt,
+                    raw_response=raw_response,
+                    success=True,
+                )
+            else:
+                return PluggableJudgeResult(
+                    item_id=item_id,
+                    parsed_data={},
+                    raw_prompt=prompt,
+                    raw_response=raw_response,
+                    success=False,
+                    error="Failed to parse response",
+                )
+
+        except Exception as e:
+            return PluggableJudgeResult(
+                item_id=item_id,
+                parsed_data={},
+                raw_prompt=prompt if 'prompt' in locals() else "",
+                raw_response="",
+                success=False,
+                error=str(e),
+            )
+
+    def evaluate_batch(
+        self,
+        items: Sequence[tuple[Any, str]],
+        progress_callback: Callable[[int, int, PluggableJudgeResult], None] | None = None,
+        **prompt_kwargs: Any,
+    ) -> list[PluggableJudgeResult]:
+        """
+        Evaluate a batch of items in parallel.
+
+        Args:
+            items: Sequence of (item, item_id) tuples
+            progress_callback: Optional callback(current, total, result)
+            **prompt_kwargs: Additional kwargs passed to prompt_builder
+
+        Returns:
+            List of PluggableJudgeResult objects
+        """
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+
+        results = []
+        total = len(items)
+
+        with ThreadPoolExecutor(max_workers=self.config.parallel_workers) as executor:
+            # Submit all tasks
+            futures = {}
+            for item, item_id in items:
+                future = executor.submit(
+                    self._evaluate_with_delay,
+                    item,
+                    item_id,
+                    prompt_kwargs,
+                )
+                futures[future] = item_id
+
+            # Collect results
+            for i, future in enumerate(as_completed(futures), 1):
+                item_id = futures[future]
+                try:
+                    result = future.result()
+                except Exception as e:
+                    result = PluggableJudgeResult(
+                        item_id=item_id,
+                        parsed_data={},
+                        raw_prompt="",
+                        raw_response="",
+                        success=False,
+                        error=str(e),
+                    )
+
+                results.append(result)
+
+                if progress_callback:
+                    progress_callback(i, total, result)
+
+        return results
+
+    def _evaluate_with_delay(
+        self,
+        item: Any,
+        item_id: str,
+        prompt_kwargs: dict[str, Any],
+    ) -> PluggableJudgeResult:
+        """Evaluate with optional rate limit delay."""
+        import time
+
+        if self.config.delay_seconds > 0:
+            time.sleep(self.config.delay_seconds)
+
+        return self.evaluate_one(item, item_id, **prompt_kwargs)

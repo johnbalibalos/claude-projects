@@ -24,15 +24,10 @@ import re
 
 # Patterns that indicate experiment scripts (may incur API costs)
 EXPERIMENT_PATTERNS = [
-    r"run_experiment",
-    r"run_.*experiment",
-    r"run_.*ablation",
-    r"run_benchmark",
-    r"run_sonnet",
-    r"run_opus",
-    r"run_local_models",
-    r"extract_multi_method.*--methods.*llm",  # LLM extraction costs money
-    r"hypothesis_pipeline",
+    r"run_modular_pipeline",
+    r"run_full_benchmark",
+    r"run_ab_test",
+    r"run_gating_ablation",
 ]
 
 # Skip confirmation patterns (user explicitly wants to skip)
@@ -42,6 +37,7 @@ SKIP_CONFIRMATION_PATTERNS = [
     r"--dry-run",  # Dry run doesn't cost anything
     r"--help",
     r"-h\b",
+    r"^git\s",  # Git commands shouldn't trigger cost check
 ]
 
 
