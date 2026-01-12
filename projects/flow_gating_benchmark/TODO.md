@@ -32,6 +32,22 @@
 
 ## High Priority
 
+### Multi-Judge Experiment
+Design and implement cross-validation with multiple judge models.
+
+**Goal:** Measure inter-judge agreement, detect self-serving bias, find cheapest reliable judge.
+
+- [ ] Design judge personas/prompts (see `docs/JUDGE_EXPERIMENT_DESIGN.md`)
+  - Option A: Same prompt, different models
+  - Option B: Different prompt styles (validation vs qualitative vs orthogonal)
+  - Option C: Hybrid approach
+- [ ] Implement `MultiJudge` class for parallel judging
+- [ ] Stratified sample: 520 predictions × 3 judges = 1560 calls (same cost)
+- [ ] Increase `max_tokens` to 20000 for prediction to reduce token exhaustion
+- [ ] Analysis: inter-rater reliability (Fleiss' kappa), self-serving bias, calibration vs auto metrics
+
+**Key question:** Should judges rate same metrics as auto-scoring (F1, structure) or orthogonal dimensions (clinical utility, biological plausibility)?
+
 ### Verify Staged OMIPs
 - [ ] Manual verification of 13 OMIPs in `data/staging/`
 - [ ] Move verified cases to `data/ground_truth/`
