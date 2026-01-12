@@ -2,128 +2,134 @@
 
 ## Recently Completed (Jan 2026)
 
-### Evaluation Framework Refactoring
-- [x] Split metrics.py into focused modules
-  - `normalization.py` - Gate name normalization with 200+ cell type synonyms
-  - `hierarchy.py` - Tree operations (extract names, parent maps, depth)
-  - `task_failure.py` - Meta-question/refusal detection
-- [x] Clean LLM client abstraction (`llm_client.py`)
-  - Unified interface for Anthropic, OpenAI, Ollama
-  - Protocol-based design with create_client() factory
-- [x] Improved response parser
-  - Better JSON extraction with proper brace matching
-  - Meta-term detection in gate names
-  - Stricter validation (MIN_GATES, MAX_NAME_LENGTH)
+### Modular Pipeline Architecture
+- [x] `PredictionCollector` - parallel API, rate-limited CLI collection
+- [x] `BatchScorer` - score predictions against ground truth
+- [x] `LLMJudge` - qualitative assessment (configurable model)
+- [x] `--judge-model` flag for flexible judge selection
+- [x] Resume/retry for errored predictions on `--resume`
+- [x] CLI delay reduced to 0.5s with exponential backoff
 
-### Task Failure Detection
-- [x] `TaskFailureType` enum: META_QUESTIONS, REFUSAL, INSTRUCTIONS, EMPTY, MALFORMED
-- [x] Pattern matching for meta-questions, refusals, instructional responses
-- [x] Integration into scorer and aggregate metrics
-- [x] Confidence scoring based on pattern matches vs. valid gates
+### LLM Clients
+- [x] `AnthropicClient` (API)
+- [x] `ClaudeCLIClient` (Max subscription, OAuth)
+- [x] `GeminiClient` (Google API)
+- [x] `OpenAIClient`
+- [x] `OllamaClient` (local models)
+- [x] `MockClient` (dry-run)
 
-### Manual Review Reports
-- [x] `ManualReviewReportGenerator` class
-- [x] Side-by-side comparison with ASCII tree visualization
-- [x] Configurable outlier thresholds (F1, hallucination, critical recall)
-- [x] Report levels: summary, outliers, full
-- [x] Task failure metrics in reports
+### Test Cases
+- [x] 13 OMIPs in staging (up from 8)
+- [x] Mass cytometry support (OMIP-087)
+- [x] Staging → ground truth workflow
 
-### Data Curation
-- [x] 8 OMIP test cases with ground truth hierarchies
-- [x] OCR/extraction library (marker_logic, paper_parser, auto_extractor)
-- [x] Panel entry extraction from XML tables
+### Evaluation
+- [x] 200+ gate synonym mappings
+- [x] Task failure detection (refusals, meta-questions)
+- [x] Critical gate recall (singlets, live)
 
 ---
 
 ## High Priority
 
-### Ground Truth Fluorophore Condition
-Create experimental condition that provides exact fluorophore assignments:
-- [ ] Add `fluorophore_provided` condition to experiments
-- [ ] Compare F1 scores: inferred vs. provided fluorophores
-- [ ] Isolate reasoning failures from information gaps
-
-### Expand Model Coverage
-- [ ] Complete Ollama integration testing
-- [ ] Run experiments with:
-  - [ ] Llama 3.2 (8B, 70B)
-  - [ ] DeepSeek-V3
-  - [ ] Qwen 2.5
-- [ ] Create model comparison report
+### Verify Staged OMIPs
+- [ ] Manual verification of 13 OMIPs in `data/staging/`
+- [ ] Move verified cases to `data/ground_truth/`
+- [ ] Validate against original OMIP PDFs
 
 ### Statistical Rigor
-- [ ] Add confidence intervals to aggregate metrics
-- [ ] Implement bootstrap significance testing
-- [ ] Multi-run experiments for variance estimation
+- [ ] Confidence intervals on aggregate metrics
+- [ ] Bootstrap significance testing
+- [ ] Multi-run variance estimation (n_bootstrap=10+)
+
+### Expand Model Coverage
+- [ ] Run full benchmark on claude-opus-cli
+- [ ] Test gpt-4o
+- [ ] Local models: llama3.1, qwen2.5, deepseek-r1
 
 ---
 
 ## Medium Priority
 
-### Scale Up Test Set
-- [ ] Expand to 20+ OMIP test cases
+### Scale Test Set
+- [ ] Expand to 20+ verified OMIPs
 - [ ] Add tissue-specific panels (bone marrow, lymph node)
-- [ ] Include rare population panels (ILCs, MAITs)
-- [ ] Target diverse difficulty levels
+- [ ] Include rare populations (ILCs, MAITs)
 
-### MCP Server for Interactive Curation
-Wrap extraction library as MCP server:
-- [ ] `get_paper_content` - Extract XML/PDF content
-- [ ] `parse_marker_table` - Parse phenotype tables
-- [ ] `build_hierarchy` - Build hierarchy from markers
-- [ ] `validate_hierarchy` - Check against panel and HIPC
-- [ ] `save_test_case` - Persist validated test cases
-
-### Testing
-- [ ] Integration tests for experiment runner
-- [ ] Edge case tests for task failure detection
-- [ ] Property-based testing with Hypothesis
-- [ ] Cross-validation against FlowRepository .wsp files
+### Integration Tests
+- [ ] End-to-end pipeline tests
+- [ ] Parser edge cases
+- [ ] Cross-validation against .wsp files
 
 ---
 
 ## Low Priority
 
-### Documentation
-- [ ] API documentation for evaluation modules
-- [ ] Tutorial notebook: "Running Your First Experiment"
-- [ ] Methods section draft for publication
-
 ### Infrastructure
-- [ ] Experiment tracking (MLflow or W&B)
-- [ ] Docker container for reproducibility
-- [ ] CI/CD pipeline
+- [ ] Experiment tracking (MLflow/W&B)
+- [ ] Docker for reproducibility
+- [ ] CI/CD
 
-### Analysis Improvements
-- [ ] Failure pattern categorization
-- [ ] Per-population difficulty analysis
-- [ ] Vocabulary familiarity correlation
+### Documentation
+- [ ] Tutorial notebook
+- [ ] Methods section for publication
 
 ---
 
-## Future Work Ideas
+## Future Work
 
 ### Multi-turn Evaluation
-- Test iterative refinement: predict → feedback → revise
-- Compare single-turn vs. multi-turn F1 scores
-- Design feedback strategies (specific vs. general)
+- See `design_docs/multi_turn_evaluation_protocol.md` (NOT IMPLEMENTED)
 
 ### Confidence Elicitation
-- Ask models to rate prediction confidence
-- Correlate confidence with actual F1 scores
-- Test calibration across difficulty levels
+- See `design_docs/confidence_elicitation_design.md` (NOT IMPLEMENTED)
 
-### Vision Integration
-- Extract gating figures from OMIP PDFs
-- Use vision LLMs to read gate names from plots
-- OCR fallback for non-vision models
+### Selective RAG for Rare Cell Types (NOT IMPLEMENTED)
 
-### FlowRepository Cross-validation
-- Automatic download of .wsp files
-- Parse hierarchies using FlowKit
-- Compare paper-extracted vs. .wsp hierarchies
-- Assess ground truth reliability
+**Context from variance analysis (Jan 2026):**
+
+Analyzed gemini-2.5-pro variance at temperature=0 across 13 OMIPs with 5 bootstrap runs:
+
+| Finding | Detail |
+|---------|--------|
+| Overall variance | gemini-2.5-flash most deterministic (60%), gemini-2.5-pro least (25%) |
+| Primary driver | **Failure rate**, not model stochasticity or training data |
+| Failure modes | MAX_TOKENS exhaustion (reasoning too long), no JSON output |
+| Valid-only F1 | When 2.5-pro succeeds, it performs well (OMIP-077: 0.45 F1 vs 0.09 overall) |
+
+**Key insight:** Apparent "training data effect" is actually failure rate. Complex panels fail 60-100% of the time, dragging mean F1 to zero. Simpler panels succeed consistently.
+
+**Correlation with marker frequency:**
+- Gates with >50k PubMed hits (CD4, CD8, T cells): F1 ≈ 0.54
+- Gates with <1k PubMed hits (SLAN, cDC1, HSPC): F1 ≈ 0.10
+- Cached frequencies in `data/cache/pubmed_frequencies.json` (100 markers)
+
+**Proposed experiment - Selective RAG:**
+
+1. **Identify rare gates** using PubMed frequency threshold (<1000 hits)
+2. **Fetch targeted context** only for rare markers (SLAN, cDC subsets, etc.)
+3. **Inject into prompt** as reference knowledge
+4. **Measure F1 improvement** on rare-gate panels (OMIP-077, OMIP-083)
+
+**Existing infrastructure:**
+- `rag_mode` parameter in conditions.py: "none" | "oracle"
+- `HIPC_RAG_CONTEXT` in prompts.py (standardized definitions)
+- `src/rag/pmc_client.py` for PubMed Central paper retrieval
+- PubMed frequency cache already built
+
+**Implementation sketch:**
+```python
+# In experiments/prompts.py
+def build_prompt_with_selective_rag(test_case, freq_threshold=1000):
+    rare_gates = [g for g in test_case.gates if pubmed_freq[g] < freq_threshold]
+    if rare_gates:
+        context = fetch_marker_context(rare_gates)  # PubMed/OMIP papers
+        return inject_rag_context(base_prompt, context)
+    return base_prompt
+```
+
+**Hypothesis:** Selective RAG should improve F1 by 0.1-0.2 on rare-gate panels with minimal token overhead (~500 tokens). The model CAN reason about these cell types when it succeeds; it just lacks specialized knowledge.
 
 ---
 
-*Last updated: 2026-01-10*
+*Last updated: 2026-01-12*
