@@ -539,7 +539,63 @@
                                       ],
                                       "marker_logic": "NK1.1+",
                                       "gate_type": "Unknown",
-                                      "children": [],
+                                      "children": [
+                                        {
+                                          "name": "CD127- NK cells",
+                                          "markers": [
+                                            "CD127"
+                                          ],
+                                          "marker_logic": "CD127-",
+                                          "gate_type": "Unknown",
+                                          "children": [
+                                            {
+                                              "name": "Terminal NK",
+                                              "markers": [
+                                                "CD11b",
+                                                "CD27"
+                                              ],
+                                              "marker_logic": "CD11b+ CD27-",
+                                              "gate_type": "Unknown",
+                                              "children": [],
+                                              "is_critical": false
+                                            },
+                                            {
+                                              "name": "DP NK",
+                                              "markers": [
+                                                "CD11b",
+                                                "CD27"
+                                              ],
+                                              "marker_logic": "CD11b+ CD27+",
+                                              "gate_type": "Unknown",
+                                              "children": [],
+                                              "is_critical": false
+                                            },
+                                            {
+                                              "name": "CD27+ NK",
+                                              "markers": [
+                                                "CD27",
+                                                "CD11b"
+                                              ],
+                                              "marker_logic": "CD27+ CD11b-",
+                                              "gate_type": "Unknown",
+                                              "children": [],
+                                              "is_critical": false
+                                            },
+                                            {
+                                              "name": "DN NK",
+                                              "markers": [
+                                                "CD11b",
+                                                "CD27"
+                                              ],
+                                              "marker_logic": "CD11b- CD27-",
+                                              "gate_type": "Unknown",
+                                              "children": [],
+                                              "is_critical": false
+                                            }
+                                          ],
+                                          "is_critical": false
+                                        }
+                                      ],
                                       "is_critical": false
                                     },
                                     {
