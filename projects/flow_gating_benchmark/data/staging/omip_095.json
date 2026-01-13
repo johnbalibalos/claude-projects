@@ -254,69 +254,6 @@
                         {"name": "pre-mNKs", "markers": ["NK1.1"], "marker_logic": "NK1.1+", "gate_type": "Unknown", "children": [], "is_critical": false}
                       ],
                       "is_critical": false
-                    },
-                    {
-                      "name": "cDCs",
-                      "markers": ["CD11c", "I-A/I-E"],
-                      "marker_logic": "CD11c+ I-A/I-E+",
-                      "gate_type": "Unknown",
-                      "children": [
-                        {"name": "cDC1", "markers": ["CD8a"], "marker_logic": "CD8a+", "gate_type": "Unknown", "children": [], "is_critical": false},
-                        {"name": "cDC2", "markers": ["CD11b"], "marker_logic": "CD11b+", "gate_type": "Unknown", "children": [], "is_critical": false}
-                      ],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "Monocytes",
-                      "markers": ["CD11b", "CD115"],
-                      "marker_logic": "CD11b+ CD115+",
-                      "gate_type": "Unknown",
-                      "children": [
-                        {"name": "Classical (inflammatory)", "markers": ["Ly6C", "CD62L"], "marker_logic": "Ly6Chi CD62L+", "gate_type": "Unknown", "children": [], "is_critical": false},
-                        {"name": "Intermediate", "markers": ["Ly6C", "CD62L"], "marker_logic": "Ly6Cint CD62L-", "gate_type": "Unknown", "children": [], "is_critical": false},
-                        {"name": "Non-classical (patrolling)", "markers": ["Ly6C", "CD62L"], "marker_logic": "Ly6C- CD62L-", "gate_type": "Unknown", "children": [], "is_critical": false}
-                      ],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "Macrophages",
-                      "markers": ["F4/80", "CD11b"],
-                      "marker_logic": "F4/80+ CD11b+",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "Neutrophils",
-                      "markers": ["Ly6G", "CD11b"],
-                      "marker_logic": "Ly6G+ CD11b+",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "Eosinophils",
-                      "markers": ["Siglec-F", "CD11c"],
-                      "marker_logic": "Siglec-F+ CD11c-",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "Basophils",
-                      "markers": ["FceR1a"],
-                      "marker_logic": "FceR1a+ CD200R3+",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "ILCs",
-                      "markers": ["CD127", "CD117"],
-                      "marker_logic": "Lineage- CD127+ CD117+/-",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
                     }
                               ],
                               "is_critical": true
