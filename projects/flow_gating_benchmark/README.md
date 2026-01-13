@@ -19,6 +19,8 @@ See **[results/BENCHMARK_RESULTS_SUMMARY.md](results/BENCHMARK_RESULTS_SUMMARY.m
 - Claude models have high critical gate recall (important QC gates)
 - Standard context improves F1 by 25%+
 
+**Methodology Note:** In earlier testing with n=10 bootstrap runs, Claude models produced ~10 unique responses per 10 runs even at temperature=0. This non-determinism finding doesn't depend on ground truth quality—it measures output consistency, not correctness. The F1 results above are from a subsequent n=1 run on manually-curated ground truth.
+
 ---
 
 ## Quick Start
