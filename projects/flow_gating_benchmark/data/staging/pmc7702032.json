@@ -1,0 +1,582 @@
+{
+  "test_case_id": "PMC7702032",
+  "source_type": "omip_paper",
+  "omip_id": null,
+  "doi": "10.1002/cyto.a.24230",
+  "pmc_id": "PMC7702032",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Tumor tissues and peripheral blood. Oral squamous cell carcinoma tissues with donor\u2010matched blood were used to profile NK cells with this 27\u2010color panel",
+    "species": "human",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Gating strategy, NKp46\u2010based approach and panel performance. ( A ) Gating strategy to identify NK cells in a single\u2010cell suspension from a representative tumor tissue. Stable acquisition over time is monitored (1), followed by exclusion of debris (2), doublets (3, 4), and autofluorescent cells (5). NK cells were identified as live lymphocytes (6), non\u2010CD14 +  monocytes (7), non\u2010CD19 +  B cells (7), non\u2010CD3 +  T cells (8), non\u2010CD127 +  innate lymphoid cells 1 (ILC1) (8), and non\u2010HLA\u2010DR +  cells (9). ( B ) To determine whether protein detection is affected by the collagenase Type II\u2010based tissue digestion protocol, peripheral blood mononuclear cells (PBMC) from healthy donors were treated with 350\u2009U/ml of collagenase Type II for 30\u2009min at 37\u00b0C. The bivariate dot plots are representing the expression of CD56 and CD16 or NKp46 and CD16 from one healthy donor before or after collagenase digestion. The right graph shows the frequencies of each different highlighted population within the HLA\u2010DR \u2212  cells as depicted in A ( n  = 4, Mann Whitney Test). ( C ) Overview of the 18 phenotypic molecules analyzed within the NKp46 +  cells of the tumor tissue (red) of a representative donor and its matched\u2010peripheral blood (blue). Central bivariate dot plot shows the gate used to identify NKp46\u2010expressing cells for both samples. Surrounding histograms or dot plots are showing the expression of the markers for both samples classified in the different categories: activation and co\u2010activation markers, inhibition and co\u2010inhibition markers, maturation markers, activation markers and migration and residency markers. As controls, both fluorescence minus one staining (FMOs) (Supporting Information Online Fig.  S7 ), as well as reference populations, which were either CD19 +  B cells (serving as negative expression control) or CD3 +  T cells (serving as positive expression control) from the same tumor tissue, were used.",
+    "full_text_gating": "Natural killer (NK) cells were first identified in the 1970s for their spontaneous cytotoxicity against target cells ( 1 ,  2 ). Based on this ability to eliminate tumor cells without the need of prior immunization, it has been proposed that NK cells possess an ongoing preventive role to eliminate malignantly transformed cells and contribute to the control of hematologic malignancies or tumor metastasis ( 3 ,  4 ). In addition to exerting direct cytotoxicity, NK cells are also able to produce cytokines and chemokines that modulate the local microenvironment and recruit additional immune cells ( 5 ,  6 ,  7 ,  8 ). Together, these data suggest that NK cells could make significant contributions to antitumor immune responses in solid tumors ( 9 ). However, a more in\u2010depth analysis of intra\u2010tumoral NK cells is needed to further decipher how NK cells affect tumor growth. Of note, multiple studies have shown that the tumor progression and outcomes in humans correlate with the presence of NK cells at the tumor site ( 10 ,  11 ,  12 ,  13 ,  14 ) highlighting that these cells are of interest for the development of immunotherapeutic approaches in solid tumors ( 15 ,  16 ,  17 ,  18 ).\n\nOne roadblock to study human NK cells isolated from tumors is the limited amount of tissue that is typically available from biopsies or tumor resections. It is thus of utmost importance to extract as much information as possible from the tumor sample on a single\u2010cell level while minimizing further sample loss (Table  1 ).\n\nThe first critical step to profile infiltrating NK cells is to obtain a single\u2010cell suspension yielding a high viability with minimal cell debris and preserved ability to detect critical cell surface antigens. Here, we used a well\u2010established digestion method combining collagenase Type II and DNase. This collagenase Type II\u2010based protocol has been used for nearly 20\u2009years and yields an excellent percentage of viable mucosal mononuclear cells when processing human mucosal tissues ( 19 ,  20 ,  21 ).\n\nThe second critical step is to extract as much information as possible from this cell suspension. To that end, high parameter flow cytometry is particularly well suited. Indeed, while cell loss can occur during staining and washing procedures, it is minimal during acquisition, with a current cell transmission efficiency greater than 95% for a standard fluorescence\u2010based flow cytometer ( 22 ).\n\nHere, we report the development and validation of a 27\u2010parameter flow cytometry panel suitable to define the phenotype and activation status of NK cells isolated from human tumor tissues. We use a type II collagenase\u2010based isolation protocol, which ensures that the panel described here is useful and applicable for a range of human mucosal tissues and possibly others ( 20 ,  23 ,  24 ). All reagents included in the final panel are listed in Table  2 .\n\nIn order to identify NK cells in tumor tissue, we applied the gating strategy depicted in Figure  1A . This gating strategy was designed to ensure that other immune populations such as B cells, T cells, and monocytes, could also be enumerated. NK cells were gated as live hematopoietic cells (Dead \u2212 , CD45 + ), non B cells (CD19 \u2212 ), non\u2010monocytes (CD14 \u2212 ), non T cells (CD3 \u2212 ), non\u2010innate lymphoid cells (ILC) (CD127 \u2212 ), and HLA\u2010DR \u2212  cells (Fig.  1A ). Of note, HLA\u2010DR is a common surrogate for immune activation on lymphocytes ( 25 ) that has been reported to be expressed by a fraction of NK cells ( 26 ,  27 ,  28 ). However, CD16 expression by HLA\u2010DR +  cells could also point to the identification of non\u2010classical CD14 \u2212  monocytes ( 29 ). We observed that a small fraction of NKp46 +  cells expressed HLA\u2010DR in the blood and the tumor tissues but kept HLA\u2010DR as a lineage marker. Future single\u2010cell RNA sequencing studies will help determine the nature of these cells and dictate if HLA\u2010DR should be included in the gating strategy or as an activation marker.\n\nGating strategy, NKp46\u2010based approach and panel performance. ( A ) Gating strategy to identify NK cells in a single\u2010cell suspension from a representative tumor tissue. Stable acquisition over time is monitored (1), followed by exclusion of debris (2), doublets (3, 4), and autofluorescent cells (5). NK cells were identified as live lymphocytes (6), non\u2010CD14 +  monocytes (7), non\u2010CD19 +  B cells (7), non\u2010CD3 +  T cells (8), non\u2010CD127 +  innate lymphoid cells 1 (ILC1) (8), and non\u2010HLA\u2010DR +  cells (9). ( B ) To determine whether protein detection is affected by the collagenase Type II\u2010based tissue digestion protocol, peripheral blood mononuclear cells (PBMC) from healthy donors were treated with 350\u2009U/ml of collagenase Type II for 30\u2009min at 37\u00b0C. The bivariate dot plots are representing the expression of CD56 and CD16 or NKp46 and CD16 from one healthy donor before or after collagenase digestion. The right graph shows the frequencies of each different highlighted population within the HLA\u2010DR \u2212  cells as depicted in A ( n  = 4, Mann Whitney Test). ( C ) Overview of the 18 phenotypic molecules analyzed within the NKp46 +  cells of the tumor tissue (red) of a representative donor and its matched\u2010peripheral blood (blue). Central bivariate dot plot shows the gate used to identify NKp46\u2010expressing cells for both samples. Surrounding histograms or dot plots are showing the expression of the markers for both samples classified in the different categories: activation and co\u2010activation markers, inhibition and co\u2010inhibition markers, maturation markers, activation markers and migration and residency markers. As controls, both fluorescence minus one staining (FMOs) (Supporting Information Online Fig.  S7 ), as well as reference populations, which were either CD19 +  B cells (serving as negative expression control) or CD3 +  T cells (serving as positive expression control) from the same tumor tissue, were used.\n\nHuman peripheral blood NK cells are typically defined by the relative expression of two different surface markers: CD56 (NCAM), an adhesion molecule that has also been shown to be involved in NK cell activation ( 30 ), and CD16, the low\u2010affinity Fc receptor known as FcyRIII that binds to the Fc domain of IgG antibodies and induces antibody\u2010dependent cellular cytotoxicity (ADCC) upon binding ( 31 ). We found that the detected level of CD56 was decreased during the isolation process required to fully dissociate tumor tissue and obtain a single cell suspension (Fig.  1B ). This sensitivity to a commonly used collagenase Type II\u2010based digestion protocol ( 20 ) highlighted that CD56 was not an ideal marker to clearly define NK\u2010cell subsets in tissues. Likewise, it might also explain the increased frequency of CD56 dim  CD16 \u2212  NK cells that has been observed in human tissues ( 32 ,  33 ,  34 ). As an alternative we have decided to use NKp46, a member of the highly conserved natural cytotoxicity receptor (NCR) family of NK\u2010activating receptors, which has been proposed to be a unique marker to define NK cells across species ( 35 ) in context of other lineage markers.\n\nWe then compiled a set of 18 biomarkers, which are highly relevant for assessing NK\u2010cell phenotype and function. First, as NK\u2010cell activation is regulated by the integration of signals from a wide array of receptors ( 36 ), we included the activating receptors NKG2D and CD244, and the inhibitory receptors CD161 and NKG2A. We also included CD2, a cell adhesion molecule that has been shown to be relevant for activation of NK cells and memory formation ( 37 ,  38 ).\n\nWe then tested several proteins with inhibitory properties such as PD\u20101, Tim3, and TIGIT ( 39 ), but only included TIGIT in the final panel ( 40 ). We found that Tim3 expression was sensitive to collagenase treatment, and, in line with a recent publication we did not observe PD\u20101 expression by NK cells ( 41 ).\n\nWe also included markers used to define NK\u2010cell differentiation (CD57, CD11b, CD27) ( 42 ,  43 ,  44 ), activation (CD38, CD25) ( 45 ,  46 ), and cytotoxic potential (Granzyme B). Ki67 was included as an indicator of cell proliferation. Finally, to assess migratory potential and tissue residence, CD69, CD103, and CX3CR1 were included in this panel along with CD39, a marker of chronic antigen stimulation ( 18 ).\n\nThe performance of the NK panel is displayed in Figure  1C . We found that this combination of markers enabled a thorough phenotypic characterization of NK cells within tumor tissues limited in both size and cell number. Of note, although our panel was developed primarily to assess NK cell phenotype, the expression of most markers could be assessed for CD3 +  T cells, providing additional valuable biological insight (Supporting Information Online Fig.  S9 ).",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "Lineage",
+        "fluorophore": null,
+        "clone": null,
+        "purpose": null
+      },
+      {
+        "marker": "Dead cells",
+        "fluorophore": "Blue",
+        "clone": "N.A.",
+        "purpose": "Viability"
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "BUV805",
+        "clone": "HI30",
+        "purpose": "Lymphocytes"
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "BV570",
+        "clone": "M5E2",
+        "purpose": "Monocytes"
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "BUV395",
+        "clone": "SJ25\u2010C1",
+        "purpose": "B cells"
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "BUV661",
+        "clone": "UCHT1",
+        "purpose": "T cells"
+      },
+      {
+        "marker": "CD127",
+        "fluorophore": "BV786",
+        "clone": "HIL\u20107R\u2010M21",
+        "purpose": "ILC"
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "APC\u2010H7",
+        "clone": "G46.6",
+        "purpose": "Exclusion / activation marker"
+      },
+      {
+        "marker": "NK cell identification",
+        "fluorophore": null,
+        "clone": null,
+        "purpose": null
+      },
+      {
+        "marker": "NKp46",
+        "fluorophore": "Biotin",
+        "clone": "9E2",
+        "purpose": "NK cell marker and activating receptor"
+      },
+      {
+        "marker": "Streptavidin",
+        "fluorophore": "BB630",
+        "clone": "N.A.",
+        "purpose": "N.A."
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "BUV496",
+        "clone": "3G8",
+        "purpose": "NK cell marker and ADCC"
+      },
+      {
+        "marker": "NK cell markers",
+        "fluorophore": null,
+        "clone": null,
+        "purpose": null
+      },
+      {
+        "marker": "NKG2D",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "1D11",
+        "purpose": "Activating receptor"
+      },
+      {
+        "marker": "CD244",
+        "fluorophore": "BV421",
+        "clone": "2\u201369",
+        "purpose": "Activating receptor"
+      },
+      {
+        "marker": "CD2",
+        "fluorophore": "BV605",
+        "clone": "RPA\u20102.10",
+        "purpose": "Co\u2010stimulatory receptor"
+      },
+      {
+        "marker": "NKG2A",
+        "fluorophore": "PE",
+        "clone": "REA110",
+        "purpose": "Inhibitory receptor"
+      },
+      {
+        "marker": "CD161",
+        "fluorophore": "BB700",
+        "clone": "DX12",
+        "purpose": "Inhibitory receptor"
+      },
+      {
+        "marker": "TIGIT",
+        "fluorophore": "BV711",
+        "clone": "741182",
+        "purpose": "Co\u2010inhibitory receptor"
+      },
+      {
+        "marker": "CD69",
+        "fluorophore": "BV650",
+        "clone": "FN50",
+        "purpose": "Residency and activation"
+      },
+      {
+        "marker": "CD39",
+        "fluorophore": "PE\u2010CF594",
+        "clone": "TU66",
+        "purpose": "Residency and activation"
+      },
+      {
+        "marker": "CD103",
+        "fluorophore": "BV750",
+        "clone": "Ber\u2010ACT8",
+        "purpose": "Residency"
+      },
+      {
+        "marker": "CX3CR1",
+        "fluorophore": "BUV737",
+        "clone": "2A9\u20101",
+        "purpose": "Migration"
+      },
+      {
+        "marker": "CD57",
+        "fluorophore": "FITC",
+        "clone": "NK\u20101",
+        "purpose": "Maturation and differentiation"
+      },
+      {
+        "marker": "CD27",
+        "fluorophore": "BB660",
+        "clone": "M\u2010T271",
+        "purpose": "Maturation"
+      },
+      {
+        "marker": "CD11b",
+        "fluorophore": "PE\u2010Cy5",
+        "clone": "ICRF44",
+        "purpose": "Maturation and adhesion"
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "BB790",
+        "clone": "HIT2",
+        "purpose": "Activation"
+      },
+      {
+        "marker": "Ki67",
+        "fluorophore": "eFluor660",
+        "clone": "Sola15",
+        "purpose": "Proliferation"
+      },
+      {
+        "marker": "Granzyme B",
+        "fluorophore": "AF700",
+        "clone": "QA16A2",
+        "purpose": "Cytolytic abilities"
+      },
+      {
+        "marker": "CD25",
+        "fluorophore": "BUV563",
+        "clone": "2A3",
+        "purpose": "Activation"
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "PECy5.5",
+        "clone": "CMSSB",
+        "purpose": "Activation marker and NK\u2010cell marker for peripheral blood"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "root",
+      "is_critical": true,
+      "children": [
+        {
+          "name": "Time Gate",
+          "markers": [
+            "Time"
+          ],
+          "marker_logic": "Stable acquisition over time",
+          "gate_type": "scatter",
+          "is_critical": true,
+          "children": [
+            {
+              "name": "Cells (Debris Exclusion)",
+              "markers": [
+                "FSC-A",
+                "SSC-A"
+              ],
+              "marker_logic": "FSC-A+ SSC-A+",
+              "gate_type": "scatter",
+              "is_critical": true,
+              "children": [
+                {
+                  "name": "Singlets (FSC)",
+                  "markers": [
+                    "FSC-A",
+                    "FSC-H"
+                  ],
+                  "marker_logic": "FSC-A vs FSC-H diagonal",
+                  "gate_type": "scatter",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "Singlets (SSC)",
+                      "markers": [
+                        "SSC-A",
+                        "SSC-H"
+                      ],
+                      "marker_logic": "SSC-A vs SSC-H diagonal",
+                      "gate_type": "scatter",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "Non-Autofluorescent Cells",
+                          "markers": [
+                            "Autofluorescence"
+                          ],
+                          "marker_logic": "Autofluorescence-",
+                          "gate_type": "scatter",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "Live CD45+ Lymphocytes",
+                              "markers": [
+                                "Viability",
+                                "CD45"
+                              ],
+                              "marker_logic": "Dead- CD45+",
+                              "gate_type": "viability",
+                              "is_critical": true,
+                              "children": [
+                                {
+                                  "name": "Non-Monocytes Non-B cells",
+                                  "markers": [
+                                    "CD14",
+                                    "CD19"
+                                  ],
+                                  "marker_logic": "CD14- CD19-",
+                                  "gate_type": "lineage",
+                                  "is_critical": true,
+                                  "children": [
+                                    {
+                                      "name": "Non-T cells Non-ILC",
+                                      "markers": [
+                                        "CD3",
+                                        "CD127"
+                                      ],
+                                      "marker_logic": "CD3- CD127-",
+                                      "gate_type": "lineage",
+                                      "is_critical": true,
+                                      "children": [
+                                        {
+                                          "name": "HLA-DR- cells",
+                                          "markers": [
+                                            "HLA-DR"
+                                          ],
+                                          "marker_logic": "HLA-DR-",
+                                          "gate_type": "lineage",
+                                          "is_critical": true,
+                                          "children": [
+                                            {
+                                              "name": "NKp46+ NK cells",
+                                              "markers": [
+                                                "NKp46"
+                                              ],
+                                              "marker_logic": "NKp46+",
+                                              "gate_type": "lineage",
+                                              "is_critical": true,
+                                              "children": [
+                                                {
+                                                  "name": "CD56bright CD16- NK cells",
+                                                  "markers": [
+                                                    "CD56",
+                                                    "CD16"
+                                                  ],
+                                                  "marker_logic": "CD56bright CD16-",
+                                                  "gate_type": "subset",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CD56dim CD16+ NK cells",
+                                                  "markers": [
+                                                    "CD56",
+                                                    "CD16"
+                                                  ],
+                                                  "marker_logic": "CD56dim CD16+",
+                                                  "gate_type": "subset",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CD56dim CD16- NK cells",
+                                                  "markers": [
+                                                    "CD56",
+                                                    "CD16"
+                                                  ],
+                                                  "marker_logic": "CD56dim CD16-",
+                                                  "gate_type": "subset",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "NKG2D+ NK cells",
+                                                  "markers": [
+                                                    "NKG2D"
+                                                  ],
+                                                  "marker_logic": "NKG2D+",
+                                                  "gate_type": "functional",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CD244+ NK cells",
+                                                  "markers": [
+                                                    "CD244"
+                                                  ],
+                                                  "marker_logic": "CD244+",
+                                                  "gate_type": "functional",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CD2+ NK cells",
+                                                  "markers": [
+                                                    "CD2"
+                                                  ],
+                                                  "marker_logic": "CD2+",
+                                                  "gate_type": "functional",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "NKG2A+ NK cells",
+                                                  "markers": [
+                                                    "NKG2A"
+                                                  ],
+                                                  "marker_logic": "NKG2A+",
+                                                  "gate_type": "functional",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CD161+ NK cells",
+                                                  "markers": [
+                                                    "CD161"
+                                                  ],
+                                                  "marker_logic": "CD161+",
+                                                  "gate_type": "functional",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "TIGIT+ NK cells",
+                                                  "markers": [
+                                                    "TIGIT"
+                                                  ],
+                                                  "marker_logic": "TIGIT+",
+                                                  "gate_type": "functional",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CD69+ NK cells",
+                                                  "markers": [
+                                                    "CD69"
+                                                  ],
+                                                  "marker_logic": "CD69+",
+                                                  "gate_type": "functional",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CD39+ NK cells",
+                                                  "markers": [
+                                                    "CD39"
+                                                  ],
+                                                  "marker_logic": "CD39+",
+                                                  "gate_type": "functional",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CD103+ NK cells",
+                                                  "markers": [
+                                                    "CD103"
+                                                  ],
+                                                  "marker_logic": "CD103+",
+                                                  "gate_type": "functional",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CX3CR1+ NK cells",
+                                                  "markers": [
+                                                    "CX3CR1"
+                                                  ],
+                                                  "marker_logic": "CX3CR1+",
+                                                  "gate_type": "functional",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CD57+ NK cells",
+                                                  "markers": [
+                                                    "CD57"
+                                                  ],
+                                                  "marker_logic": "CD57+",
+                                                  "gate_type": "subset",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CD27+ NK cells",
+                                                  "markers": [
+                                                    "CD27"
+                                                  ],
+                                                  "marker_logic": "CD27+",
+                                                  "gate_type": "subset",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CD11b+ NK cells",
+                                                  "markers": [
+                                                    "CD11b"
+                                                  ],
+                                                  "marker_logic": "CD11b+",
+                                                  "gate_type": "subset",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CD38+ NK cells",
+                                                  "markers": [
+                                                    "CD38"
+                                                  ],
+                                                  "marker_logic": "CD38+",
+                                                  "gate_type": "functional",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "Ki67+ NK cells",
+                                                  "markers": [
+                                                    "Ki67"
+                                                  ],
+                                                  "marker_logic": "Ki67+",
+                                                  "gate_type": "functional",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "Granzyme B+ NK cells",
+                                                  "markers": [
+                                                    "Granzyme B"
+                                                  ],
+                                                  "marker_logic": "Granzyme B+",
+                                                  "gate_type": "functional",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CD25+ NK cells",
+                                                  "markers": [
+                                                    "CD25"
+                                                  ],
+                                                  "marker_logic": "CD25+",
+                                                  "gate_type": "functional",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "CD3+ T cells",
+                                      "markers": [
+                                        "CD3"
+                                      ],
+                                      "marker_logic": "CD3+",
+                                      "gate_type": "lineage",
+                                      "is_critical": true,
+                                      "children": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "CD14+ Monocytes",
+                                  "markers": [
+                                    "CD14"
+                                  ],
+                                  "marker_logic": "CD14+",
+                                  "gate_type": "lineage",
+                                  "is_critical": true,
+                                  "children": []
+                                },
+                                {
+                                  "name": "CD19+ B cells",
+                                  "markers": [
+                                    "CD19"
+                                  ],
+                                  "marker_logic": "CD19+",
+                                  "gate_type": "lineage",
+                                  "is_critical": true,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 31 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 8721 chars of gating text from body"
+    ]
+  }
+}

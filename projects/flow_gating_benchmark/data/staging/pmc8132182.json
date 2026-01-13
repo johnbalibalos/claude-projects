@@ -1,0 +1,1104 @@
+{
+  "test_case_id": "PMC8132182",
+  "source_type": "omip_paper",
+  "omip_id": null,
+  "doi": "10.1002/cyto.a.24213",
+  "pmc_id": "PMC8132182",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "PBMCs",
+    "species": "human",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "A . Manual gating strategy. The gating strategy used to identify the main cellular subsets is presented. Arrows are used to visualize the relationships across plots, and numbers are used to call attention to populations described here. After doublets and dead cells were excluded, basophils (1) were delineated as CD45 + CD123 + HLA\u2010DR \u2010 . Lymphocytes and monocytes (2) were gated based on FSC\u2010A/SSC\u2010A properties. Monocytes (3) were then classified by CD14 and CD16 expression as non\u2010classical (CD14 \u2212 CD16 + ), intermediate (CD14 + CD16 +/low ), and classical (CD14 + CD16 \u2010 ). From the lymphocyte gate (2), the following populations were identified: CD3 \u2212 TCR\u03b3\u03b4 \u2212 , CD3 + TCR\u03b3\u03b4 + , and CD3 + TCR\u03b3\u03b4 \u2212  (4). The CD3 + TCR\u03b3\u03b4 +  population (5) was characterized based on CD45RA and CCR7 expression. The CD3 + TCR\u03b3\u03b4 \u2212  population was divided in CD3 + CD56 +  (NKT\u2010like) and CD3 + CD56 \u2212  subsets (6). The inclusion of CD2 and CD8 enables further classification of the NKT\u2010like cells (7). CD4 + , CD8 + , CD4 + CD8 +  and CD4 \u2212 CD8 \u2212  T cells were identified from the CD3 + CD56 \u2212  gate (8). T regs  were identified from the CD4 +  population using CD127 and CD25 expression (CD127 lo/\u2010 CD25 hi ) and CD39 and CD45RA were used to further classify these cells (9). CCR7, CD45RA, CD27, and CD28 allowed for further classification of memory/effector CD4 and CD8 T cell subsets (10, 11). CD19 +  and/or CD20 +  cells (B cells) were gated out of the CD3 \u2212 TCR\u03b3\u03b4 \u2212  population (12). CD19 + CD20 +/\u2212  cells were further gated as IgD + CD27 \u2212 , IgD + CD27 + , or IgD \u2212 CD27 +/\u2212 ; the IgD \u2212 CD27 +/\u2212  subset was divided into plasmablasts or IgD \u2212  memory B cells based on CD20 expression and IgG and IgM expression were assessed within the IgD \u2010  memory B cells (13). NK cells were defined as CD3 \u2212 TCR\u03b3\u03b4 \u2212 HLA\u2010DR \u2212  and classified as early NK (CD56 + CD16 \u2212 ), mature NK (CD56 + CD16 + ), and terminal NK (CD56 \u2212 CD16 + ) cells (14). Dendritic cells (DCs, 15) were identified first by gating on CD3 \u2212 CD19 \u2212 CD56 \u2212 CD14 \u2212 HLA\u2010DR +  and from there CD123 +  (pDCs) and CD11c +  DCs were identified. CD11c +  DCs were further divided into CD16 \u2212  and CD16 + . CD1c and CD141 were then used to further classify the CD11c + CD16 \u2212  and CD11c + CD16 +  DCs. Finally, innate lymphoid cells (ILCs, 16) were identified as CD3 \u2212 CD19 \u2212 CD20 \u2212 CD14 \u2212 CD123 \u2212 CD127 +  and subsetted based on CD2 and CD4 expression. All data presented is derived from frozen PBMCs of one healthy donor (donor ID 4559).  B.  High\u2010dimensional data analysis on PBMCs from four donors displaying FlowSOM clusters projected on to two UMAP dimensions to show concordance between manual and automated analysis techniques. the overlay plot shows concatenated events from all four samples, while the density plots show differences in population distribution between the individual samples. As expected with a combination of high\u2010resolution and high\u2010dimensional data, several clusters contain events that evade a canonical definition. These populations are displayed in gray.",
+    "full_text_gating": "The need to understand the mechanisms and pathways of immune evasion seen either post immunotherapy or during natural immune responses to cancer, autoimmunity, and infectious diseases, requires methods and protocols which will enable a deeper profiling of the immune system. Greater characterization of immune subpopulations allows for more informed decisions regarding the identification of targetable biomarkers and the development of new therapeutic approaches. ( 1 ,  2 ,  3 ,  4 )\n\nUnraveling the complexity of the human immune response requires the ability to perform high\u2010throughput, in\u2010depth analysis, at the single cell and population levels. Flow cytometry has sought to address this need by allowing the characterization of single\u2010cell protein expression, through the binding of fluorochrome\u2010labeled antibodies to specific markers of interest. Over the years, manufacturers have increased the capabilities of flow cytometers through the incorporation of additional lasers and detectors, allowing detection of greater numbers of markers per cell. Concurrently, reagent manufacturers have worked to provide additional fluorophores to meet the demands of this rapidly expanding field. This has led to panel expansion over the last two decades, with a 17\u2010color assay reported in 2004 ( 5 ) and up to 28 colors in more recent years ( 6 ,  7 ,  8 ,  9 ,  10 ,  11 ). With the arrival of mass cytometry in 2009 ( 12 ), the number of markers assessed was expanded to 32, using metal\u2010conjugated antibodies ( 13 ), and most recently a panel using 43 markers has been published ( 14 ).\n\nIn contrast to conventional flow cytometry, which primarily measures the peak emission of each fluorochrome, full spectrum flow cytometry measures the entire emission spectra for every fluorochrome, across all laser lines. As a result of collecting substantially more information about each cell, full spectrum flow cytometry is well suited to the development of highly multiparametric panels. Reports of applying the concepts of measuring fluorescence spectra by flow cytometry can be found as early as the 1970s ( 15 ), which was followed by a number of subsequent publications in later years ( 16 ,  17 ,  18 ,  19 ,  20 ). In order to expand the number of fluorochromes beyond the 28\u2010color mark, a very high level of detail is needed to distinguish fluorochromes whose spectral signatures, particularly their peak emissions, are similar. This level of detail requires high\u2010quality signals, low noise, and excitation specific full\u2010emission profiles. It also requires extremely careful panel design and optimization. Here, we define full spectrum flow cytometry as measuring the entire fluorochrome emission, from ultraviolet to near\u2010infrared, across multiple lasers using many more detectors, when compared to a conventional flow cytometer. This produces very specific spectral fingerprints that are used to mathematically distinguish one fluorophore from another, even when their maximum emissions are very similar. Leveraging this full spectrum technology in a five\u2010laser system, the ability to combine 30\u201340 fluorescently labeled antibodies becomes possible using a fluorescence\u2010based flow cytometer.\n\nAs mentioned previously, mass cytometry is also capable of assessing similarly high numbers of parameters. Currently, this technology has the advantage of additional detection channels to accommodate bar coding schemes for sample pooling, and as a more mature technology, high complexity panels using mass cytometry have been previously published and are widely available, including the publication of multiple OMIPs ( 21 ,  22 ,  23 ,  24 ). However, limitations such as sample throughput, cell transmission efficiency, and overall cost of ownership have impacted the practicality, and broader adoption, of this technology in some laboratory environments ( 25 ,  26 ,  27 ). Spectral flow cytometers share a very common workflow with conventional flow cytometers and are therefore not hindered by these limitations. However, there are no previously published reports of panels beyond 28 fluorescent parameters, a fact which further supports the need for a fluorescent OMIP panel of this complexity.\n\nThe panel presented in this OMIP examines the frequency of CD4 and CD8 T cells, regulatory T cells (T regs ), \u03b3\u03b4 T cells, NKT\u2010like cells, B cells, NK cells, monocytes, basophils, innate lymphoid cells (ILCs), and dendritic cells. Additional markers allow for the characterization of the main B and T cell subsets\u2014na\u00efve, memory, and effector\u2014as well as putative T helper subsets. Dead cells were excluded using a viability dye (LIVE/Dead Fixable Blue). The following markers were used to characterize the indicated cell types: CD45 for all leukocytes; pan\u2010\u03b3\u03b4 TCR for \u03b3\u03b4 T cells; CD3, CD4, and CD8 for the main T cell populations; CD19 and CD20 for B cells; CD16 and CD56 for NK cells; CD123 and HLA\u2010DR for basophils; lineage markers and CD127 for total ILCs; and CD14 and CD16 for monocytes.\n\nNK cells were identified by expression of CD56 (neural cell adhesion molecule [NCAM]) and CD16 (Fc\u03b3RIII) ( 28 ), while CD2 was used to identify NK cells most likely to be involved in cytotoxicity ( 29 ). We included two natural cytotoxicity receptors (NCRs), NKG2D (natural killer group 2, member D [CD314]) and NKp30 (CD337); as well as the inhibitory receptor NKG2A (CD159a), identified as a possible target for immunotherapy ( 30 ), and the activation receptor NKG2C (CD159c) known to be relevant for NK cells in infectious diseases and vaccine effector response ( 31 ). CD57 was included as a maturation marker for NK cells, identifying cells with potent cytotoxic and reduced replicative potential ( 32 ). CD56 was further used for the identification of NKT\u2010like cells, defined as CD56 + CD3 + , as cells with this phenotype might play a role in infectious diseases ( 33 ).\n\n\u03b3\u03b4 T cells are regarded as an important bridge between the innate and adaptive immune systems because their response precedes adaptive immunity, making \u03b3\u03b4 T cells a unique component of the immune system ( 34 ,  35 ,  36 ). They are also associated with major autoimmune rheumatic diseases, such as rheumatoid arthritis, juvenile idiopathic arthritis, ankylosing spondylitis, systemic lupus erythematosus, and scleroderma ( 37 ). Although we included CD16 and CD56 to define NK cell subsets, CD16 and CD56 are also associated with an activated phenotype in \u03b3\u03b4 T cells ( 6 ,  38 ). \u03b3\u03b4 T cells have also been shown to have effector/memory subsets based on expression of CD45RA, CD27, and CCR7 ( 39 ).\n\nTo characterize T cells, the memory and differentiation markers CD45RA, CCR7, CD27, and CD28 were used. Using CD45RA and CCR7, T cells can be classified into na\u00efve (CD45RA + CCR7 + ), central memory (CD45RA \u2212 CCR7 + ), effector memory (CD45RA \u2212 CCR7 \u2212 ), and terminal effector memory (CD45RA + CCR7 \u2212 ) subsets ( 40 ,  41 ). The addition of CD27 and CD28 allows further refinement of those subsets, identifying early effector (CD45RA \u2212 CCR7 \u2212 CD28 + CD27 + ), early\u2010like effector (CD45RA \u2212 CCR7 \u2212 CD28 + CD27 \u2212 ), intermediate effector (CD45RA \u2212 CCR7 \u2212 CD28 \u2212 CD27 + ), terminal effector (CD45RA \u2212 CCR7 \u2212 CD28 \u2212 CD27 \u2212 ), and RA\u2010terminal effector (CD45RA + CCR7 \u2212 CD28 \u2212 CD27 \u2212 ) ( 42 ,  43 ).\n\nOther surface markers, including CD127, CD95, PD\u20101, CD57, CD38, and HLA\u2010DR, were included to further characterize T cell subsets ( 1 ,  44 ,  45 ). The IL\u20107 receptor (CD127) is involved in homeostatic proliferation and survival of memory T cell precursors ( 46 ), while CD57 is indicative of cell senescence, failure to proliferate, and susceptibility to activation\u2010induced cell death ( 47 ,  48 ). CD38 and HLA\u2010DR were included as T cell activation markers ( 49 ). Viral infections such as HIV\u20101, dengue virus, or influenza lead to increased frequencies of CD38 + HLA\u2010DR +  activated T cells ( 50 ,  51 ). PD\u20101 and CD95 are both upregulated in activated T cells ( 52 ). The inhibitory receptor PD\u20101 is crucial for the regulation of immune responses and to avoid excessive immune activation ( 53 ).\n\nIn order to identify T regs , we used CD25 (IL\u20102R\u03b1) and CD127 (IL\u20107R\u03b1) markers without the inclusion of FoxP3, which requires intracellular staining. Previous studies have shown that CD25 hi CD127 lo/\u2010 CD4 +  T cells are a good correlate of T regs  ( 54 ,  55 ), although this strategy may over\u2010 or underestimate their frequency. It has been reported that T regs  can be further subsetted based on CD39 expression ( 7 ,  56 ,  57 ) and that CD39 +  T regs  might play a role in certain autoimmune diseases like multiple sclerosis ( 58 ).\n\nCD27 and IgD were chosen for identification of na\u00efve (IgD + CD27 \u2212 ), marginal zone\u2010like (IgD + CD27 + ), and memory (IgD \u2212 CD27 + ) B cells as previously described ( 59 ). Marginal zone\u2010like B cells can be further divided into IgM +  marginal zone and IgD only memory B cells ( 8 ). When used in combination, CD24 and CD38 distinguish memory (CD24 + CD38 lo/neg ), na\u00efve (CD24 int CD38 int ), and transitional (CD24 hi CD38 hi ) B cells, and have been used for regulatory B cell identification ( 60 ,  61 ). Plasmablasts can be identified based on expression of CD19, CD20, CD27, and CD38 ( 62 ). Memory B cells express different B cell receptor isotypes as a result of class switch recombination. This panel includes IgG and IgM, which are the most prevalent subsets of memory B cells found in blood. IgA was not included as this subpopulation of memory B cells is predominantly expressed in mucosa\u2010associated lymphatic tissues, such as the intestine and mesenteric lymph nodes. IgE was excluded from this panel, since this subset of memory B cells is hardly detectable in human blood ( 63 ).\n\nChemokine receptors are important for the migration and positioning of immune cells ( 64 ). This panel includes CCR5, CCR6, CXCR3, and CXCR5. CCR5 is expressed by activated and memory T cells ( 65 ), \u03b3\u03b4 T cells ( 66 ), and T regs  ( 67 ). On human T cells, CCR6 is attributed to a Th17 (ROR\u03b3t) phenotype ( 68 ). On B cells, CCR6 expression is restricted to functionally mature cells capable of responding to antigen challenge ( 69 ). CXCR3 has been reported to be necessary for T cell clustering around antigen presenting cells and T cell bystander activation ( 70 ) and also to be expressed on subsets of \u03b3\u03b4 T cells ( 66 ). CXCR5 interacts with CXCL13, which promotes T cell trafficking to B cell follicles and germinal centers. These are crucial sites for the generation of high\u2010affinity antibody responses ( 71 ). Moreover, it has been shown that chronic inflammation leads to modulation of chemokine receptor expression on peripheral blood B cells. In patients with rheumatoid arthritis, B cells show decreased expression of CXCR5 and CCR6 and increased levels of CXCR3 ( 72 ).\n\nMonocyte subsets were identified using CD14 (lipopolysaccharide binding protein) and CD16 (Fc\u03b3RIII). These two markers allow the identification of classical monocytes (CD14 ++ CD16 \u2212 ), non\u2010classical monocytes (CD14 + CD16 ++ ), and an intermediate monocyte population (CD14 + CD16 + ) ( 73 ). Intermediate monocytes expand in the presence of cytokines and inflammation. Non\u2010classical monocytes have also been shown to expand in inflammatory diseases. It has been demonstrated that, over the course of infection, there is first an increase in intermediate monocytes followed by an increase in non\u2010classical monocytes ( 74 ).\n\nWith the markers present in this panel, basophils were identified as CD45 dim CD123 + HLA\u2010DR \u2212  ( 75 ). The phenotype of these cells can then be further characterized by evaluating expression of CD38, CD95, and CD25.\n\nTotal ILCs were identified using a similar strategy as presented in OMIP\u2010055 ( 76 ). This subset was identified as CD45 + CD127 + Lin \u2010 . For lineage markers, we used CD14, CD19, CD20, and CD3. However, to fully identify these cells other markers should be excluded like CD1a, CD34, CD303, and FC\u03b5R1a. Despite lacking these markers, the cells identified as ILCs could be further classified based on expression of CD2, CD4, CCR6, CXCR3, CD27, CD28, CXCR5, and CCR7 as previously reported ( 77 ).\n\nFinally, to identify the main dendritic cell subsets, CD11c, HLA\u2010DR, CD141 (BDCA\u20103), CD1c (BDCA\u20101), and CD123 were used as previously described ( 9 ). pDCs were identified as lineage negative (CD3 \u2212 CD19 \u2212 CD56 \u2212 CD14 \u2212 ) HLA\u2010DR + CD123 +  cells; conventional DCs were identified as CD123 \u2212 CD11c + HLA\u2010DR + , and they were further subset based on CD141 ( 78 ) and CD1c expression ( 79 ).\n\nThe manual gating strategy used to identify the main cell subsets, based on the descriptions provided above, is shown in Figure  1A . As it is more likely that a complex data set such as this would be analyzed using a pipeline containing both dimensionality reduction and clustering algorithms, we present in Figure  1B  the computationally derived analogs of manually gated canonical subsets using such an unsupervised approach. When preparing for any kind of automated analysis, it is imperative that the data be of the highest quality, as any undesirable events or processing artifacts will negatively affect the downstream results. In this case, the scaling of the data was first checked to ensure the arcsinh transformation was unimodal around 0 and then the data were cleaned by manual gating to remove doublets, debris, and dead cells. The data were then run through flowCut ( 80 ) to check for aberrant signal patterns or events, and with none found. UMAP ( 81 ) was run to group phenotypically similar events into \u201cislands\u201d to illustrate differences both between and inside each population. FlowSOM ( 82 ) was subsequently used to cluster the events based on UMAP parameters and selected surface markers in order to emphasize differences between hard to resolve populations and then the resulting clusters were overlaid on the initial UMAP parameters. A traditional clustered heatmap analysis then followed to aid in the identification and labeling of the FlowSOM clusters (See Supporting Information Fig.  S11 A).\n\nThis 40\u2010color panel (Table  2 ) presents a powerful tool for in\u2010depth characterization of lymphocytes, monocytes, and dendritic cells present in human peripheral blood. It covers almost the entire cellular composition of the human peripheral immune system and will be particularly useful for studies in which sample availability is limited or unique biomarker signatures are sought. Taking advantage of full spectrum cytometry, we present a panel that highlights the first published OMIP to go beyond 28\u2010color fluorescence flow cytometry with excellent population resolution.",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "Viability",
+        "fluorophore": "Live Dead UV Blue",
+        "clone": "\u2014",
+        "purpose": "Viability"
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "PerCP",
+        "clone": "HI30",
+        "purpose": "Leukocytes"
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "BV510",
+        "clone": "SK7",
+        "purpose": "Pan T cell, NKT\u2010Like cells"
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "cFluor YG584",
+        "clone": "SK3",
+        "purpose": "CD4 T and NKT\u2010Like cells"
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "BUV805",
+        "clone": "SK1",
+        "purpose": "CD8 T, NK, and NKT\u2010Like cells"
+      },
+      {
+        "marker": "CD25",
+        "fluorophore": "PE\u2010Alexa Fluor700",
+        "clone": "CD25\u20103G10",
+        "purpose": "Regulatory T cells"
+      },
+      {
+        "marker": "TCR\u03b3\u03b4",
+        "fluorophore": "PerCP\u2010eFluor 710",
+        "clone": "B1.1",
+        "purpose": "Pan \u03b3\u03b4 T cell"
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "Spark Blue 550",
+        "clone": "63D3",
+        "purpose": "Monocyte differentiation"
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "BUV496",
+        "clone": "3G8",
+        "purpose": "Monocyte, NK cell, and dendritic cell differentiation"
+      },
+      {
+        "marker": "CD11c",
+        "fluorophore": "eFluor 450",
+        "clone": "3.9",
+        "purpose": "Dendritic Cell differentiation"
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "Spark NIR 685",
+        "clone": "HIB19",
+        "purpose": "B cells"
+      },
+      {
+        "marker": "CD20",
+        "fluorophore": "Pacific Orange",
+        "clone": "HI47",
+        "purpose": "B cells"
+      },
+      {
+        "marker": "CD24",
+        "fluorophore": "PE\u2010Alexa Fluor 610",
+        "clone": "SN3",
+        "purpose": "B cell differentiation"
+      },
+      {
+        "marker": "CD39",
+        "fluorophore": "BUV661",
+        "clone": "TU66",
+        "purpose": "B cell, T regs , and monocyte differentiation"
+      },
+      {
+        "marker": "IgD",
+        "fluorophore": "BV480",
+        "clone": "IA6\u20102",
+        "purpose": "B cell differentiation"
+      },
+      {
+        "marker": "IgG",
+        "fluorophore": "BV605",
+        "clone": "G18\u2010145",
+        "purpose": "B cell differentiation"
+      },
+      {
+        "marker": "IgM",
+        "fluorophore": "BV570",
+        "clone": "MHM\u201088",
+        "purpose": "B cell differentiation"
+      },
+      {
+        "marker": "CD141",
+        "fluorophore": "BB515",
+        "clone": "1A4",
+        "purpose": "Dendritic cell differentiation"
+      },
+      {
+        "marker": "CD1c",
+        "fluorophore": "Alexa Fluor 647",
+        "clone": "L161",
+        "purpose": "Dendritic cells, NKT\u2010Like cells"
+      },
+      {
+        "marker": "CD123",
+        "fluorophore": "Super Bright 436",
+        "clone": "6H6",
+        "purpose": "Plasmacytoid dendritic cells"
+      },
+      {
+        "marker": "CD2",
+        "fluorophore": "PerCP\u2010Cy5.5",
+        "clone": "TS1/8",
+        "purpose": "NK cell differentiation"
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "BUV737",
+        "clone": "NCAM16.2",
+        "purpose": "Pan NK cell, \u03b3\u03b4 T cell activation"
+      },
+      {
+        "marker": "CCR7",
+        "fluorophore": "BV421",
+        "clone": "G043H7",
+        "purpose": "T cell differentiation"
+      },
+      {
+        "marker": "CD27",
+        "fluorophore": "APC\u2010H7",
+        "clone": "M\u2010T271",
+        "purpose": "T and B cell differentiation"
+      },
+      {
+        "marker": "CD28",
+        "fluorophore": "BV650",
+        "clone": "CD28.2",
+        "purpose": "T cell and NK cell differentiation"
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "BUV395",
+        "clone": "5H9",
+        "purpose": "T cell and dendritic cell differentiation"
+      },
+      {
+        "marker": "CD95",
+        "fluorophore": "PE\u2010Cy5",
+        "clone": "DX2",
+        "purpose": "T cell and B cell differentiation"
+      },
+      {
+        "marker": "CD127",
+        "fluorophore": "APC\u2010R700",
+        "clone": "HIL\u20107R\u2010M21",
+        "purpose": "Cytokine receptor; T cell differentiation"
+      },
+      {
+        "marker": "CD337",
+        "fluorophore": "PE\u2010Dazzle594",
+        "clone": "P30\u201015",
+        "purpose": "NK cell differentiation"
+      },
+      {
+        "marker": "CCR6",
+        "fluorophore": "BV711",
+        "clone": "G034E3",
+        "purpose": "Chemokine receptor; T cell and B cell differentiation"
+      },
+      {
+        "marker": "CCR5",
+        "fluorophore": "BUV563",
+        "clone": "2D7/CCR5",
+        "purpose": "Chemokine receptor; Monocyte, dendritic cell, T cell, and B cell differentiation"
+      },
+      {
+        "marker": "CXCR5",
+        "fluorophore": "BV750",
+        "clone": "RF8B2",
+        "purpose": "Chemokine receptor; T cell differentiation"
+      },
+      {
+        "marker": "CXCR3",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "G025H7",
+        "purpose": "Chemokine receptor; Dendritic cell, T cell, and B cell differentiation"
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "PE\u2010Fire810",
+        "clone": "L243",
+        "purpose": "T cell and monocyte activation, NK cell lineage discrimination, dendritic cell lineage marker"
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "APC\u2010Fire810",
+        "clone": "HIT2",
+        "purpose": "Monocyte, dendritic cell, T cell, and B cell activation/differentiation"
+      },
+      {
+        "marker": "CD57",
+        "fluorophore": "FITC",
+        "clone": "HNK\u20101",
+        "purpose": "NK and CD8 +  T cell immune senescence"
+      },
+      {
+        "marker": "PD-1",
+        "fluorophore": "BV785",
+        "clone": "EH12.2H7",
+        "purpose": "T cell inhibitory receptor"
+      },
+      {
+        "marker": "CD159a",
+        "fluorophore": "APC",
+        "clone": "REA110",
+        "purpose": "NK, NKT\u2010Like, and \u03b3\u03b4 T cell activation/differentiation"
+      },
+      {
+        "marker": "CD159c",
+        "fluorophore": "PE",
+        "clone": "REA205",
+        "purpose": "NK cell differentiation"
+      },
+      {
+        "marker": "CD314",
+        "fluorophore": "BUV615",
+        "clone": "1D11",
+        "purpose": "NK cell differentiation"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "root",
+      "is_critical": true,
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
+          "marker_logic": "FSC-A vs FSC-H",
+          "gate_type": "scatter",
+          "is_critical": true,
+          "children": [
+            {
+              "name": "Live cells",
+              "markers": [
+                "Viability"
+              ],
+              "marker_logic": "Viability-",
+              "gate_type": "viability",
+              "is_critical": true,
+              "children": [
+                {
+                  "name": "Basophils",
+                  "markers": [
+                    "CD45",
+                    "CD123",
+                    "HLA-DR"
+                  ],
+                  "marker_logic": "CD45+dim CD123+ HLA-DR-",
+                  "gate_type": "lineage",
+                  "is_critical": false,
+                  "children": []
+                },
+                {
+                  "name": "Lymphocytes and Monocytes",
+                  "markers": [
+                    "FSC-A",
+                    "SSC-A"
+                  ],
+                  "marker_logic": "FSC-A vs SSC-A",
+                  "gate_type": "scatter",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "Monocytes",
+                      "markers": [
+                        "CD14",
+                        "CD16"
+                      ],
+                      "marker_logic": "CD14 vs CD16",
+                      "gate_type": "lineage",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "Classical Monocytes",
+                          "markers": [
+                            "CD14",
+                            "CD16"
+                          ],
+                          "marker_logic": "CD14++ CD16-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        },
+                        {
+                          "name": "Intermediate Monocytes",
+                          "markers": [
+                            "CD14",
+                            "CD16"
+                          ],
+                          "marker_logic": "CD14+ CD16+/lo",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        },
+                        {
+                          "name": "Non-classical Monocytes",
+                          "markers": [
+                            "CD14",
+                            "CD16"
+                          ],
+                          "marker_logic": "CD14- CD16+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Lymphocytes",
+                      "markers": [
+                        "FSC-A",
+                        "SSC-A"
+                      ],
+                      "marker_logic": "FSC-A vs SSC-A lymphocyte gate",
+                      "gate_type": "scatter",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "CD3- TCRgd- cells",
+                          "markers": [
+                            "CD3",
+                            "TCR\u03b3\u03b4"
+                          ],
+                          "marker_logic": "CD3- TCR\u03b3\u03b4-",
+                          "gate_type": "lineage",
+                          "is_critical": true,
+                          "children": [
+                            {
+                              "name": "B cells",
+                              "markers": [
+                                "CD19",
+                                "CD20"
+                              ],
+                              "marker_logic": "CD19+ and/or CD20+",
+                              "gate_type": "lineage",
+                              "is_critical": true,
+                              "children": [
+                                {
+                                  "name": "Naive B cells",
+                                  "markers": [
+                                    "IgD",
+                                    "CD27"
+                                  ],
+                                  "marker_logic": "IgD+ CD27-",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Marginal Zone-like B cells",
+                                  "markers": [
+                                    "IgD",
+                                    "CD27"
+                                  ],
+                                  "marker_logic": "IgD+ CD27+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "IgD- B cells",
+                                  "markers": [
+                                    "IgD",
+                                    "CD27"
+                                  ],
+                                  "marker_logic": "IgD- CD27+/-",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": [
+                                    {
+                                      "name": "Plasmablasts",
+                                      "markers": [
+                                        "CD20",
+                                        "CD27",
+                                        "CD38"
+                                      ],
+                                      "marker_logic": "CD20- CD27+ CD38+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "IgD- Memory B cells",
+                                      "markers": [
+                                        "CD20"
+                                      ],
+                                      "marker_logic": "CD20+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "IgG+ Memory B cells",
+                                          "markers": [
+                                            "IgG"
+                                          ],
+                                          "marker_logic": "IgG+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "IgM+ Memory B cells",
+                                          "markers": [
+                                            "IgM"
+                                          ],
+                                          "marker_logic": "IgM+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "NK cells",
+                              "markers": [
+                                "HLA-DR",
+                                "CD56",
+                                "CD16"
+                              ],
+                              "marker_logic": "HLA-DR- CD56 and/or CD16",
+                              "gate_type": "lineage",
+                              "is_critical": true,
+                              "children": [
+                                {
+                                  "name": "Early NK cells",
+                                  "markers": [
+                                    "CD56",
+                                    "CD16"
+                                  ],
+                                  "marker_logic": "CD56+ CD16-",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Mature NK cells",
+                                  "markers": [
+                                    "CD56",
+                                    "CD16"
+                                  ],
+                                  "marker_logic": "CD56+ CD16+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Terminal NK cells",
+                                  "markers": [
+                                    "CD56",
+                                    "CD16"
+                                  ],
+                                  "marker_logic": "CD56- CD16+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "Dendritic Cells",
+                              "markers": [
+                                "CD3",
+                                "CD19",
+                                "CD56",
+                                "CD14",
+                                "HLA-DR"
+                              ],
+                              "marker_logic": "CD3- CD19- CD56- CD14- HLA-DR+",
+                              "gate_type": "lineage",
+                              "is_critical": true,
+                              "children": [
+                                {
+                                  "name": "Plasmacytoid DCs",
+                                  "markers": [
+                                    "CD123"
+                                  ],
+                                  "marker_logic": "CD123+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "CD11c+ DCs",
+                                  "markers": [
+                                    "CD11c"
+                                  ],
+                                  "marker_logic": "CD11c+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": [
+                                    {
+                                      "name": "CD11c+ CD16- DCs",
+                                      "markers": [
+                                        "CD16"
+                                      ],
+                                      "marker_logic": "CD16-",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "CD1c+ DCs",
+                                          "markers": [
+                                            "CD1c"
+                                          ],
+                                          "marker_logic": "CD1c+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD141+ DCs",
+                                          "markers": [
+                                            "CD141"
+                                          ],
+                                          "marker_logic": "CD141+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "CD11c+ CD16+ DCs",
+                                      "markers": [
+                                        "CD16"
+                                      ],
+                                      "marker_logic": "CD16+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "CD16+ CD1c+ DCs",
+                                          "markers": [
+                                            "CD1c"
+                                          ],
+                                          "marker_logic": "CD1c+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD16+ CD141+ DCs",
+                                          "markers": [
+                                            "CD141"
+                                          ],
+                                          "marker_logic": "CD141+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "Innate Lymphoid Cells",
+                              "markers": [
+                                "CD3",
+                                "CD19",
+                                "CD20",
+                                "CD14",
+                                "CD123",
+                                "CD127"
+                              ],
+                              "marker_logic": "CD3- CD19- CD20- CD14- CD123- CD127+",
+                              "gate_type": "lineage",
+                              "is_critical": false,
+                              "children": [
+                                {
+                                  "name": "CD2+ ILCs",
+                                  "markers": [
+                                    "CD2"
+                                  ],
+                                  "marker_logic": "CD2+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "CD2- ILCs",
+                                  "markers": [
+                                    "CD2"
+                                  ],
+                                  "marker_logic": "CD2-",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "CD4+ ILCs",
+                                  "markers": [
+                                    "CD4"
+                                  ],
+                                  "marker_logic": "CD4+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "CD4- ILCs",
+                                  "markers": [
+                                    "CD4"
+                                  ],
+                                  "marker_logic": "CD4-",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Gamma Delta T cells",
+                          "markers": [
+                            "CD3",
+                            "TCR\u03b3\u03b4"
+                          ],
+                          "marker_logic": "CD3+ TCR\u03b3\u03b4+",
+                          "gate_type": "lineage",
+                          "is_critical": true,
+                          "children": [
+                            {
+                              "name": "Naive gd T cells",
+                              "markers": [
+                                "CD45RA",
+                                "CCR7"
+                              ],
+                              "marker_logic": "CD45RA+ CCR7+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "Central Memory gd T cells",
+                              "markers": [
+                                "CD45RA",
+                                "CCR7"
+                              ],
+                              "marker_logic": "CD45RA- CCR7+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "Effector Memory gd T cells",
+                              "markers": [
+                                "CD45RA",
+                                "CCR7"
+                              ],
+                              "marker_logic": "CD45RA- CCR7-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "TEMRA gd T cells",
+                              "markers": [
+                                "CD45RA",
+                                "CCR7"
+                              ],
+                              "marker_logic": "CD45RA+ CCR7-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CD3+ TCRgd- cells",
+                          "markers": [
+                            "CD3",
+                            "TCR\u03b3\u03b4"
+                          ],
+                          "marker_logic": "CD3+ TCR\u03b3\u03b4-",
+                          "gate_type": "lineage",
+                          "is_critical": true,
+                          "children": [
+                            {
+                              "name": "NKT-like cells",
+                              "markers": [
+                                "CD3",
+                                "CD56"
+                              ],
+                              "marker_logic": "CD3+ CD56+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": [
+                                {
+                                  "name": "CD2+ NKT-like cells",
+                                  "markers": [
+                                    "CD2"
+                                  ],
+                                  "marker_logic": "CD2+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "CD8+ NKT-like cells",
+                                  "markers": [
+                                    "CD8"
+                                  ],
+                                  "marker_logic": "CD8+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "T cells",
+                              "markers": [
+                                "CD3",
+                                "CD56"
+                              ],
+                              "marker_logic": "CD3+ CD56-",
+                              "gate_type": "lineage",
+                              "is_critical": true,
+                              "children": [
+                                {
+                                  "name": "CD4+ T cells",
+                                  "markers": [
+                                    "CD4",
+                                    "CD8"
+                                  ],
+                                  "marker_logic": "CD4+ CD8-",
+                                  "gate_type": "lineage",
+                                  "is_critical": true,
+                                  "children": [
+                                    {
+                                      "name": "Regulatory T cells",
+                                      "markers": [
+                                        "CD127",
+                                        "CD25"
+                                      ],
+                                      "marker_logic": "CD127lo/- CD25hi",
+                                      "gate_type": "subset",
+                                      "is_critical": true,
+                                      "children": [
+                                        {
+                                          "name": "CD39+ Tregs",
+                                          "markers": [
+                                            "CD39"
+                                          ],
+                                          "marker_logic": "CD39+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD39- Tregs",
+                                          "markers": [
+                                            "CD39"
+                                          ],
+                                          "marker_logic": "CD39-",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD45RA+ Tregs",
+                                          "markers": [
+                                            "CD45RA"
+                                          ],
+                                          "marker_logic": "CD45RA+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD45RA- Tregs",
+                                          "markers": [
+                                            "CD45RA"
+                                          ],
+                                          "marker_logic": "CD45RA-",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "Naive CD4+ T cells",
+                                      "markers": [
+                                        "CD45RA",
+                                        "CCR7"
+                                      ],
+                                      "marker_logic": "CD45RA+ CCR7+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "Central Memory CD4+ T cells",
+                                      "markers": [
+                                        "CD45RA",
+                                        "CCR7"
+                                      ],
+                                      "marker_logic": "CD45RA- CCR7+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "Effector Memory CD4+ T cells",
+                                      "markers": [
+                                        "CD45RA",
+                                        "CCR7"
+                                      ],
+                                      "marker_logic": "CD45RA- CCR7-",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "Early Effector CD4+ T cells",
+                                          "markers": [
+                                            "CD27",
+                                            "CD28"
+                                          ],
+                                          "marker_logic": "CD27+ CD28+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Early-like Effector CD4+ T cells",
+                                          "markers": [
+                                            "CD27",
+                                            "CD28"
+                                          ],
+                                          "marker_logic": "CD27- CD28+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Intermediate Effector CD4+ T cells",
+                                          "markers": [
+                                            "CD27",
+                                            "CD28"
+                                          ],
+                                          "marker_logic": "CD27+ CD28-",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Terminal Effector CD4+ T cells",
+                                          "markers": [
+                                            "CD27",
+                                            "CD28"
+                                          ],
+                                          "marker_logic": "CD27- CD28-",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "TEMRA CD4+ T cells",
+                                      "markers": [
+                                        "CD45RA",
+                                        "CCR7"
+                                      ],
+                                      "marker_logic": "CD45RA+ CCR7-",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "RA-Terminal Effector CD4+ T cells",
+                                          "markers": [
+                                            "CD27",
+                                            "CD28"
+                                          ],
+                                          "marker_logic": "CD27- CD28-",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "CD8+ T cells",
+                                  "markers": [
+                                    "CD4",
+                                    "CD8"
+                                  ],
+                                  "marker_logic": "CD4- CD8+",
+                                  "gate_type": "lineage",
+                                  "is_critical": true,
+                                  "children": [
+                                    {
+                                      "name": "Naive CD8+ T cells",
+                                      "markers": [
+                                        "CD45RA",
+                                        "CCR7"
+                                      ],
+                                      "marker_logic": "CD45RA+ CCR7+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "Central Memory CD8+ T cells",
+                                      "markers": [
+                                        "CD45RA",
+                                        "CCR7"
+                                      ],
+                                      "marker_logic": "CD45RA- CCR7+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "Effector Memory CD8+ T cells",
+                                      "markers": [
+                                        "CD45RA",
+                                        "CCR7"
+                                      ],
+                                      "marker_logic": "CD45RA- CCR7-",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "Early Effector CD8+ T cells",
+                                          "markers": [
+                                            "CD27",
+                                            "CD28"
+                                          ],
+                                          "marker_logic": "CD27+ CD28+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Early-like Effector CD8+ T cells",
+                                          "markers": [
+                                            "CD27",
+                                            "CD28"
+                                          ],
+                                          "marker_logic": "CD27- CD28+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Intermediate Effector CD8+ T cells",
+                                          "markers": [
+                                            "CD27",
+                                            "CD28"
+                                          ],
+                                          "marker_logic": "CD27+ CD28-",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Terminal Effector CD8+ T cells",
+                                          "markers": [
+                                            "CD27",
+                                            "CD28"
+                                          ],
+                                          "marker_logic": "CD27- CD28-",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "TEMRA CD8+ T cells",
+                                      "markers": [
+                                        "CD45RA",
+                                        "CCR7"
+                                      ],
+                                      "marker_logic": "CD45RA+ CCR7-",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "RA-Terminal Effector CD8+ T cells",
+                                          "markers": [
+                                            "CD27",
+                                            "CD28"
+                                          ],
+                                          "marker_logic": "CD27- CD28-",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "Double Positive T cells",
+                                  "markers": [
+                                    "CD4",
+                                    "CD8"
+                                  ],
+                                  "marker_logic": "CD4+ CD8+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Double Negative T cells",
+                                  "markers": [
+                                    "CD4",
+                                    "CD8"
+                                  ],
+                                  "marker_logic": "CD4- CD8-",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 40 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 14610 chars of gating text from body"
+    ]
+  }
+}

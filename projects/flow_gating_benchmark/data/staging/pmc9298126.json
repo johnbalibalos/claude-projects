@@ -1,0 +1,665 @@
+{
+  "test_case_id": "PMC9298126",
+  "source_type": "omip_paper",
+  "omip_id": null,
+  "doi": "10.1002/cyto.a.24511",
+  "pmc_id": "PMC9298126",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Bone marrow, peripheral blood",
+    "species": "human",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Staining and evaluation protocol of the new 21\u2010mAb 10\u2010color panel. By using the established gating procedure, the combination of 21 mAbs in 10 colors provides optimal information about lymphocyte subsets, monocytes, myeloid cells, precursor cells, and aberrant cell populations. A normal bone marrow was used to establish the efficacy of the 21\u2010mAb panel. A, Monocytes are excluded from gated cells; B, Lymphocytes, monocytes, granulocytes, and plasma cells are excluded from gated cells; C, T cells, B cells, and NK\u2010T cells are excluded from gated cells",
+    "full_text_gating": "The rapid and sensitive multiparameter detection, even at a single cell level, renders flow cytometry (FCM) to a powerful tool to distinguish malignant hematopoietic cells from normal cells. Due to the technical aspects of the FCMs for diagnostics, currently immunophenotypic analyses often consist of up to 10\u2010mAb panels and oblige the use of multiple tubes that contain the specific combinations of mAbs to characterize the aberrant cell population. However, this approach hampers the evaluation of co\u2010expression patterns from mAbs that are present in different tubes. In particular, determinations like minimal residual disease (MRD) or characterization of very small cell populations need high\u2010level multicolor analyses [ 1 ,  2 ,  3 ,  4 ,  5 ]. Furthermore, the multiple color analysis using multiple tubes is time consuming and cost ineffective. Therefore, a one\u2010tube approach with 21 mAbs is more sensitive and adequate to detect aberrant cells. Besides the need of a subsequent second step and more targeted immunophenotyping will be reduced (Table\u00a0 1 ).\n\nAt present, the application of panels with more than 10 colors is restricted technically for diagnostic purposes. In order of improve immunophenotyping by applying more than 10 mAbs in one tube, stacking of antibodies within one fluorescence channel is therefore needed. We developed a screening panel using stacking up to three antibodies resulting in up to 23 evaluable parameters (FS, SS, and mAbs). Similar approaches of stacking have been applied by other groups [ 6 ,  7 ,  8 ,  9 ,  10 ]. This 21\u2010mAb in 10\u2010colors panel can be a reliable alternative for the use of 23\u2010PMT containing FCMs that are presently hardly available.\n\nAfter selection of the target antigens and search for suitable mAb clones and fluorochromes (Table\u00a0 2 ), all mAbs were titrated to find the optimal concentration. Subsequently, compensation of spectral overlap and extensive balancing of the panel was performed to establish suitable and correct combinations of stacked mAbs with preservation of their capacity to separate and identify the different hematopoietic cell populations and maturation stages.\n\nAbbreviations: AF, AlexaFluor; APC, allophycocyanin; Cy, cyanin; ECD, energy\u2010coupled dye (PE coupled to Texas Red); FITC, fluorescein isothiocyanate; KO, Krome Orange; PacB, Pacific Blue; PE, R\u2010phycoerythrin; WBC, white blood cells.\n\nTesting of the panel was performed on a Navios (10\u2010color/3\u2010laser instrument; Beckman Coulter; see  Table S1 ). KALUZA\u2122 analysis software was used to establish a suitable analysis protocol (Table\u00a0 3 ) with Boolean gating to separate expression patterns of the various stacked mAbs in the different channels. Thereby, we could identify the main subpopulations of all hematopoietic lineages and malignant aberrancies in this one\u2010tube panel (Figure\u00a0 1 ).\n\nGating strategy of the 21\u2010mAb 10\u2010color panel to identify and characterize the relevant cell populations adequately\n\nNote : The gating procedure of the relevant cell populations is shown in Figure\u00a0 1 . Color\u2010marked populations and antibodies are corresponding with the colors in Figure\u00a0 1 .\n\nStaining and evaluation protocol of the new 21\u2010mAb 10\u2010color panel. By using the established gating procedure, the combination of 21 mAbs in 10 colors provides optimal information about lymphocyte subsets, monocytes, myeloid cells, precursor cells, and aberrant cell populations. A normal bone marrow was used to establish the efficacy of the 21\u2010mAb panel. A, Monocytes are excluded from gated cells; B, Lymphocytes, monocytes, granulocytes, and plasma cells are excluded from gated cells; C, T cells, B cells, and NK\u2010T cells are excluded from gated cells\n\nDesigning such a high\u2010level powerful screening tool relies on the proper balancing of the panel. Furthermore, the use of correct analysis protocols generates more accurate results by creating more co\u2010expression pattern and to maximize the evaluation possibilities of samples with low cell counts.\n\nFIGURE S1  A and B Normal BM was spiked with BM of an AML patient having a patient\u2010specific leukemia\u2010associated immunophenotype (LAIP) to obtain 4.5% AML cells in the ultimately sample. Subsequently 10 5  (Online Figure 1A.) and 10 3  (Online Figure 1B.) WBC of this mixed sample were flow cytometric analyzed. In the CD45/SS plot the lymphocytes, monocytes and granulocytes and the location of the AML cells to detect the LAIP (gate CD45\u2009+\u2009\u2010) were gated. Each gate is separately further analyzed using plots with the relevant mAb combinations.\n\nFIGURE S2  Representative analysis of a BM sample with the new 21\u2010mAbs 10\u2010color panel with suspicion of a lympho\u2010proliferative process. The lymphoid population (bright CD45 expression) was gated in the CD45/SS plot and lymphoid subpopulations were further defined as T cells (CD3+), NK cells (CD3\u2010/CD56+), NK\u2010T cells (CD3+/CD56+) and B cells (CD19+). Within the T cells the CD4/CD8 ratio was normal. The B cells expressed a normal Igkappa / Iglambda ratio and displayed a normal maturation pattern (CD20/CD10). No plasma cell (CD138+) aberrancies were found. No aberrant immature cells were detected in the CD45/SS plot and CD34/CD117 plot.\n\nFIGURE S3  Representative analysis of a BM sample with the new 21\u2010mAbs 10\u2010color panel with suspicion of acute myeloid leukemia (AML). The lymphoid population (bright CD45 expression) was identified within the CD45/SS plot. Lymphoid subpopulations were further classified as T cells (CD3+), NK cells (CD3\u2010/CD56+), NK\u2010T cells (CD3+/CD56+) and B cells (CD19). Within the T\u2010cells the CD4/CD8 ratio was normal. The B cells expressed a normal Igkappa/Iglambda ratio, though only mature B cell (CD20) were present. No aberrant Plasma cells (CD138+) were found. A large population aberrant immature cells was seen in the CD45/SS plot and CD34/CD117 plots. These aberrant cells also expressed CD33\u2009+\u2009.\n\nFIGURE S4  Representative analysis of a PB sample with the new 21\u2010mAbs 10\u2010color panel with suspicion of evidence of acute lymphoblastic leukemia (ALL). The lymphoid population (bright CD45 expression) was identified within the CD45/SS plot. Lymphoid subpopulations were further classified as T cells (CD3+), NK cells (CD3\u2010/CD56+), NK\u2010T cells (CD3+/CD56+) and B cells (CD19). Within the T cells the CD4/CD8 ratio was normal. The B cells expressed a normal Igkappa/ Iglambda ratio and only mature B cells (CD20) were present. No aberrant plasma cells (CD138+) were found. A population of immature cells (CD45+/\u2212 SS and CD34\u2010 CD117+/\u2212 plots) was seen expressing CD19+ CD10+ and CD20+/\u2212.\n\nFIGURE S5  Representative analysis of a BM sample with the new 21\u2010mAbs 10\u2010color panel with suspicion of evidence of a monoclonal B cell neoplasia. The lymphoid population (CD45[+]) was identified within the CD45/SS plot. The lymphoid subpopulations were further identified as T cells (CD3+), NK cells (CD3\u2010/CD56+), NK\u2010T cells (CD3+/CD56+) and B cells (CD19+).The CD4/CD8 ratio was normal. In contrast, the B\u2010cell population was aberrant and displayed a restricted Igkappa, CD10\u2010 and CD20+ expression. Furthermore, a small population of plasma cells (CD138+), CD19+ was identified expressing CD117 and Igkappa. Aberrant immature cells were not detected in the CD45\u2009+\u2009\u2010 gating of CD45/SS plot in combination with the CD34/CD117 plots.\n\nFIGURE S6  Representative analysis of a BM sample with the new 21\u2010mAbs 10\u2010color panel with suspicion of evidence of a monoclonal B cell neoplasia. The lymphoid population (bright CD45 expression) was identified within the CD45/SS plot. Lymphoid subpopulations were further identified as T cells (CD3+), NK cells (CD3\u2010/CD56+), NK\u2010T cells (CD3+/CD56+) and B cells (CD19+). Within the T cells the CD4/CD8 ratio was normal. The B cells expressed almost only Igkappa and CD20. CD19\u2009+\u2009CD5+ B\u2010lineage cells could not be detected. Only normal plasma cells (CD138+) and immature cells were present in the CD45+/\u2212 SS plot and CD34/CD117 plot.",
+    "cross_references": [
+      "OMIP-10"
+    ],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD45",
+        "fluorophore": "KO",
+        "clone": "J33",
+        "purpose": "WBC subpopulations"
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "APC\u2010AF750",
+        "clone": "UCHT1",
+        "purpose": "Mature T cells"
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "SFCI12T4B11",
+        "purpose": "Helper T cells, Monocyte lineage"
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "PacB",
+        "clone": "B9.11",
+        "purpose": "Cytotoxic T cells, NK\u2010cell subset"
+      },
+      {
+        "marker": "CD2",
+        "fluorophore": "APC\u2010AF700",
+        "clone": "39C15",
+        "purpose": "T\u2010cell lineage, NK\u2010cell subset"
+      },
+      {
+        "marker": "CD5",
+        "fluorophore": "PE\u2010Cy5.5",
+        "clone": "BL1a",
+        "purpose": "T\u2010cell lineage, B\u2010cell subset"
+      },
+      {
+        "marker": "CD7",
+        "fluorophore": "FITC",
+        "clone": "8H8.1",
+        "purpose": "T\u2010cell lineage, T\u2010cell activation, NK\u2010cell subsets"
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "PE",
+        "clone": "B73.1",
+        "purpose": "T\u2010cell subsets, NK cells, monocyte differentiation, eosinophil exclusion, myeloid lineage"
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "PE",
+        "clone": "NCAM16.2",
+        "purpose": "NK cells, plasma cell subset"
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "ECD",
+        "clone": "J3.119",
+        "purpose": "B\u2010cell lineage"
+      },
+      {
+        "marker": "CD20",
+        "fluorophore": "PacB",
+        "clone": "B9E9",
+        "purpose": "Mature B cells"
+      },
+      {
+        "marker": "Igkappa",
+        "fluorophore": "APC",
+        "clone": "Rb\u2010anti\u2010Hu \n a",
+        "purpose": "B\u2010cell subset, B\u2010cell lineage clonality"
+      },
+      {
+        "marker": "Iglambda",
+        "fluorophore": "PE",
+        "clone": "Rb\u2010anti\u2010Hu \n a",
+        "purpose": "B\u2010cell subset, B\u2010cell lineage clonality"
+      },
+      {
+        "marker": "CD138",
+        "fluorophore": "FITC",
+        "clone": "B\u2010B4",
+        "purpose": "Plasma cells"
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "ECD",
+        "clone": "RM052",
+        "purpose": "Mature monocytes"
+      },
+      {
+        "marker": "CD36",
+        "fluorophore": "APC\u2010AF700",
+        "clone": "FA6.152",
+        "purpose": "Monocyte lineage, erythroid lineage, megakaryocytes"
+      },
+      {
+        "marker": "CD33",
+        "fluorophore": "PE\u2010Cy5.5",
+        "clone": "D3HL60.251",
+        "purpose": "Monocyte lineage, myeloid lineage"
+      },
+      {
+        "marker": "CD15",
+        "fluorophore": "PacB",
+        "clone": "80H5",
+        "purpose": "Myeloid lineage"
+      },
+      {
+        "marker": "CD34",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "581",
+        "purpose": "Progenitor cells"
+      },
+      {
+        "marker": "CD117",
+        "fluorophore": "APC",
+        "clone": "104D2D1",
+        "purpose": "Myeloid precursors"
+      },
+      {
+        "marker": "CD10",
+        "fluorophore": "APC\u2010AF700",
+        "clone": "ALB1",
+        "purpose": "B\u2010cell precursors, mature neutrophils"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "root",
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
+          "marker_logic": "FSC-A vs FSC-H linear",
+          "gate_type": "scatter",
+          "is_critical": true,
+          "children": [
+            {
+              "name": "CD45+ Leukocytes",
+              "markers": [
+                "CD45"
+              ],
+              "marker_logic": "CD45+",
+              "gate_type": "lineage",
+              "is_critical": true,
+              "children": [
+                {
+                  "name": "Lymphocytes",
+                  "markers": [
+                    "CD45",
+                    "SSC"
+                  ],
+                  "marker_logic": "CD45 bright SSC low",
+                  "gate_type": "scatter",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "T cells",
+                      "markers": [
+                        "CD3"
+                      ],
+                      "marker_logic": "CD3+",
+                      "gate_type": "lineage",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "CD4+ Helper T cells",
+                          "markers": [
+                            "CD4",
+                            "CD8"
+                          ],
+                          "marker_logic": "CD4+ CD8-",
+                          "gate_type": "subset",
+                          "is_critical": true,
+                          "children": []
+                        },
+                        {
+                          "name": "CD8+ Cytotoxic T cells",
+                          "markers": [
+                            "CD4",
+                            "CD8"
+                          ],
+                          "marker_logic": "CD4- CD8+",
+                          "gate_type": "subset",
+                          "is_critical": true,
+                          "children": []
+                        },
+                        {
+                          "name": "CD4+ CD8+ Double Positive T cells",
+                          "markers": [
+                            "CD4",
+                            "CD8"
+                          ],
+                          "marker_logic": "CD4+ CD8+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        },
+                        {
+                          "name": "CD4- CD8- Double Negative T cells",
+                          "markers": [
+                            "CD4",
+                            "CD8"
+                          ],
+                          "marker_logic": "CD4- CD8-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "NK-T cells",
+                      "markers": [
+                        "CD3",
+                        "CD56"
+                      ],
+                      "marker_logic": "CD3+ CD56+",
+                      "gate_type": "lineage",
+                      "is_critical": false,
+                      "children": []
+                    },
+                    {
+                      "name": "NK cells",
+                      "markers": [
+                        "CD3",
+                        "CD56"
+                      ],
+                      "marker_logic": "CD3- CD56+",
+                      "gate_type": "lineage",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "CD16+ NK cells",
+                          "markers": [
+                            "CD16"
+                          ],
+                          "marker_logic": "CD16+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        },
+                        {
+                          "name": "CD16- NK cells",
+                          "markers": [
+                            "CD16"
+                          ],
+                          "marker_logic": "CD16-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "B cells",
+                      "markers": [
+                        "CD19"
+                      ],
+                      "marker_logic": "CD19+",
+                      "gate_type": "lineage",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "Mature B cells",
+                          "markers": [
+                            "CD20"
+                          ],
+                          "marker_logic": "CD20+",
+                          "gate_type": "subset",
+                          "is_critical": true,
+                          "children": []
+                        },
+                        {
+                          "name": "Immature B cells",
+                          "markers": [
+                            "CD20",
+                            "CD10"
+                          ],
+                          "marker_logic": "CD20- CD10+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        },
+                        {
+                          "name": "Igkappa+ B cells",
+                          "markers": [
+                            "Igkappa",
+                            "Iglambda"
+                          ],
+                          "marker_logic": "Igkappa+ Iglambda-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        },
+                        {
+                          "name": "Iglambda+ B cells",
+                          "markers": [
+                            "Igkappa",
+                            "Iglambda"
+                          ],
+                          "marker_logic": "Igkappa- Iglambda+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        },
+                        {
+                          "name": "CD5+ B cells",
+                          "markers": [
+                            "CD5"
+                          ],
+                          "marker_logic": "CD5+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Monocytes",
+                  "markers": [
+                    "CD45",
+                    "SSC",
+                    "CD14"
+                  ],
+                  "marker_logic": "CD45+ SSC intermediate CD14+",
+                  "gate_type": "lineage",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "Classical Monocytes",
+                      "markers": [
+                        "CD14",
+                        "CD16"
+                      ],
+                      "marker_logic": "CD14+ CD16-",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": []
+                    },
+                    {
+                      "name": "Non-classical Monocytes",
+                      "markers": [
+                        "CD14",
+                        "CD16"
+                      ],
+                      "marker_logic": "CD14dim CD16+",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": []
+                    },
+                    {
+                      "name": "CD33+ Monocytes",
+                      "markers": [
+                        "CD33"
+                      ],
+                      "marker_logic": "CD33+",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": []
+                    },
+                    {
+                      "name": "CD36+ Monocytes",
+                      "markers": [
+                        "CD36"
+                      ],
+                      "marker_logic": "CD36+",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Granulocytes",
+                  "markers": [
+                    "CD45",
+                    "SSC"
+                  ],
+                  "marker_logic": "CD45dim SSC high",
+                  "gate_type": "lineage",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "Neutrophils",
+                      "markers": [
+                        "CD15",
+                        "CD10"
+                      ],
+                      "marker_logic": "CD15+ CD10+",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": []
+                    },
+                    {
+                      "name": "Eosinophils",
+                      "markers": [
+                        "CD16"
+                      ],
+                      "marker_logic": "CD16-",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Plasma cells",
+                  "markers": [
+                    "CD138"
+                  ],
+                  "marker_logic": "CD138+",
+                  "gate_type": "lineage",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "CD19+ Plasma cells",
+                      "markers": [
+                        "CD19"
+                      ],
+                      "marker_logic": "CD19+",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": []
+                    },
+                    {
+                      "name": "CD56+ Plasma cells",
+                      "markers": [
+                        "CD56"
+                      ],
+                      "marker_logic": "CD56+",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": []
+                    },
+                    {
+                      "name": "Igkappa+ Plasma cells",
+                      "markers": [
+                        "Igkappa"
+                      ],
+                      "marker_logic": "Igkappa+",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": []
+                    },
+                    {
+                      "name": "Iglambda+ Plasma cells",
+                      "markers": [
+                        "Iglambda"
+                      ],
+                      "marker_logic": "Iglambda+",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": []
+                    },
+                    {
+                      "name": "CD117+ Plasma cells",
+                      "markers": [
+                        "CD117"
+                      ],
+                      "marker_logic": "CD117+",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Progenitor/Precursor cells",
+                  "markers": [
+                    "CD45",
+                    "SSC"
+                  ],
+                  "marker_logic": "CD45dim/- SSC low",
+                  "gate_type": "lineage",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "CD34+ Progenitor cells",
+                      "markers": [
+                        "CD34"
+                      ],
+                      "marker_logic": "CD34+",
+                      "gate_type": "subset",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "CD34+ CD117+ Myeloid Progenitors",
+                          "markers": [
+                            "CD34",
+                            "CD117"
+                          ],
+                          "marker_logic": "CD34+ CD117+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        },
+                        {
+                          "name": "CD34+ CD19+ B-cell Precursors",
+                          "markers": [
+                            "CD34",
+                            "CD19"
+                          ],
+                          "marker_logic": "CD34+ CD19+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CD117+ Precursor cells",
+                      "markers": [
+                        "CD117"
+                      ],
+                      "marker_logic": "CD117+",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": [
+                        {
+                          "name": "CD117+ CD33+ Myeloid Precursors",
+                          "markers": [
+                            "CD117",
+                            "CD33"
+                          ],
+                          "marker_logic": "CD117+ CD33+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "B-cell Precursors",
+                      "markers": [
+                        "CD19",
+                        "CD10"
+                      ],
+                      "marker_logic": "CD19+ CD10+",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": [
+                        {
+                          "name": "CD20- B-cell Precursors",
+                          "markers": [
+                            "CD20"
+                          ],
+                          "marker_logic": "CD20-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        },
+                        {
+                          "name": "CD20+/- B-cell Precursors",
+                          "markers": [
+                            "CD20"
+                          ],
+                          "marker_logic": "CD20+/-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Erythroid lineage",
+                  "markers": [
+                    "CD36",
+                    "CD45"
+                  ],
+                  "marker_logic": "CD36+ CD45-",
+                  "gate_type": "lineage",
+                  "is_critical": false,
+                  "children": []
+                },
+                {
+                  "name": "Myeloid cells",
+                  "markers": [
+                    "CD33",
+                    "CD15"
+                  ],
+                  "marker_logic": "CD33+ and/or CD15+",
+                  "gate_type": "lineage",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "CD33+ CD15+ Myeloid cells",
+                      "markers": [
+                        "CD33",
+                        "CD15"
+                      ],
+                      "marker_logic": "CD33+ CD15+",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": []
+                    },
+                    {
+                      "name": "CD33+ CD15- Myeloid cells",
+                      "markers": [
+                        "CD33",
+                        "CD15"
+                      ],
+                      "marker_logic": "CD33+ CD15-",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "is_critical": true
+    }
+  },
+  "_extraction_metadata": {
+    "tables_found": 3,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 21 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 7916 chars of gating text from body"
+    ]
+  }
+}

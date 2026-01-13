@@ -1,0 +1,944 @@
+{
+  "test_case_id": "PMC6663658",
+  "source_type": "omip_paper",
+  "omip_id": null,
+  "doi": "10.1002/cyto.a.23753",
+  "pmc_id": "PMC6663658",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Cryopreserved PBMC",
+    "species": "human",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Example of the staining and gating strategy for PBMC stimulated with staphylococcal enterotoxin B (SEB). PBMC from a healthy adult were stimulated for 6 h with SEB. (A) Gating hierarchy to identify lineages. Initial gating on time (seconds) to exclude any events early in collection if there are pressure fluctuations, singlet gating on forward scatter height vs. area, exclusion of aggregates (only one example shown, but several sequential gates on various parameters are used), and live cell gating. Monocytes are gated as either CD14+ or high for side scatter and the upper right graph shows three monocyte subsets based on CD14 vs. CD16. Non\u2010monocytes are gated as CD14\u2010SS lo  and then scatter gated on lymphocytes. The gating scheme avoids any overlapping subsets as shown in supplemental figure 4. Thus, conventional CD4+ and CD8+ T cells are gated as CD3+, then \u03b3\u03b4\u2010, not CD26\u2009+\u2009CD161+ (containing MAIT cells), and not CD16+ OR CD56+ (containing NKT cells). (B) Functional markers for CD4+ and CD8+ T cells. A gate is applied for each cytokine, and Boolean gates are created to identify cells expressing different combinations of markers. The single function gates are sometimes chosen vs. a parameter that displays some FMO spreading to allow for angled gates. Most gates are copied, applied to all lineages, and then cloned so that any changes to the gate on one lineage changes that gate for all lineages. However, the IL\u201022 gate was uniquely lower for CD4 T cells (compared to other lineages) since the CD8 reagent caused some spreading into IL\u201022 and thus requiring a higher gate for all other lineages that express CD8. (C) Additional functional and non\u2010functional markers for CD4+ and CD8+ T cells. Perforin and granzyme A are constitutive but can be examined as co\u2010expression with another functional marker. (D) NK T cells gated as CD16+ OR CD56+ on CD3+ \u03b3\u03b4\u2010 T cells. Expression of CD4 vs. CD8 is shown, but all the other markers are also gated on the NK T cells. (E) NK cell subsets defined by CD16 vs. CD56 on CD3\u2010 lymphocytes. (F) MAIT cells identified as CD3+ \u03b3\u03b4\u2010 CD26\u2009+\u2009CD161+ and then V\u03b17.2+. The Va7.2+ cells are predominantly CD8+; however, the V\u03b17.2\u2010 cells are predominantly CD4+ and are likely not MAIT cells. For all gates, none are placed lower than that defined by FMO controls. Some gates are placed higher to improve the specificity, for example, for the functional markers based on the background as observed in the unstimulated controls (Online Fig. 6). The labels above each graph indicate the cells included in that graph.",
+    "full_text_gating": null,
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "Perforin",
+        "fluorophore": "FITC",
+        "clone": "B\u2010D48",
+        "purpose": "Function"
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "BB660",
+        "clone": "M\u03d5P9",
+        "purpose": "Monocytes"
+      },
+      {
+        "marker": "IL2",
+        "fluorophore": "BB700",
+        "clone": "MQ1\u201017H12",
+        "purpose": "Function"
+      },
+      {
+        "marker": "IL22",
+        "fluorophore": "PE",
+        "clone": "22URTI",
+        "purpose": "Function"
+      },
+      {
+        "marker": "KLRG1 (MAFA)",
+        "fluorophore": "PE\u2010Dazzle 594",
+        "clone": "SA231A2",
+        "purpose": "Differentiation"
+      },
+      {
+        "marker": "CXCR3",
+        "fluorophore": "PE\u2010Cy5",
+        "clone": "1C6/CXCR3",
+        "purpose": "T helper class"
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "PE\u2010Cy5.5",
+        "clone": "CMSSB",
+        "purpose": "NK, NKT"
+      },
+      {
+        "marker": "CD154",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "24\u201331",
+        "purpose": "Function"
+      },
+      {
+        "marker": "IL4",
+        "fluorophore": "APC",
+        "clone": "MP4\u201025D2",
+        "purpose": "Function"
+      },
+      {
+        "marker": "Granzyme A",
+        "fluorophore": "Alx700",
+        "clone": "CB9",
+        "purpose": "Function"
+      },
+      {
+        "marker": "TCRv\u03b17.2",
+        "fluorophore": "APC\u2010Cy7",
+        "clone": "3C10",
+        "purpose": "MAIT"
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "BUV395",
+        "clone": "UCHT1",
+        "purpose": "T cell lineage"
+      },
+      {
+        "marker": "Viability",
+        "fluorophore": "UViD",
+        "clone": "NA",
+        "purpose": "Viability"
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "BUV496",
+        "clone": "HI100",
+        "purpose": "Differentiation"
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "BUV563",
+        "clone": "RPA\u2010T8",
+        "purpose": "T cell lineage"
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "BUV661",
+        "clone": "G46\u20106",
+        "purpose": "Activation"
+      },
+      {
+        "marker": "IL17a",
+        "fluorophore": "BUV737",
+        "clone": "N49\u2010653",
+        "purpose": "Function"
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BUV805",
+        "clone": "RPA\u2010T4",
+        "purpose": "T cell lineage"
+      },
+      {
+        "marker": "IFNy",
+        "fluorophore": "V450",
+        "clone": "B27",
+        "purpose": "Function"
+      },
+      {
+        "marker": "TCR \u03b3\u03b4",
+        "fluorophore": "BV510",
+        "clone": "11F2",
+        "purpose": "\u03b3\u03b4 T cell lineage"
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "BV570",
+        "clone": "3G8",
+        "purpose": "NK, NKT"
+      },
+      {
+        "marker": "CCR6 (CD196)",
+        "fluorophore": "BV605",
+        "clone": "11\u2010A9",
+        "purpose": "T helper class"
+      },
+      {
+        "marker": "CD161",
+        "fluorophore": "BV650",
+        "clone": "DX12",
+        "purpose": "MAIT"
+      },
+      {
+        "marker": "CD26",
+        "fluorophore": "BV711",
+        "clone": "M\u2010A261",
+        "purpose": "MAIT"
+      },
+      {
+        "marker": "TNF\u03b1",
+        "fluorophore": "BV750",
+        "clone": "MAb11",
+        "purpose": "Function"
+      },
+      {
+        "marker": "CCR7 (CD197)",
+        "fluorophore": "BV785",
+        "clone": "G043H7",
+        "purpose": "Differentiation"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "root",
+      "is_critical": true,
+      "children": [
+        {
+          "name": "Time Gate",
+          "markers": [
+            "Time"
+          ],
+          "marker_logic": "Time stable",
+          "gate_type": "scatter",
+          "is_critical": true,
+          "children": [
+            {
+              "name": "Singlets",
+              "markers": [
+                "FSC-H",
+                "FSC-A"
+              ],
+              "marker_logic": "FSC-H vs FSC-A diagonal",
+              "gate_type": "scatter",
+              "is_critical": true,
+              "children": [
+                {
+                  "name": "Aggregate Exclusion",
+                  "markers": [],
+                  "marker_logic": "Sequential aggregate exclusion gates",
+                  "gate_type": "scatter",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "Live Cells",
+                      "markers": [
+                        "Viability"
+                      ],
+                      "marker_logic": "Viability-",
+                      "gate_type": "viability",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "Monocytes",
+                          "markers": [
+                            "CD14",
+                            "SSC"
+                          ],
+                          "marker_logic": "CD14+ OR SSC-hi",
+                          "gate_type": "lineage",
+                          "is_critical": true,
+                          "children": [
+                            {
+                              "name": "Classical Monocytes",
+                              "markers": [
+                                "CD14",
+                                "CD16"
+                              ],
+                              "marker_logic": "CD14++ CD16-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "Intermediate Monocytes",
+                              "markers": [
+                                "CD14",
+                                "CD16"
+                              ],
+                              "marker_logic": "CD14++ CD16+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "Non-classical Monocytes",
+                              "markers": [
+                                "CD14",
+                                "CD16"
+                              ],
+                              "marker_logic": "CD14+ CD16++",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Non-Monocytes",
+                          "markers": [
+                            "CD14",
+                            "SSC"
+                          ],
+                          "marker_logic": "CD14- SSC-lo",
+                          "gate_type": "lineage",
+                          "is_critical": true,
+                          "children": [
+                            {
+                              "name": "Lymphocytes",
+                              "markers": [
+                                "FSC",
+                                "SSC"
+                              ],
+                              "marker_logic": "FSC-lo SSC-lo",
+                              "gate_type": "scatter",
+                              "is_critical": true,
+                              "children": [
+                                {
+                                  "name": "CD3+ T Cells",
+                                  "markers": [
+                                    "CD3"
+                                  ],
+                                  "marker_logic": "CD3+",
+                                  "gate_type": "lineage",
+                                  "is_critical": true,
+                                  "children": [
+                                    {
+                                      "name": "\u03b3\u03b4 T Cells",
+                                      "markers": [
+                                        "TCR \u03b3\u03b4"
+                                      ],
+                                      "marker_logic": "TCR \u03b3\u03b4+",
+                                      "gate_type": "lineage",
+                                      "is_critical": true,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "\u03b1\u03b2 T Cells (\u03b3\u03b4-)",
+                                      "markers": [
+                                        "TCR \u03b3\u03b4"
+                                      ],
+                                      "marker_logic": "TCR \u03b3\u03b4-",
+                                      "gate_type": "lineage",
+                                      "is_critical": true,
+                                      "children": [
+                                        {
+                                          "name": "MAIT Cells",
+                                          "markers": [
+                                            "CD26",
+                                            "CD161"
+                                          ],
+                                          "marker_logic": "CD26+ CD161+",
+                                          "gate_type": "subset",
+                                          "is_critical": true,
+                                          "children": [
+                                            {
+                                              "name": "V\u03b17.2+ MAIT",
+                                              "markers": [
+                                                "TCRv\u03b17.2"
+                                              ],
+                                              "marker_logic": "TCRv\u03b17.2+",
+                                              "gate_type": "subset",
+                                              "is_critical": true,
+                                              "children": [
+                                                {
+                                                  "name": "CD8+ MAIT",
+                                                  "markers": [
+                                                    "CD8"
+                                                  ],
+                                                  "marker_logic": "CD8+",
+                                                  "gate_type": "subset",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CD4+ MAIT",
+                                                  "markers": [
+                                                    "CD4"
+                                                  ],
+                                                  "marker_logic": "CD4+",
+                                                  "gate_type": "subset",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "DN MAIT",
+                                                  "markers": [
+                                                    "CD4",
+                                                    "CD8"
+                                                  ],
+                                                  "marker_logic": "CD4- CD8-",
+                                                  "gate_type": "subset",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "name": "V\u03b17.2- (non-MAIT)",
+                                              "markers": [
+                                                "TCRv\u03b17.2"
+                                              ],
+                                              "marker_logic": "TCRv\u03b17.2-",
+                                              "gate_type": "subset",
+                                              "is_critical": false,
+                                              "children": []
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "Non-MAIT \u03b1\u03b2 T Cells",
+                                          "markers": [
+                                            "CD26",
+                                            "CD161"
+                                          ],
+                                          "marker_logic": "NOT (CD26+ CD161+)",
+                                          "gate_type": "subset",
+                                          "is_critical": true,
+                                          "children": [
+                                            {
+                                              "name": "NKT Cells",
+                                              "markers": [
+                                                "CD16",
+                                                "CD56"
+                                              ],
+                                              "marker_logic": "CD16+ OR CD56+",
+                                              "gate_type": "subset",
+                                              "is_critical": true,
+                                              "children": [
+                                                {
+                                                  "name": "CD4+ NKT",
+                                                  "markers": [
+                                                    "CD4",
+                                                    "CD8"
+                                                  ],
+                                                  "marker_logic": "CD4+ CD8-",
+                                                  "gate_type": "subset",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "CD8+ NKT",
+                                                  "markers": [
+                                                    "CD4",
+                                                    "CD8"
+                                                  ],
+                                                  "marker_logic": "CD4- CD8+",
+                                                  "gate_type": "subset",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "DN NKT",
+                                                  "markers": [
+                                                    "CD4",
+                                                    "CD8"
+                                                  ],
+                                                  "marker_logic": "CD4- CD8-",
+                                                  "gate_type": "subset",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "DP NKT",
+                                                  "markers": [
+                                                    "CD4",
+                                                    "CD8"
+                                                  ],
+                                                  "marker_logic": "CD4+ CD8+",
+                                                  "gate_type": "subset",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "name": "Conventional T Cells",
+                                              "markers": [
+                                                "CD16",
+                                                "CD56"
+                                              ],
+                                              "marker_logic": "CD16- CD56-",
+                                              "gate_type": "subset",
+                                              "is_critical": true,
+                                              "children": [
+                                                {
+                                                  "name": "CD4+ T Cells",
+                                                  "markers": [
+                                                    "CD4",
+                                                    "CD8"
+                                                  ],
+                                                  "marker_logic": "CD4+ CD8-",
+                                                  "gate_type": "lineage",
+                                                  "is_critical": true,
+                                                  "children": [
+                                                    {
+                                                      "name": "Naive CD4+",
+                                                      "markers": [
+                                                        "CD45RA",
+                                                        "CCR7"
+                                                      ],
+                                                      "marker_logic": "CD45RA+ CCR7+",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "Central Memory CD4+",
+                                                      "markers": [
+                                                        "CD45RA",
+                                                        "CCR7"
+                                                      ],
+                                                      "marker_logic": "CD45RA- CCR7+",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "Effector Memory CD4+",
+                                                      "markers": [
+                                                        "CD45RA",
+                                                        "CCR7"
+                                                      ],
+                                                      "marker_logic": "CD45RA- CCR7-",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "TEMRA CD4+",
+                                                      "markers": [
+                                                        "CD45RA",
+                                                        "CCR7"
+                                                      ],
+                                                      "marker_logic": "CD45RA+ CCR7-",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "Th1 CD4+",
+                                                      "markers": [
+                                                        "CXCR3",
+                                                        "CCR6"
+                                                      ],
+                                                      "marker_logic": "CXCR3+ CCR6-",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "Th2 CD4+",
+                                                      "markers": [
+                                                        "CXCR3",
+                                                        "CCR6"
+                                                      ],
+                                                      "marker_logic": "CXCR3- CCR6-",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "Th17 CD4+",
+                                                      "markers": [
+                                                        "CXCR3",
+                                                        "CCR6"
+                                                      ],
+                                                      "marker_logic": "CXCR3- CCR6+",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "Th1/17 CD4+",
+                                                      "markers": [
+                                                        "CXCR3",
+                                                        "CCR6"
+                                                      ],
+                                                      "marker_logic": "CXCR3+ CCR6+",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "KLRG1+ CD4+",
+                                                      "markers": [
+                                                        "KLRG1"
+                                                      ],
+                                                      "marker_logic": "KLRG1+",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "HLA-DR+ CD4+",
+                                                      "markers": [
+                                                        "HLA-DR"
+                                                      ],
+                                                      "marker_logic": "HLA-DR+",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "IFN\u03b3+ CD4+",
+                                                      "markers": [
+                                                        "IFNy"
+                                                      ],
+                                                      "marker_logic": "IFN\u03b3+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "TNF\u03b1+ CD4+",
+                                                      "markers": [
+                                                        "TNF\u03b1"
+                                                      ],
+                                                      "marker_logic": "TNF\u03b1+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "IL2+ CD4+",
+                                                      "markers": [
+                                                        "IL2"
+                                                      ],
+                                                      "marker_logic": "IL2+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "IL4+ CD4+",
+                                                      "markers": [
+                                                        "IL4"
+                                                      ],
+                                                      "marker_logic": "IL4+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "IL17a+ CD4+",
+                                                      "markers": [
+                                                        "IL17a"
+                                                      ],
+                                                      "marker_logic": "IL17a+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "IL22+ CD4+",
+                                                      "markers": [
+                                                        "IL22"
+                                                      ],
+                                                      "marker_logic": "IL22+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "CD154+ CD4+",
+                                                      "markers": [
+                                                        "CD154"
+                                                      ],
+                                                      "marker_logic": "CD154+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "Perforin+ CD4+",
+                                                      "markers": [
+                                                        "Perforin"
+                                                      ],
+                                                      "marker_logic": "Perforin+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "Granzyme A+ CD4+",
+                                                      "markers": [
+                                                        "Granzyme A"
+                                                      ],
+                                                      "marker_logic": "Granzyme A+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "name": "CD8+ T Cells",
+                                                  "markers": [
+                                                    "CD4",
+                                                    "CD8"
+                                                  ],
+                                                  "marker_logic": "CD4- CD8+",
+                                                  "gate_type": "lineage",
+                                                  "is_critical": true,
+                                                  "children": [
+                                                    {
+                                                      "name": "Naive CD8+",
+                                                      "markers": [
+                                                        "CD45RA",
+                                                        "CCR7"
+                                                      ],
+                                                      "marker_logic": "CD45RA+ CCR7+",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "Central Memory CD8+",
+                                                      "markers": [
+                                                        "CD45RA",
+                                                        "CCR7"
+                                                      ],
+                                                      "marker_logic": "CD45RA- CCR7+",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "Effector Memory CD8+",
+                                                      "markers": [
+                                                        "CD45RA",
+                                                        "CCR7"
+                                                      ],
+                                                      "marker_logic": "CD45RA- CCR7-",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "TEMRA CD8+",
+                                                      "markers": [
+                                                        "CD45RA",
+                                                        "CCR7"
+                                                      ],
+                                                      "marker_logic": "CD45RA+ CCR7-",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "KLRG1+ CD8+",
+                                                      "markers": [
+                                                        "KLRG1"
+                                                      ],
+                                                      "marker_logic": "KLRG1+",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "HLA-DR+ CD8+",
+                                                      "markers": [
+                                                        "HLA-DR"
+                                                      ],
+                                                      "marker_logic": "HLA-DR+",
+                                                      "gate_type": "subset",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "IFN\u03b3+ CD8+",
+                                                      "markers": [
+                                                        "IFNy"
+                                                      ],
+                                                      "marker_logic": "IFN\u03b3+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "TNF\u03b1+ CD8+",
+                                                      "markers": [
+                                                        "TNF\u03b1"
+                                                      ],
+                                                      "marker_logic": "TNF\u03b1+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "IL2+ CD8+",
+                                                      "markers": [
+                                                        "IL2"
+                                                      ],
+                                                      "marker_logic": "IL2+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "IL4+ CD8+",
+                                                      "markers": [
+                                                        "IL4"
+                                                      ],
+                                                      "marker_logic": "IL4+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "IL17a+ CD8+",
+                                                      "markers": [
+                                                        "IL17a"
+                                                      ],
+                                                      "marker_logic": "IL17a+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "IL22+ CD8+",
+                                                      "markers": [
+                                                        "IL22"
+                                                      ],
+                                                      "marker_logic": "IL22+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "CD154+ CD8+",
+                                                      "markers": [
+                                                        "CD154"
+                                                      ],
+                                                      "marker_logic": "CD154+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "Perforin+ CD8+",
+                                                      "markers": [
+                                                        "Perforin"
+                                                      ],
+                                                      "marker_logic": "Perforin+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "name": "Granzyme A+ CD8+",
+                                                      "markers": [
+                                                        "Granzyme A"
+                                                      ],
+                                                      "marker_logic": "Granzyme A+",
+                                                      "gate_type": "functional",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "name": "DN T Cells",
+                                                  "markers": [
+                                                    "CD4",
+                                                    "CD8"
+                                                  ],
+                                                  "marker_logic": "CD4- CD8-",
+                                                  "gate_type": "subset",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "DP T Cells",
+                                                  "markers": [
+                                                    "CD4",
+                                                    "CD8"
+                                                  ],
+                                                  "marker_logic": "CD4+ CD8+",
+                                                  "gate_type": "subset",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "CD3- Lymphocytes",
+                                  "markers": [
+                                    "CD3"
+                                  ],
+                                  "marker_logic": "CD3-",
+                                  "gate_type": "lineage",
+                                  "is_critical": true,
+                                  "children": [
+                                    {
+                                      "name": "NK Cells",
+                                      "markers": [
+                                        "CD16",
+                                        "CD56"
+                                      ],
+                                      "marker_logic": "CD16+ OR CD56+",
+                                      "gate_type": "lineage",
+                                      "is_critical": true,
+                                      "children": [
+                                        {
+                                          "name": "CD56bright NK",
+                                          "markers": [
+                                            "CD16",
+                                            "CD56"
+                                          ],
+                                          "marker_logic": "CD56++ CD16-",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD56dim CD16+ NK",
+                                          "markers": [
+                                            "CD16",
+                                            "CD56"
+                                          ],
+                                          "marker_logic": "CD56+ CD16+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD56- CD16+ NK",
+                                          "markers": [
+                                            "CD16",
+                                            "CD56"
+                                          ],
+                                          "marker_logic": "CD56- CD16+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 26 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1"
+    ]
+  }
+}

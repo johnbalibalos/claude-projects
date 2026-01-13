@@ -1,0 +1,448 @@
+{
+  "test_case_id": "PMC6704361",
+  "source_type": "omip_paper",
+  "omip_id": null,
+  "doi": "10.1002/cyto.a.23488",
+  "pmc_id": "PMC6704361",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "PBMC",
+    "species": "human",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Characterization of B cell subsets by flow cytometry.  (A)  A Time versus SSC\u2010A gate was set to exclude fluorescence intensity fluctuations due to eventual irregular acquisition of the flow cytometer. Single cells were further defined based on SSC\u2010A and FSC\u2010A and a gate for doublet discrimination based on FSC\u2010H/FSC\u2010A. B cells were defined as Dump\u2010negative (Dump set as CD3, CD14, CD16 positive and dead cells) and CD19\u2010positive cells. A major B cell subset discrimination is based on CD10 and, therefore, B cells were divided into CD10 \u2010  and CD10 +  subpopulations.  (B)  CD10 +  B cells can be further refined into transitional B cells (CD38 + IgD + ). The gating of CD38 +  cells was done based on a FMO control for CD38 AF700 shown in the left panel.  (C)  CD10 \u2010  B cells comprise IgD +  unswitched B cells (CD38 \u2010 IgD + ), memory B cells (CD38 \u2010 IgD \u2010 ) and plasmablasts (PB; CD38 high IgD \u2010 ), which can be defined based on the surface expression pattern of CD38 and IgD. The unswitched IgD +  fraction can be further divided in na\u00efve (CD27 \u2010 IgD high ) and marginal zone (MZ) B cells (CD27 + IgD + ) as shown in the right panel.  (D)  Memory B cells derived from the memory B cell gate (CD38 \u2010 IgD \u2010 ) in Figure  1 C can be further divided in subsets based on their maturation state by expression patterns of CD21 and CD27 as described  3 ,  18 ,  29 . In HIV\u20101 infected patients the distribution is known to be skewed toward activated (AM) and tissue\u2010like (TLM) memory B cells  3 ,  18 ,  29 . The analysis of cell samples from HIV\u20101 infection (Figure  1 D, right panel) was thus useful to verify sufficient resolution of CD21 staining.  (E)  Alternatively, memory B cells can be divided in subsets based on their expressed B cell receptor isotype. The panel includes antibodies specific for IgG1, IgG3, and IgA. IgA\u2010expressing switched memory B cells (right panel) are defined from cells within the \u201cNon\u2010IgG1 and \u2010IgG3\u201d gate (left panel, transparent green gate).  (F)  To characterize the potential migratory activity of B cell subsets, we included antibodies for the chemokine receptors CCR7, CXCR3, CXCR4 and CXCR5 in our panel. To measure responsiveness to IL\u201021, an important cytokine for development of high\u2010affinity antibody responses, IL\u201021R levels were measured. The resolution of anti\u2010CXCR4, \u2010CXCR5, and \u2013IL\u201021R antibodies was sufficient as judged by staining differences between the full stained sample (blue) and the corresponding FMO control (grey).  (G)  Resolution of CCR7 proved high so that FMO was not necessary to define positive populations.  (H)  In healthy donors the frequency of CXCR3\u2010 and Ki67\u2010expressing B cells is genuinely low necessitating FMO controls. FMO control and fully stained sample are shown as a dot plot in combination with CD27. Both markers show sufficient separation in combination with full staining panel. Data in panels 1A, B, C, and E are from measurements of the same sampling time point of one healthy donor. Data shown in right panel of Figure  1 D is from measurements of PBMC from a chronically HIV\u20101 infected individual. All percentages are related to total Dump \u2010 CD19 +  B cells except in Figures  1 D and E where percentages are related to memory B cells as gated in Figure  1 C. Percentages stated in brackets in Figure  1 B are related to total CD10 +  B cells. [Color figure can be viewed at  wileyonlinelibrary.com ]",
+    "full_text_gating": "Chronic viral diseases such as HIV\u20101 and Hepatitis C virus result in dramatic perturbations of the B cell compartment, most strikingly a shift toward mature and exhausted phenotypes and increased frequencies of immature CD10 +  transitional B cells  1 ,  2 ,  3 . As a consequence, B cell responses in HIV\u20101 infection are frequently impaired, resulting in delayed and, in part, insufficient humoral responses to diverse infectious agents and vaccines  4 ,  5 ,  6 ,  7 ,  8 ,  9 ,  10 . The comprehensive 18\u2010parameter panel described herein will allow in\u2010depth analysis of B cell dynamics with a focus on memory B cells in healthy individuals and during disease in frozen, banked PBMC samples.\n\nB cells can be defined by expression of the canonical marker CD19. We used a dump channel including CD3, CD14, CD16, and a Live/Dead dye to achieve optimal resolution between CD19 +  and CD19 \u2010  cell types to allow definition and inclusion of CD19 dim  plasmablasts into the analysis (Fig.  1 A).\n\nCD10 was included in the panel for detection of CD10 +  transitional B cells (Figs. 1A and B and Supporting Information Fig. S10). While transitional B cells can also be defined by the classical Bm1\u2010Bm5 classification based on CD38 and IgD expression  11 , we found that this was less reliable compared to using CD10 expression  11 ,  12 .\n\nCD38 was included to define plasmablasts. Using a CD38 specific reagent labeled with the dim fluorochrome Alexa Fluor 700 (AF700) allowed to define plasmablasts readily as these cells express high levels of CD38 (Fig.  1 C and Supporting Information Fig. S11)  11 . Plasmablasts are defined as CD38 high . According to their lower CD38 levels CD10 +  transitional B cells are referred to as CD38 +  (Fig.  1 B and Supporting Information Fig. S10). As the AF700 conjugated CD38 antibody cannot distinguish between CD38 \u2010  and CD38 +  na\u00efve or between CD38 \u2010  and CD38 +  switched memory B cells, we refer to these cells as CD38 \u2010 \n 11 . Integrating CD38 and IgD in the panel allowed a dissection of CD10 \u2010  mature B cells in IgD +  unswitched B cells (IgD + CD38 \u2010 ), memory B cells (IgD \u2010 CD38 \u2010 ) and plasmablasts (PB; IgD \u2010 CD38 high ) (Fig.  1 C)  11 .\n\nIgD +  unswitched B cells encompass antigen\u2010inexperienced na\u00efve B cells and marginal zone (MZ) B cells  13 ,  14 , which can be distinguished by the differential expression of the memory B cell marker CD27 (Fig.  1 C). Na\u00efve B cells do not express CD27 but express high levels of IgD, whereas IgD on MZ B cells is lower and paired with expression of CD27  13 . IgD is a well\u2010established marker to define memory B cells. The majority of memory B cells lose IgD expression and only low frequencies of IgD +  memory B cells in the periphery have been described  15 ,  16 ,  17 .\n\nAnalysis of B cell subsets based on CD21 and CD27 expression has been frequently used in the literature, but bears a limitation. Naive B cells with a phenotype of CD21 + CD27 \u2010  are commonly not distinguished from memory B cells with the same expression profile  5 ,  8 ,  9 ,  18 . This OMIP panel defines the na\u00efve B cell population separately based on IgD and CD27 expression. This allows for the exclusion of this subset from the analysis of memory B cells and the definition of CD21 + CD27 \u2010  intermediate memory (IM) B cells  18 . The differential expression of CD21 and CD27 further facilitates the definition of the maturation state of memory B cells: quiescent resting memory (RM, CD21 + CD27 + ), activated memory (AM, CD21 \u2010 CD27 + ) and exhausted tissue\u2010like memory (TLM, CD21 \u2010 CD27 \u2010 ) B cells (Fig.  1 D)  3 ,  18 . To obtain a refined dissection of phenotypic differences amongst the memory B cell subsets our staining panel monitors IgA, IgG1, and IgG3 B cell receptor isotypes (Fig.  1 E). We included in our panel IgG1 and IgG3 as these specificities were of interest in the context of the research question we addressed when developing the panel, where we were aimed to monitor HIV\u20101 Env IgG1 and IgG3 responses linked with the development of neutralization breadth. Depending on the research topic addressed the addition of IgM to also define IgM\u2010only memory B cells may be of interest. For an easy adaptation of the panel to incorporate IgM or other markers we recommend markers in the FITC and PE channel, which in the present setting of our panel are occupied by IgG1 and IgG3. These markers can, however, be readily swopped to other markers (e.g., pan IgG or IgM) as needed since PE and FITC labeled reagents are among the most widely available reagents.\n\nChemokine receptors CCR7, CXCR3, CXCR4, and CXCR5 are measured herein to provide insight into the potential tissue destination and migratory profiles of the diverse B cell subsets, (Figs.  1 F\u2013H). CXCR4, the chemokine receptor for CXCL12, is important for homing of B cells to bone marrow and lymphoid organs, including the spleen  19 ,  20 . In B cell follicles, follicular dendritic cells secrete high levels of CXCL13, which attract CXCR5\u2010expressing B cells. CCR7 plays an important role guiding cells to the T cell areas in secondary lymph organs. CXCR3\u2010expressing B cells are attracted to inflamed tissues by CXCL9 and CXCL10 produced at sites with ongoing immune activation.\n\nAn additional marker included in our panel is IL\u201021R (Fig.  1 F). IL\u201021, mainly secreted by follicular helper T cells in the GC, supports somatic hypermutation (SHM) and isotype switching through signaling of the IL\u201021R and is crucial for the development of high\u2010affinity antibody responses  21 ,  22 ,  23 ,  24 ,  25 . Including IL\u201021R in the B cell panel enables analysis of the dynamics of IL\u201021R expression. This allows one to determine whether chronic viral infections manipulate the responsiveness of B cells to SHM and isotype class switching through regulation of IL\u201021R  22 ,  23 ,  26 .\n\nExamination of the proliferation marker Ki67 identifies recently activated B cells and makes it possible to define their phenotype and dynamics during ongoing immune responses (Fig.  1 H)  27 .\n\nCombining classical lineage markers with a range of phenotypic parameters (Table  2 ) our comprehensive 18\u2010parameter B cell panel provides the possibility for a highly detailed characterization of the B cell compartment in healthy individuals, as well as in response to infections or in autoimmune diseases.",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD3",
+        "fluorophore": "APC\u2010Cy7",
+        "clone": "SK7",
+        "purpose": "Dump"
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "APC\u2010Cy7",
+        "clone": "HCD14",
+        "purpose": "Dump"
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "APC\u2010Cy7",
+        "clone": "3G8",
+        "purpose": "Dump"
+      },
+      {
+        "marker": "Dead cells",
+        "fluorophore": "Near\u2010infrared",
+        "clone": "\u2013",
+        "purpose": "Dump"
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "Brilliant violet 786",
+        "clone": "SJ25C1",
+        "purpose": "Lineage"
+      },
+      {
+        "marker": "CD10",
+        "fluorophore": "BV650",
+        "clone": "HI10a",
+        "purpose": "B cell subsets"
+      },
+      {
+        "marker": "IgD",
+        "fluorophore": "PE\u2010Cy5 \n (in\u2010house conjugation)",
+        "clone": "IA6\u20102",
+        "purpose": "B cell subsets"
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "AF700",
+        "clone": "HIT2",
+        "purpose": "B cell subsets"
+      },
+      {
+        "marker": "CD21",
+        "fluorophore": "BV711",
+        "clone": "B\u2010ly4",
+        "purpose": "B cell subsets/Exhaustion"
+      },
+      {
+        "marker": "CD27",
+        "fluorophore": "PE\u2010CF594",
+        "clone": "M\u2010T271",
+        "purpose": "Differentiation, Memory"
+      },
+      {
+        "marker": "IgG1",
+        "fluorophore": "PE",
+        "clone": "HP6001",
+        "purpose": "IgG1 class\u2010switched B cells"
+      },
+      {
+        "marker": "IgG3",
+        "fluorophore": "FITC",
+        "clone": "Polyclonal Sheep IgG",
+        "purpose": "IgG3 class\u2010switched B cells"
+      },
+      {
+        "marker": "IgA",
+        "fluorophore": "APC",
+        "clone": "Polyclonal goat IgG",
+        "purpose": "IgA class\u2010switched B cells"
+      },
+      {
+        "marker": "CCR7",
+        "fluorophore": "BV605",
+        "clone": "G043H7",
+        "purpose": "Migration pattern"
+      },
+      {
+        "marker": "CXCR3",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "G025H7",
+        "purpose": "Migration pattern"
+      },
+      {
+        "marker": "CXCR4",
+        "fluorophore": "PE\u2010Cy5.5 \n (in\u2010house conjugation)",
+        "clone": "12G5",
+        "purpose": "Migration pattern"
+      },
+      {
+        "marker": "CXCR5",
+        "fluorophore": "BV510",
+        "clone": "RF8B2",
+        "purpose": "Migration pattern"
+      },
+      {
+        "marker": "IL-21R",
+        "fluorophore": "BV421",
+        "clone": "2G1\u2010K12",
+        "purpose": "Cytokine receptor"
+      },
+      {
+        "marker": "Ki67",
+        "fluorophore": "PerCP\u2010eFluor710",
+        "clone": "20Raj1",
+        "purpose": "Proliferation marker"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "root",
+      "is_critical": true,
+      "children": [
+        {
+          "name": "Time Gate",
+          "markers": [
+            "Time",
+            "SSC-A"
+          ],
+          "marker_logic": "Time vs SSC-A stable acquisition",
+          "gate_type": "scatter",
+          "is_critical": true,
+          "children": [
+            {
+              "name": "Single Cells",
+              "markers": [
+                "SSC-A",
+                "FSC-A"
+              ],
+              "marker_logic": "SSC-A vs FSC-A",
+              "gate_type": "scatter",
+              "is_critical": true,
+              "children": [
+                {
+                  "name": "Singlets",
+                  "markers": [
+                    "FSC-H",
+                    "FSC-A"
+                  ],
+                  "marker_logic": "FSC-H vs FSC-A doublet discrimination",
+                  "gate_type": "scatter",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "B cells",
+                      "markers": [
+                        "CD3",
+                        "CD14",
+                        "CD16",
+                        "Dead cells",
+                        "CD19"
+                      ],
+                      "marker_logic": "Dump- (CD3- CD14- CD16- Live) CD19+",
+                      "gate_type": "lineage",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "CD10+ B cells",
+                          "markers": [
+                            "CD10"
+                          ],
+                          "marker_logic": "CD10+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "Transitional B cells",
+                              "markers": [
+                                "CD38",
+                                "IgD"
+                              ],
+                              "marker_logic": "CD38+ IgD+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CD10- B cells",
+                          "markers": [
+                            "CD10"
+                          ],
+                          "marker_logic": "CD10-",
+                          "gate_type": "subset",
+                          "is_critical": true,
+                          "children": [
+                            {
+                              "name": "Unswitched B cells",
+                              "markers": [
+                                "IgD",
+                                "CD38"
+                              ],
+                              "marker_logic": "IgD+ CD38-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": [
+                                {
+                                  "name": "Naive B cells",
+                                  "markers": [
+                                    "CD27",
+                                    "IgD"
+                                  ],
+                                  "marker_logic": "CD27- IgD high",
+                                  "gate_type": "subset",
+                                  "is_critical": true,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Marginal Zone B cells",
+                                  "markers": [
+                                    "CD27",
+                                    "IgD"
+                                  ],
+                                  "marker_logic": "CD27+ IgD+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "Memory B cells",
+                              "markers": [
+                                "IgD",
+                                "CD38"
+                              ],
+                              "marker_logic": "IgD- CD38-",
+                              "gate_type": "subset",
+                              "is_critical": true,
+                              "children": [
+                                {
+                                  "name": "Resting Memory B cells",
+                                  "markers": [
+                                    "CD21",
+                                    "CD27"
+                                  ],
+                                  "marker_logic": "CD21+ CD27+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Intermediate Memory B cells",
+                                  "markers": [
+                                    "CD21",
+                                    "CD27"
+                                  ],
+                                  "marker_logic": "CD21+ CD27-",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Activated Memory B cells",
+                                  "markers": [
+                                    "CD21",
+                                    "CD27"
+                                  ],
+                                  "marker_logic": "CD21- CD27+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Tissue-like Memory B cells",
+                                  "markers": [
+                                    "CD21",
+                                    "CD27"
+                                  ],
+                                  "marker_logic": "CD21- CD27-",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "IgG1+ Memory B cells",
+                                  "markers": [
+                                    "IgG1"
+                                  ],
+                                  "marker_logic": "IgG1+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "IgG3+ Memory B cells",
+                                  "markers": [
+                                    "IgG3"
+                                  ],
+                                  "marker_logic": "IgG3+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Non-IgG1 and Non-IgG3 Memory B cells",
+                                  "markers": [
+                                    "IgG1",
+                                    "IgG3"
+                                  ],
+                                  "marker_logic": "IgG1- IgG3-",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": [
+                                    {
+                                      "name": "IgA+ Memory B cells",
+                                      "markers": [
+                                        "IgA"
+                                      ],
+                                      "marker_logic": "IgA+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "CCR7+ Memory B cells",
+                                  "markers": [
+                                    "CCR7"
+                                  ],
+                                  "marker_logic": "CCR7+",
+                                  "gate_type": "functional",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "CXCR3+ Memory B cells",
+                                  "markers": [
+                                    "CXCR3"
+                                  ],
+                                  "marker_logic": "CXCR3+",
+                                  "gate_type": "functional",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "CXCR4+ Memory B cells",
+                                  "markers": [
+                                    "CXCR4"
+                                  ],
+                                  "marker_logic": "CXCR4+",
+                                  "gate_type": "functional",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "CXCR5+ Memory B cells",
+                                  "markers": [
+                                    "CXCR5"
+                                  ],
+                                  "marker_logic": "CXCR5+",
+                                  "gate_type": "functional",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "IL-21R+ Memory B cells",
+                                  "markers": [
+                                    "IL-21R"
+                                  ],
+                                  "marker_logic": "IL-21R+",
+                                  "gate_type": "functional",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Ki67+ Memory B cells",
+                                  "markers": [
+                                    "Ki67"
+                                  ],
+                                  "marker_logic": "Ki67+",
+                                  "gate_type": "functional",
+                                  "is_critical": false,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "Plasmablasts",
+                              "markers": [
+                                "IgD",
+                                "CD38"
+                              ],
+                              "marker_logic": "IgD- CD38 high",
+                              "gate_type": "subset",
+                              "is_critical": true,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 19 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 6332 chars of gating text from body"
+    ]
+  }
+}
