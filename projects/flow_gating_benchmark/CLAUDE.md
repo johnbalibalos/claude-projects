@@ -231,6 +231,63 @@ All Events
 | `critical_gate_recall` | Must-have gates present | 0-1 |
 | `hallucination_rate` | Gates not in panel | 0-1 |
 
+#### Learnings: From F1 to Multi-Judge Paradigm
+
+**Initial approach:** We started with strict F1 scoring for gate name matching. Example result:
+
+```
+OMIP-077 F1 Results:
+  hierarchy_f1: 0.304
+  structure_accuracy: 0.140
+```
+
+**Problem discovered:** F1 penalizes valid biological alternatives. Example:
+
+| Ground Truth | Prediction | F1 Match |
+|--------------|------------|----------|
+| `T cells` | `T Cells (CD3+)` | ❌ No |
+| `CD4+ T cells` | `Helper T cells (CD4+)` | ❌ No |
+| `B cell lineage → Mature B` | `Mature B → subsets` | ❌ Wrong order |
+
+All three predictions are biologically correct but score as failures because:
+1. Name annotations differ (adding marker info is common practice)
+2. Gating order varies (both orders are experimentally valid)
+
+**Evidence for multi-judge approach:**
+
+| Metric | Valid OMIPs | Interpretation |
+|--------|-------------|----------------|
+| F1 Score | 0.304 | Strict string matching |
+| LLM Judge | 0.495 | +0.192 recognizing semantic equivalence |
+| F1-Judge correlation | r = 0.13-0.21 | Weak - measuring different things |
+
+**Current recommendation:** Use multi-judge paradigm (5 judge styles) for evaluation. F1 retained as sanity check but not primary metric.
+
+#### Early Results: F1 Bias Toward Sonnet
+
+Early multi-judge results across 5 evaluation styles suggest F1 scoring systematically penalizes Opus and favors Sonnet's output patterns.
+
+**Multi-Judge Styles:**
+
+| Style | Description | Focus |
+|-------|-------------|-------|
+| `default` | Standard quality assessment | Overall gating accuracy |
+| `validation` | Error checking focus | Missing gates, invalid markers |
+| `qualitative` | Biological reasoning | Domain appropriateness |
+| `orthogonal` | Alternative evaluation axes | Completeness, specificity |
+| `binary` | Pass/fail threshold | Minimum viability |
+
+**Key Finding:** Sonnet includes reasoning explanations in 92% of responses vs Opus at 63%. F1 scoring, which measures exact gate name matching, inadvertently rewards Sonnet's verbose naming style (e.g., `T Cells (CD3+)`) over Opus's terse output (e.g., `T cells`).
+
+| Model | F1 Score | Judge Score | Explanation Rate |
+|-------|----------|-------------|------------------|
+| Sonnet | Higher | Similar | 92% |
+| Opus | Lower | Similar | 63% |
+
+**Implication:** F1 conflates *presentation style* with *prediction quality*. When judges evaluate semantic correctness rather than string matching, the Sonnet-Opus gap narrows significantly. This reinforces the move to LLM-judge evaluation for fair cross-model comparison.
+
+**Caveat:** 27.5% of Opus judge evaluations encountered API errors in initial runs, which may skew comparisons. Clean reruns recommended before drawing final conclusions.
+
 ### Experimental Conditions
 
 Generated from cartesian product:
@@ -241,6 +298,8 @@ context_levels = ["minimal", "standard", "rich"]
 prompt_strategies = ["direct", "cot"]
 # → 18 conditions
 ```
+
+**Note:** An `explanation` template exists in `prompts.py` that requests per-gate rationale in the JSON output. Not yet integrated into benchmark conditions but may improve LLM judge evaluation by providing reasoning context.
 
 ### Execution Model
 
