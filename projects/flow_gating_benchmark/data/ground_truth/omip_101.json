@@ -1,0 +1,897 @@
+{
+  "test_case_id": "OMIP-101",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-101",
+  "doi": "10.1002/cyto.a.24827",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "whole blood",
+    "species": "human",
+    "application": "Broad immunophenotyping of leukocytes including myeloid and lymphoid cell lineages",
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "27-color flow cytometry panel for immunophenotyping of major leukocyte populations in fixed whole blood.",
+    "cross_references": [
+      "OMIP-062",
+      "OMIP-063",
+      "OMIP-069",
+      "OMIP-077",
+      "OMIP-078"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms-1964512.pdf"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD45",
+        "fluorophore": "BV785",
+        "clone": "HI30",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD66",
+        "fluorophore": "BV750",
+        "clone": "B1.1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD33",
+        "fluorophore": "PE-Cy5",
+        "clone": "WM53",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "BB660",
+        "clone": "M\u03c6P9",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD11c",
+        "fluorophore": "BUV661",
+        "clone": "B-ly6",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "R718",
+        "clone": "HIB19",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "BV711",
+        "clone": "HCD56",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD127",
+        "fluorophore": "PE-Cy5.5",
+        "clone": "eBioRD5",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "BUV496",
+        "clone": "UCHT-1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BV480",
+        "clone": "SK3",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "BV570",
+        "clone": "RPA-T8",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "\u03b3\u03b4 TCR",
+        "fluorophore": "BUV395",
+        "clone": "B1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "TRAV1.2",
+        "fluorophore": "PE",
+        "clone": "3C10",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD161",
+        "fluorophore": "BV650",
+        "clone": "DX12",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "BB700",
+        "clone": "HIT2",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "BUV563",
+        "clone": "G46-6",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD32",
+        "fluorophore": "BB630",
+        "clone": "FLI8.26",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "BV605",
+        "clone": "3G8",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgD",
+        "fluorophore": "BUV737",
+        "clone": "IA6-2",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD27",
+        "fluorophore": "BUV805",
+        "clone": "M-T271",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD57",
+        "fluorophore": "BB515",
+        "clone": "NK-1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "APC-eFluor 780",
+        "clone": "HI100",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CCR7",
+        "fluorophore": "PE-CF594",
+        "clone": "150503",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "V\u03b42",
+        "fluorophore": "BB790",
+        "clone": "B6",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "Perforin",
+        "fluorophore": "BV421",
+        "clone": "\u03b3G9",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "Granzyme B",
+        "fluorophore": "AF647",
+        "clone": "GB11",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "Ki67",
+        "fluorophore": "PE-Cy7",
+        "clone": "B56",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": [],
+      "gate_type": "Unknown",
+      "is_critical": true,
+      "children": [
+        {
+          "name": "Time gate",
+          "markers": [],
+          "marker_logic": "Consistent fluorescence over time",
+          "gate_type": "Unknown",
+          "is_critical": false,
+          "children": [
+            {
+              "name": "Singlets",
+              "markers": [],
+              "marker_logic": "FSC-A vs FSC-H",
+              "gate_type": "Unknown",
+              "is_critical": true,
+              "children": [
+                {
+                  "name": "Non-beads",
+                  "markers": [],
+                  "marker_logic": "Exclude reference beads",
+                  "gate_type": "Unknown",
+                  "is_critical": false,
+                  "children": [
+                    {
+                      "name": "Leukocytes",
+                      "markers": [
+                        "CD45"
+                      ],
+                      "marker_logic": "CD45+ SSC/FSC",
+                      "gate_type": "Unknown",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "Non-aggregates",
+                          "markers": [
+                            "CD14",
+                            "CD33"
+                          ],
+                          "marker_logic": "CD14 vs CD33 (exclude extremes)",
+                          "gate_type": "Unknown",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "Granulocytes",
+                              "markers": [
+                                "CD66"
+                              ],
+                              "marker_logic": "CD66+",
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "Non-granulocytes",
+                              "markers": [
+                                "CD66"
+                              ],
+                              "marker_logic": "CD66-",
+                              "gate_type": "Unknown",
+                              "is_critical": false,
+                              "children": [
+                                {
+                                  "name": "Myeloid cells",
+                                  "markers": [
+                                    "CD33"
+                                  ],
+                                  "marker_logic": "CD33+",
+                                  "gate_type": "Unknown",
+                                  "is_critical": false,
+                                  "children": [
+                                    {
+                                      "name": "Non-T/B/NK myeloid",
+                                      "markers": [
+                                        "CD19",
+                                        "CD3",
+                                        "CD56"
+                                      ],
+                                      "marker_logic": "CD19- CD3- CD56-",
+                                      "gate_type": "Unknown",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "HLA-DR+ myeloid",
+                                          "markers": [
+                                            "HLA-DR"
+                                          ],
+                                          "marker_logic": "HLA-DR+",
+                                          "gate_type": "Unknown",
+                                          "is_critical": false,
+                                          "children": [
+                                            {
+                                              "name": "Classical monocytes",
+                                              "markers": [
+                                                "CD14",
+                                                "CD16"
+                                              ],
+                                              "marker_logic": "CD14+ CD16-",
+                                              "gate_type": "Unknown",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "Intermediate monocytes",
+                                              "markers": [
+                                                "CD14",
+                                                "CD16"
+                                              ],
+                                              "marker_logic": "CD14+ CD16+/low",
+                                              "gate_type": "Unknown",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "Non-classical monocytes",
+                                              "markers": [
+                                                "CD14",
+                                                "CD16"
+                                              ],
+                                              "marker_logic": "CD14- CD16+",
+                                              "gate_type": "Unknown",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "mDCs",
+                                              "markers": [
+                                                "CD14",
+                                                "CD16",
+                                                "HLA-DR",
+                                                "CD11c"
+                                              ],
+                                              "marker_logic": "CD14- CD16- HLA-DR+ CD11c+",
+                                              "gate_type": "Unknown",
+                                              "is_critical": false,
+                                              "children": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "Lymphocytes",
+                                  "markers": [
+                                    "CD33"
+                                  ],
+                                  "marker_logic": "CD33- SSC low",
+                                  "gate_type": "Unknown",
+                                  "is_critical": true,
+                                  "children": [
+                                    {
+                                      "name": "B cells",
+                                      "markers": [
+                                        "CD3",
+                                        "CD4",
+                                        "CD56",
+                                        "CD19"
+                                      ],
+                                      "marker_logic": "CD3- CD4- CD56- CD19+",
+                                      "gate_type": "Unknown",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "Plasmablasts",
+                                          "markers": [
+                                            "CD38",
+                                            "CD27"
+                                          ],
+                                          "marker_logic": "CD38high CD27high",
+                                          "gate_type": "Unknown",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Naive B cells",
+                                          "markers": [
+                                            "IgD",
+                                            "CD27"
+                                          ],
+                                          "marker_logic": "IgD+ CD27-",
+                                          "gate_type": "Unknown",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Memory B cells",
+                                          "markers": [
+                                            "IgD",
+                                            "CD27"
+                                          ],
+                                          "marker_logic": "IgD- CD27+",
+                                          "gate_type": "Unknown",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "NK cells",
+                                      "markers": [
+                                        "CD3",
+                                        "CD4",
+                                        "CD19",
+                                        "CD56"
+                                      ],
+                                      "marker_logic": "CD3- CD4- CD19- CD56+",
+                                      "gate_type": "Unknown",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "CD56dim NK cells",
+                                          "markers": [
+                                            "CD56",
+                                            "CD16"
+                                          ],
+                                          "marker_logic": "CD56dim CD16+",
+                                          "gate_type": "Unknown",
+                                          "is_critical": false,
+                                          "children": [
+                                            {
+                                              "name": "Cytotoxic CD56dim NK",
+                                              "markers": [
+                                                "Perforin",
+                                                "Granzyme B"
+                                              ],
+                                              "marker_logic": "Perforin+ and/or Granzyme B+",
+                                              "gate_type": "Unknown",
+                                              "is_critical": false,
+                                              "children": []
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "CD56bright CD16+ NK cells",
+                                          "markers": [
+                                            "CD56",
+                                            "CD16"
+                                          ],
+                                          "marker_logic": "CD56bright CD16+",
+                                          "gate_type": "Unknown",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD56bright CD16- NK cells",
+                                          "markers": [
+                                            "CD56",
+                                            "CD16"
+                                          ],
+                                          "marker_logic": "CD56bright CD16-",
+                                          "gate_type": "Unknown",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Memory NK cells",
+                                          "markers": [
+                                            "CD57",
+                                            "CD27"
+                                          ],
+                                          "marker_logic": "CD57/CD27 subsets",
+                                          "gate_type": "Unknown",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "ILCs",
+                                      "markers": [
+                                        "CD3",
+                                        "CD4",
+                                        "CD19",
+                                        "CD16",
+                                        "CD56",
+                                        "CD127"
+                                      ],
+                                      "marker_logic": "CD3- CD4- CD19- CD16- CD56- CD127+",
+                                      "gate_type": "Unknown",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "T cells",
+                                      "markers": [
+                                        "CD3"
+                                      ],
+                                      "marker_logic": "CD3+",
+                                      "gate_type": "Unknown",
+                                      "is_critical": true,
+                                      "children": [
+                                        {
+                                          "name": "T cells (B cell excluded)",
+                                          "markers": [
+                                            "CD19"
+                                          ],
+                                          "marker_logic": "CD19-",
+                                          "gate_type": "Unknown",
+                                          "is_critical": false,
+                                          "children": [
+                                            {
+                                              "name": "\u03b3\u03b4 T cells",
+                                              "markers": [
+                                                "\u03b3\u03b4 TCR"
+                                              ],
+                                              "marker_logic": "\u03b3\u03b4TCR+",
+                                              "gate_type": "Unknown",
+                                              "is_critical": false,
+                                              "children": [
+                                                {
+                                                  "name": "V\u03b42+ \u03b3\u03b4 T cells",
+                                                  "markers": [
+                                                    "V\u03b42"
+                                                  ],
+                                                  "marker_logic": "V\u03b42+",
+                                                  "gate_type": "Unknown",
+                                                  "is_critical": false,
+                                                  "children": [
+                                                    {
+                                                      "name": "Cytotoxic V\u03b42+ \u03b3\u03b4 T",
+                                                      "markers": [
+                                                        "Perforin",
+                                                        "Granzyme B"
+                                                      ],
+                                                      "marker_logic": "Perforin+ and/or Granzyme B+",
+                                                      "gate_type": "Unknown",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "name": "V\u03b42- \u03b3\u03b4 T cells",
+                                                  "markers": [
+                                                    "V\u03b42"
+                                                  ],
+                                                  "marker_logic": "V\u03b42-",
+                                                  "gate_type": "Unknown",
+                                                  "is_critical": false,
+                                                  "children": [
+                                                    {
+                                                      "name": "Cytotoxic V\u03b42- \u03b3\u03b4 T",
+                                                      "markers": [
+                                                        "Perforin",
+                                                        "Granzyme B"
+                                                      ],
+                                                      "marker_logic": "Perforin+ and/or Granzyme B+",
+                                                      "gate_type": "Unknown",
+                                                      "is_critical": false,
+                                                      "children": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "name": "\u03b1\u03b2 T cells",
+                                              "markers": [
+                                                "\u03b3\u03b4 TCR"
+                                              ],
+                                              "marker_logic": "\u03b3\u03b4TCR-",
+                                              "gate_type": "Unknown",
+                                              "is_critical": false,
+                                              "children": [
+                                                {
+                                                  "name": "MAIT cells",
+                                                  "markers": [
+                                                    "TRAV1.2",
+                                                    "CD161"
+                                                  ],
+                                                  "marker_logic": "TRAV1.2+ CD161+",
+                                                  "gate_type": "Unknown",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "Non-MAIT \u03b1\u03b2 T cells",
+                                                  "markers": [
+                                                    "TRAV1.2",
+                                                    "CD161"
+                                                  ],
+                                                  "marker_logic": "TRAV1.2- or CD161-",
+                                                  "gate_type": "Unknown",
+                                                  "is_critical": false,
+                                                  "children": [
+                                                    {
+                                                      "name": "NKT-like cells",
+                                                      "markers": [
+                                                        "CD56"
+                                                      ],
+                                                      "marker_logic": "CD56+",
+                                                      "gate_type": "Unknown",
+                                                      "is_critical": false,
+                                                      "children": [
+                                                        {
+                                                          "name": "Cytotoxic NKT-like",
+                                                          "markers": [
+                                                            "Perforin",
+                                                            "Granzyme B"
+                                                          ],
+                                                          "marker_logic": "Perforin+ and/or Granzyme B+",
+                                                          "gate_type": "Unknown",
+                                                          "is_critical": false,
+                                                          "children": []
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "name": "Conventional T cells",
+                                                      "markers": [
+                                                        "CD56"
+                                                      ],
+                                                      "marker_logic": "CD56-",
+                                                      "gate_type": "Unknown",
+                                                      "is_critical": false,
+                                                      "children": [
+                                                        {
+                                                          "name": "CD4+ T cells",
+                                                          "markers": [
+                                                            "CD4",
+                                                            "CD8"
+                                                          ],
+                                                          "marker_logic": "CD4+ CD8-",
+                                                          "gate_type": "Unknown",
+                                                          "is_critical": false,
+                                                          "children": [
+                                                            {
+                                                              "name": "Naive CD4+ T cells",
+                                                              "markers": [
+                                                                "CCR7",
+                                                                "CD45RA"
+                                                              ],
+                                                              "marker_logic": "CCR7+ CD45RA+",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "name": "Central memory CD4+ T cells",
+                                                              "markers": [
+                                                                "CCR7",
+                                                                "CD45RA"
+                                                              ],
+                                                              "marker_logic": "CCR7+ CD45RA-",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "name": "Effector memory CD4+ T cells",
+                                                              "markers": [
+                                                                "CCR7",
+                                                                "CD45RA"
+                                                              ],
+                                                              "marker_logic": "CCR7- CD45RA-",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "name": "TEMRA CD4+ T cells",
+                                                              "markers": [
+                                                                "CCR7",
+                                                                "CD45RA"
+                                                              ],
+                                                              "marker_logic": "CCR7- CD45RA+",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "name": "Proliferating CD4+ T cells",
+                                                              "markers": [
+                                                                "Ki67"
+                                                              ],
+                                                              "marker_logic": "Ki67+",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "name": "Cytotoxic CD4+ T cells",
+                                                              "markers": [
+                                                                "Perforin",
+                                                                "Granzyme B"
+                                                              ],
+                                                              "marker_logic": "Perforin+ and/or Granzyme B+",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "name": "Activated CD4+ T cells",
+                                                              "markers": [
+                                                                "HLA-DR",
+                                                                "CD38"
+                                                              ],
+                                                              "marker_logic": "HLA-DR+ and/or CD38+",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "name": "CD8+ T cells",
+                                                          "markers": [
+                                                            "CD4",
+                                                            "CD8"
+                                                          ],
+                                                          "marker_logic": "CD4- CD8+",
+                                                          "gate_type": "Unknown",
+                                                          "is_critical": false,
+                                                          "children": [
+                                                            {
+                                                              "name": "Naive CD8+ T cells",
+                                                              "markers": [
+                                                                "CCR7",
+                                                                "CD45RA"
+                                                              ],
+                                                              "marker_logic": "CCR7+ CD45RA+",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "name": "Central memory CD8+ T cells",
+                                                              "markers": [
+                                                                "CCR7",
+                                                                "CD45RA"
+                                                              ],
+                                                              "marker_logic": "CCR7+ CD45RA-",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "name": "Effector memory CD8+ T cells",
+                                                              "markers": [
+                                                                "CCR7",
+                                                                "CD45RA"
+                                                              ],
+                                                              "marker_logic": "CCR7- CD45RA-",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "name": "TEMRA CD8+ T cells",
+                                                              "markers": [
+                                                                "CCR7",
+                                                                "CD45RA"
+                                                              ],
+                                                              "marker_logic": "CCR7- CD45RA+",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "name": "Proliferating CD8+ T cells",
+                                                              "markers": [
+                                                                "Ki67"
+                                                              ],
+                                                              "marker_logic": "Ki67+",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "name": "Cytotoxic CD8+ T cells",
+                                                              "markers": [
+                                                                "Perforin",
+                                                                "Granzyme B"
+                                                              ],
+                                                              "marker_logic": "Perforin+ and/or Granzyme B+",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "name": "Activated CD8+ T cells",
+                                                              "markers": [
+                                                                "HLA-DR",
+                                                                "CD38"
+                                                              ],
+                                                              "marker_logic": "HLA-DR+ and/or CD38+",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "name": "Double positive T cells",
+                                                          "markers": [
+                                                            "CD4",
+                                                            "CD8"
+                                                          ],
+                                                          "marker_logic": "CD4+ CD8+",
+                                                          "gate_type": "Unknown",
+                                                          "is_critical": false,
+                                                          "children": []
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "validation": {
+    "paper_source": null,
+    "wsp_extraction_match": null,
+    "discrepancies": [],
+    "curator_notes": "Manually verified 2026-01-13. Panel markers and gating hierarchy confirmed against original OMIP paper.",
+    "validation_date": "2026-01-13"
+  },
+  "metadata": {
+    "curation_date": "2026-01-09",
+    "curator": "manual-verification",
+    "flowkit_version": null,
+    "last_updated": "2026-01-13"
+  },
+  "difficulty": "hard"
+}
