@@ -247,22 +247,6 @@
                                   "gate_type": "Rectangle",
                                   "children": [
                                     {
-                                      "name": "MZB cells",
-                                      "markers": [],
-                                      "marker_logic": "CD1c+ (CD1c vs CD38)",
-                                      "gate_type": "Rectangle",
-                                      "children": [],
-                                      "is_critical": false
-                                    },
-                                    {
-                                      "name": "Plasma cells",
-                                      "markers": [],
-                                      "marker_logic": "CD38+ (CD1c vs CD38)",
-                                      "gate_type": "Rectangle",
-                                      "children": [],
-                                      "is_critical": false
-                                    },
-                                    {
                                       "name": "CD14- HLA-DR-",
                                       "markers": [],
                                       "marker_logic": "CD14- HLA-DR- (HLA-DR vs CD14)",
@@ -323,7 +307,24 @@
                                               "markers": [],
                                               "marker_logic": "CD19+ (CD19 vs CD38)",
                                               "gate_type": "Rectangle",
-                                              "children": [],
+                                              "children": [
+                                                {
+                                                  "name": "Plasma cells",
+                                                  "markers": [],
+                                                  "marker_logic": "CD38++ CD1c- (CD1c vs CD38)",
+                                                  "gate_type": "Rectangle",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                },
+                                                {
+                                                  "name": "MZB cells",
+                                                  "markers": [],
+                                                  "marker_logic": "CD1c+ CD38lo (CD1c vs CD38)",
+                                                  "gate_type": "Rectangle",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                }
+                                              ],
                                               "is_critical": false
                                             },
                                             {
