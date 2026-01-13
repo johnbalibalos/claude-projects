@@ -2,14 +2,16 @@
 
 import pytest
 from src.evaluation.metrics import (
-    extract_gate_names,
-    extract_parent_map,
     compute_hierarchy_f1,
     compute_structure_accuracy,
     compute_critical_gate_recall,
     compute_hallucination_rate,
     normalize_gate_name,
     normalize_gate_semantic,
+)
+from src.evaluation.hierarchy import (
+    extract_gate_names,
+    extract_parent_map,
     get_hierarchy_depth,
 )
 

@@ -20,6 +20,12 @@ pydantic>=2.0.0
 httpx>=0.25.0
 tenacity>=8.2.0
 
+# Evaluation - semantic similarity
+sentence-transformers>=2.2.0
+
+# Evaluation - graph similarity (has fallback if not installed)
+scipy>=1.10.0
+
 # Development
 pytest>=7.4.0
 pytest-cov>=4.1.0
