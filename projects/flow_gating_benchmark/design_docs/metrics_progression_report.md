@@ -1,5 +1,9 @@
 # Flow Gating Benchmark: Metrics Progression Report
 
+> **STATUS: HISTORICAL REFERENCE**
+>
+> Documents bug fixes and metric improvements through 2026-01-10. Accurate as historical record.
+
 **Generated:** 2026-01-10
 **Purpose:** Document how metrics changed across significant bug fixes and improvements
 

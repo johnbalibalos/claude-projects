@@ -116,5 +116,6 @@
     "curator": "claude-extraction",
     "flowkit_version": null,
     "last_updated": "2026-01-09"
-  }
+  },
+  "difficulty": "easy"
 }

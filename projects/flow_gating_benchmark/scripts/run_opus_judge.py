@@ -17,7 +17,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from experiments.batch_scorer import ScoringResult
-from experiments.llm_judge import JudgeConfig, LLMJudge, JUDGE_STYLES
+from experiments.llm_judge import JUDGE_STYLES, JudgeConfig, LLMJudge
 
 
 def load_opus_scoring_results(multi_judge_dir: Path) -> list[ScoringResult]:
@@ -36,7 +36,7 @@ def load_opus_scoring_results(multi_judge_dir: Path) -> list[ScoringResult]:
     # Fall back to multi_judge_run scoring
     scoring_file = multi_judge_dir / "scoring_results.json"
     if not scoring_file.exists():
-        raise FileNotFoundError(f"No scoring results found")
+        raise FileNotFoundError("No scoring results found")
 
     with open(scoring_file) as f:
         data = json.load(f)
@@ -126,7 +126,7 @@ def main():
 
     if not args.dry_run and not args.force:
         print("⚠️  This will make API calls. Use --dry-run to test or --force to proceed.")
-        print(f"   Estimated cost: ~$2-3 (520 predictions × 5 styles with gemini-2.0-flash)")
+        print("   Estimated cost: ~$2-3 (520 predictions × 5 styles with gemini-2.0-flash)")
         sys.exit(1)
 
     # Load opus scoring results

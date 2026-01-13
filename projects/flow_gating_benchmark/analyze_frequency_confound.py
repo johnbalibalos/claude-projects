@@ -12,9 +12,9 @@ Generates visualizations for presentation.
 
 import json
 import sys
-from pathlib import Path
 from collections import defaultdict
 from dataclasses import dataclass
+from pathlib import Path
 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent / "src"))

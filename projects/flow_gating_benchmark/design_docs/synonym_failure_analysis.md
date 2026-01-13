@@ -1,5 +1,9 @@
 # Synonym Matching Failure Analysis
 
+> **STATUS: RESOLVED - Implementation completed 2026-01-10**
+>
+> Synonym dictionary expanded to 218+ mappings in `src/evaluation/normalization.py`. Issue resolved.
+
 **Date:** 2026-01-10
 **Results analyzed:** experiment_results_20260109_210400.json (48 results)
 

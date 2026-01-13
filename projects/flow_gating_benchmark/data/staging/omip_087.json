@@ -316,5 +316,6 @@
     "curator": "Claude",
     "extraction_method": "llm",
     "notes": "Mass cytometry panel - scatter gates not applicable"
-  }
+  },
+  "difficulty": "hard"
 }

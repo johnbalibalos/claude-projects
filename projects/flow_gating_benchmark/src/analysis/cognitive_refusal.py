@@ -14,9 +14,8 @@ Test: Force the model to output with progressively assertive prompts.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
-from typing import Any
 
 
 class RefusalType(Enum):
@@ -246,7 +245,7 @@ class AggregateRefusalAnalysis:
     interpretation: str
 
     @classmethod
-    def from_analyses(cls, analyses: list[CognitiveRefusalAnalysis]) -> "AggregateRefusalAnalysis":
+    def from_analyses(cls, analyses: list[CognitiveRefusalAnalysis]) -> AggregateRefusalAnalysis:
         """Create aggregate from individual analyses."""
         if not analyses:
             return cls(

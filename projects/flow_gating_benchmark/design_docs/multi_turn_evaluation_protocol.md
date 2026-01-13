@@ -1,5 +1,9 @@
 # Multi-Turn Evaluation Protocol for Flow Gating
 
+> **STATUS: PROPOSED - NOT YET IMPLEMENTED**
+>
+> This is a design proposal. No multi-turn evaluation code has been implemented. Current pipeline is single-turn only.
+
 ## Overview
 
 This document specifies a multi-turn evaluation protocol for testing LLM interactive reasoning capabilities in flow cytometry gating. Unlike single-turn evaluation (prompt → hierarchy), multi-turn tests the model's ability to:

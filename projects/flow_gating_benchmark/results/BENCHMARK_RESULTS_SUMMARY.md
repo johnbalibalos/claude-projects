@@ -21,8 +21,10 @@ We evaluated 5 LLMs on their ability to predict flow cytometry gating hierarchie
 | **gemini-2.0-flash** | **0.393 ± 0.163** | 0.268 ± 0.185 | 0.891 ± 0.189 | 100% |
 | claude-opus-4 | 0.349 ± 0.196 | 0.229 ± 0.193 | **0.856 ± 0.210** | 100% |
 | claude-sonnet-4 | 0.325 ± 0.212 | 0.204 ± 0.191 | 0.791 ± 0.252 | 99.2% |
-| gemini-2.5-pro | 0.196 ± 0.217 | 0.127 ± 0.152 | 0.661 ± 0.312 | 88% |
+| gemini-2.5-pro | 0.240 ± 0.211 | 0.092 ± 0.128 | 0.631 ± 0.298 | 99.5% |
 | gemini-2.5-flash | 0.119 ± 0.199 | 0.078 ± 0.131 | 0.489 ± 0.389 | 31% |
+
+*Note: gemini-2.5-pro results include reruns with max_tokens=12000 for originally blocked predictions.*
 
 ### Key Observations
 
@@ -60,7 +62,7 @@ Context level and prompt strategy significantly affect performance:
 | gemini-2.0-flash | 0.355 | 0.323 | **0.455** | 0.440 |
 | claude-opus-4 | 0.337 | 0.315 | **0.371** | 0.370 |
 | claude-sonnet-4 | 0.304 | 0.308 | **0.341** | **0.347** |
-| gemini-2.5-pro | 0.182 | 0.212 | 0.199 | 0.192 |
+| gemini-2.5-pro | 0.258 | 0.241 | 0.257 | 0.203 |
 | gemini-2.5-flash | 0.145 | 0.114 | 0.134 | 0.083 |
 
 **Insights:**

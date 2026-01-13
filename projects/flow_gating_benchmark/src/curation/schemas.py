@@ -11,7 +11,9 @@ from datetime import date
 from enum import Enum
 from typing import Literal
 
-from pydantic import BaseModel, Field
+import re
+
+from pydantic import BaseModel, Field, field_validator
 
 
 class Complexity(str, Enum):
@@ -20,6 +22,14 @@ class Complexity(str, Enum):
     SIMPLE = "simple"  # ≤15 colors
     MEDIUM = "medium"  # 16-25 colors
     COMPLEX = "complex"  # 26+ colors
+
+
+class Difficulty(str, Enum):
+    """Test case difficulty based on gating hierarchy size."""
+
+    EASY = "easy"  # ≤10 gates
+    MEDIUM = "medium"  # 11-18 gates
+    HARD = "hard"  # >18 gates
 
 
 class SourceType(str, Enum):
@@ -99,6 +109,52 @@ class MarkerExpression(BaseModel):
         return f"{self.marker}{suffix}"
 
 
+def parse_marker_logic_string(value: str) -> list[MarkerExpression]:
+    """
+    Parse a marker logic string into MarkerExpression objects.
+
+    Examples:
+        "CD3+" -> [MarkerExpression(marker="CD3", positive=True)]
+        "CD3+ CD19-" -> [MarkerExpression(marker="CD3", positive=True),
+                        MarkerExpression(marker="CD19", positive=False)]
+        "CD45RA+ CCR7+ CD28+ CD95-" -> [...]
+        "FSC-A vs FSC-H" -> [] (scatter gates, not marker logic)
+        "CD56dim" -> [MarkerExpression(marker="CD56", positive=True, level="dim")]
+    """
+    if not value or not isinstance(value, str):
+        return []
+
+    # Skip scatter/morphology gates (not marker logic)
+    scatter_patterns = ["FSC", "SSC", " vs ", "Time", "morphology", "scatter"]
+    if any(p.lower() in value.lower() for p in scatter_patterns):
+        return []
+
+    expressions = []
+
+    # Pattern to match marker expressions like CD3+, CD19-, CD56bright, CD4+/low
+    # Handles: CD3+, CD19-, CD56dim, CD56bright, CD45RAhigh, HLA-DR+, γδTCR+
+    pattern = r'([A-Za-z0-9γδαβ/_-]+?)(bright|dim|high|low|\+/?low|\+|-)'
+
+    for match in re.finditer(pattern, value):
+        marker = match.group(1)
+        suffix = match.group(2).lower()
+
+        # Skip if marker looks like a scatter parameter
+        if marker.upper() in ("FSC", "SSC", "FSC-A", "FSC-H", "SSC-A", "SSC-H"):
+            continue
+
+        if suffix == '+' or suffix == '+/low':
+            expressions.append(MarkerExpression(marker=marker, positive=True))
+        elif suffix == '-':
+            expressions.append(MarkerExpression(marker=marker, positive=False))
+        elif suffix in ('bright', 'high'):
+            expressions.append(MarkerExpression(marker=marker, positive=True, level=suffix))
+        elif suffix in ('dim', 'low'):
+            expressions.append(MarkerExpression(marker=marker, positive=True, level=suffix))
+
+    return expressions
+
+
 class GateNode(BaseModel):
     """A single gate in the hierarchy."""
 
@@ -111,6 +167,20 @@ class GateNode(BaseModel):
         default_factory=list,
         description="Marker expressions defining this population (e.g., CD3+ CD19-)",
     )
+
+    @field_validator("marker_logic", mode="before")
+    @classmethod
+    def parse_marker_logic(cls, v):
+        """Accept string format and convert to MarkerExpression list."""
+        if v is None:
+            return []
+        if isinstance(v, str):
+            return parse_marker_logic_string(v)
+        if isinstance(v, list):
+            # Could be list of dicts or list of MarkerExpression
+            return v
+        return []
+
     gate_type: GateType | str = Field(
         default=GateType.UNKNOWN,
         description="Type of gate (rectangle, polygon, etc.)",
@@ -173,6 +243,39 @@ class GatingHierarchy(BaseModel):
         traverse(self.root)
         return parent_map
 
+    def count_gates(self) -> int:
+        """Count total gates excluding root 'All Events'."""
+        count = 0
+
+        def traverse(node: GateNode):
+            nonlocal count
+            count += 1
+            for child in node.children:
+                traverse(child)
+
+        traverse(self.root)
+        return count - 1  # Exclude root
+
+    def get_max_depth(self) -> int:
+        """Get maximum depth of the hierarchy."""
+
+        def traverse(node: GateNode, depth: int) -> int:
+            if not node.children:
+                return depth
+            return max(traverse(child, depth + 1) for child in node.children)
+
+        return traverse(self.root, 0)
+
+    def compute_difficulty(self) -> Difficulty:
+        """Compute difficulty based on gate count."""
+        n_gates = self.count_gates()
+        if n_gates <= 10:
+            return Difficulty.EASY
+        elif n_gates <= 18:
+            return Difficulty.MEDIUM
+        else:
+            return Difficulty.HARD
+
 
 class ExperimentContext(BaseModel):
     """Experimental context for the test case."""
@@ -234,12 +337,24 @@ class TestCase(BaseModel):
     panel: Panel = Field(..., description="Flow cytometry panel")
     gating_hierarchy: GatingHierarchy = Field(..., description="Ground truth hierarchy")
 
+    # Difficulty (optional - computed from hierarchy if not set)
+    difficulty: Difficulty | None = Field(
+        None,
+        description="Test case difficulty based on hierarchy size (easy/medium/hard)",
+    )
+
     # Validation and metadata
     validation: ValidationInfo = Field(
         default_factory=ValidationInfo,
         description="Validation information",
     )
     metadata: CurationMetadata = Field(..., description="Curation metadata")
+
+    def get_difficulty(self) -> Difficulty:
+        """Get difficulty - use stored value or compute from hierarchy."""
+        if self.difficulty is not None:
+            return self.difficulty
+        return self.gating_hierarchy.compute_difficulty()
 
     @property
     def complexity(self) -> Complexity:

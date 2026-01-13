@@ -1,5 +1,9 @@
 # Confidence Elicitation Design for Flow Gating Benchmark
 
+> **STATUS: PROPOSED - NOT YET IMPLEMENTED**
+>
+> Calibration infrastructure exists in `libs/hypothesis_pipeline/calibration.py` but is not integrated into the flow gating benchmark pipeline.
+
 ## Background
 
 The `libs/hypothesis_pipeline/calibration.py` module provides calibration metrics (ECE, MCE, Brier score) but is currently unused. This document explores whether and how to integrate calibration into flow gating evaluation.

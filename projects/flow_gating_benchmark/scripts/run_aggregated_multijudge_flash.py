@@ -23,9 +23,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from utils.prediction_aggregator import (
-    load_and_aggregate,
-    build_aggregated_judge_prompt,
     AggregatedPrediction,
+    build_aggregated_judge_prompt,
+    load_and_aggregate,
 )
 
 # Judge styles - same as multi-judge pipeline

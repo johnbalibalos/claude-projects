@@ -17,11 +17,11 @@ If model fails on "Glorp Cells" → memorization/retrieval dependency
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from curation.schemas import GateNode, GatingHierarchy, Panel, TestCase
+    from curation.schemas import TestCase
 
 
 ALIEN_CELL_NAMES = [
@@ -55,7 +55,7 @@ class AlienCellMapping:
 @dataclass
 class AlienCellTestCase:
     """A test case with alien cell names injected."""
-    original_test_case: "TestCase"
+    original_test_case: TestCase
     modified_hierarchy: dict  # Modified hierarchy as dict (for JSON serialization)
     mappings: list[AlienCellMapping]
     mapping_context: str  # Context explaining the alien names

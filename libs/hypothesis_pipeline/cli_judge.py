@@ -31,7 +31,7 @@ from .llm_judge import (
 )
 
 if TYPE_CHECKING:
-    from model_client.cli_client import ClaudeCLIClient
+    pass
 
 
 @dataclass
@@ -64,7 +64,7 @@ def create_cli_judge(config: CLIJudgeConfig | None = None) -> LLMJudge:
     Returns:
         Configured LLMJudge instance
     """
-    from model_client.cli_client import CLIConfig, ClaudeCLIClient
+    from model_client.cli_client import ClaudeCLIClient, CLIConfig
 
     config = config or CLIJudgeConfig()
 
@@ -108,7 +108,7 @@ def create_cli_pairwise_judge(
     Returns:
         Configured PairwiseJudge instance
     """
-    from model_client.cli_client import CLIConfig, ClaudeCLIClient
+    from model_client.cli_client import ClaudeCLIClient, CLIConfig
 
     config = config or CLIJudgeConfig()
 

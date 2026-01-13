@@ -28,6 +28,10 @@ docs/
 checkpoints/
 **/results/
 
+# Stale/archived data
+projects/flow_gating_benchmark/data/ground_truth/real/
+projects/flow_gating_benchmark/data/ground_truth/synthetic/
+
 # Local config
 .claude/settings.local.json
 

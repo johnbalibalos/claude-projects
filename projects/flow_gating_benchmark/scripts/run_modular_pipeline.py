@@ -206,9 +206,10 @@ def run_judge(
         print(f"Loaded {len(scoring_results)} scoring results from file")
 
     # Configure judge
+    # Use high parallelism for Gemini (50) - flash model can handle it
     config = JudgeConfig(
         model=judge_model,
-        parallel_workers=3,
+        parallel_workers=50,
         checkpoint_dir=output_dir / "checkpoints",
         dry_run=dry_run,
         prompt_style=judge_style,
