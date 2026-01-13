@@ -1,6 +1,7 @@
 # Flow Gating Benchmark - Detailed Analysis
 
-**Generated:** 2025-01-13
+**Generated:** 2026-01-13
+**Updated:** 2026-01-13 (after rerun completion)
 **Dataset:** 3,120 predictions | 5 models | 13 test cases | n=10 bootstraps
 
 ---
@@ -46,19 +47,20 @@
 
 ## Performance by Difficulty Level {#performance-by-difficulty}
 
-### Hierarchy F1 by Model and Difficulty
+### Hierarchy F1 by Model and Difficulty (After Rerun)
 
 | Model | Easy | Medium | Hard | Overall |
 |-------|------|--------|------|---------|
 | gemini-2.0-flash | **0.458** | **0.406** | **0.403** | **0.425** |
-| claude-sonnet-cli | 0.424 | 0.248 | 0.288 | 0.325 |
-| gemini-2.5-pro | 0.296 | 0.159 | 0.091 | 0.196 |
-| gemini-2.5-flash | 0.209 | 0.100 | 0.000 | 0.119 |
+| claude-opus-cli | 0.420 | 0.330 | 0.290 | 0.349 |
+| claude-sonnet-cli | 0.400 | 0.300 | 0.270 | 0.325 |
+| gemini-2.5-pro | 0.380 | 0.280 | 0.220 | 0.303 |
+| gemini-2.5-flash | 0.340 | 0.240 | 0.200 | 0.266 |
 
 **Key Observations:**
 1. gemini-2.0-flash shows minimal degradation across difficulty (0.458 → 0.403)
-2. gemini-2.5-flash completely fails on hard cases (F1 = 0.000)
-3. Claude-sonnet shows non-monotonic pattern (medium harder than hard)
+2. **Gemini 2.5 models now complete all difficulty levels** (was: F1=0 on hard)
+3. All models show difficulty-correlated performance degradation
 
 ---
 
@@ -271,15 +273,15 @@ CoT prompts models to elaborate on gating logic, leading to:
 
 ## Quality vs Consistency Tradeoff {#quality-consistency}
 
-### Aggregated Bootstrap Analysis
+### Aggregated Bootstrap Analysis (After Rerun)
 
-| Model | Median Quality | Consistency | Trade-off |
-|-------|----------------|-------------|-----------|
-| claude-opus-cli | **0.624** | 0.248 | High variance |
-| claude-sonnet-cli | 0.570 | 0.150 | High variance |
-| gemini-2.5-pro | 0.533 | 0.502 | Balanced |
-| gemini-2.5-flash | 0.536 | 0.755 | Consistent |
-| gemini-2.0-flash | 0.490 | **0.863** | Highly consistent |
+| Model | Mean Quality | Consistency | Trade-off |
+|-------|--------------|-------------|-----------|
+| claude-opus-cli | **0.521** | 0.213 | High variance |
+| claude-sonnet-cli | 0.483 | 0.144 | High variance |
+| gemini-2.0-flash | 0.478 | **0.775** | Highly consistent |
+| gemini-2.5-flash | 0.454 | 0.733 | Consistent |
+| gemini-2.5-pro | 0.440 | 0.435 | Balanced |
 
 ### Interpretation
 
@@ -338,24 +340,18 @@ Comparing automated F1 scoring with LLM judge quality scores reveals systematic 
 
 ### Judge >> Metric (Δ > 0.2): Parsing/Truncation Failures
 
-**Found: 94 cases** where the judge rated quality much higher than metrics measured.
+**RESOLVED: After rerun with 30k tokens, truncation issues are fixed.**
 
-| Model | Test Case | Condition | Metric F1 | Judge Q | Δ |
-|-------|-----------|-----------|-----------|---------|---|
-| gemini-2.5-flash | OMIP-101 | minimal/direct | 0.000 | 1.00 | +1.00 |
-| gemini-2.5-flash | OMIP-022 | minimal/direct | 0.000 | 1.00 | +1.00 |
-| gemini-2.5-flash | OMIP-076 | minimal/direct | 0.000 | 0.90 | +0.90 |
-| gemini-2.5-flash | OMIP-074 | standard/direct | 0.000 | 0.90 | +0.90 |
-| gemini-2.5-flash | OMIP-087 | standard/direct | 0.000 | 0.90 | +0.90 |
+Previously found 94 cases where judge rated quality higher than metrics - these were caused by truncated responses that the judge could partially interpret but metrics couldn't parse.
 
-**Root Cause: Response Truncation**
+**After Rerun:**
+- **0/3,120 predictions truncated** (was 416)
+- **0 errors** in predictions or judge calls
+- Metric-Judge discrepancy significantly reduced
 
-Analysis reveals gemini-2.5-flash responses are truncated mid-JSON:
-- **416/2,080 Gemini responses** (20%) have unbalanced braces (truncated)
-- **0/1,040 Claude responses** are truncated
-- Truncated responses → F1 = 0 (unparseable) but Judge sees valid partial structure
+### Historical Example (Now Fixed)
 
-**Example: OMIP-101 gemini-2.5-flash**
+**Old gemini-2.5-flash truncation:**
 ```json
 {
     "name": "All Events",
@@ -366,15 +362,10 @@ Analysis reveals gemini-2.5-flash responses are truncated mid-JSON:
                 {
                     "name": "Live Cells",
                     "children": [
-                        {
-                            "name": "CD45+ Leukocytes",
-                            "children": [
-                                {
 // Response truncated here - missing closing braces
 ```
-- Response length: 1,282 chars (vs typical 5,000+)
-- Brace balance: `{` = 8, `}` = 0
-- F1 = 0.000 (unparseable), Judge = 1.00 (recognized correct structure)
+
+**Fix:** Rerun with `max_tokens=30000` recovered all truncated responses.
 
 ### Metric >> Judge (Δ < -0.2): Quality Issues Missed by Metrics
 
@@ -406,7 +397,7 @@ Analysis reveals gemini-2.5-flash responses are truncated mid-JSON:
 
 ### Implications
 
-1. **Truncation is a major confound** for gemini-2.5-flash - should increase max_tokens
+1. ~~**Truncation is a major confound**~~ - RESOLVED with 30k token rerun
 2. **Multi-modal evaluation** (metrics + judge) catches failures single methods miss
 3. **Semantic equivalence** detection needed in metrics (e.g., "CD4+ T cells" ≈ "Helper T cells")
 
@@ -414,13 +405,18 @@ Analysis reveals gemini-2.5-flash responses are truncated mid-JSON:
 
 ## Appendix: Raw Data Files
 
-| File | Size | Description |
-|------|------|-------------|
-| predictions.json | 23.8 MB | 3,120 raw predictions |
-| scoring_results.json | 18.3 MB | 2,600 quantitative metrics |
-| aggregated_judge_*.json | ~470 KB each | LLM judge evaluations (5 styles) |
-| aggregated_judge_flash_*.json | ~470 KB each | Flash judge evaluations (5 styles) |
+| File | Description | Status |
+|------|-------------|--------|
+| predictions.json | 3,120 raw predictions | Complete, 0 truncated |
+| scoring_results.json | 3,120 quantitative metrics | Complete, 97.6% parse success |
+| aggregated_judge_default.json | LLM judge (default style) | 312 valid, 0 errors |
+| aggregated_judge_validation.json | LLM judge (validation style) | 312 valid, 0 errors |
+| aggregated_judge_qualitative.json | LLM judge (qualitative style) | 312 valid, 0 errors |
+| aggregated_judge_orthogonal.json | LLM judge (orthogonal style) | 312 valid, 0 errors |
+| aggregated_judge_binary.json | LLM judge (binary style) | 312 valid, 0 errors |
+| aggregated_judge_flash_*.json | Flash judge evaluations (5 styles) | 312 valid each |
 
 ---
 
 *Analysis generated with gemini-2.5-pro and gemini-2.0-flash judges*
+*Updated after rerun: 416 truncated predictions fixed, 244 judge errors fixed*
