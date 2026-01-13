@@ -1,0 +1,1141 @@
+{
+  "test_case_id": "PMC10952450",
+  "source_type": "omip_paper",
+  "omip_id": null,
+  "doi": "10.1002/cyto.a.24720",
+  "pmc_id": "PMC10952450",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Fresh PBMC",
+    "species": "human",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Gating strategy to identify viable T reg  and T conv  subpopulations from total PBMC. (A) Identification of T reg  and T conv  cells from viable CD3 + CD4 +  lymphocytes using surface markers CD25 and CD127. (B) T conv  were further separated in na\u00efve, follicular helper T cells (T FH ) and memory T conv  (i) through the expression of CD45RA, CCR7, CD28, CD95 and CXCR5. Memory T conv  were further separated (ii) in the other memory Tconv subsets (TSCM, TEMRA, TCM, TTM and TEM) using the expression of CCR7 and CD28. (C) Staining of CD45RA separated na\u00efve T reg  (CD45RA + ) from the other antigen experienced T reg  subsets. CD45RA \u2212  T reg  were further separated through the expression of CXCR5 (iii) in memory (CD45RA \u2212 CXCR5 \u2212 ) and follicular (T FR , CD45RA \u2212 CXCR5 + ) cell subsets. Alternative gating (iv) based on the combination of CD45RA and CD25 on total T reg  could be used to identify the three functional subsets described by Miyara and collaborators. (D) Further gating of cells obtained in (i) (T FH  and memory T conv ) or (ii) (T FR  and T reg ) could be used to define the distribution of CCR3 + , CCR5 +  and T H  (or T H\u2010like ) cells. (E) Analysis of skin and gut homing capacity of all the subsets described in panel B, C and D (T FH , T FR , T H  and T H\u2010like ) using the expression of CLA and integrin \u03b27.",
+    "full_text_gating": "CD4 +  T cells play a central role in adaptive immunity supporting an appropriate immune response to external insults by secretion of cytokines and stimulation of target cells such as CD8 +  T cells, B cells and innate immune cells. CD4 +  T cells consist of conventional T helper cells (T conv  or T H ), which mediate immune responses and immune\u2010suppressive regulatory T cells (Treg) that inhibit proinflammatory effector functions and thereby limit excessive immune responses. Both, activated T reg  and T conv  cells further differentiate into a wide range of subsets with distinct functions and phenotypes, but exhibit considerable phenotypical and transcriptional overlap [ 1 ,  2 ,  3 ]. During homeostasis of the immune system T cells migrate between tissue sites via peripheral blood in order to encounter their cognate antigens [ 4 ,  5 ,  6 ]. In contrast, pathogenesis of autoimmune diseases can cause imbalance of these T cell subsets resulting in dysregulation and excessive reactivity of lymphocytes against autoantigens. Aberrant homing capacity of CD4 +  T cells can lead to accumulation of lymphocytes at auto\u2010immune tissue sites, thereby further contributing to the loss of self\u2010tolerance and orchestrating chronic or relapsing inflammatory responses [ 7 ,  8 ].\n\nTherefore, monitoring and a better understanding of phenotypic subset diversity and homing capacity of CD4 +  T cell subsets during disease pathogenesis can contribute to informed therapeutical decisions and can improve clinical outcomes in patients. We developed a panel for monitoring common T conv  and T reg  cell subsets, including populations, which have been described in context of autoimmunity and their homing capacity to skin, gut, upper airways, and inflammatory lesions based on surface markers\u00a0(Table\u00a0 1 \u00a0and\u00a0Figure\u00a0 1 ). To circumvent experimental complexity resulting from permeabilization and staining of intracellular transcription factors we focused our panel only on the staining of surface markers. This approach using combination of markers to identify CD4 +  T cell subsets, allows to rapidly process large quantity of patient samples and makes the panel ideal for immune monitoring uses. Note, this panel is not limited to the investigation of autoimmune and inflammatory disorders, but also applicable for transplantation studies (where homing to tissue sites might affect outcome of transplantation). This panel is also compatible with live cell sorting for further investigation of functional properties of CD4 +  T cell subsets.\n\nGating strategy to identify viable T reg  and T conv  subpopulations from total PBMC. (A) Identification of T reg  and T conv  cells from viable CD3 + CD4 +  lymphocytes using surface markers CD25 and CD127. (B) T conv  were further separated in na\u00efve, follicular helper T cells (T FH ) and memory T conv  (i) through the expression of CD45RA, CCR7, CD28, CD95 and CXCR5. Memory T conv  were further separated (ii) in the other memory Tconv subsets (TSCM, TEMRA, TCM, TTM and TEM) using the expression of CCR7 and CD28. (C) Staining of CD45RA separated na\u00efve T reg  (CD45RA + ) from the other antigen experienced T reg  subsets. CD45RA \u2212  T reg  were further separated through the expression of CXCR5 (iii) in memory (CD45RA \u2212 CXCR5 \u2212 ) and follicular (T FR , CD45RA \u2212 CXCR5 + ) cell subsets. Alternative gating (iv) based on the combination of CD45RA and CD25 on total T reg  could be used to identify the three functional subsets described by Miyara and collaborators. (D) Further gating of cells obtained in (i) (T FH  and memory T conv ) or (ii) (T FR  and T reg ) could be used to define the distribution of CCR3 + , CCR5 +  and T H  (or T H\u2010like ) cells. (E) Analysis of skin and gut homing capacity of all the subsets described in panel B, C and D (T FH , T FR , T H  and T H\u2010like ) using the expression of CLA and integrin \u03b27.\n\nStaining of viable cells for CD3, CD4, CD25 and CD127 allows to delineate between T conv  (CD25 \u2212/+ ) and T reg  cells (CD25 hi  CD127 lo ), wherein the very high expression of CD25 combined to the low expression of CD127 describe a well\u2010defined population expressing high levels of the lineage\u2010defining T reg  marker FOXP3 [ 9 ]. Maturation of T conv  cells upon recognition of their cognate antigens results in differentiation from na\u00efve to memory and effector subsets [ 10 ]. The use of markers like CD28, CD95 and CXCR5 along to the \u201cclassical\u201d markers CD45RA and CD197 (CCR7) allows the identification of na\u00efve and multiple memory/effector T conv  cell subsets. As a result, CD45RA +  cells can be separated into na\u00efve cells (CD45RA +  CCR7 +  CD28 +  CD95 \u2212 ), T stem cell\u2010like memory cells which exhibit self\u2010renewal capacity (T SCM , CD45RA +  CCR7 +  CD28 +  CD95 hi ) [ 11 ,  12 ,  13 ] and terminally differentiated effector cells (T EMRA , CD45RA +  CCR7 \u2212  CD28 \u2212 ) [ 10 ].\n\nGating of CD45RA \u2212  cells using the combination of CD3 and CXCR5 separates follicular helper T cells (T FH ) from the other memory T cells. T FH  are a specialized cell subset that supports the antibody production against pathogens. The homing marker CXCR5 mediates the migration of these cells after recognition of antigens towards germinal centres, where they interact with B cells, undergo further differentiation, and provide B cell help for induction of antibody production [ 14 ]. The other memory T cells (CXCR5 \u2212 ) can be further separated using the expression of CCR7 and CD28 in the three main memory populations: central memory (T CM , CD45RA \u2212  CCR7 +  CD28 + ), transitional memory (T TM , CD45RA \u2212  CCR7 \u2212  CD28 + ) and effector memory (T EM , CD45RA \u2212  CCR7 \u2212  CD28 \u2212 ) T conv  cells.\n\nMajor T H  cell subsets can be identified from either T FH  (CXCR5 + ) or memory T cell (CXCR5 \u2212 ) populations according to lineage\u2010specific cytokine secretion and the chemokine receptors CCR4 (CD194), CCR6 (CD196), CCR10 and CXCR3 (CD183) [ 15 ,  16 ,  17 ]. T H 1 cells (CCR4 \u2212  CCR6 \u2212  CCR10 \u2212  CXCR3 + ) are specified by the transcription factor T\u2010bet and produce the pro\u2010inflammatory cytokine IFN\u2010\u03b3, activate macrophages and mediate immunity against intracellular pathogens. T H 2 cells (CCR4 +  CCR6 \u2212  CCR10 \u2212  CXCR3 \u2212 ) orchestrate defense against large extracellular pathogens and helminths by secretion of IL\u20104, but are also involved in inflammatory disorders, such as asthma and allergies [ 18 ]. IL\u20109 producing T H 9 cells (CCR4 \u2212  CCR6 +  CCR10 \u2212  CXCR3 + ) can be induced by the growth factor TGF\u2010\u03b2 and IL\u20104 from T H 2 cells and are similarly involved in immunity against intestinal helminths and onset of allergies [ 19 ]. The transcription factor ROR\u03b3T specifies the IL\u201017 producing T H 17 cell subset (CCR4 +  CCR6 +  CCR10 \u2212  CXCR3 \u2212 ), which mediate protection against fungi and extracellular bacteria [ 20 ,  21 ]. Further, balance of T H 17 cells and T reg  cells plays a critical role in onset of autoimmune diseases [ 22 ,  23 ,  24 ]. Plasticity within the T H 17 subset leads co\u2010expression of markers and functional properties that are shared between subsets. Indeed, in some conditions, ROR\u03b3T +  T H 17 cells can start expressing T\u2010bet, CXCR3 and secrete both IL\u201017 and IFN\u2010\u03b3. This subset (T H 1\u2010like T H 17 cells) might represent an intermediate and transitional state during trans\u2010differentiation between T H 1 and T H 17 cells [ 25 ]. T H 22 (CCR4 +  CCR6 +  CCR10 +  CXCR3 \u2212 ) are characterized by secretion of the eponymous cytokine IL\u201022 and TNF\u2010\u03b1, and are involved in skin immunity and maintenance [ 26 ].\n\nSimilarly, T reg  cells can be separated into different stages of differentiation using CD45RA and CD25 markers. The level of expression of these two molecules can be used to identify the three functional subsets described by Miyara and collaborators: na\u00efve (population I, CD45RA +  CD25 + ), effector (population II, CD45RA \u2212  CD25 hi ) and cytokine\u2010producing (population III, CD45RA \u2212  CD25 + ) T reg  cells [ 3 ,  27 ]. Besides, T reg  cells exhibit phenotypical and transcriptional overlap with the T conv  cells they target, therefore the same markers can be used to distinguish follicular regulatory (T FR ) and T H \u2010like subsets within the T reg  compartment [ 1 ,  2 ,  28 ]. To explore subset diversity of T reg  cells, we set and adjusted the gates on clear populations of CD45RA \u2212  memory T conv  cells across multiple donors and subsequently applied the same gates to either T FR  or memory T reg  cells.\n\nBoth chronic inflammatory diseases and autoimmune disorders can exhibit localized inflammation at various tissue sites. Inflammation is often mediated by the recruitment of T cells into these tissues. Migration is regulated by the expression of specific homing receptors that mediate rolling of T cells over activated endothelial cells and their trafficking into the tissue. We included the cutaneous lymphocyte antigen (CLA) as a crucial marker for initiation of skin homing of lymphocytes, which is associated with T cell mediated cutaneous inflammation [ 29 ,  30 ]. To identify lymphocytes homing to small intestine we used the expression of integrin \u03b27 [ 31 ]. Staining of CCR3 for the recognition of T cells accumulating in the upper airway mucosa and involved in asthma and allergic inflammation [ 32 ,  33 ]. Finally, we also included the staining of CCR5 that is expressed on activated T cells involved in several pathological processes including autoimmunity, cancer, and HIV infection [ 34 ]. Its expression drives T cells to atherosclerotic plaques [ 35 ] and, in combination with CXCR3, to inflammatory lesions in autoimmune diseases such as rheumatoid arthritis (RA), inflammatory bowel disease (IBD) and multiple sclerosis (MS) [ 36 ,  37 ]\u00a0(Table\u00a0 2 ).\n\nThis OMIP is similar to OMIP\u2010017, \u2010018, \u201030 and \u201042 in their objective to identify multiple human T cells subsets in PBMCs using exclusively surface receptors [ 12 ,  15 ,  16 ,  17 ]. However, in OMIP\u201017 and \u201018 there is no possibility to characterize any regulatory T cell subsets. The above similar OMIPs do not investigate cell trafficking to non\u2010lymphoid tissues (i.e., skin, gut, or airway mucosa).",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD3",
+        "fluorophore": "AF 700",
+        "clone": "UCHT1",
+        "purpose": "T cell Lineage"
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BUV 395",
+        "clone": "SK3",
+        "purpose": "T helper Lineage"
+      },
+      {
+        "marker": "CD25",
+        "fluorophore": "PE/CF594",
+        "clone": "M\u2010A251",
+        "purpose": "T reg  Lineage"
+      },
+      {
+        "marker": "CD127",
+        "fluorophore": "BV 786",
+        "clone": "HIL\u20107R\u2010M21",
+        "purpose": "T reg  Lineage"
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "BUV 496",
+        "clone": "HI100",
+        "purpose": "Na\u00efve/memory"
+      },
+      {
+        "marker": "CD28",
+        "fluorophore": "BV 711",
+        "clone": "CD28.2",
+        "purpose": "Cell subsets"
+      },
+      {
+        "marker": "CD95",
+        "fluorophore": "BUV 737",
+        "clone": "DX2",
+        "purpose": "Cell subsets"
+      },
+      {
+        "marker": "CCR3",
+        "fluorophore": "BV 510",
+        "clone": "5E8",
+        "purpose": "Homing"
+      },
+      {
+        "marker": "CCR4 (CD194)",
+        "fluorophore": "BV 605",
+        "clone": "1G1",
+        "purpose": "Cell subsets"
+      },
+      {
+        "marker": "CCR5",
+        "fluorophore": "PE/Cy7",
+        "clone": "J418F1",
+        "purpose": "Activation/Homing"
+      },
+      {
+        "marker": "CCR6 (CD196)",
+        "fluorophore": "APC",
+        "clone": "G034E3",
+        "purpose": "Cell subsets"
+      },
+      {
+        "marker": "CCR7 (CD197)",
+        "fluorophore": "BV 421",
+        "clone": "G043H7",
+        "purpose": "Differentiation"
+      },
+      {
+        "marker": "CCR10",
+        "fluorophore": "PerCP/Cy5.5",
+        "clone": "1B5",
+        "purpose": "Cell subsets"
+      },
+      {
+        "marker": "CXCR3 (CD183)",
+        "fluorophore": "PE/Cy5",
+        "clone": "1C6/CXCR3",
+        "purpose": "Cell subsets"
+      },
+      {
+        "marker": "CXCR5 (CD185)",
+        "fluorophore": "PE",
+        "clone": "J252D4",
+        "purpose": "Homing"
+      },
+      {
+        "marker": "Integrin Beta 7",
+        "fluorophore": "BV 650",
+        "clone": "FIB504",
+        "purpose": "Homing"
+      },
+      {
+        "marker": "CLA",
+        "fluorophore": "FITC",
+        "clone": "HECA\u2010452",
+        "purpose": "Homing"
+      },
+      {
+        "marker": "Fixable Viability Stain 780",
+        "fluorophore": "Live/Dead Near Infra\u2010Red (NIR)",
+        "clone": "n/a",
+        "purpose": "Viability/Dump"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "root",
+      "is_critical": true,
+      "children": [
+        {
+          "name": "Lymphocytes",
+          "markers": [
+            "FSC",
+            "SSC"
+          ],
+          "marker_logic": "FSC/SSC lymphocyte gate",
+          "gate_type": "scatter",
+          "is_critical": true,
+          "children": [
+            {
+              "name": "Singlets",
+              "markers": [
+                "FSC-A",
+                "FSC-H"
+              ],
+              "marker_logic": "FSC-A vs FSC-H diagonal",
+              "gate_type": "scatter",
+              "is_critical": true,
+              "children": [
+                {
+                  "name": "Live cells",
+                  "markers": [
+                    "Fixable Viability Stain 780"
+                  ],
+                  "marker_logic": "Viability Stain 780-",
+                  "gate_type": "viability",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "CD3+ T cells",
+                      "markers": [
+                        "CD3"
+                      ],
+                      "marker_logic": "CD3+",
+                      "gate_type": "lineage",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "CD4+ T cells",
+                          "markers": [
+                            "CD4"
+                          ],
+                          "marker_logic": "CD3+ CD4+",
+                          "gate_type": "lineage",
+                          "is_critical": true,
+                          "children": [
+                            {
+                              "name": "Treg",
+                              "markers": [
+                                "CD25",
+                                "CD127"
+                              ],
+                              "marker_logic": "CD25hi CD127lo",
+                              "gate_type": "subset",
+                              "is_critical": true,
+                              "children": [
+                                {
+                                  "name": "Na\u00efve Treg",
+                                  "markers": [
+                                    "CD45RA"
+                                  ],
+                                  "marker_logic": "CD45RA+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "CD45RA- Treg",
+                                  "markers": [
+                                    "CD45RA"
+                                  ],
+                                  "marker_logic": "CD45RA-",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": [
+                                    {
+                                      "name": "Memory Treg",
+                                      "markers": [
+                                        "CXCR5"
+                                      ],
+                                      "marker_logic": "CD45RA- CXCR5-",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "CCR3+ Treg",
+                                          "markers": [
+                                            "CCR3"
+                                          ],
+                                          "marker_logic": "CCR3+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CCR5+ Treg",
+                                          "markers": [
+                                            "CCR5"
+                                          ],
+                                          "marker_logic": "CCR5+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "TH1-like Treg",
+                                          "markers": [
+                                            "CCR4",
+                                            "CCR6",
+                                            "CCR10",
+                                            "CXCR3"
+                                          ],
+                                          "marker_logic": "CCR4- CCR6- CCR10- CXCR3+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": [
+                                            {
+                                              "name": "Skin-homing TH1-like Treg",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA+ Integrin Beta 7-",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "Gut-homing TH1-like Treg",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA- Integrin Beta 7+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "TH2-like Treg",
+                                          "markers": [
+                                            "CCR4",
+                                            "CCR6",
+                                            "CCR10",
+                                            "CXCR3"
+                                          ],
+                                          "marker_logic": "CCR4+ CCR6- CCR10- CXCR3-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": [
+                                            {
+                                              "name": "Skin-homing TH2-like Treg",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA+ Integrin Beta 7-",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "Gut-homing TH2-like Treg",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA- Integrin Beta 7+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "TH9-like Treg",
+                                          "markers": [
+                                            "CCR4",
+                                            "CCR6",
+                                            "CCR10",
+                                            "CXCR3"
+                                          ],
+                                          "marker_logic": "CCR4- CCR6+ CCR10- CXCR3+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "TH17-like Treg",
+                                          "markers": [
+                                            "CCR4",
+                                            "CCR6",
+                                            "CCR10",
+                                            "CXCR3"
+                                          ],
+                                          "marker_logic": "CCR4+ CCR6+ CCR10- CXCR3-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": [
+                                            {
+                                              "name": "Skin-homing TH17-like Treg",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA+ Integrin Beta 7-",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "Gut-homing TH17-like Treg",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA- Integrin Beta 7+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "TH1-like TH17 Treg",
+                                          "markers": [
+                                            "CCR4",
+                                            "CCR6",
+                                            "CCR10",
+                                            "CXCR3"
+                                          ],
+                                          "marker_logic": "CCR4+ CCR6+ CCR10- CXCR3+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "TH22-like Treg",
+                                          "markers": [
+                                            "CCR4",
+                                            "CCR6",
+                                            "CCR10",
+                                            "CXCR3"
+                                          ],
+                                          "marker_logic": "CCR4+ CCR6+ CCR10+ CXCR3-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": [
+                                            {
+                                              "name": "Skin-homing TH22-like Treg",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA+ Integrin Beta 7-",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "Gut-homing TH22-like Treg",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA- Integrin Beta 7+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "TFR (Follicular Regulatory T cells)",
+                                      "markers": [
+                                        "CXCR5"
+                                      ],
+                                      "marker_logic": "CD45RA- CXCR5+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "CCR3+ TFR",
+                                          "markers": [
+                                            "CCR3"
+                                          ],
+                                          "marker_logic": "CCR3+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CCR5+ TFR",
+                                          "markers": [
+                                            "CCR5"
+                                          ],
+                                          "marker_logic": "CCR5+",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "TH1-like TFR",
+                                          "markers": [
+                                            "CCR4",
+                                            "CCR6",
+                                            "CCR10",
+                                            "CXCR3"
+                                          ],
+                                          "marker_logic": "CCR4- CCR6- CCR10- CXCR3+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": [
+                                            {
+                                              "name": "Skin-homing TH1-like TFR",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA+ Integrin Beta 7-",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "Gut-homing TH1-like TFR",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA- Integrin Beta 7+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "TH2-like TFR",
+                                          "markers": [
+                                            "CCR4",
+                                            "CCR6",
+                                            "CCR10",
+                                            "CXCR3"
+                                          ],
+                                          "marker_logic": "CCR4+ CCR6- CCR10- CXCR3-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": [
+                                            {
+                                              "name": "Skin-homing TH2-like TFR",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA+ Integrin Beta 7-",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "Gut-homing TH2-like TFR",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA- Integrin Beta 7+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "TH17-like TFR",
+                                          "markers": [
+                                            "CCR4",
+                                            "CCR6",
+                                            "CCR10",
+                                            "CXCR3"
+                                          ],
+                                          "marker_logic": "CCR4+ CCR6+ CCR10- CXCR3-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": [
+                                            {
+                                              "name": "Skin-homing TH17-like TFR",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA+ Integrin Beta 7-",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "Gut-homing TH17-like TFR",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA- Integrin Beta 7+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "TH22-like TFR",
+                                          "markers": [
+                                            "CCR4",
+                                            "CCR6",
+                                            "CCR10",
+                                            "CXCR3"
+                                          ],
+                                          "marker_logic": "CCR4+ CCR6+ CCR10+ CXCR3-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": [
+                                            {
+                                              "name": "Skin-homing TH22-like TFR",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA+ Integrin Beta 7-",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "Gut-homing TH22-like TFR",
+                                              "markers": [
+                                                "CLA",
+                                                "Integrin Beta 7"
+                                              ],
+                                              "marker_logic": "CLA- Integrin Beta 7+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "Miyara Population I (Na\u00efve Treg)",
+                                  "markers": [
+                                    "CD45RA",
+                                    "CD25"
+                                  ],
+                                  "marker_logic": "CD45RA+ CD25+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Miyara Population II (Effector Treg)",
+                                  "markers": [
+                                    "CD45RA",
+                                    "CD25"
+                                  ],
+                                  "marker_logic": "CD45RA- CD25hi",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Miyara Population III (Cytokine-producing Treg)",
+                                  "markers": [
+                                    "CD45RA",
+                                    "CD25"
+                                  ],
+                                  "marker_logic": "CD45RA- CD25+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "Tconv (Conventional T cells)",
+                              "markers": [
+                                "CD25",
+                                "CD127"
+                              ],
+                              "marker_logic": "CD25-/+",
+                              "gate_type": "subset",
+                              "is_critical": true,
+                              "children": [
+                                {
+                                  "name": "Na\u00efve Tconv",
+                                  "markers": [
+                                    "CD45RA",
+                                    "CCR7",
+                                    "CD28",
+                                    "CD95"
+                                  ],
+                                  "marker_logic": "CD45RA+ CCR7+ CD28+ CD95-",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "TSCM (Stem cell-like memory)",
+                                  "markers": [
+                                    "CD45RA",
+                                    "CCR7",
+                                    "CD28",
+                                    "CD95"
+                                  ],
+                                  "marker_logic": "CD45RA+ CCR7+ CD28+ CD95hi",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "TEMRA (Terminally differentiated effector)",
+                                  "markers": [
+                                    "CD45RA",
+                                    "CCR7",
+                                    "CD28"
+                                  ],
+                                  "marker_logic": "CD45RA+ CCR7- CD28-",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "TFH (Follicular helper T cells)",
+                                  "markers": [
+                                    "CD45RA",
+                                    "CXCR5"
+                                  ],
+                                  "marker_logic": "CD45RA- CXCR5+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": [
+                                    {
+                                      "name": "CCR3+ TFH",
+                                      "markers": [
+                                        "CCR3"
+                                      ],
+                                      "marker_logic": "CCR3+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "CCR5+ TFH",
+                                      "markers": [
+                                        "CCR5"
+                                      ],
+                                      "marker_logic": "CCR5+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "TH1 TFH",
+                                      "markers": [
+                                        "CCR4",
+                                        "CCR6",
+                                        "CCR10",
+                                        "CXCR3"
+                                      ],
+                                      "marker_logic": "CCR4- CCR6- CCR10- CXCR3+",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "Skin-homing TH1 TFH",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA+ Integrin Beta 7-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Gut-homing TH1 TFH",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA- Integrin Beta 7+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "TH2 TFH",
+                                      "markers": [
+                                        "CCR4",
+                                        "CCR6",
+                                        "CCR10",
+                                        "CXCR3"
+                                      ],
+                                      "marker_logic": "CCR4+ CCR6- CCR10- CXCR3-",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "Skin-homing TH2 TFH",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA+ Integrin Beta 7-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Gut-homing TH2 TFH",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA- Integrin Beta 7+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "TH9 TFH",
+                                      "markers": [
+                                        "CCR4",
+                                        "CCR6",
+                                        "CCR10",
+                                        "CXCR3"
+                                      ],
+                                      "marker_logic": "CCR4- CCR6+ CCR10- CXCR3+",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "TH17 TFH",
+                                      "markers": [
+                                        "CCR4",
+                                        "CCR6",
+                                        "CCR10",
+                                        "CXCR3"
+                                      ],
+                                      "marker_logic": "CCR4+ CCR6+ CCR10- CXCR3-",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "Skin-homing TH17 TFH",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA+ Integrin Beta 7-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Gut-homing TH17 TFH",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA- Integrin Beta 7+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "TH1-like TH17 TFH",
+                                      "markers": [
+                                        "CCR4",
+                                        "CCR6",
+                                        "CCR10",
+                                        "CXCR3"
+                                      ],
+                                      "marker_logic": "CCR4+ CCR6+ CCR10- CXCR3+",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "TH22 TFH",
+                                      "markers": [
+                                        "CCR4",
+                                        "CCR6",
+                                        "CCR10",
+                                        "CXCR3"
+                                      ],
+                                      "marker_logic": "CCR4+ CCR6+ CCR10+ CXCR3-",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "Skin-homing TH22 TFH",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA+ Integrin Beta 7-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Gut-homing TH22 TFH",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA- Integrin Beta 7+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "Memory Tconv",
+                                  "markers": [
+                                    "CD45RA",
+                                    "CXCR5"
+                                  ],
+                                  "marker_logic": "CD45RA- CXCR5-",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": [
+                                    {
+                                      "name": "TCM (Central memory)",
+                                      "markers": [
+                                        "CCR7",
+                                        "CD28"
+                                      ],
+                                      "marker_logic": "CD45RA- CCR7+ CD28+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "TTM (Transitional memory)",
+                                      "markers": [
+                                        "CCR7",
+                                        "CD28"
+                                      ],
+                                      "marker_logic": "CD45RA- CCR7- CD28+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "TEM (Effector memory)",
+                                      "markers": [
+                                        "CCR7",
+                                        "CD28"
+                                      ],
+                                      "marker_logic": "CD45RA- CCR7- CD28-",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "CCR3+ Memory Tconv",
+                                      "markers": [
+                                        "CCR3"
+                                      ],
+                                      "marker_logic": "CCR3+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "CCR5+ Memory Tconv",
+                                      "markers": [
+                                        "CCR5"
+                                      ],
+                                      "marker_logic": "CCR5+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "TH1",
+                                      "markers": [
+                                        "CCR4",
+                                        "CCR6",
+                                        "CCR10",
+                                        "CXCR3"
+                                      ],
+                                      "marker_logic": "CCR4- CCR6- CCR10- CXCR3+",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "Skin-homing TH1",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA+ Integrin Beta 7-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Gut-homing TH1",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA- Integrin Beta 7+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "TH2",
+                                      "markers": [
+                                        "CCR4",
+                                        "CCR6",
+                                        "CCR10",
+                                        "CXCR3"
+                                      ],
+                                      "marker_logic": "CCR4+ CCR6- CCR10- CXCR3-",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "Skin-homing TH2",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA+ Integrin Beta 7-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Gut-homing TH2",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA- Integrin Beta 7+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "TH9",
+                                      "markers": [
+                                        "CCR4",
+                                        "CCR6",
+                                        "CCR10",
+                                        "CXCR3"
+                                      ],
+                                      "marker_logic": "CCR4- CCR6+ CCR10- CXCR3+",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "TH17",
+                                      "markers": [
+                                        "CCR4",
+                                        "CCR6",
+                                        "CCR10",
+                                        "CXCR3"
+                                      ],
+                                      "marker_logic": "CCR4+ CCR6+ CCR10- CXCR3-",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "Skin-homing TH17",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA+ Integrin Beta 7-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Gut-homing TH17",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA- Integrin Beta 7+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "TH1-like TH17",
+                                      "markers": [
+                                        "CCR4",
+                                        "CCR6",
+                                        "CCR10",
+                                        "CXCR3"
+                                      ],
+                                      "marker_logic": "CCR4+ CCR6+ CCR10- CXCR3+",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "TH22",
+                                      "markers": [
+                                        "CCR4",
+                                        "CCR6",
+                                        "CCR10",
+                                        "CXCR3"
+                                      ],
+                                      "marker_logic": "CCR4+ CCR6+ CCR10+ CXCR3-",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "Skin-homing TH22",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA+ Integrin Beta 7-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Gut-homing TH22",
+                                          "markers": [
+                                            "CLA",
+                                            "Integrin Beta 7"
+                                          ],
+                                          "marker_logic": "CLA- Integrin Beta 7+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 18 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 10098 chars of gating text from body"
+    ]
+  }
+}

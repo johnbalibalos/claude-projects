@@ -1,0 +1,132 @@
+{
+  "test_case_id": "OMIP-077",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-077",
+  "doi": "10.1002/cyto.a.24481",
+  "pmc_id": "PMC9292053",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Leukocytes from human WB (anticoagulated, erythrocyte\u2010depleted)",
+    "species": "human ( homo sapiens )",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Gating strategy and performance of this OMIP. (A) General gating strategy for identifying single viable leukocytes in human WB. Note that the last gating step is only applicable when counting beads were included in the staining. (B) Exemplary gating strategy for identifying the principal cell populations downstream of the leukocyte denominator. (C) Opt\u2010SNE plot showing the separation of leukocyte populations in human WB. (D) Opt\u2010SNE plot showing the separation of PBMC populations in human WB. mDC, myeloid dendritic cell; MZB, marginal zone B; monocyte (c/nc), classical/nonclassical monocyte; NK, natural killer; NKT, natural killer T; OMIP, optimized multicolor immunofluorescence panel; PBMC, peripheral blood mononuclear cell; pDC, plasmacytoid dendritic cell; opt\u2010SNE, optimized t\u2010distributed stochastic neighbor embedding; WB, whole blood.  \n Note : Data as shown here were acquired on a 3\u2010laser BD LSRFortessa flow cytometric instrument (BD biosciences)  [Color figure can be viewed at  wileyonlinelibrary.com ]",
+    "full_text_gating": "High\u2010dimensional single cell analysis using FCM [ 1 ,  2 ] or MCM [ 3 ] has provided unprecedented insights into the cellular makeup of heterogeneous samples. However, considering that the number of theoretical populations increases exponentially with every marker dimension added [ 4 ,  5 ] and that the complexity of data analysis and interpretation rises alongside, the benefit of high\u2010dimensional cytometry for a given study has to be carefully weighted. This is especially true for clinical applications where immune profiling of a high number of samples shall robustly assess the influence of a tested medicine on the abundance and phenotype of the major immune cell lineages even in a multicenter setting [ 6 ] rather than analyzing a maximum number of populations or deciphering developmental trajectories [ 7 ]. Hence, there is room for limited\u2010color FCM panels nevertheless capable of resolving all major leukocyte subsets in humans. The present OMIP shall occupy this niche and leverage the low\u2010threshold access to comprehensive FCM\u2010based immune phenotyping in laboratories around the globe. Notably, the present OMIP was specifically designed to produce clear populations and be applicable to multiple instruments from various manufacturers even without normalization.\n\nAfter several months of development and optimization (see Online  supplement ), we arrived at the 14\u2010color panel shown in Table\u00a0 2 , exclusively targeting surface markers. After general gating steps involving (i) the prospective identification of pan\u2010leukocytes using CD45 expression, (ii) the exclusion of dead cells and debris based on FSC/SSC characteristics, (iii) the exclusion of doublets and aggregates using the different signals of FSC and, if applicable, (iv) the exclusion of counting bead contamination (Figure\u00a0 1(A) ), PBMCs are separated from granulocytes using a bivariate SSC/CD14 plot (Figure\u00a0 1(B) ). CD15 +  granulocytes are subsequently divided into CD193 \u2212 /CD16 +/\u2212  neutrophils and CD193 +  eosinophils. Within the CD3 +  T cell\u2010excluded PBMC compartment, CD34 +  progenitor cells as well as CD193 +  basophils are defined. The bulk of CD34/CD193 double\u2010negative cells contain HLA\u2010DR \u2212 /CD14 \u2212  natural killer (NK) cells expressing CD56 (and for the most part CD16) as well as populations of HLA\u2010DR/CD14 single\u2010 or double\u2010positive cells. This latter fraction comprises monocyte populations that express CD14 and/or CD16 as well as a population of CD14/CD16 double\u2010negative cells. CD14 \u2212 /CD16 \u2212  cells mostly consist of CD19/CD38 single\u2010 or double\u2010positive cells in turn representing CD19 +  B cells, CD38 +  plasma cells and CD1c +  marginal zone B (MZB) cells. The CD19 \u2212 /CD38 dim  fraction contains both CD1c +  myeloid dendritic cells (mDCs) and CD123 +  plasmacytoid dendritic cells (pDCs). Finally, the CD1c/CD123 double\u2010negative cell fraction contains CD141 +  mDCs. The discriminatory power of the panel is excellent as evidenced by optimized t\u2010distributed stochastic neighbor embedding (opt\u2010SNE) analysis which shows unambiguous separation of the various cell populations downstream of the leukocyte (Figure\u00a0 1(C) ) or PBMC (Figure\u00a0 1(D) ) denominators. Moreover, the panel has a very high coverage such that virtually no cells remain undefined after gating. For the clear demarcation of individual populations, it is therefore essential that all populations be gated so as to exploit the panel's full potential and definitely avoid the false allocation of cells (particularly relevant for minor populations). Collectively, this carefully selected, limited\u2010color flow panel allows for the unambiguous definition of all principal leukocyte subsets in human WB using a convenient and fast one\u2010step/single\u2010tube staining procedure. The single\u2010tube nature of our assay not only is convenient and efficient, it also allows the analysis of very small amounts of blood (relevant for newborns) as well as the collection of as much information as possible. A comprehensive list of relative antigen expression for each marker for each cell type is provided in  Online Table 4 .\n\nAbbreviations: mDC, myeloid dendritic cell; monocyte (c/nc), classical/non\u2010classical monocyte; MZB, marginal zone B cell; NK, natural killer; OMIP, optimized multicolor immunofluorescence panel; pDC, plasmacytoid dendritic cell.\n\nGating strategy and performance of this OMIP. (A) General gating strategy for identifying single viable leukocytes in human WB. Note that the last gating step is only applicable when counting beads were included in the staining. (B) Exemplary gating strategy for identifying the principal cell populations downstream of the leukocyte denominator. (C) Opt\u2010SNE plot showing the separation of leukocyte populations in human WB. (D) Opt\u2010SNE plot showing the separation of PBMC populations in human WB. mDC, myeloid dendritic cell; MZB, marginal zone B; monocyte (c/nc), classical/nonclassical monocyte; NK, natural killer; NKT, natural killer T; OMIP, optimized multicolor immunofluorescence panel; PBMC, peripheral blood mononuclear cell; pDC, plasmacytoid dendritic cell; opt\u2010SNE, optimized t\u2010distributed stochastic neighbor embedding; WB, whole blood.  \n Note : Data as shown here were acquired on a 3\u2010laser BD LSRFortessa flow cytometric instrument (BD biosciences)  [Color figure can be viewed at  wileyonlinelibrary.com ]\n\nAs per intent, the here presented panel does not target minor cell subsets downstream of respective denominator populations, such as regulatory T cells (downstream of CD3 [ 8 ]) and certain subsets of NK cells and innate lymphoid cells (downstream of CD56 [ 9 ,  10 ,  11 ]). Instead, this panel is intended as a general and broadly applicable immune profiling platform that may also serve as a starting point for more specialized investigations based on subset\u2010targeted panels, panels specific for cell activation/exhaustion, or panels discriminating effector from memory phenotypes. Nevertheless, this panel supports the collection of information beyond the main target populations it was designed for. As an example, the combination of CD3 and CD56 allows for the detection and quantification of NKT cells [ 12 ] and the combination of CD19 and CD1c enables MZB cell delineation [ 13 ] (Figure\u00a0 1 ). In addition, the panel permits the analysis of HLA\u2010DR expression on non\u2010antigen\u2010presenting cells such as T cells [ 14 ] and allows for the quantification of HLA\u2010DR and CD38 double\u2010positive cells, an activated T cell subpopulation, which has regained interest in the SARS\u2010CoV\u20102 pandemic [ 15 ,  16 ].\n\nWe waived the use of a dead cell discrimination marker since cell viability in blood is generally high such that exclusion of the remaining dead cells by means of FSC/SSC characteristics was deemed appropriate and sufficient. However, this panel can be adopted in whole or in part to analyze leukocytes from other tissue sources and a dead cell discrimination marker may then be considered (especially after tissue disaggregation). The use of WB instead of buffy coats re\u2010prioritizes polymorphonuclear cells and permits absolute cell counting in the original in vivo volume ( Online Figure 5 ), thus reducing experimental variation especially in the case of minor cell populations [ 17 ]. Further assets are the detection of CD34 +  hematopoietic progenitor cells (highly relevant for leukemia stem cell research [ 18 ]) as well as the possibility for live cell recovery for functional testing.\n\nIn summary, we present a versatile, surface marker\u2010only, 14\u2010color flow panel for the prospective identification of all major immune cell lineages in human WB. Standard flow cytometric instruments of various brands support this panel, which is hence accessible to a particularly large number of researchers. Although a plethora of research questions can be addressed with this OMIP, envisaged key applications are (i) companion immune profiling of clinical trials and (ii) initial discovery paving the way for more specialized panels. Moreover, our panel may be adopted for use in clinical diagnostics based on novel 3\u2010laser instruments such as 12\u2010color FACSLyric (BD Biosciences) and 13\u2010color DxFLEX (Beckman Coulter). In this case, select markers would need to be omitted and prime candidates for this purpose would be CD15 and CD193 considering that neutrophils and eosinophils can usually be sufficiently discriminated using SSC/autofluorescence/CD16 characteristics or, alternatively, be enumerated by a differential blood count.",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD1c",
+        "fluorophore": "PE",
+        "clone": "AD5\u20108E7",
+        "purpose": "CD1c +  mDCs, MZB cells"
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "BV605",
+        "clone": "OKT3",
+        "purpose": "T cells"
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "BV711",
+        "clone": "M\u03a6P9",
+        "purpose": "Monocytes (c), intermediate monocytes, monocytes (nc)"
+      },
+      {
+        "marker": "CD15",
+        "fluorophore": "PerCP\u2010Cy5.5",
+        "clone": "HI98",
+        "purpose": "Eosinophils"
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "APC\u2010efluor780",
+        "clone": "ebioCB16",
+        "purpose": "Neutrophils, intermediate monocytes, monocytes (nc)"
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "APC\u2010R700",
+        "clone": "HIB19",
+        "purpose": "B cells, plasma cells"
+      },
+      {
+        "marker": "CD34",
+        "fluorophore": "FITC",
+        "clone": "HPCA\u20102",
+        "purpose": "Progenitor cells"
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "BV421",
+        "clone": "HIT2",
+        "purpose": "Plasma cells, basophils"
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "BV480",
+        "clone": "HI30",
+        "purpose": "Pan\u2010leukocytes"
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "NCAM16.2",
+        "purpose": "NK cells"
+      },
+      {
+        "marker": "CD123",
+        "fluorophore": "BV650",
+        "clone": "7G3",
+        "purpose": "Basophils, pDCs"
+      },
+      {
+        "marker": "CD141",
+        "fluorophore": "APC",
+        "clone": "AD5\u201014H12",
+        "purpose": "CD141 +  mDCs"
+      },
+      {
+        "marker": "CD193",
+        "fluorophore": "PE\u2010CF594",
+        "clone": "5E8",
+        "purpose": "Eosinophils, basophils"
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "BV786",
+        "clone": "G46\u20106",
+        "purpose": "Neutrophils, monocytes (c), intermediate monocytes, monocytes (nc), B cells, plasma cells, CD1c +  mDCs, CD141 +  mDCs"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "Unknown",
+      "children": [],
+      "is_critical": true
+    },
+    "_extraction_note": "Hierarchy needs manual curation from gating_description"
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 14 markers",
+      "Parsed Table 1 for metadata",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 8471 chars of gating text from body"
+    ]
+  }
+}

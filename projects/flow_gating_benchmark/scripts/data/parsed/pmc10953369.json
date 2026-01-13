@@ -1,0 +1,633 @@
+{
+  "test_case_id": "PMC10953369",
+  "source_type": "omip_paper",
+  "omip_id": null,
+  "doi": "10.1002/cyto.a.24702",
+  "pmc_id": "PMC10953369",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Innate lymphoid cells",
+    "species": "mouse",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Gating strategy to characterize innate lymphoid cell (ILC) populations and their subset\u2010specific cytokine and proliferative profiles. After exclusion of cellular debris, doublets, red blood cell contamination and non\u2010viable CD45 +/\u2212  cells, viable CD45 +  leukocytes (A) were gated on IL\u20107R\u03b1 and lineage (CD3, CD4, CD5, CD11b, CD11c, CD19, B220, F4/80, Fc\u03b5R1, Gr1, TCR\u03b2, TCR\u03b3\u03b4, Ter119; Lin) negative cells to identify ILCs (B). ILCPs were then identified as IL\u201018R\u03b1 + PLZF +  cells (C). Characterization of ILC1, ILC2, NCR + , NCR \u2212  and CCR6 +  LTi\u2010like ILC3 subsets in the lung (D) and siLP (E). All samples in panel (A\u2013E) were ex vivo stimulated for 5\u00a0h with PMA/Ionomycin/BFA. Single cell suspensions were ex vivo stimulated for 5\u00a0h with PMA/Ionomycin/BFA and either IL\u201012 and IL\u201018 (pro\u2010ILC1), IL\u201033 (pro\u2010ILC2), or IL\u20101\u03b2 and IL\u201023 (pro\u2010ILC3) and ILC subsets were assessed for production of subset\u2010specific cytokines (IFN\u2010\u03b3, IL\u20105, IL\u201013, IL\u201017A, and IL\u201022) and cellular proliferation (Ki\u201067) within the lung (F) and siLP (G). (H) Identification of NK cells within the lung and siLP, with downstream characterization of lung tissue\u2010resident NK (trNK) and circulating NK (cNK) cells. Plots in panel (A\u2013C) are representative of individual lung samples. For panels (B\u2013H), viable leukocytes from three technical lung or siLP replicates were concatenated into single FCS files prior to gating. All fluorochrome\u2010conjugated antibodies were titrated (Figure\u00a0 S1 ) during panel optimization and manual gating was determined using fluorescence minus one controls (Figure\u00a0 S2 ) where necessary [Color figure can be viewed at  wileyonlinelibrary.com ]",
+    "full_text_gating": "ILCs are a unique subset of innate effector cells enriched at mucosal surfaces, with diverse roles in host defense, tissue remodeling and repair, inflammation, and metabolic homeostasis [ 1 ]. Despite lacking rearranged antigen receptors, ILCs display remarkable homology with conventional T helper (Th) type 1 (Th1), Th2, and Th17 cells in regards to phenotype and function, and thus are similarly classified into ILC1, ILC2, and ILC3 subsets [ 2 ]. Moreover, bona fide ILC subsets have now been expanded to include both cytotoxic NK and lymphoid tissue\u2010inducer (LTi) cells, which are phenotypically and functionally similar to ILC1 and ILC3 respectively, yet exhibit distinct developmental trajectories [ 3 ]. However, it is increasingly recognized that ILC subsets are not fixed, and that these cells can exhibit significant plasticity depending on the local inflammatory milieu [ 4 ,  5 ,  6 ,  7 ,  8 ]. As such, ILCs demonstrate intra\u2010subset phenotypic heterogeneity depending on their specific microenvironment [ 9 ,  10 ], and deep immunophenotyping therefore requires a comprehensive array of phenotypic and functional markers to accurately capture this biological variation.\n\nAlthough crucial in multiple biological settings, ILCs constitute a relatively minor population within both mouse and human lymphoid and non\u2010lymphoid tissues and blood, comprising 1%\u20135% of CD45 +  leukocytes [ 5 ,  11 ,  12 ,  13 ,  14 ,  15 ]. Due to this inherent scarcity, acquiring as much information as possible on a single\u2010cell level is of upmost importance for accurate ILC discrimination. High resolution ILC characterization is further convoluted in tissues such as the lung and small intestine, where the intrinsically autofluorescent nature of the samples results in a heightened background noise\u2010to\u2010signal ratio. With this in mind, cellular characterization via full spectrum flow cytometry provides a technological advancement given its high parameter capabilities [ 16 ] combined with the capacity to extract cellular autofluorescence profiles, thus improving discrimination of rare populations compared to conventional flow cytometry [ 17 ]. As such, the full spectrum panel described herein enables the detailed enumeration and functional assessment of all ILC subsets identified within mouse tissues, with a specific focus on the characterization of lung and small intestine lamina propria (siLP) populations given the divergent repertoire of resident ILC subsets localized to these tissue compartments.\n\nILCs arise from common lymphoid progenitors within the bone marrow (BM), which through a series of intermediate commitment stages give rise to ILC progenitors (ILCP). While initially believed to be restricted within the BM, ILCPs are now recognized to exist within circulation and as tissue\u2010resident populations at distal sites in both neonates and adults, including the lungs, skin, and secondary lymphoid tissues [ 18 ,  19 ,  20 ,  21 ]. During early development, expression of the transcription factor promyelocytic leukemia zinc finger (PLZF; encoded by  Zbtb16 ) dictates the bifurcation of innate lymphoid progenitors, whereby PLZF +  ILCPs are restricted to the generation of ILC1, ILC2, and ILC3, but not LTi or NK cells [ 22 ,  23 ]. In addition to PLZF, ILCPs display high\u2010level expression of  Il18r1 , and thus a requirement for IL\u201018 signaling through IL\u201018R\u03b1 for proliferation and differentiation [ 19 ]. Importantly, both ILCPs and mature ILC subset are dependent on canonical IL\u20107 signaling for development and function, with expression of the receptor (IL\u20107R\u03b1) and consumption of IL\u20107 dramatically greater in ILCs than their T cell counterparts [ 24 ]. Continual differentiation of IL\u20107R\u03b1 + PLZF + IL\u201018R\u03b1 +  ILCP into distinct ILC subsets is under the control of a series of lineage\u2010defining master transcription factors, with all terminal subsets lacking expression of extracellular markers routinely used to identify both lymphoid and myeloid cells, subsequently defining ILCs as lineage negative (Lin \u2212 ) cells (refer to Table\u00a0 2  for all appropriate lineage markers).\n\nILC1s are characterized by their constitutive expression of T\u2010bet (encoded by  Tbx21 ), which is central for their production of interferon (IFN)\u2010\u03b3 and ensuing response to intracellular pathogens following IL\u201012 and IL\u201018 stimulation [ 18 ,  25 ]. Owing to their similarities with cytotoxic NK cells, ILC1s express NKp46, however tissue\u2010specific distinctions can be made between these two subsets via the preferential expression of CD49a and/or TRAIL by ILC1, in conjunction with the absence of CD11b and CD49b [ 3 ,  18 ,  25 ].\n\nILC2s represent the most abundant subset of ILCs in mouse lungs [ 5 ] and are dependent on the expression of GATA\u20103 for maintenance and survival [ 26 ,  27 ]. Analogous to their Th2 counterparts, ILC2s play a key role in controlling helminth infection [ 26 ,  28 ,  29 ], while perpetuating allergen\u2010induced allergic inflammation [ 30 ,  31 ,  32 ,  33 ] via the production of IL\u20105 and IL\u201013 in response to alarmins IL\u201033, IL\u201025, and thymic stromal lymphopoietin (TSLP). Given their extensive roles in both immunity and inflammation, ILC2s are known to display dynamic expression of extracellular markers associated with pro\u2010inflammatory functions, exemplified via variations in IL\u201033 receptor (ST2) and KLRG1 expression depending on the inflammatory signal initiating the primary response [ 13 ,  34 ,  35 ]. Moreover, the inflammation\u2010dependent plasticity of ILC2s has been demonstrated in both mouse lungs and human peripheral blood, whereby stimulation with IL\u20101\u03b2, IL\u201012, and IL\u201018 promotes ILC2s to adopt an ILC1\u2010like transcriptional and functional profile associated with the expression of T\u2010bet ( Tbx21 ) and production of IFN\u2010\u03b3 [ 5 ,  6 ,  34 ,  36 ]. Similarly, human ILC2s, in response to IL\u20101\u03b2 and IL\u201023 stimulation, transdifferentiate into a subset exhibiting ILC3\u2010like characteristics, evidenced by upregulation of the ILC3 signature transcription factor ROR\u03b3t and production of IL\u201017 [ 8 ,  37 ].\n\nILC3s are a heterogeneous subset and contribute broad roles in combating against extracellular microbes, including fungi and bacteria, via the production of IL\u201017A and IL\u201022 following IL\u20101\u03b2 and IL\u201023\u2010mediated activation [ 38 ,  39 ,  40 ]. Representing the dominant ILC subset within the steady state siLP [ 41 ], ILC3s are strictly reliant upon ROR\u03b3t (encoded by  Rorc ) expression for development and function [ 39 ,  42 ,  43 ]. However, mouse ILC3s can be further classified into three subtypes based on the differential expression of NKp46 and CCR6; namely NKp46 + CCR6 \u2212  (NCR + ), NKp46 \u2212 CCR6 \u2212  (NCR \u2212 ), and NKp46 \u2212 CCR6 +  (CCR6 +  LTi\u2010like) ILC3s [ 42 ,  44 ,  45 ]. Moreover, NCR +  ILC3s share transcriptional expression of T\u2010bet with ILC1s, crucial for their expression of NKp46 and endowing them with the ability to produce IFN\u2010\u03b3 [ 46 ,  47 ]. Furthermore, stimulation of mouse tissue\u2010specific NCR +  ILC3s with IL\u201012 promotes downregulation of ROR\u03b3t and concomitant upregulation of T\u2010bet, further promoting a phenotype associated with IFN\u2010\u03b3 +  ILC1s [ 4 ] and demonstrating their plasticity in response to environmental cues.\n\nGating strategy to characterize innate lymphoid cell (ILC) populations and their subset\u2010specific cytokine and proliferative profiles. After exclusion of cellular debris, doublets, red blood cell contamination and non\u2010viable CD45 +/\u2212  cells, viable CD45 +  leukocytes (A) were gated on IL\u20107R\u03b1 and lineage (CD3, CD4, CD5, CD11b, CD11c, CD19, B220, F4/80, Fc\u03b5R1, Gr1, TCR\u03b2, TCR\u03b3\u03b4, Ter119; Lin) negative cells to identify ILCs (B). ILCPs were then identified as IL\u201018R\u03b1 + PLZF +  cells (C). Characterization of ILC1, ILC2, NCR + , NCR \u2212  and CCR6 +  LTi\u2010like ILC3 subsets in the lung (D) and siLP (E). All samples in panel (A\u2013E) were ex vivo stimulated for 5\u00a0h with PMA/Ionomycin/BFA. Single cell suspensions were ex vivo stimulated for 5\u00a0h with PMA/Ionomycin/BFA and either IL\u201012 and IL\u201018 (pro\u2010ILC1), IL\u201033 (pro\u2010ILC2), or IL\u20101\u03b2 and IL\u201023 (pro\u2010ILC3) and ILC subsets were assessed for production of subset\u2010specific cytokines (IFN\u2010\u03b3, IL\u20105, IL\u201013, IL\u201017A, and IL\u201022) and cellular proliferation (Ki\u201067) within the lung (F) and siLP (G). (H) Identification of NK cells within the lung and siLP, with downstream characterization of lung tissue\u2010resident NK (trNK) and circulating NK (cNK) cells. Plots in panel (A\u2013C) are representative of individual lung samples. For panels (B\u2013H), viable leukocytes from three technical lung or siLP replicates were concatenated into single FCS files prior to gating. All fluorochrome\u2010conjugated antibodies were titrated (Figure\u00a0 S1 ) during panel optimization and manual gating was determined using fluorescence minus one controls (Figure\u00a0 S2 ) where necessary [Color figure can be viewed at  wileyonlinelibrary.com ]\n\nIn summary, we present here the first full spectrum flow cytometry panel (Table\u00a0 2 ) to comprehensively profile the phenotypic and functional state of ILCs in multiple mouse tissues. Moreover, by maintaining availability on the 355\u2009nm ultraviolet laser, this panel can be expanded to incorporate additional markers of interest with little impact on the overall Complexity\u2122 Index (a value of how distinct a collection of spectral signatures are from one other when unmixed simultaneously), thereby providing a valuable resource within the rapidly expanding field of ILC biology.",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD45",
+        "fluorophore": "BUV395",
+        "clone": "30\u2010F11",
+        "purpose": "Pan leukocytes"
+      },
+      {
+        "marker": "IL-7R\u03b1",
+        "fluorophore": "PE\u2010Cy5",
+        "clone": "SB/199",
+        "purpose": "Pan ILC"
+      },
+      {
+        "marker": "PLZF",
+        "fluorophore": "PE",
+        "clone": "MAGS21F7",
+        "purpose": "ILCP"
+      },
+      {
+        "marker": "IL-18R\u03b1",
+        "fluorophore": "PerCP\u2010eFluor 710",
+        "clone": "P3TUNYA",
+        "purpose": "ILCP and ILC1"
+      },
+      {
+        "marker": "T-bet",
+        "fluorophore": "BV421",
+        "clone": "4B10",
+        "purpose": "ILC1 and ILC3 subsets"
+      },
+      {
+        "marker": "NKp46",
+        "fluorophore": "PE/Dazzle 594",
+        "clone": "29A1.4",
+        "purpose": "ILC1, ILC3 subsets and NK cells"
+      },
+      {
+        "marker": "CD49a",
+        "fluorophore": "BUV496",
+        "clone": "Ha31/8",
+        "purpose": "ILC1 subsets and trNK cells"
+      },
+      {
+        "marker": "TRAIL",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "N2B2",
+        "purpose": "ILC1 subsets"
+      },
+      {
+        "marker": "IFN-\u03b3",
+        "fluorophore": "BUV737",
+        "clone": "XMG1.2",
+        "purpose": "ILC1 and NK cells"
+      },
+      {
+        "marker": "GATA-3",
+        "fluorophore": "BB700",
+        "clone": "L50\u2010823",
+        "purpose": "ILC2"
+      },
+      {
+        "marker": "KLRG1",
+        "fluorophore": "BV480",
+        "clone": "2F1",
+        "purpose": "ILC2"
+      },
+      {
+        "marker": "ST2",
+        "fluorophore": "R718",
+        "clone": "U29\u201093",
+        "purpose": "ILC2"
+      },
+      {
+        "marker": "IL-5",
+        "fluorophore": "APC",
+        "clone": "TRFK5",
+        "purpose": "ILC2"
+      },
+      {
+        "marker": "IL-13",
+        "fluorophore": "eFluor 450",
+        "clone": "eBio13A",
+        "purpose": "ILC2"
+      },
+      {
+        "marker": "ROR\u03b3t",
+        "fluorophore": "BV786",
+        "clone": "Q31\u2010378",
+        "purpose": "ILC3"
+      },
+      {
+        "marker": "CCR6",
+        "fluorophore": "BV711",
+        "clone": "140706",
+        "purpose": "ILC3 subsets"
+      },
+      {
+        "marker": "IL-17A",
+        "fluorophore": "BV650",
+        "clone": "TC11\u201018H10.1",
+        "purpose": "ILC3"
+      },
+      {
+        "marker": "IL-22",
+        "fluorophore": "Alexa Fluor 647",
+        "clone": "Poly5164",
+        "purpose": "ILC3"
+      },
+      {
+        "marker": "CD49b",
+        "fluorophore": "eFluor 506",
+        "clone": "DX5",
+        "purpose": "NK cells"
+      },
+      {
+        "marker": "Ki-67",
+        "fluorophore": "Alexa Fluor 532",
+        "clone": "SolA15",
+        "purpose": "Proliferating cells"
+      },
+      {
+        "marker": "B220",
+        "fluorophore": "FITC",
+        "clone": "RA3\u20106B2",
+        "purpose": "B cell subsets (Lin dump)"
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "FITC",
+        "clone": "145\u20102C11",
+        "purpose": "T cell subsets (Lin dump)"
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "FITC",
+        "clone": "GK1.5",
+        "purpose": "T cell subsets (Lin dump)"
+      },
+      {
+        "marker": "CD5",
+        "fluorophore": "FITC",
+        "clone": "53\u20107.3",
+        "purpose": "T cell and B cell subsets (Lin dump)"
+      },
+      {
+        "marker": "CD11b",
+        "fluorophore": "FITC",
+        "clone": "M1/70",
+        "purpose": "Myeloid/NK/Granulocytes (Lin dump)"
+      },
+      {
+        "marker": "CD11c",
+        "fluorophore": "FITC",
+        "clone": "N418",
+        "purpose": "Myeloid cells/Granulocytes (Lin dump)"
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "FITC",
+        "clone": "1D3/CD19",
+        "purpose": "B cell subsets (Lin dump)"
+      },
+      {
+        "marker": "F4/80",
+        "fluorophore": "FITC",
+        "clone": "BM8",
+        "purpose": "Macrophages (Lin dump)"
+      },
+      {
+        "marker": "Fc\u03b5R1\u03b1",
+        "fluorophore": "FITC",
+        "clone": "MAR\u20101",
+        "purpose": "Mast cells and Basophils (Lin dump)"
+      },
+      {
+        "marker": "Gr-1",
+        "fluorophore": "FITC",
+        "clone": "RB6\u201085C",
+        "purpose": "Myeloid cells/Granulocytes (Lin dump)"
+      },
+      {
+        "marker": "TCR\u03b2",
+        "fluorophore": "FITC",
+        "clone": "H57\u2010597",
+        "purpose": "\u03b1\u03b2 T\u2010cells (Lin dump)"
+      },
+      {
+        "marker": "TCR\u03b3\u03b4",
+        "fluorophore": "FITC",
+        "clone": "UC7\u201013D5",
+        "purpose": "\u03b3\u03b4 T\u2010cells (Lin dump)"
+      },
+      {
+        "marker": "Ter119",
+        "fluorophore": "FITC",
+        "clone": "TER\u2010119",
+        "purpose": "Red blood cells (Lin dump)"
+      },
+      {
+        "marker": "Dead cells",
+        "fluorophore": "LIVE/DEAD\u2122 Blue",
+        "clone": "\u2010",
+        "purpose": "Viable cells"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "root",
+      "is_critical": true,
+      "children": [
+        {
+          "name": "Cells (Debris Exclusion)",
+          "markers": [
+            "FSC",
+            "SSC"
+          ],
+          "marker_logic": "FSC-A vs SSC-A",
+          "gate_type": "scatter",
+          "is_critical": true,
+          "children": [
+            {
+              "name": "Singlets",
+              "markers": [
+                "FSC-A",
+                "FSC-H"
+              ],
+              "marker_logic": "FSC-A vs FSC-H",
+              "gate_type": "scatter",
+              "is_critical": true,
+              "children": [
+                {
+                  "name": "Ter119- (RBC exclusion)",
+                  "markers": [
+                    "Ter119"
+                  ],
+                  "marker_logic": "Ter119-",
+                  "gate_type": "lineage",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "Live Cells",
+                      "markers": [
+                        "Dead cells"
+                      ],
+                      "marker_logic": "Viability dye-",
+                      "gate_type": "viability",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "CD45+ Leukocytes",
+                          "markers": [
+                            "CD45"
+                          ],
+                          "marker_logic": "CD45+",
+                          "gate_type": "lineage",
+                          "is_critical": true,
+                          "children": [
+                            {
+                              "name": "ILCs (Lin- IL-7R\u03b1+)",
+                              "markers": [
+                                "IL-7R\u03b1",
+                                "CD3",
+                                "CD4",
+                                "CD5",
+                                "CD11b",
+                                "CD11c",
+                                "CD19",
+                                "B220",
+                                "F4/80",
+                                "Fc\u03b5R1\u03b1",
+                                "Gr-1",
+                                "TCR\u03b2",
+                                "TCR\u03b3\u03b4",
+                                "Ter119"
+                              ],
+                              "marker_logic": "IL-7R\u03b1+ Lin- (CD3- CD4- CD5- CD11b- CD11c- CD19- B220- F4/80- Fc\u03b5R1\u03b1- Gr-1- TCR\u03b2- TCR\u03b3\u03b4- Ter119-)",
+                              "gate_type": "lineage",
+                              "is_critical": true,
+                              "children": [
+                                {
+                                  "name": "ILCPs",
+                                  "markers": [
+                                    "IL-18R\u03b1",
+                                    "PLZF"
+                                  ],
+                                  "marker_logic": "IL-18R\u03b1+ PLZF+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "ILC1",
+                                  "markers": [
+                                    "T-bet",
+                                    "GATA-3",
+                                    "ROR\u03b3t"
+                                  ],
+                                  "marker_logic": "T-bet+ GATA-3- ROR\u03b3t-",
+                                  "gate_type": "subset",
+                                  "is_critical": true,
+                                  "children": [
+                                    {
+                                      "name": "IFN-\u03b3+ ILC1",
+                                      "markers": [
+                                        "IFN-\u03b3"
+                                      ],
+                                      "marker_logic": "IFN-\u03b3+",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "Ki-67+ ILC1 (Proliferating)",
+                                      "markers": [
+                                        "Ki-67"
+                                      ],
+                                      "marker_logic": "Ki-67+",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "ILC2",
+                                  "markers": [
+                                    "GATA-3",
+                                    "T-bet",
+                                    "ROR\u03b3t"
+                                  ],
+                                  "marker_logic": "GATA-3+ T-bet- ROR\u03b3t-",
+                                  "gate_type": "subset",
+                                  "is_critical": true,
+                                  "children": [
+                                    {
+                                      "name": "ST2+ ILC2",
+                                      "markers": [
+                                        "ST2"
+                                      ],
+                                      "marker_logic": "ST2+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "KLRG1+ ILC2",
+                                      "markers": [
+                                        "KLRG1"
+                                      ],
+                                      "marker_logic": "KLRG1+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "IL-5+ ILC2",
+                                      "markers": [
+                                        "IL-5"
+                                      ],
+                                      "marker_logic": "IL-5+",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "IL-13+ ILC2",
+                                      "markers": [
+                                        "IL-13"
+                                      ],
+                                      "marker_logic": "IL-13+",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "Ki-67+ ILC2 (Proliferating)",
+                                      "markers": [
+                                        "Ki-67"
+                                      ],
+                                      "marker_logic": "Ki-67+",
+                                      "gate_type": "functional",
+                                      "is_critical": false,
+                                      "children": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "ILC3",
+                                  "markers": [
+                                    "ROR\u03b3t",
+                                    "GATA-3"
+                                  ],
+                                  "marker_logic": "ROR\u03b3t+ GATA-3-",
+                                  "gate_type": "subset",
+                                  "is_critical": true,
+                                  "children": [
+                                    {
+                                      "name": "NCR+ ILC3",
+                                      "markers": [
+                                        "NKp46",
+                                        "CCR6"
+                                      ],
+                                      "marker_logic": "NKp46+ CCR6-",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "IL-22+ NCR+ ILC3",
+                                          "markers": [
+                                            "IL-22"
+                                          ],
+                                          "marker_logic": "IL-22+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "IL-17A+ NCR+ ILC3",
+                                          "markers": [
+                                            "IL-17A"
+                                          ],
+                                          "marker_logic": "IL-17A+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Ki-67+ NCR+ ILC3 (Proliferating)",
+                                          "markers": [
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "Ki-67+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "NCR- ILC3",
+                                      "markers": [
+                                        "NKp46",
+                                        "CCR6"
+                                      ],
+                                      "marker_logic": "NKp46- CCR6-",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "IL-22+ NCR- ILC3",
+                                          "markers": [
+                                            "IL-22"
+                                          ],
+                                          "marker_logic": "IL-22+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "IL-17A+ NCR- ILC3",
+                                          "markers": [
+                                            "IL-17A"
+                                          ],
+                                          "marker_logic": "IL-17A+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Ki-67+ NCR- ILC3 (Proliferating)",
+                                          "markers": [
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "Ki-67+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "CCR6+ LTi-like ILC3",
+                                      "markers": [
+                                        "NKp46",
+                                        "CCR6"
+                                      ],
+                                      "marker_logic": "NKp46- CCR6+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "IL-22+ CCR6+ LTi-like ILC3",
+                                          "markers": [
+                                            "IL-22"
+                                          ],
+                                          "marker_logic": "IL-22+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "IL-17A+ CCR6+ LTi-like ILC3",
+                                          "markers": [
+                                            "IL-17A"
+                                          ],
+                                          "marker_logic": "IL-17A+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Ki-67+ CCR6+ LTi-like ILC3 (Proliferating)",
+                                          "markers": [
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "Ki-67+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "NK Cells",
+                              "markers": [
+                                "NKp46",
+                                "CD49b",
+                                "IL-7R\u03b1"
+                              ],
+                              "marker_logic": "NKp46+ CD49b+ IL-7R\u03b1-",
+                              "gate_type": "lineage",
+                              "is_critical": true,
+                              "children": [
+                                {
+                                  "name": "Tissue-resident NK (trNK)",
+                                  "markers": [
+                                    "CD49a",
+                                    "CD49b"
+                                  ],
+                                  "marker_logic": "CD49a+ CD49b-",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": [
+                                    {
+                                      "name": "TRAIL+ trNK",
+                                      "markers": [
+                                        "TRAIL"
+                                      ],
+                                      "marker_logic": "TRAIL+",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "Circulating NK (cNK)",
+                                  "markers": [
+                                    "CD49a",
+                                    "CD49b"
+                                  ],
+                                  "marker_logic": "CD49a- CD49b+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "IFN-\u03b3+ NK Cells",
+                                  "markers": [
+                                    "IFN-\u03b3"
+                                  ],
+                                  "marker_logic": "IFN-\u03b3+",
+                                  "gate_type": "functional",
+                                  "is_critical": false,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 34 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 9408 chars of gating text from body"
+    ]
+  }
+}

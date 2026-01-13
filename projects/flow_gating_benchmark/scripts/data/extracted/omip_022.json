@@ -1,0 +1,142 @@
+{
+  "test_case_id": "OMIP-022",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-022",
+  "doi": "10.1002/cyto.a.22478",
+  "pmc_id": "PMC4231567",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Cryopreserved PBMC (adult and infant)",
+    "species": "human",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Example staining of adult human PBMC following stimulation. (A) The first two rows demonstrate the gating hierarchy from total sample to CD4/CD8 identification. A time gate is used to exclude pressure aberrations from the cytometer that may have occurred during sample acquisition. Aggregate gates are used to exclude brightly positive events that may result from antibody or cell aggregation. The bottom row demonstrates gating for cytokines and functions from CD4+ (top half) and CD8+ (bottom half) events resulting from stimulation with  Staphylococcal enterotoxin B . Note that IL-17A and CD154 were gated on the same plot to avoid mischaracterization resulting from the increased spectral overlap observed from their fluorochromes. (B) Example plots showing memory profile of CCR7 versus CD45RO in CD4+ and CD8+ populations. Using CMV pp65 peptide pool-stimulated PBMC from a CMV-reactive donor, IFN-\u03b3+ events (blue) were overlaid onto these plots (gray), confirming localization of these events to the effector memory and effector compartments.",
+    "full_text_gating": "Th1 cytokines have been shown to be critical for controlling TB  3 \u2013 9 . To assess Th1 responses, we utilize antibodies against tumor necrosis factor (TNF) and IFN-\u03b3. In designing this panel, we moved TNF to PE-Cy7 to improve detection of this cytokine, as fluorescein isothiocyanate (FITC) is comparatively dimmer and more prone to photobleaching. The recently introduced Brilliant Violet series of fluorochromes represents a bright and economical set of tools for detecting markers via the violet laser. Brilliant Violet 421 (BV421) was previously shown to be of similar brightness to PE  10 , and was initially chosen as a replacement fluorochrome for IFN-\u03b3. However, further investigation showed that any increase in antigen-specific response detected using the BV421 conjugate was matched with a significant increase in IFN-\u03b3 background. This increased background was observed using both the B27 (BD Biosciences, San Jose, CA) and the 4S.B3 (Biolegend, San Diego, CA) clones. When this background population was excluded from the IFN-\u03b3 gate of the BV421 conjugates, the responses detected using either the BV421 conjugates or the V450 conjugate were similar. This issue, combined with the increased cost of the reagent, led us to choose to continue to use the V450 conjugate for IFN-\u03b3 detection in this panel.\n\nAs an effect of changing CD8 to Ax700, a reduction in CD8+ events [perhaps an escapee phenomenon  23 ] was noted using Ax700 to detect CD8, but was mitigated by staining for CD8 intracellularly.\n\nExample staining of adult human PBMC following stimulation. (A) The first two rows demonstrate the gating hierarchy from total sample to CD4/CD8 identification. A time gate is used to exclude pressure aberrations from the cytometer that may have occurred during sample acquisition. Aggregate gates are used to exclude brightly positive events that may result from antibody or cell aggregation. The bottom row demonstrates gating for cytokines and functions from CD4+ (top half) and CD8+ (bottom half) events resulting from stimulation with  Staphylococcal enterotoxin B . Note that IL-17A and CD154 were gated on the same plot to avoid mischaracterization resulting from the increased spectral overlap observed from their fluorochromes. (B) Example plots showing memory profile of CCR7 versus CD45RO in CD4+ and CD8+ populations. Using CMV pp65 peptide pool-stimulated PBMC from a CMV-reactive donor, IFN-\u03b3+ events (blue) were overlaid onto these plots (gray), confirming localization of these events to the effector memory and effector compartments.",
+    "cross_references": [
+      "OMIP-001",
+      "OMIP-008",
+      "OMIP-009",
+      "OMIP-014"
+    ],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "Viability Dye",
+        "fluorophore": "AViD",
+        "clone": "\u2013",
+        "purpose": "Dump"
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "V500",
+        "clone": "M5E2",
+        "purpose": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "V500",
+        "clone": "HIB19",
+        "purpose": null
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "ECD",
+        "clone": "UCHT1",
+        "purpose": "Phenotype"
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "APC-eFluor 780",
+        "clone": "RPA-T4",
+        "purpose": null
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "Ax700",
+        "clone": "HIT8a",
+        "purpose": null
+      },
+      {
+        "marker": "CCR7",
+        "fluorophore": "BV605",
+        "clone": "G043H7",
+        "purpose": "Memory"
+      },
+      {
+        "marker": "CD45RO",
+        "fluorophore": "BV785",
+        "clone": "UCHL1",
+        "purpose": null
+      },
+      {
+        "marker": "IFN-\u03b3",
+        "fluorophore": "V450",
+        "clone": "B27",
+        "purpose": "Th1"
+      },
+      {
+        "marker": "IL-2",
+        "fluorophore": "PE",
+        "clone": "MQ1\u201317H12",
+        "purpose": null
+      },
+      {
+        "marker": "TNF",
+        "fluorophore": "PE-Cy7",
+        "clone": "MAb11",
+        "purpose": null
+      },
+      {
+        "marker": "IL-17A",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": "BL168",
+        "purpose": "Th17"
+      },
+      {
+        "marker": "IL-22",
+        "fluorophore": "APC",
+        "clone": "IL22JOP",
+        "purpose": "Th22"
+      },
+      {
+        "marker": "CD107a",
+        "fluorophore": "Ax488",
+        "clone": "H4A3",
+        "purpose": "Degranulation"
+      },
+      {
+        "marker": "CD154",
+        "fluorophore": "PE-Cy5",
+        "clone": "TRAP1",
+        "purpose": "Activation/B-Cell Help"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "Unknown",
+      "children": [],
+      "is_critical": true
+    },
+    "_extraction_note": "Hierarchy needs manual curation from gating_description"
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 15 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 2562 chars of gating text from body"
+    ]
+  }
+}

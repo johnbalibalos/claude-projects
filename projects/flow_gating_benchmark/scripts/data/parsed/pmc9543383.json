@@ -1,0 +1,606 @@
+{
+  "test_case_id": "PMC9543383",
+  "source_type": "omip_paper",
+  "omip_id": null,
+  "doi": "10.1002/cyto.a.24509",
+  "pmc_id": "PMC9543383",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Splenocytes",
+    "species": "mouse",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Cell cycle analysis of mouse T cell subsets. Example of analysis of spleen cells from a 3\u2010months old C57BL/6J mouse, using manual gating strategy. (A) Refined gating of viable single cells from the spleen in five steps: (1) DNA singlets. Single cells having 2n\u2009\u2264\u2009DNA content \u22644n were selected on the Hoechst\u201033342 area (A) versus (vs) Hoechst\u201033342 width (W) plot; (2) time exclusion. Stable acquisition over time (seconds) was monitored on the time vs Hoechst\u201033342\u2010A plot and any events collected in case of pressure fluctuations were excluded; (3) viable cells. Live cells were selected using FSC\u2010A vs eFluor 780 (eF780) viability dye; (4) FSC/SSC \u201crelaxed\u201d gate. A \u201crelaxed\u201d gate was used on the FSC\u2010A vs SSC\u2010A plot, to include highly activated and cycling lymphocytes [ 19 ]; (5) refined singlets. A few remaining doublets composed by one cell sitting on top of another (so called \u201cshadow\u201d doublets) were excluded as Ki\u201067 int / \u2212  events having >2n DNA content [ 20 ]. This gating strategy was used as a base for the subsequent gates. (B) CD3 +  T cells were gated on CD3\u2010A vs Ki\u201067\u2010A plot, then CD4 +  and CD8 +  T cells on CD4\u2010A vs CD8\u2010A plot. CD4 +  Treg cells were distinguished based on their FoxP3 expression from conventional FoxP3 \u2212  CD4 +  T cells. Subsequently, the following na\u00efve/memory subsets of conventional CD4 +  T cells were identified: CD44 int/low CD62L +  na\u00efve, CD44 high CD62L +  central memory (CM), CD44 high CD62L \u2212  effector memory (EM), and CD44 int/low CD62L \u2212  EMRA. Similarly, na\u00efve/memory subsets were identified among CD8 +  T cells. (C) Cell cycle phases of Treg cells and of na\u00efve/memory CD4 +  and CD8 +  T cell subsets were defined on Hoechst\u201033342\u2010A vs Ki67\u2010A plot as follows: Cells in G 0  were identified as DNA 2n/ Ki67 \u2212  (bottom left quadrant); cells in G 1  as DNA 2n/ Ki67 +  (upper left quadrant); cells in S\u2010G 2 /M as DNA\u2009>\u20092n/ Ki67 +  (top right quadrant) [Color figure can be viewed at  wileyonlinelibrary.com ]",
+    "full_text_gating": "The periodicity of cell proliferation is a fundamental aspect of biology that, for example, discriminates neural stem cells from terminally differentiated neurons. Likewise, it is a key feature of adaptive immunity that depends upon clonal expansion of primed T and B cells with appropriate antigen specificity, thereupon generating a vast progeny of short\u2010lived effector cells and a few long\u2010lived memory cells. There are two main subsets of T cells, CD4 +  and CD8 +  T cells, having a predominant helper and cytotoxic effector function, respectively. Maintenance of memory CD4 +  and CD8 +  T cells over time is a dynamic process, relying on a fine equilibrium among cell death, survival, and low level of homeostatic proliferation [ 1 ,  2 ]. Under steady\u2010state conditions, most T cells in the spleen of untreated mice are quiescent cells, although a tiny proportion divides, possibly reflecting immune responses to unknown environmental antigens and/or cytokine\u2010driven homeostatic proliferation. Such cell cycling in the absence of intentional immunization is more prominent among the so\u2010called memory\u2010phenotype T cells, that share a set of membrane markers with antigen\u2010primed T cells [ 3 ]. Furthermore, some Treg cells (a subset of CD4 +  T cells with regulatory function defined by the expression of the transcription factor FoxP3 [ 4 ]) have an activated/proliferative phenotype, possibly reflecting continuous self\u2010renewal in adult mice [ 5 ].\n\nIn fact, memory\u2010phenotype T cells comprise a heterogeneous pool of cells of undefined antigen\u2010specificity, that are considered to include T cells primed by environmental antigens, as well as some antigen\u2010inexperienced T cells having self\u2010ligand\u2010 and/or cytokine\u2010dependent development [ 6 ,  7 ]. In C57BL/6 mice memory\u2010phenotype T cells have a high expression of CD44, an adhesion molecule that binds to hyaluronic acid, and can thus be distinguished from na\u00efve\u2010phenotype T cells, that have an intermediate/low CD44 expression [ 6 ]. Similarly, in humans na\u00efve and memory\u2010phenotype T cells can be identified by high and low expression of CD45RA, respectively [ 8 ].\n\nProliferative potential is one of the features that, together with lymph node (LN) homing capabilities, and effector function, differentiates additional subsets among memory T cells. Thus, central memory (CM) T cells have a LN homing receptor typically expressed by na\u00efve T cells, specifically CD62L, also named L\u2010selectin, a glycan receptor [ 9 ], whereas effector memory (EM) T cells lack it [ 10 ]. According to this classification, originally proposed for human blood T cells using CCR7, the chemokine receptor for CCL19/CCL21, as a marker [ 11 ], T CM are LN\u2010homing cells with high potential to expand after stimulation, while T EM cells are tissue\u2010homing cells able to display rapid effector function [ 12 ,  13 ]. An additional subset, the T EMRA cells, comprises effector memory T cells that re\u2010acquire a na\u00efve phenotype (CD45RA +  in humans, CD44 int/low  in mice). Based on this, the following four na\u00efve/memory T cell subsets can be identified among mouse CD4 +  and CD8 +  T cells: CD44 int/low  CD62L +  na\u00efve, CD44 high  CD62L +  CM, CD44 high  CD62L \u2212  EM, and CD44 int/low  CD62L \u2212  EMRA [ 10 ,  14 ].\n\nWhile identification of memory T cells with high proliferative potential can impact the success of adoptive transfers [ 15 ], accurate measurement of in vivo proliferation is essential to track the dynamics of T cell responses [ 16 ]. Proliferation of mouse T cells has been measured by a few cytofluorimetric methods, that can be divided into \u201cstatic\u201d\u2014that is, those which provide a snapshot of the cell cycle phases at the time of analysis\u2014and \u201cdynamic,\u201d that is, those which give information on the proliferation that occurred over a few hours or days prior to the analysis. The most widely used \u201cstatic\u201d method relies on the Ki\u201067 marker, an intranuclear protein that supports chromosome architecture organization, and nucleus and nucleolar assembly after cell division [ 17 ,  18 ]. However, Ki\u201067 is expressed by cells in any phase of cell cycle (i.e., in G 1 , S, G 2 , M), while it is only low or absent in quiescent cells (i.e., in G 0  state). The \u201cdynamic\u201d methods include carboxyfluorescein succinimidyl ester (CFSE) and Bromodeoxyuridine (BrdU) labelling, which identify proliferating cells that have undergone cell division and S\u2010phase, respectively [ 2 ]. We chose to combine Ki\u201067 staining and DNA content analysis, thereby to distinguish between cells in G 1  and those in S\u2010G 2 /M phases of cell cycle, a discrimination that is relevant to the proliferative fate of the cell. Indeed, cells in S are duplicating their DNA and are committed to proceed into G 2 /M and divide. In contrast, cells that are in G 1  might proceed into S\u2010G 2 /M, return to G 0 , or stay in G 1  for a prolonged period. Thus, Ki\u201067 +  cells might not be actively proliferating if they are in G 1  phase or are returning to G 0 . For example, this might be the case for antigen\u2010specific T cell progeny at the end of clonal expansion [ 19 ].\n\nIn this OMIP, we offer a staining panel for ex vivo cell cycle analysis of CD4 +  and CD8 +  na\u00efve/memory\u2010phenotype T cell subsets, and of Treg cells from mouse spleen, using Ki\u201067/DNA dual staining to distinguish cells in G 0 , G 1 , and S\u2010G 2 /M (Table\u00a0 1 ; Figure\u00a0 1 ). Panel optimization and protocol details are reported in the online  Supporting Information . We used standard markers for T cell subset identification. CD3 expression was used to identify T cells, and the mutually exclusive expression of CD4 and CD8 to distinguish CD4 +  and CD8 +  T cells, respectively. Treg cells were identified among CD4 +  T cells based on their expression of the intranuclear protein FoxP3, and by this marker distinguished from conventional CD4 +  T cells, that is, FoxP3 \u2212  CD3 +  CD4 +  CD8 \u2212  cells. CD4 +  and CD8 +  na\u00efve/memory T cell subsets were subsequently identified among conventional CD4 +  and CD8 +  T cells, respectively. The four classical na\u00efve/memory subsets were defined based on their CD62L and CD44 membrane phenotype (see above). For each T cell subset, cells in G 0 , G 1 , and S\u2010G 2 /M were discriminated based on Ki\u201067 and DNA staining (Table\u00a0 2 ; Figure\u00a0 1 ).\n\nCell cycle analysis of mouse T cell subsets. Example of analysis of spleen cells from a 3\u2010months old C57BL/6J mouse, using manual gating strategy. (A) Refined gating of viable single cells from the spleen in five steps: (1) DNA singlets. Single cells having 2n\u2009\u2264\u2009DNA content \u22644n were selected on the Hoechst\u201033342 area (A) versus (vs) Hoechst\u201033342 width (W) plot; (2) time exclusion. Stable acquisition over time (seconds) was monitored on the time vs Hoechst\u201033342\u2010A plot and any events collected in case of pressure fluctuations were excluded; (3) viable cells. Live cells were selected using FSC\u2010A vs eFluor 780 (eF780) viability dye; (4) FSC/SSC \u201crelaxed\u201d gate. A \u201crelaxed\u201d gate was used on the FSC\u2010A vs SSC\u2010A plot, to include highly activated and cycling lymphocytes [ 19 ]; (5) refined singlets. A few remaining doublets composed by one cell sitting on top of another (so called \u201cshadow\u201d doublets) were excluded as Ki\u201067 int / \u2212  events having >2n DNA content [ 20 ]. This gating strategy was used as a base for the subsequent gates. (B) CD3 +  T cells were gated on CD3\u2010A vs Ki\u201067\u2010A plot, then CD4 +  and CD8 +  T cells on CD4\u2010A vs CD8\u2010A plot. CD4 +  Treg cells were distinguished based on their FoxP3 expression from conventional FoxP3 \u2212  CD4 +  T cells. Subsequently, the following na\u00efve/memory subsets of conventional CD4 +  T cells were identified: CD44 int/low CD62L +  na\u00efve, CD44 high CD62L +  central memory (CM), CD44 high CD62L \u2212  effector memory (EM), and CD44 int/low CD62L \u2212  EMRA. Similarly, na\u00efve/memory subsets were identified among CD8 +  T cells. (C) Cell cycle phases of Treg cells and of na\u00efve/memory CD4 +  and CD8 +  T cell subsets were defined on Hoechst\u201033342\u2010A vs Ki67\u2010A plot as follows: Cells in G 0  were identified as DNA 2n/ Ki67 \u2212  (bottom left quadrant); cells in G 1  as DNA 2n/ Ki67 +  (upper left quadrant); cells in S\u2010G 2 /M as DNA\u2009>\u20092n/ Ki67 +  (top right quadrant) [Color figure can be viewed at  wileyonlinelibrary.com ]\n\nThis OMIP can be exploited for in depth\u2010analysis of T cell cycle in conditions characterized by altered proportions, numbers and proliferative state of spleen T cell subsets, for example in aged mice having higher percentages of memory CD4 +  and CD8 +  T cells, with or without oligoclonal expansion [ 21 ,  22 ,  23 ]; in lymphopenic mice having compensatory T cell proliferation [ 24 ]; or in genetically modified mice with abnormal Treg cells representation [ 25 ]. Furthermore, this panel may be instrumental in identifying hitherto overlooked changes in Treg and/or na\u00efve/memory T cell subset cycling in a variety of settings such as vaccination, infection, autoimmunity, and cancer.\n\nOMIP\u2010031 and \u2010032 examined na\u00efve/memory T cells, with different purposes. OMIP\u2010031 used a combination of CD44, CD62L, CD27, CD45RA for T cell subset definition, plus a panel of activation and exhaustion markers, with the aim to analyze inhibitor checkpoint expression. OMIP\u2010032 was designed for assessing innate and adaptive immune subsets from mouse organs, including na\u00efve/memory T cell subsets, that were identified based on CD44 and CD62L expression. OMIP\u2010032 did not include any analysis of proliferation or cell cycle.\n\nFigure S5  Fluorescence Minus One (FMOs). FMOs were used as quality controls for assessment of the accuracy of gates used to identify cell populations in Figure 1B and C. The following FMO plots are represented: (A) Ki\u201067; (B) CD3; (C) CD4; (D) CD8; (E) FoxP3; (F) CD44; (G) CD62L. Please, note that the CD44 int/low  and CD44 high  populations were defined based on the level of expression of CD44, rather than on the FMO control.\n\nFigure S6  eF780 staining control. Freshly obtained spleen cells were stained with eF780, then either incubated with surface mAbs as in Figure 1 or not (gray filled circles). In parallel, spleen cells were either incubated with surface mAbs as in Figure 1 or not, then stained with eF780 (black filled triangles). All samples were then fixed and permeabilized according to our protocol. Surface mAb stained samples were stained with intracellular mAbs as in Figure 1 (Full stained), while the remaining samples were not (no mAbs). Finally, all samples were incubated with Hoechst. The percentage of viable cells was determined using the gating strategy shown in Figure 1. The panel summarizes the results of 4 independent experiments. Mean values and Standard Deviations are represented. Statistical analysis was performed using Friedman test with Dunn's multiple comparison (* P \u2009<\u20090.05).\n\nFigure S7  Antibody titration on spleen cells stained with eF780 and Hoechst. Six or eight 2\u2010fold dilutions were tested for each antibody. Titration of CD4 PerCp\u2010Cy5.5, CD4 BUV737, CD8 BUV805, CD8 PE\u2010Cy5 and CD8 PE\u2010Cy7 was performed on CD3 FITC co\u2010stained cells. The concentration is shown on the x\u2010axis in \u03bcg/ml (final concentration, in a total staining volume of 50\u2009\u03bcl). For each antibody titration, concatenated files were represented (top), and SI and percentage of positive cells plotted (bottom), as in Online Figure 3. The concentration with maximal or near maximal percentage of positive cells and high SI was chosen. The chosen titer is highlighted with a red frame (top) and a red font (bottom). The mAbs in this figure were not included in the final panel (reason for exclusion in Online Table 3).\n\nFigure S8  Alternative options for Ki67 and FoxP3 mAbs. Freshly obtained spleen cells were stained using either mAbs and reagents of this OMIP panel (A) or a modified panel to test the following mAbs (indicated in red): (B) Ki\u201067 PE and FoxP3 AF700; (C) Ki\u201067 APC, FoxP3 AF700 and CD44 PE; (D) Ki\u201067 PE\u2010Cy7, FoxP3 AF700, CD44 PE and CD62L APC. Each of these mAbs replaced the corresponding marker\u2010specific mAb in this OMIP panel. Data were analyzed using the gating strategy shown in Figure 1, and representative plots are shown, as indicated. The mAbs in this figure were not included in the final panel (reasons for exclusion in Online Table 3).\n\nFigure S9  Alternative options for CD44 and CD62L mAbs. Freshly obtained spleen cells were stained using either mAbs and reagents of this OMIP panel (A\u2010C), or CD44 PE\u2010Cy7 and CD62L APC (in red) replacing the corresponding marker\u2010specific mAbs in this OMIP panel (D\u2010F). Data were analyzed using the gating strategy shown in Figure 1, and representative plots are shown, as indicated. Fully stained samples are shown in A and D; CD44 FMO controls in B and E; CD62L FMO controls in C and F. Please, note that the CD44 int/low  and CD44 high  populations were defined based on the level of expression of CD44, rather than on the FMO control. CD44 PE\u2010Cy7 and CD62L APC mAbs were not included in the final panel (reasons for exclusion in Online Table 3).\n\nFigure S11  Cell cycle analysis of spleen T cell subsets from a 6\u2010months old C57BL/6J mouse. Example of staining and gating of spleen cells from a 6\u2010months old C57BL/6J mouse, using the same gating strategy as in Figure 1.",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD3",
+        "fluorophore": "FITC",
+        "clone": "145\u20102C11",
+        "purpose": "Pan T cell marker"
+      },
+      {
+        "marker": "CD44",
+        "fluorophore": "APC",
+        "clone": "IM7",
+        "purpose": "Na\u00cfve/Memory subset identification"
+      },
+      {
+        "marker": "Ki-67",
+        "fluorophore": "Alexa Fluor 700",
+        "clone": "SolA15",
+        "purpose": "Quiescence/cell cycle"
+      },
+      {
+        "marker": "Dead cells",
+        "fluorophore": "eFluor 780",
+        "clone": "N/A",
+        "purpose": "Live/Dead cell discrimination"
+      },
+      {
+        "marker": "DNA",
+        "fluorophore": "Hoechst 33342",
+        "clone": "N/A",
+        "purpose": "DNA content/cell cycle"
+      },
+      {
+        "marker": "FoxP3",
+        "fluorophore": "PE",
+        "clone": "FJK\u201016s",
+        "purpose": "Treg identification"
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "PE\u2010CF594",
+        "clone": "RM4\u20105",
+        "purpose": "Helper T cell identification"
+      },
+      {
+        "marker": "CD62L",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "MEL\u201014",
+        "purpose": "Na\u00cfve/Memory subset identification"
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "BV785",
+        "clone": "53\u20106.7",
+        "purpose": "Cytotoxic T cell identification"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "root",
+      "is_critical": true,
+      "children": [
+        {
+          "name": "DNA Singlets",
+          "markers": [
+            "DNA"
+          ],
+          "marker_logic": "2n \u2264 DNA content \u2264 4n",
+          "gate_type": "scatter",
+          "is_critical": true,
+          "children": [
+            {
+              "name": "Time Gate",
+              "markers": [],
+              "marker_logic": "Stable acquisition over time",
+              "gate_type": "scatter",
+              "is_critical": false,
+              "children": [
+                {
+                  "name": "Viable Cells",
+                  "markers": [
+                    "Dead cells"
+                  ],
+                  "marker_logic": "eFluor 780-",
+                  "gate_type": "viability",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "Lymphocytes",
+                      "markers": [
+                        "FSC",
+                        "SSC"
+                      ],
+                      "marker_logic": "FSC-A vs SSC-A relaxed gate",
+                      "gate_type": "scatter",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "Refined Singlets",
+                          "markers": [
+                            "Ki-67",
+                            "DNA"
+                          ],
+                          "marker_logic": "Exclude Ki-67 int/- with >2n DNA (shadow doublets)",
+                          "gate_type": "scatter",
+                          "is_critical": true,
+                          "children": [
+                            {
+                              "name": "CD3+ T cells",
+                              "markers": [
+                                "CD3"
+                              ],
+                              "marker_logic": "CD3+",
+                              "gate_type": "lineage",
+                              "is_critical": true,
+                              "children": [
+                                {
+                                  "name": "CD4+ T cells",
+                                  "markers": [
+                                    "CD4",
+                                    "CD8"
+                                  ],
+                                  "marker_logic": "CD4+ CD8-",
+                                  "gate_type": "lineage",
+                                  "is_critical": true,
+                                  "children": [
+                                    {
+                                      "name": "Treg cells",
+                                      "markers": [
+                                        "FoxP3"
+                                      ],
+                                      "marker_logic": "FoxP3+",
+                                      "gate_type": "subset",
+                                      "is_critical": true,
+                                      "children": [
+                                        {
+                                          "name": "Treg G0",
+                                          "markers": [
+                                            "DNA",
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "DNA 2n Ki-67-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Treg G1",
+                                          "markers": [
+                                            "DNA",
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "DNA 2n Ki-67+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "Treg S-G2/M",
+                                          "markers": [
+                                            "DNA",
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "DNA >2n Ki-67+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "Conventional CD4+ T cells",
+                                      "markers": [
+                                        "FoxP3"
+                                      ],
+                                      "marker_logic": "FoxP3-",
+                                      "gate_type": "subset",
+                                      "is_critical": true,
+                                      "children": [
+                                        {
+                                          "name": "CD4+ Naive",
+                                          "markers": [
+                                            "CD44",
+                                            "CD62L"
+                                          ],
+                                          "marker_logic": "CD44 int/low CD62L+",
+                                          "gate_type": "subset",
+                                          "is_critical": true,
+                                          "children": [
+                                            {
+                                              "name": "CD4+ Naive G0",
+                                              "markers": [
+                                                "DNA",
+                                                "Ki-67"
+                                              ],
+                                              "marker_logic": "DNA 2n Ki-67-",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "CD4+ Naive G1",
+                                              "markers": [
+                                                "DNA",
+                                                "Ki-67"
+                                              ],
+                                              "marker_logic": "DNA 2n Ki-67+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "CD4+ Naive S-G2/M",
+                                              "markers": [
+                                                "DNA",
+                                                "Ki-67"
+                                              ],
+                                              "marker_logic": "DNA >2n Ki-67+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "CD4+ Central Memory",
+                                          "markers": [
+                                            "CD44",
+                                            "CD62L"
+                                          ],
+                                          "marker_logic": "CD44 high CD62L+",
+                                          "gate_type": "subset",
+                                          "is_critical": true,
+                                          "children": [
+                                            {
+                                              "name": "CD4+ CM G0",
+                                              "markers": [
+                                                "DNA",
+                                                "Ki-67"
+                                              ],
+                                              "marker_logic": "DNA 2n Ki-67-",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "CD4+ CM G1",
+                                              "markers": [
+                                                "DNA",
+                                                "Ki-67"
+                                              ],
+                                              "marker_logic": "DNA 2n Ki-67+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "CD4+ CM S-G2/M",
+                                              "markers": [
+                                                "DNA",
+                                                "Ki-67"
+                                              ],
+                                              "marker_logic": "DNA >2n Ki-67+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "CD4+ Effector Memory",
+                                          "markers": [
+                                            "CD44",
+                                            "CD62L"
+                                          ],
+                                          "marker_logic": "CD44 high CD62L-",
+                                          "gate_type": "subset",
+                                          "is_critical": true,
+                                          "children": [
+                                            {
+                                              "name": "CD4+ EM G0",
+                                              "markers": [
+                                                "DNA",
+                                                "Ki-67"
+                                              ],
+                                              "marker_logic": "DNA 2n Ki-67-",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "CD4+ EM G1",
+                                              "markers": [
+                                                "DNA",
+                                                "Ki-67"
+                                              ],
+                                              "marker_logic": "DNA 2n Ki-67+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "CD4+ EM S-G2/M",
+                                              "markers": [
+                                                "DNA",
+                                                "Ki-67"
+                                              ],
+                                              "marker_logic": "DNA >2n Ki-67+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "CD4+ EMRA",
+                                          "markers": [
+                                            "CD44",
+                                            "CD62L"
+                                          ],
+                                          "marker_logic": "CD44 int/low CD62L-",
+                                          "gate_type": "subset",
+                                          "is_critical": true,
+                                          "children": [
+                                            {
+                                              "name": "CD4+ EMRA G0",
+                                              "markers": [
+                                                "DNA",
+                                                "Ki-67"
+                                              ],
+                                              "marker_logic": "DNA 2n Ki-67-",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "CD4+ EMRA G1",
+                                              "markers": [
+                                                "DNA",
+                                                "Ki-67"
+                                              ],
+                                              "marker_logic": "DNA 2n Ki-67+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "CD4+ EMRA S-G2/M",
+                                              "markers": [
+                                                "DNA",
+                                                "Ki-67"
+                                              ],
+                                              "marker_logic": "DNA >2n Ki-67+",
+                                              "gate_type": "functional",
+                                              "is_critical": false,
+                                              "children": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "CD8+ T cells",
+                                  "markers": [
+                                    "CD4",
+                                    "CD8"
+                                  ],
+                                  "marker_logic": "CD4- CD8+",
+                                  "gate_type": "lineage",
+                                  "is_critical": true,
+                                  "children": [
+                                    {
+                                      "name": "CD8+ Naive",
+                                      "markers": [
+                                        "CD44",
+                                        "CD62L"
+                                      ],
+                                      "marker_logic": "CD44 int/low CD62L+",
+                                      "gate_type": "subset",
+                                      "is_critical": true,
+                                      "children": [
+                                        {
+                                          "name": "CD8+ Naive G0",
+                                          "markers": [
+                                            "DNA",
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "DNA 2n Ki-67-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD8+ Naive G1",
+                                          "markers": [
+                                            "DNA",
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "DNA 2n Ki-67+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD8+ Naive S-G2/M",
+                                          "markers": [
+                                            "DNA",
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "DNA >2n Ki-67+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "CD8+ Central Memory",
+                                      "markers": [
+                                        "CD44",
+                                        "CD62L"
+                                      ],
+                                      "marker_logic": "CD44 high CD62L+",
+                                      "gate_type": "subset",
+                                      "is_critical": true,
+                                      "children": [
+                                        {
+                                          "name": "CD8+ CM G0",
+                                          "markers": [
+                                            "DNA",
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "DNA 2n Ki-67-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD8+ CM G1",
+                                          "markers": [
+                                            "DNA",
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "DNA 2n Ki-67+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD8+ CM S-G2/M",
+                                          "markers": [
+                                            "DNA",
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "DNA >2n Ki-67+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "CD8+ Effector Memory",
+                                      "markers": [
+                                        "CD44",
+                                        "CD62L"
+                                      ],
+                                      "marker_logic": "CD44 high CD62L-",
+                                      "gate_type": "subset",
+                                      "is_critical": true,
+                                      "children": [
+                                        {
+                                          "name": "CD8+ EM G0",
+                                          "markers": [
+                                            "DNA",
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "DNA 2n Ki-67-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD8+ EM G1",
+                                          "markers": [
+                                            "DNA",
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "DNA 2n Ki-67+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD8+ EM S-G2/M",
+                                          "markers": [
+                                            "DNA",
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "DNA >2n Ki-67+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "CD8+ EMRA",
+                                      "markers": [
+                                        "CD44",
+                                        "CD62L"
+                                      ],
+                                      "marker_logic": "CD44 int/low CD62L-",
+                                      "gate_type": "subset",
+                                      "is_critical": true,
+                                      "children": [
+                                        {
+                                          "name": "CD8+ EMRA G0",
+                                          "markers": [
+                                            "DNA",
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "DNA 2n Ki-67-",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD8+ EMRA G1",
+                                          "markers": [
+                                            "DNA",
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "DNA 2n Ki-67+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "CD8+ EMRA S-G2/M",
+                                          "markers": [
+                                            "DNA",
+                                            "Ki-67"
+                                          ],
+                                          "marker_logic": "DNA >2n Ki-67+",
+                                          "gate_type": "functional",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 9 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 13202 chars of gating text from body"
+    ]
+  }
+}

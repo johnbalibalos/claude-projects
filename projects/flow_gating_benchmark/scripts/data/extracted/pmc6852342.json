@@ -1,0 +1,167 @@
+{
+  "test_case_id": "PMC6852342",
+  "source_type": "omip_paper",
+  "omip_id": null,
+  "doi": "10.1002/cyto.a.23845",
+  "pmc_id": "PMC6852342",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Hematopoietic stem and precursor cells",
+    "species": "mouse",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Single staining 16 parameter analysis of mouse bone marrow cells. After lysis of the erythrocytes, bone marrow cells were first stained with the life/dead discriminator and then with the indicated fluorochrome conjugated antibodies. ( A ) Basal analysis. First, bone marrow cells were plotted for forward and side scatter. After exclusion of cellular debris, doublets were discriminated from single cells by analyzing the side scatter area and width signals. Subsequently, cells were investigated for the viability using the Fixable NIR Dead Cell Stain Kit (upper panel). Alive single cells are then plotted for lineage markers (CD4, CD8a, CD11b, B220, Gr1, and Ter119). Lineage negative cells are analyzed for cKit and Sca1 to define the LSK and LS\u2010K cell population as well as cells expressing low levels of both markers (lower panel). ( B ). LSK analysis. LSK cells are discriminated by expression of CD150 and CD48 to identify MPP2 and MPP5 as well as the mixed populations containing HSCs/MPP1 or MPP3/4. HSCs can be separated from MPP1s by lack of CD34 expression. The separation of MPP 3 versus 4 is achieved by differential CD135 expression. ( C ) LS\u2010K analysis. To analyze the LS\u2010K fraction, cells are separated based on CD16/32 and CD34 expression, revealing MEP, CMP, and GMP populations as indicated. ( D ) LS low Kl ow  analysis. Cells expressing cKit and Sca1 at a low level are analyzed for CD135 and CD127 to define the CLP population after exclusion of highly autofluorescent cells by displaying the cells for the side scatter versus the BL695/40 detector. ( E ) CD45/GFP analysis. Expression of the isoforms CD45.1 and CD45.2 was analyzed exemplary in the lineage positive cell fraction and in the CLP population. In a subsequent analysis, the GFP expression is shown in the CD45.1 and the CD45.2 positive cells within CLPs. Since the lymphoid cell populations of the SCL\u2010tTA H2B\u2010GFP mouse do not express GFP, the CD45.1 expressing CLP cells are negative for GFP expression. In contrast, the CD45.2 expressing CLP population of the ISRE\u2010EGFP mouse contains GFP negative and positive cells.",
+    "full_text_gating": "The panel was developed and optimized to identify mouse bone marrow hematopoietic stem cells (HSCs) and five multipotent progenitors (MPPs) along with controllable green fluorescent protein (GFP) expression as well as CD45.1 and CD45.2. HSCs and MPPs can be identified by analyzing the cell surface proteins Sca1, cKit, CD150, CD48, CD34, and CD135. The common myeloid progenitor (CMP), the granulocyte macrophage progenitor (GMP), the megakaryocyte erythrocyte progenitor (MEP), and the common lymphoid progenitor (CLP) are defined by specific expression patterns of Sca1 and cKit plus CD16/32 and CD34, CD135, and CD127. Additionally, the membrane integrity is determined with a life/dead discriminator to differentiate living from dead cells. The staining is performed in freshly isolated living cells without fixation obtained from transgenic mice (SCL\u2010tTA H2B\u2010GFP or ISRE\u2010EGFP) expressing the GFP and the genetic alleles CD45.1 or CD45.2. The analysis of the status of these markers is included in the reported 16 parameter staining panel.\n\nHSCs are sitting on top of the hierarchically organized mouse hematopoietic system and progenitor cell types arising from them can be described using flow cytometry by a set of different cell surface markers  1 ,  2 ,  3 . The number of surface markers is constantly increasing, leading to a steadily more detailed description and discrimination of the different cell populations. In parallel, functional and single cell data suggest a wide spectrum of molecular and functional heterogeneity  4 ,  5 . During the last years in particular HSCs and immediate downstream progenitors achieved high attention, as the hematopoietic system also serves as a model for other hierarchically organized stem cell systems. However, an optimized multicolor immune fluorescence panel (OMIP) characterizing these cell populations has not yet been reported (Tables  1  and  2 ). The optimized panel presented here was designed to differentiate HSCs, MPPs, and committed progenitor cells in the mouse bone marrow in conjunction with CD45.1 and CD45.2 as well as the GFP in one single 16 parameter staining panel.\n\nBoth alleles of CD45 differ by five amino acids and are frequently used in HSC transplantation experiments to differentiate between host and transplanted cells and its progeny  6 ,  7 . The intracellular reporter protein GFP and its derivatives such as enhanced GFP (EGFP) are used to label cells in many different applications  8 . As models in which all HSC\u2010progenitors as well as CD45 and GFP are present, we used two mouse strains. First, SCL\u2010tTA H2B\u2010GFP transgenic mice were crossed to express CD45.1  2 ,  9 . These mice express the H2B\u2010GFP fusion protein under the HSC\u2010myeloid progenitor specific SCL promoter, which can be repressed by the tetracycline\u2010responsive regulatory element in the presence of doxycycline  2 . Second, CD45.2 positive ISRE\u2010EGFP transgenic mice express EGFP controlled by an interferon responsive element  10 ,  11 . To perform the staining, murine bone marrow was isolated by crushing the femurs, tibias, and the spine of the animals. Then erythrocytes were lysed using ACK lysing buffer (Lonza, Basel, Switzerland) and subsequently the resulting cells of both mouse strains were pooled to obtain a single sample, containing both CD45.1 and CD45.2 expressing cells. These were subsequently stained with a commercially available life/dead discriminator and the antibodies detecting the indicated surface markers. Before staining, all antibodies as well as the life/dead discriminator were titrated with the aim to maximize the resolution of negative and positive cells with the lowest necessary antibody concentration. The used dilutions range from 1:2000 to 1:125 (data are presented in the Supporting Information  Fig. S1 ); however, this needs to be performed for each antibody lot supplied by the companies individually each time. The data were obtained at a BD FACS Aria Fusion cell sorter equipped with five lasers (355, 405, 488, 561, and 640\u2009nm) and the DIVA v8.0.2 software (Beckton Dickinson, Franklin Lakes, NJ) using a nozzle with 100\u2009\u03bcm diameter. Daily calibration of the cell sorter was performed manually using BD Calibrite beads (Becton Dickinson) in combination with Cell Sorting Set\u2010up Beads for UV Lasers (Thermo Fisher Scientific, Waltham, MA). In line with other bead\u2010based calibration protocols, the following values were tracked over time and daily analyzed for optimization: PMT sensitivity (voltage) and respective target values, laser delay (with window extension 0) and area scaling factors. Data analysis was performed with Flowjo v10.5 (Flowjo, LLC, Ashland, OR). Before the experiment, compensation was done manually with the DIVA software using single\u2010stained OneComp eBeads (Thermo Fisher Scientific) by comparing median values of positive and negative single beads.\n\nSingle staining 16 parameter analysis of mouse bone marrow cells. After lysis of the erythrocytes, bone marrow cells were first stained with the life/dead discriminator and then with the indicated fluorochrome conjugated antibodies. ( A ) Basal analysis. First, bone marrow cells were plotted for forward and side scatter. After exclusion of cellular debris, doublets were discriminated from single cells by analyzing the side scatter area and width signals. Subsequently, cells were investigated for the viability using the Fixable NIR Dead Cell Stain Kit (upper panel). Alive single cells are then plotted for lineage markers (CD4, CD8a, CD11b, B220, Gr1, and Ter119). Lineage negative cells are analyzed for cKit and Sca1 to define the LSK and LS\u2010K cell population as well as cells expressing low levels of both markers (lower panel). ( B ). LSK analysis. LSK cells are discriminated by expression of CD150 and CD48 to identify MPP2 and MPP5 as well as the mixed populations containing HSCs/MPP1 or MPP3/4. HSCs can be separated from MPP1s by lack of CD34 expression. The separation of MPP 3 versus 4 is achieved by differential CD135 expression. ( C ) LS\u2010K analysis. To analyze the LS\u2010K fraction, cells are separated based on CD16/32 and CD34 expression, revealing MEP, CMP, and GMP populations as indicated. ( D ) LS low Kl ow  analysis. Cells expressing cKit and Sca1 at a low level are analyzed for CD135 and CD127 to define the CLP population after exclusion of highly autofluorescent cells by displaying the cells for the side scatter versus the BL695/40 detector. ( E ) CD45/GFP analysis. Expression of the isoforms CD45.1 and CD45.2 was analyzed exemplary in the lineage positive cell fraction and in the CLP population. In a subsequent analysis, the GFP expression is shown in the CD45.1 and the CD45.2 positive cells within CLPs. Since the lymphoid cell populations of the SCL\u2010tTA H2B\u2010GFP mouse do not express GFP, the CD45.1 expressing CLP cells are negative for GFP expression. In contrast, the CD45.2 expressing CLP population of the ISRE\u2010EGFP mouse contains GFP negative and positive cells.\n\nIn summary, with the here reported panel, it is possible to discriminate and quantify all major populations of the mouse hematopoietic system from the earliest HSCs, via the MPPs to the lineage committed progenitor populations with high resolution. To increase the range of applications additional analysis of the internal reporter GFP as well as the genetic alleles, CD45.1 and CD45.2 are also included in the panel to study these cells also in a transplantation setting.",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD4",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "GK1.5",
+        "purpose": "Lineage\u2010 cells"
+      },
+      {
+        "marker": "CD8a",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "53\u20136.7",
+        "purpose": "Lineage\u2010 cells"
+      },
+      {
+        "marker": "CD11b",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "M1/70",
+        "purpose": "Lineage\u2010 cells"
+      },
+      {
+        "marker": "B220",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "RA3\u20106B2",
+        "purpose": "Lineage\u2010 cells"
+      },
+      {
+        "marker": "Gr1",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "RB6\u20108C5",
+        "purpose": "Lineage\u2010 cells"
+      },
+      {
+        "marker": "Ter119",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "TER119",
+        "purpose": "Lineage\u2010 cells"
+      },
+      {
+        "marker": "Sca1",
+        "fluorophore": "BV421",
+        "clone": "D7",
+        "purpose": "LSK\u2010, LS\u2010K cells"
+      },
+      {
+        "marker": "cKit",
+        "fluorophore": "PE",
+        "clone": "2B8",
+        "purpose": "LSK\u2010, LS\u2010K cells"
+      },
+      {
+        "marker": "CD150",
+        "fluorophore": "BV785",
+        "clone": "TC15\u201012F12.2",
+        "purpose": "HSCs, MPPs"
+      },
+      {
+        "marker": "CD48",
+        "fluorophore": "BUV395",
+        "clone": "HM48\u20101",
+        "purpose": "HSCs, MPPs"
+      },
+      {
+        "marker": "CD34",
+        "fluorophore": "Alexa\u2010Fluor 700",
+        "clone": "RAM34",
+        "purpose": "LT\u2010, ST\u2010HSCs, CMP, GMP, MEP"
+      },
+      {
+        "marker": "CD135",
+        "fluorophore": "APC",
+        "clone": "A2F10",
+        "purpose": "MPP3, MPP4, CLP"
+      },
+      {
+        "marker": "CD16/32",
+        "fluorophore": "BV480",
+        "clone": "2.4G2",
+        "purpose": "CMP, GMP, MEP"
+      },
+      {
+        "marker": "CD127",
+        "fluorophore": "BV650",
+        "clone": "A7R34",
+        "purpose": "CLP"
+      },
+      {
+        "marker": "CD45.1",
+        "fluorophore": "PE\u2010CF594",
+        "clone": "A20",
+        "purpose": "Internal reporter"
+      },
+      {
+        "marker": "CD45.2",
+        "fluorophore": "BUV737",
+        "clone": "104",
+        "purpose": "Internal reporter"
+      },
+      {
+        "marker": "Fluorescent protein",
+        "fluorophore": "Purpose",
+        "clone": null,
+        "purpose": null
+      },
+      {
+        "marker": "GFP",
+        "fluorophore": null,
+        "clone": null,
+        "purpose": "Inducible internal reporter"
+      },
+      {
+        "marker": "Fluorescent dye",
+        "fluorophore": null,
+        "clone": "Purpose",
+        "purpose": null
+      },
+      {
+        "marker": "Fixable NIR Dead Cell Stain Kit",
+        "fluorophore": null,
+        "clone": "Viability",
+        "purpose": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "Unknown",
+      "children": [],
+      "is_critical": true
+    },
+    "_extraction_note": "Hierarchy needs manual curation from gating_description"
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 20 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 7455 chars of gating text from body"
+    ]
+  }
+}

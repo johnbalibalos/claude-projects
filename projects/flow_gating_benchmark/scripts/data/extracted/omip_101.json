@@ -1,0 +1,211 @@
+{
+  "test_case_id": "OMIP-101",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-101",
+  "doi": "10.1002/cyto.a.24827",
+  "pmc_id": "PMC10958279",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Fresh or fixed, cryopreserved whole blood",
+    "species": "human",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Hierarchical gating strategy Representative example of manual gating strategy for fixed whole blood using BD FACSymphony A5 cytometer B. Labels in bold above graphs are used to indicate cell lineages / reference beads. Time gates were applied to the detector measuring the longer wavelength off each of the lasers, to exclude any inconsistent fluorescence patterns during sample acquisition. After exclusion of doublets, aggregates and reference beads, leukocytes were firstly selected based on SSC/FSC overlaid with CD45 and refined using CD45 and SSC parameters. Antibody aggregates were identified as extremes by plotting CD14 vs CD33 (the fluorochrome combination that most frequently allowed visualization of aggregates) and excluded. Following exclusion of CD66+ granulocytes and additional cleaning, CD66\u2212 myeloid and lymphoid cell populations were delineated based on CD33 expression. From the CD33+ myeloid gate, CD19+, CD3+ and CD56+ cells were excluded and HLA-DR+ cells were selected. Monocytes were stratified based on CD16/CD14 markers into classical (CD14+CD16\u2212), intermediate (CD14+CD16+/low) and non-classical (CD14-CD16+) monocytes. From the double negative population (CD14-CD16\u2212), mDCs were identified as HLA-DR+CD11c+. Expression of CD32 and CD38 was assessed on all CD33+ myeloid cells. From the lymphocyte (CD33\u2212 and SSC low) gate, B cells were defined as CD3\u2212, CD4\u2212, CD56\u2212 and CD19+ cells. Plasmablasts (CD38 and CD27 high) were identified among CD19+ B cells. B cells were further classified into na\u00efve (IgD+CD27\u2212) and memory (IgD-CD27+) populations. NK cells were identified after exclusion of CD3, CD4 and CD19 based on CD56 (dim and bright) and CD16 (positive or negative) expression. Overlay of perforin expression was visualized to confirm that CD56dim CD16+ cells were NK cells (not shown). Their cytotoxic and memory patterns were evaluated using perforin/granzyme B and CD57/CD27, respectively. CD3\u2212, CD4\u2212, CD19\u2212, CD16\u2212, CD56\u2212 lymphocytes expressing CD127 were categorized as ILCs. From the lymphocyte (CD33\u2212 and SSC low) gate, T cells were gated based on CD3 expression followed by exclusion of CD19+ B cells. \u03b3\u03b4 TCR+ T cells were further classified based on V\u03b42 expression. Inclusion of perforin and granzyme B allowed evaluation of their cytotoxic potential. From the \u03b3\u03b4 TCR\u2212 T cell gate, phenotypic MAIT cells were identified based on TRAV1.2 and CD161 co-expression. Following exclusion of this lineage, NKT-like cells (CD56+) and conventional T cells (CD56\u2212) were selected. Cytotoxic potential of CD3+CD56+ NKT-like cells was further characterized by perforin and granzyme B expression. Conventional T cells were then classified into the following populations: single positive CD4 T cells (CD4+CD8\u2212), single positive CD8 T cells (CD4\u2212CD8+) and double positives (CD4+CD8+). CCR7 and CD45RA were further used to stratify CD8 and CD4 T cells into na\u00efve (CCR7+CD45RA+), central memory (CCR7+CD45RA\u2212), effector memory (CCR7-CD45RA\u2212) and terminally differentiated effector memory (CCR7-CD45RA+) cells. CD57, CD127 (not shown) and CD27 were also used to refine differentiation/memory subsets. Expression of proliferation (Ki67), cytotoxic (perforin, granzyme B) and activation (HLA-DR and CD38) markers was also assessed on CD4 and CD8 conventional T cells.",
+    "full_text_gating": "We developed this antibody panel in the context of a research program that aims to identify vaccine-induced immune correlates of protection against  Mycobacterium tuberculosis  infection or TB disease ( 1 ). The panel was designed to enumerate and phenotype relevant leukocyte subsets that may be modulated by vaccination in fixed whole blood samples collected from participants enrolled in large TB vaccine clinical trials. We applied a procedure termed  D ifferential  L eukocyte  C ounting and  I mmunophenotyping in  C ryopreserved  E x vivo whole blood (DLC-ICE) ( 2 ), based on erythrocyte lysis and cell fixation of a precise volume of blood, prior to cryopreservation. After thawing in batches, fixed cells are permeabilized and stained with the antibody panel, and reference fluorescent microbeads are added to the final cell suspension to accurately determine absolute cell counts by flow cytometry. Use of cryopreserved fixed whole blood in this assay offers multiple benefits compared to other flow cytometry-based methods, including reduction of procedural complexity and workload at the point of sample collection, cost-effectiveness, improvement and reduction of data variability, especially in extensive studies involving multiple sites in resource-limited settings. In a previous report, we demonstrated accuracy, robustness, low inter-operator variability of this method and high concordance of readouts including a wide range of absolute counts and frequencies when fresh and cryopreserved fixed WB samples from the same donors were stained with a similar 27-color panel ( 3 ). These results suggest that fixation/permeabilization and cryopreservation steps do not affect the detection and resolution of the selected antibody-marker combinations. Markers included in this panel allow broad analysis of most lymphoid populations, while myeloid subsets can also be characterized to a lesser extent, as described below ( Figure 1  and  Online Figure 1 ).\n\nGranulocytes are identified by the expression of CD66, a member of the carcinoembryonic antigen (CEA) family and related to the immunoglobulin superfamily of glycoproteins. Also called polymorphonuclear neutrophilic leukocytes (PMNs), granulocytes include three different types of subsets namely, neutrophils, basophils and eosinophils. We selected the anti-CD66 antibody B1.1 clone, which recognises isoforms that are expressed solely by neutrophils in the blood. Phagocytic neutrophils recognize and internalize pathogenic microorganisms by phagocytosis into microbicidal acidified phagolysosomes, where the organisms are killed through release of antimicrobial enzymes stored in their cytoplasmic granules ( 4 ).\n\nMyeloid and lymphoid cells can be distinguished using CD33 expression and side scatter. Monocytes can be divided into three populations based on their CD14 and CD16 expression, namely classical (CD14 high  CD16 \u2212 ), intermediate (CD14 int  CD16 int ) and non-classical (CD14 \u2212 CD16 + ) monocytes. Myeloid DCs, also named conventional DCs (cDCs), are CD14 and CD16 negative and express high levels of CD11c and HLA-DR. Defined as professional antigen-presenting cells, mDCs are crucial for T cell priming. Through their ability to process ingested pathogens and present microbial peptide antigens to T cells while providing essential co-stimulatory signals, they orchestrate T cell activation and differentiation in response to microbial recognition ( 5 ). We did not include CD123, which precluded precise identification of plasmacytoid DC (pDCs, CD123 +  CD11c \u2212 ) with our panel.\n\nWe included two Fc receptors (FcRs), CD32 and CD16, in our panel because of the recently described role of Fc-mediated functions in protection against malaria following vaccination ( 6 ). As receptors for the Fc portion of immunoglobulins (Ig), FcRs are transmembrane glycoproteins expressed by a variety of leukocytes including granulocytes, monocytes, B and NK cells. FcR cross-linking mediates positive and negative regulation of cellular signalling including phagocytosis, antibody-dependent cellular cytotoxicity (ADCC), production and release of cytokines and pro-inflammatory molecules. Importantly, FcRs can also induce clearance of immune complexes. In fact, following capture and internalization/degradation of antigen-antibody complex, peptide antigens are presented to cells in an MHC-restricted manner. The largest family of Fc receptors are the IgG receptors or Fc\u03b3Rs which themselves contain several groups: Fc\u03b3RI/CD64, the high affinity IgG receptor, the Fc\u03b3RII/CD32 family (Fc\u03b3RIIA, Fc\u03b3RIIB, Fc\u03b3RIIC), and the Fc\u03b3RIII/CD16 family ( 7 ).\n\nAmongst the CD3\u2212 cells, we were able to distinguish B cells and several stages of their differentiation. Rather than CD20, we decided to stain for CD19, which is also expressed by plasmablasts, a rare B cell subset expressing CD27 and CD38 at high levels. While they can secrete antibodies at high rate, plasmablasts divide and express surface Ig and MHC class II, allowing antigen presentation to T cells. Following division, they either die or undergo differentiation into short or long-lived plasma cells, the latter migrating to bone marrow ( 8 ). Plasmablasts are typically absent or detectable at very low frequencies in healthy individuals, but frequencies usually transiently increase after vaccination. Based on CD27 and IgD expression, memory (IgD \u2212 CD27 + ) and na\u00efve (IgD + CD27 \u2212 ) B cells can be distinguished. However, even if we observed CD27 staining patterns as expected on T cells, we note that the resolution of CD27 staining was poor on B cells. We recommend testing different CD27 clones and fluorochrome conjugates if CD27 measurement on B cells is an essential desired outcome in other studies. Expression of IgM and IgG isotypes allow class switch identification, but these markers were not included in our panel due to low priority and poor resolution of staining in fixed whole blood, respectively. Similarly, CXCR5, a chemokine receptor for CXCL13 and important soluble factor for germinal center establishment and maintenance, was tested during panel optimisation, but resulted in particularly poor resolution on T cells and therefore was excluded. ILCs were identified using CD127 after exclusion of most lineage markers.\n\nNK cells, defined as CD3 \u2212 CD56 + CD16 +/\u2212 , are innate cells with the ability to kill infected cells. Their cytolytic granules, containing pore-forming protein perforin and granzymes are released at the surface of the target cell and can penetrate the cell membrane to mediate programmed cell death ( 9 ). NK cells can be classified into two main types based on expression of CD56 and CD16: highly cytotoxic CD56 dim CD16 +  mature cells and CD56 bri CD16 \u2212  immature cells that can produce cytokines, especially IFN-\u03b3, that can polarize CD4 T cells towards Th1 pro-inflammatory cells. In this panel, we included the cytotoxic markers perforin and granzyme B. CD57 and CD27 were included as NK (and T) cell differentiation markers, facilitating the delineation of NK cell maturation from CD56 bri  to CD56 dim CD57 +  cells, which have decreased proliferative but retain highly cytotoxic capacity ( 10 ,  11 ). Of note, in another study, CD57 +  NKG2C +  NK cells revealed memory-like properties specific to acute MCMV infection ( 12 ). Similarly, Venkatasubramanian  et al . suggested CD27 as a potential \u2018memory\u2019 marker for BCG-induced memory-like NK cells ( 13 ).\n\nDonor-unrestricted T cells (DURT cells) include MR1-restricted MAIT cells, CD1-restricted invariant NKT (iNKT) cells, germline-encoded mycolyl-reactive (GEM) cells, glucose monomycolate-reactive (GMM) cells, and \u03b3\u03b4 T cells. DURT cells recognize non-peptide antigens such as lipids, vitamin B metabolites or phosphoantigens presented by non-polymorphic MHC-like and non-MHC-like molecules (i.e CD1d for iNKT, MR1 for MAIT, CD1b for GMM cells) ( 14 ). While MAIT and CD1-restricted DURT cells predominantly recognize antigens via \u03b1\u03b2 T cell receptors (TCRs), \u03b3\u03b4 T cells recognize antigens via \u03b3\u03b4 TCRs. V\u03b42 +  \u03b3\u03b4 T cells are the most dominant subset of \u03b3\u03b4 T cells in adult human blood and can be profiled with this panel ( 15 ). DURT cells are optimally defined using tetramers or by detecting specific invariant TCRs. Staining of fixed cells with MR1\u20135OP-RU and CD1d-\u03b1GalCer tetramers, or anti-V\u03b124J\u03b118 TCR antibody was suboptimal, yielding very high inter-individual variability (MR1 tetramer) or poor staining resolution (CD1d- tetramer and anti-V\u03b124J\u03b118,) and these reagents were not included. Rather, anti-CD161 and anti-TRAV1.2 (V\u03b17.2) antibodies were used to phenotypically identify MAIT cells, while CD56 expression on T cells was used to identify NKT-like cells. Conventional CD4 +  and CD8 +  T cells were identified after exclusion of DURT cell subsets.\n\nWe included several markers to characterize lymphocyte differentiation. Expression levels of CCR7 and CD45RA were primarily used to distinguish between memory and na\u00efve T cells and between memory and effector T cell compartments. Four main subsets were identified, namely na\u00efve T cells, central memory T cells (CM), effector memory (EM) and terminally differentiated effector T cells (EMRA). While na\u00efve T cells express both CCR7 and CD45RA, CM lose CD45RA during transition from na\u00efve to memory stage. Following antigen exposure, CM lose CCR7 expression and differentiate into EM and, typically after chronic activation, finally into EMRA, which lack CCR7 and re-express CD45RA ( 16 ). CD27, CD57 and CD127 were used to further refine na\u00efve and memory T cell subsets. CD27 is a co-stimulatory receptor important for activation of T cells during the early stages of differentiation. The oligosaccharide CD57 is an end-stage marker associated with T cell senescence and prone to activation-induced cell death. CD127 (IL-7 receptor \u03b1) regulates T cell homeostasis though proliferation and survival of memory T cells. As mentioned above, most of these differentiation markers can also be used to characterize lymphocyte subsets other than conventional T cells.\n\nIn this panel, we also included HLA-DR and CD38, which serve to differentiate myeloid cell subsets and identify activated T cells, as well as Ki-67, a proliferation marker expressed by all cell types during cell cycle. These activation markers are expressed for several days after  in vivo  upregulation, and are therefore useful to monitor  ex vivo , non-specific activation of immune cells during infections and following treatment or vaccination ( 17 \u2013 19 ).\n\nTo summarize, this panel enables identification and broad characterization of most relevant circulating leukocyte populations, including lymphoid and myeloid cell subsets and their phenotypes in human peripheral blood ( Table 2 ). It may be used to track changes in immune cell subset abundance and expression of surface and intracellular markers that are modulated during different stages of infection and disease, as well as upon treatment, particularly by immunotherapy and vaccination. Importantly, we verified that all antibody clones included in the panel stained live, unfixed cells as well as fixed cells with similar performance. We recommend performing the same validation of individual antibodies and fluorochrome conjugates not reported here.\n\nAlthough OMIP-063, -069 and -078 focused on immune-profiling of major immune cell subsets by flow cytometry, these panels were optimized using PBMCs. To our knowledge, few extensive panels focusing on a broad range of leukocytes were developed on whole blood (OMIP-077, -062) and none used fixative prior to staining of extra-cellular markers. In fact, this 27-color panel is the first to enable comprehensive characterization of cellular composition of fixed and cryopreserved whole blood. This is particularly valuable to measure expression of surface and intracellular markers on most cell populations, especially when sample availability is limited, for example in paediatric studies or large clinical studies. Myeloid populations are defined using five of the 27 markers, while we identified lymphoid cells with nine markers. In addition, we included additional markers to allow characterization of  ex vivo  cell differentiation, activation, function and proliferation. HLA-DR, CD11c, CD16, CD32, CD38 and CD45RA can be expressed by both myeloid and lymphoid compartments.",
+    "cross_references": [
+      "OMIP-062"
+    ],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD45",
+        "fluorophore": "BV785",
+        "clone": "HI30",
+        "purpose": "Leukocytes"
+      },
+      {
+        "marker": "CD66",
+        "fluorophore": "BV750",
+        "clone": "B1.1",
+        "purpose": "Granulocytes"
+      },
+      {
+        "marker": "CD33",
+        "fluorophore": "PE-Cy5",
+        "clone": "WM53",
+        "purpose": "Myeloid cells"
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "BB660",
+        "clone": "M\u03c6P9",
+        "purpose": "Monocytes"
+      },
+      {
+        "marker": "CD11c",
+        "fluorophore": "BUV661",
+        "clone": "B-ly6",
+        "purpose": "Myeloid dendritic cells"
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "R718",
+        "clone": "HIB19",
+        "purpose": "B cells"
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "BV711",
+        "clone": "HCD56",
+        "purpose": "NK cells, NKT-like cells"
+      },
+      {
+        "marker": "CD127",
+        "fluorophore": "PE-Cy5.5",
+        "clone": "eBioRD5",
+        "purpose": "ILCs, T cell differentiation"
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "BUV496",
+        "clone": "UCHT-1",
+        "purpose": "T cells"
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BV480",
+        "clone": "SK3",
+        "purpose": "Helper T cells"
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "BV570",
+        "clone": "RPA-T8",
+        "purpose": "Cytotoxic T cells"
+      },
+      {
+        "marker": "\u03b3\u03b4 TCR",
+        "fluorophore": "BUV395",
+        "clone": "B1",
+        "purpose": "\u03b3\u03b4 T cells"
+      },
+      {
+        "marker": "TRAV1.2",
+        "fluorophore": "PE",
+        "clone": "3C10",
+        "purpose": "MAIT cells"
+      },
+      {
+        "marker": "CD161",
+        "fluorophore": "BV650",
+        "clone": "DX12",
+        "purpose": "MAIT cells, T/NK cell differentiation"
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "BB700",
+        "clone": "HIT2",
+        "purpose": "Monocyte, mDC, T cell, and B cell activation/differentiation, plasmablasts"
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "BUV563",
+        "clone": "G46-6",
+        "purpose": "Myeloid subsets, T cell activation"
+      },
+      {
+        "marker": "CD32",
+        "fluorophore": "BB630",
+        "clone": "FLI8.26",
+        "purpose": "Fc receptor"
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "BV605",
+        "clone": "3G8",
+        "purpose": "Monocyte, NK, and mDC subsets"
+      },
+      {
+        "marker": "IgD",
+        "fluorophore": "BUV737",
+        "clone": "IA6-2",
+        "purpose": "B cell differentiation"
+      },
+      {
+        "marker": "CD27",
+        "fluorophore": "BUV805",
+        "clone": "M-T271",
+        "purpose": "T, B, and NK cell differentiation"
+      },
+      {
+        "marker": "CD57",
+        "fluorophore": "BB515",
+        "clone": "NK-1",
+        "purpose": "NK and T cell differentiation"
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "APC-eFluor 780",
+        "clone": "HI100",
+        "purpose": "T cell differentiation"
+      },
+      {
+        "marker": "CCR7",
+        "fluorophore": "PE-CF594",
+        "clone": "150503",
+        "purpose": "T cell differentiation"
+      },
+      {
+        "marker": "V\u03b42",
+        "fluorophore": "BB790",
+        "clone": "B6",
+        "purpose": "\u03b3\u03b4 T cell subset"
+      },
+      {
+        "marker": "Perforin",
+        "fluorophore": "BV421",
+        "clone": "\u03b3G9",
+        "purpose": "CD8, NK and NKT cell cytotoxicity"
+      },
+      {
+        "marker": "Granzyme B",
+        "fluorophore": "AF647",
+        "clone": "DH2",
+        "purpose": "CD8, NK and NKT-like cell cytotoxicity"
+      },
+      {
+        "marker": "Ki67",
+        "fluorophore": "PE-Cy7",
+        "clone": "B56",
+        "purpose": "Proliferation"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "Unknown",
+      "children": [],
+      "is_critical": true
+    },
+    "_extraction_note": "Hierarchy needs manual curation from gating_description"
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 27 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 12367 chars of gating text from body"
+    ]
+  }
+}

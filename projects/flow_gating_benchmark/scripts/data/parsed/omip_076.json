@@ -1,0 +1,391 @@
+{
+  "test_case_id": "OMIP-076",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-076",
+  "doi": "10.1002/cyto.a.24474",
+  "pmc_id": "PMC9546025",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Murine tissues containing lymphocyte populations",
+    "species": "mouse",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Overview of 19\u2010parameter gating strategy developed for the characterization of T\u2010cell, B\u2010cell, and ASC subsets within freshly isolated splenocytes from 21\u2010day\u2010old BALB/c mice. 1\u2009\u00d7\u200910 6  splenocytes were incubated in Fc Block\u2122, followed by fixable viability stain (FVS) and a 17\u2010parameter extracellular antibody cocktail containing 10% brilliant stain buffer plus (BD biosciences). Intracellular staining was performed following fixation\u2010permeabilization of extracellular stained splenocytes. Data were acquired on a BD LSRFortessa\u2122 (BD Biosciences). (A\u2013C) Removal of cellular debris, doublets, nonviable cells and stromal cells. (D) Primary delineation of TCR\u03b2 \u2212 CD19 + , TCR\u03b2 + CD4 + , and TCR\u03b2 \u2212 CD4/CD19 \u2212  cells. (E\u2013M) Characterization of (E) plasma cells, (F) plasmablasts, (G) activated B\u2010cells, (H) memory B\u2010cells, (I) na\u00efve, effector memory and central memory T\u2010cells, (J) effector and regulatory T\u2010cells, (K) ICOS + CD44 +  Treg, (L) T follicular helper cells, and (M) follicular regulatory T\u2010cells. All plots are representative of individual samples. Manual gating was determined using fluorescence minus one (FMO) controls where necessary (Figure\u00a0 S4 ) [Color figure can be viewed at  wileyonlinelibrary.com ]",
+    "full_text_gating": "This 19\u2010parameter, 18\u2010color flow cytometry panel was designed and optimized to enable the comprehensive and simultaneous immunophenotyping of distinct T\u2010cell, B\u2010cell, and antibody secreting cell (ASC) subsets within murine tissues (Table\u00a0 1 ). Cellular populations identified by using this OMIP include two major subsets of B\u2010cells (memory and activated), two ASC subsets (plasma cells and plasmablasts), and seven major subsets of CD4 +  T\u2010cells (na\u00efve, central memory, effector memory, helper, regulatory, follicular helper, and follicular regulatory). Staining was performed on freshly isolated splenocytes from 21\u2010day\u2010old BALB/c mice, however, due to the omission of mouse strain\u2010specific markers, this OMIP can be implemented across a range of murine models where in\u2010depth immunophenotyping of the diverse repertoire of T\u2010cell, B\u2010cell, and ASC populations is required.\n\nThere is now considerable evidence demonstrating that both prenatal and postnatal exposure to particular classes of microbial stimuli can provide beneficial signals during early life immune development, resulting in the protection against future inflammatory disease [ 1 ,  2 ,  3 ]. The principal target of this beneficial immunostimulation appears to be the innate immune system [ 4 ,  5 ], and the mechanisms driving protection underlay the paradigm of innate immune training, whereby certain classes of microbial stimuli can alter the functional state of innate immune cells, leading to the optimization of immunocompetence [ 6 ]. Immune training focuses on the phenotypic and transcriptional profiles of several prototypical innate populations [ 6 ,  7 ], however, the characterization of downstream adaptive responses associated with protection via innate immune training are of critical importance for understanding disease pathogenesis, and the potential for therapeutic mitigation. Due to this gap in our current understanding, the broader protective mechanisms remain incompletely understood. To address this requirement, we have developed and optimized a novel 19\u2010parameter flow cytometry panel to comprehensively and simultaneously characterize distinct T\u2010cell, B\u2010cell, and ASC subsets localized within tissues of BALB/c mice in response to immune training during early life.\n\nPanel optimization was performed on a BD LSRFortessa\u2122, with all fluorochrome\u2010conjugated antibodies (Table\u00a0 2 ) titrated during the optimization phase (Figure\u00a0 S1 ). Prior to multicolor extracellular staining, splenocytes were incubated in Fc Block\u2122 (Purified recombinant CD16/32) to inhibit non\u2010antigen\u2010specific binding of fluorochrome\u2010conjugated antibodies to the nonpolymorphic epitope of Fc\u03b3III (CD16) and Fc\u03b3II (CD32) receptors expressed on multiple myeloid populations and B\u2010cells. A representative gating strategy to delineate the T\u2010cell, B\u2010cell, and ASC subsets described above is detailed in Figure\u00a0 1 . Briefly, splenocytes were first gated on side\u2010scatter (SSC) and forward\u2010scatter (FSC) parameters (Figure\u00a0 1A ) to remove sample debris, followed by single\u2010cell gating (Figure\u00a0 1B ) to remove doublets. Gating was then performed on viable CD45 +  cells (Figure\u00a0 1C ) to remove dead/dying cells and stromal cells from the analysis. The primary T\u2010cell/B\u2010cell/ASC separation involved delineation of TCR\u03b2 and CD4/CD19 expression (Figure\u00a0 1D ). Double positive cells were classified as CD4 +  T\u2010cells, as CD19 +  B\u2010cells and ASC subsets will be present within the TCR\u03b2 \u2212  population (Figure\u00a0 1D ) due to the absence of TCR\u03b2/CD19 co\u2010expression (Figure\u00a0 S2 A). An additional TCR\u03b2 \u2212 CD4/CD19 \u2212  gate was included to enable the characterization of B220 \u2212 Synd\u20101 + MHC class II \u2212 IgM +  plasma cells (PC; Figure\u00a0 1E ). CD19 +  B\u2010cells and ASC subsets were then defined as B220 lo/+ Synd\u20101 + MHC class II + IgM +  plasmablasts (PB; Figure\u00a0 1F ), B220 + Synd\u20101 \u2212 CD80 + PD\u2010L2 \u2212 MHC class II + IgM + IgD +  activated B\u2010cells (Figure\u00a0 1G ) and B220 + Synd\u20101 \u2212 CD80 + PD\u2010L2 + IgM + IgD +/\u2212  memory B\u2010cells (Figure\u00a0 1H ). CD4 +  T\u2010cells were defined as CD62L + CD44 lo/\u2212  na\u00efve T\u2010cells (Figure\u00a0 1I ), CD62L + CD44 hi  T CM  (Figure\u00a0 1I ), CD62L \u2212 CD44 hi  T EM  (Figure\u00a0 1I ), CD25 + Foxp3 \u2212  Teff (Figure\u00a0 1J ), CD25 + Foxp3 +  Treg (Figure\u00a0 1J ) ICOS + CD44 +  Treg (Figure\u00a0 1K ), CXCR5 + ICOS + PD\u20101 +  T FH  (Figure\u00a0 1L ), and CXCR5 + ICOS + PD\u20101 + CD25 +/\u2010 Foxp3 +  T FR  (Figure\u00a0 1M ).\n\nOverview of 19\u2010parameter gating strategy developed for the characterization of T\u2010cell, B\u2010cell, and ASC subsets within freshly isolated splenocytes from 21\u2010day\u2010old BALB/c mice. 1\u2009\u00d7\u200910 6  splenocytes were incubated in Fc Block\u2122, followed by fixable viability stain (FVS) and a 17\u2010parameter extracellular antibody cocktail containing 10% brilliant stain buffer plus (BD biosciences). Intracellular staining was performed following fixation\u2010permeabilization of extracellular stained splenocytes. Data were acquired on a BD LSRFortessa\u2122 (BD Biosciences). (A\u2013C) Removal of cellular debris, doublets, nonviable cells and stromal cells. (D) Primary delineation of TCR\u03b2 \u2212 CD19 + , TCR\u03b2 + CD4 + , and TCR\u03b2 \u2212 CD4/CD19 \u2212  cells. (E\u2013M) Characterization of (E) plasma cells, (F) plasmablasts, (G) activated B\u2010cells, (H) memory B\u2010cells, (I) na\u00efve, effector memory and central memory T\u2010cells, (J) effector and regulatory T\u2010cells, (K) ICOS + CD44 +  Treg, (L) T follicular helper cells, and (M) follicular regulatory T\u2010cells. All plots are representative of individual samples. Manual gating was determined using fluorescence minus one (FMO) controls where necessary (Figure\u00a0 S4 ) [Color figure can be viewed at  wileyonlinelibrary.com ]\n\nTo perform high\u2010dimensional analysis on 21\u2010day\u2010old na\u00efve splenocytes, viable CD45 +  cells (Figure\u00a0 1C ) underwent high\u2010resolution FlowSOM clustering to define cell populations, followed by metaclustering for visualization with Uniform Manifold Approximation and Projection (UMAP) [ 37 ] using the Cytometry Data Analysis Tool (CATALYST) pipeline [ 38 ,  39 ]. Primary unsupervised analysis was performed to identify CD4 +  T\u2010cell and B\u2010cell/ASC clusters based on extracellular receptor co\u2010expression (Figure\u00a0 S3 A). CD4 +  T\u2010cell (Figure\u00a0 S3 B), and B\u2010cell/ASC (Figure\u00a0 S3 C) clusters were then isolated for secondary subset analysis.\n\nThe OMIP described here shares a small degree of marker similarity (TCR\u03b2, CD4, CD44, CD62L, PD\u20101, CD19, B220) with OMIP\u2010031 [ 40 ], OMIP\u2010032 [ 41 ], and OMIP\u2010061 [ 42 ], which are focused on immunologic checkpoint expression on murine T\u2010cell subsets, the characterization of innate and adaptive populations within the murine mammary gland and murine antigen\u2010presenting cells, respectively. While both OMIP\u2010031 and OMIP\u2010032 characterize TCR\u03b2 + CD4 +  effector and memory T\u2010cell subsets based on a combination of CD44 and/or CD62L expression, OMIP\u2010032 employs an additional CD19 +  gate to delineate B\u2010cells. OMIP\u2010061 utilized B220 to identify B\u2010cells. A distinct difference between these OMIPs and the OMIP described here is that our panel was developed for the sole purpose of comprehensively immunophenotyping T\u2010cell, B\u2010cell, and ASC subsets simultaneously, and we therefore include an additional 12 markers to allow the characterization of two major B\u2010cell, two ASC and seven major T\u2010cell populations within a single sample. The OMIP described here also exhibits minor overlap with OMIP\u2010054 [ 43 ], however, our panel was developed to maximize the potential of a 5\u2010laser BD LSRFortessa\u2122 in facilities without the capacity to perform mass cytometry.\n\nFigure S1. Titrations of each individual component used in the final OMIP.  All antibodies were individually titrated on splenocytes from na\u00efve 21\u2010day\u2010old BALB/c mice. Data are splenocytes pre\u2010gated to remove debris (SSC/FSC) and doublets.\n\nFigure S3. High\u2010dimensional analysis of CD45 \n \n + \n \n splenocytes.  Dimensionality reduction and clustering by UMAP demonstrating  (A)  distribution of TCR\u03b2, CD4/19 and B220 expression on viable CD45 +  splenocytes,  (B)  CD4 +  T\u2010cell and  (C)  B\u2010cell/ASC clusters. Dimensionality reduction and UMAP visualization was performed using 12,000 total splenocytes from 8 individual 21\u2010day\u2010old na\u00efve BALB/c mice (1500 cells per sample).\n\nFigure S5. Titration data for CD3\u03b5 PerCP and CD3\u03b5 BB700 antibodies.  Titrations of  (A)  CD3\u03b5 PerCP and  (B)  CD3\u03b5 BB700 antibodies not used in the final panel. Data are splenocytes pre\u2010gated to remove debris (SSC/FSC) and doublets.\n\nFigure S7. Titration data for Foxp3 PE clone MF23 antibody.  Titration of  (A)  Foxp3 PE clone MF23 antibody not used in the final panel and  (B)  Foxp3 PE clone FJK\u201016\u2009s antibody used in the final panel. Data are splenocytes pre\u2010gated to remove debris (SSC/FSC) and doublets.\n\nFigure S8. Initial panel staining with CD62L AF700. (A)  Titration of CD62L AF700.  (B)  Poor discrimination of CD45 + TCR\u03b2 + CD4 + CD62L + CD44 lo/\u2212  na\u00efve, of CD45 + TCR\u03b2 + CD4 + CD62L + CD44 hi  central memory and of CD45 + TCR\u03b2 + CD4 + CD62L \u2212 CD44 hi  effector memory T\u2010cell subsets when using the AF700 fluorochrome. Data are splenocytes from na\u00efve 21\u2010day\u2010old BALB/c mice.\n\nFigure S9. Compensation matrix . Based on data displayed in Figure\u00a0 1 . Acquisition\u2010defined compensation matrix was manually generated post\u2010acquisition.\n\nFigure S11. Initial panel staining with IgD BUV496 clone 217\u2013170. (A)  Titration of IgD BUV496 clone 217\u2013170.  (B)  Suboptimal detection of IgD expression on CD45 + TCR\u03b2 \u2212 CD19 + B220 + Synd\u20101 \u2212 CD80 + PD\u2010L2 \u2212 MHC class II + IgM + IgD +  activated and CD45 + TCR\u03b2 \u2212 CD19 + B220 + Synd\u20101 \u2212 CD80 + PD\u2010L2 + IgM + IgD \u2212  memory B\u2010cell subsets. Data are splenocytes from na\u00efve 21\u2010day\u2010old BALB/c mice.",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "PD-L2 (CD273)",
+        "fluorophore": "BUV395",
+        "clone": "TY25",
+        "purpose": "Memory B\u2010cells"
+      },
+      {
+        "marker": "IgD",
+        "fluorophore": "BUV496",
+        "clone": "AMS 9.1",
+        "purpose": "Activated/memory B\u2010cells"
+      },
+      {
+        "marker": "CD44",
+        "fluorophore": "BUV737",
+        "clone": "IM7",
+        "purpose": "T\u2010cell subsets"
+      },
+      {
+        "marker": "ICOS (CD278)",
+        "fluorophore": "BV421",
+        "clone": "7E.17G9",
+        "purpose": "T Follicular helper/Treg"
+      },
+      {
+        "marker": "PD-1 (CD279)",
+        "fluorophore": "BV480",
+        "clone": "J43",
+        "purpose": "T Follicular helper cells"
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "FVS575",
+        "clone": "N/A",
+        "purpose": "Viable cells"
+      },
+      {
+        "marker": "CD80",
+        "fluorophore": "BV650",
+        "clone": "16\u201010A1",
+        "purpose": "Activated B\u2010cells"
+      },
+      {
+        "marker": "IgM",
+        "fluorophore": "BV711",
+        "clone": "R6.60.2",
+        "purpose": "B\u2010cell/ASC subsets"
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BV786",
+        "clone": "RM4\u20105",
+        "purpose": "CD4 +  T\u2010cells"
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "BV786",
+        "clone": "1D3",
+        "purpose": "B\u2010cell subsets"
+      },
+      {
+        "marker": "Synd-1 (CD138)",
+        "fluorophore": "BB515",
+        "clone": "281\u20102",
+        "purpose": "Plasmablasts/Plasma cells"
+      },
+      {
+        "marker": "TCR\u03b2",
+        "fluorophore": "BB700",
+        "clone": "H57\u2010597",
+        "purpose": "Pan T\u2010cells"
+      },
+      {
+        "marker": "Foxp3",
+        "fluorophore": "PE",
+        "clone": "FJK\u201016s",
+        "purpose": "Regulatory T\u2010cells"
+      },
+      {
+        "marker": "B220 (CD45R)",
+        "fluorophore": "PE\u2010CF594",
+        "clone": "RA3\u20106B2",
+        "purpose": "B\u2010cell subsets"
+      },
+      {
+        "marker": "CD25",
+        "fluorophore": "PE\u2010Cy5",
+        "clone": "PC61",
+        "purpose": "Activated T\u2010cells"
+      },
+      {
+        "marker": "CXCR5 (CD185)",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "2G8",
+        "purpose": "T Follicular helper cells"
+      },
+      {
+        "marker": "MHC class II (I-A/I-E)",
+        "fluorophore": "AF647",
+        "clone": "M5/114.15.2",
+        "purpose": "B\u2010cell subsets"
+      },
+      {
+        "marker": "CD62L",
+        "fluorophore": "APC\u2010R700",
+        "clone": "MEL\u201014",
+        "purpose": "T\u2010cell subsets"
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "APC\u2010Cy7",
+        "clone": "30\u2010F11",
+        "purpose": "Pan leukocyte"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "root",
+      "is_critical": true,
+      "children": [
+        {
+          "name": "Cells",
+          "markers": [
+            "FSC",
+            "SSC"
+          ],
+          "marker_logic": "FSC/SSC gating",
+          "gate_type": "scatter",
+          "is_critical": true,
+          "children": [
+            {
+              "name": "Singlets",
+              "markers": [
+                "FSC-A",
+                "FSC-H"
+              ],
+              "marker_logic": "FSC-A vs FSC-H",
+              "gate_type": "scatter",
+              "is_critical": true,
+              "children": [
+                {
+                  "name": "Live CD45+ cells",
+                  "markers": [
+                    "Live/Dead",
+                    "CD45"
+                  ],
+                  "marker_logic": "Live/Dead- CD45+",
+                  "gate_type": "viability",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "CD4+ T cells",
+                      "markers": [
+                        "TCR\u03b2",
+                        "CD4",
+                        "CD19"
+                      ],
+                      "marker_logic": "TCR\u03b2+ CD4+",
+                      "gate_type": "lineage",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "Na\u00efve T cells",
+                          "markers": [
+                            "CD62L",
+                            "CD44"
+                          ],
+                          "marker_logic": "CD62L+ CD44lo/-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        },
+                        {
+                          "name": "Central Memory T cells",
+                          "markers": [
+                            "CD62L",
+                            "CD44"
+                          ],
+                          "marker_logic": "CD62L+ CD44hi",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        },
+                        {
+                          "name": "Effector Memory T cells",
+                          "markers": [
+                            "CD62L",
+                            "CD44"
+                          ],
+                          "marker_logic": "CD62L- CD44hi",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        },
+                        {
+                          "name": "Effector T cells",
+                          "markers": [
+                            "CD25",
+                            "Foxp3"
+                          ],
+                          "marker_logic": "CD25+ Foxp3-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        },
+                        {
+                          "name": "Regulatory T cells",
+                          "markers": [
+                            "CD25",
+                            "Foxp3"
+                          ],
+                          "marker_logic": "CD25+ Foxp3+",
+                          "gate_type": "subset",
+                          "is_critical": true,
+                          "children": [
+                            {
+                              "name": "ICOS+ CD44+ Treg",
+                              "markers": [
+                                "ICOS",
+                                "CD44"
+                              ],
+                              "marker_logic": "ICOS+ CD44+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "T Follicular Helper cells",
+                          "markers": [
+                            "CXCR5",
+                            "ICOS",
+                            "PD-1"
+                          ],
+                          "marker_logic": "CXCR5+ ICOS+ PD-1+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "Follicular Regulatory T cells",
+                              "markers": [
+                                "CD25",
+                                "Foxp3"
+                              ],
+                              "marker_logic": "CD25+/- Foxp3+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CD19+ B cells and ASC",
+                      "markers": [
+                        "TCR\u03b2",
+                        "CD19"
+                      ],
+                      "marker_logic": "TCR\u03b2- CD19+",
+                      "gate_type": "lineage",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "Plasmablasts",
+                          "markers": [
+                            "B220",
+                            "Synd-1",
+                            "MHC class II",
+                            "IgM"
+                          ],
+                          "marker_logic": "B220lo/+ Synd-1+ MHC class II+ IgM+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        },
+                        {
+                          "name": "B220+ Synd-1- B cells",
+                          "markers": [
+                            "B220",
+                            "Synd-1"
+                          ],
+                          "marker_logic": "B220+ Synd-1-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "Activated B cells",
+                              "markers": [
+                                "CD80",
+                                "PD-L2",
+                                "MHC class II",
+                                "IgM",
+                                "IgD"
+                              ],
+                              "marker_logic": "CD80+ PD-L2- MHC class II+ IgM+ IgD+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "Memory B cells",
+                              "markers": [
+                                "CD80",
+                                "PD-L2",
+                                "IgM",
+                                "IgD"
+                              ],
+                              "marker_logic": "CD80+ PD-L2+ IgM+ IgD+/-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "TCR\u03b2- CD4/CD19- cells",
+                      "markers": [
+                        "TCR\u03b2",
+                        "CD4",
+                        "CD19"
+                      ],
+                      "marker_logic": "TCR\u03b2- CD4- CD19-",
+                      "gate_type": "lineage",
+                      "is_critical": false,
+                      "children": [
+                        {
+                          "name": "Plasma cells",
+                          "markers": [
+                            "B220",
+                            "Synd-1",
+                            "MHC class II",
+                            "IgM"
+                          ],
+                          "marker_logic": "B220- Synd-1+ MHC class II- IgM+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 19 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 9578 chars of gating text from body"
+    ]
+  }
+}

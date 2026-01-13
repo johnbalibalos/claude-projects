@@ -1,0 +1,513 @@
+{
+  "test_case_id": "PMC6590190",
+  "source_type": "omip_paper",
+  "omip_id": null,
+  "doi": "10.1002/cyto.a.23725",
+  "pmc_id": "PMC6590190",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Single cells from Miltenyi neural tissue dissociation kit (P) treated brain",
+    "species": "mouse",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Identification of main leukocyte populations and CD45 \u2212  cells in murine glioblastoma by manual gating and representation by viSNE. ( A ) Example gating of cell subsets. ( B ) viSNE embeddings color\u2010coded for lineage markers. ( C ) Populations gated in A are color\u2010coded according to the legend inset and displayed in the viSNE map. ( D ) Heatmap describing relative expression of lineage markers across the populations described in A, B, and C. ( E ) Heatmap displaying median mass intensity (ArcSinH(5)\u2010transformed) of activation and migration markers across the populations described in A, B, and C.",
+    "full_text_gating": "Here we present a 42 parameter panel to characterize myeloid immune cell subsets and T lymphocyte activation status in cryopreserved and barcoded single cell suspensions obtained from brain, spleen, and bone marrow of an orthotopic immunocompetent glioblastoma mouse model in a C57BL/6 background (Table  1 ). This panel is designed for mass cytometry by time of flight (CyTOF) and combines 34 antibodies against diverse cell surface and intracellular targets together with cisplatin for live/dead discrimination, iridium for cell identification, and six cellular barcodes  1  to enable simultaneous multiplexed acquisition of up to 20 samples (Table  2 ). The panel is designed for a comprehensive evaluation of the immune system in different organs during murine in vivo studies in the field of glioblastoma immunology, but could also be applied to other disease models in the central nervous system (CNS) with possible systemic involvement, such as brain metastasis arising from other types of cancer, experimental autoimmune encephalomyelitis (EAE), or neurodegenerative disease models. Marker selection was partly based on a combination of previously reported panels studying CNS immune infiltrates  2 ,  3 ,  4 ,  5 ,  6 ,  7 . The selected set of markers captures T lymphocytes (CD8+, CD4+, and regulatory T lymphocytes), dendritic cells (DC), monocytes, macrophages, microglia, tumor cells (when GFP positive), and granulocytes, and contains a set of antibodies to detect cell activation, migratory capacity and immune checkpoints (Table  2 ). The panel has been optimized with respect to marker selection, antibody clone usage, antibody\u2010metal pairing, and antibody concentration, and has room for additional markers by filling in a number of free channels as listed in Table  2 .\n\nIn the last decades enormous efforts have been made to develop therapeutic interventions that boost antitumor immunity, including adoptive cell transfer, anti\u2010cancer vaccination, application of oncolytic viruses, and immune checkpoint inhibition  8 ,  9 . A wide range of immunotherapeutic strategies are being tested in glioblastoma, advanced by successes in other tumor types. In these approaches particularly T cells are targeted as final effector cells by, for example, dendritic cell vaccination or immune checkpoint inhibition, but durable responses remain limited to case reports  10 . Boosted T cell responses as a result of, for example, vaccination strategies encounter functional impairment due to immune inhibitory mechanisms both in the tumor microenvironment and systemically. To overcome T cell inhibition hope was pinned on immune checkpoint inhibition with monoclonal antibody therapy against PD1 and CTLA\u20104. Nevertheless, to date clinical trials testing immune checkpoint inhibition in glioblastoma have not shown impressive results  11 . Clearly glioblastoma\u2010specific immune suppression is a complex and unsolved problem that remains an obstacle for successful immunotherapies. Therefore, a better understanding of glioblastoma immune escape and contributing factors is warranted, alongside the development of biomarkers for patient selection and prediction of clinical response. Immune suppression in glioblastoma is largely mediated by infiltration of monocytes into the glioblastoma microenvironment  12 . Myeloid immune cells dominate immune infiltrates and are involved in glioblastoma disease progression  13 ,  14 ,  15 . Although some subsets have been studied in isolation, the different types of infiltrating myeloid and lymphoid cells, their recruitment from the bone marrow and spleen, and their phenotypic distribution need further investigation.\n\nIdentification of main leukocyte populations and CD45 \u2212  cells in murine glioblastoma by manual gating and representation by viSNE. ( A ) Example gating of cell subsets. ( B ) viSNE embeddings color\u2010coded for lineage markers. ( C ) Populations gated in A are color\u2010coded according to the legend inset and displayed in the viSNE map. ( D ) Heatmap describing relative expression of lineage markers across the populations described in A, B, and C. ( E ) Heatmap displaying median mass intensity (ArcSinH(5)\u2010transformed) of activation and migration markers across the populations described in A, B, and C.\n\nEnzymatic digestions often result in the cleavage of molecules on the membrane of immune cells, which could have detrimental effect in their recognition by antibodies. In order to allow direct comparison amongst different organs (brain, spleen, and bone marrow) all samples were subjected to the same enzymatic treatment as it was required for the processing of the brain samples. The panel presented in this OMIP has been optimized to the single cell suspension preparation procedure as suggested by the manufacturer with some minor adjustments (see Supporting Information \u201cOnline Protocol\u201d). Care should be taken to specifically address any effects of alterations in the tissue dissociation protocol to the performance of this panel.\n\nThis OMIP is partly overlapping with OMIP\u2010032, which describes two murine multicolor immunofluorescence panels including the following markers to detect B and T lymphocytes, natural killer cells, dendritic cells, macrophages, monocytes, and neutrophils: CD45, TCR\u03b2, CD4, CD8, Ly6C, CD49b, Ly6G, CD11c, MHCII, CD206, NKp46, CD62L, and CD44  19 . These markers overlap with our panel except for CD49b, NKp46, and CD62L. Since our panel is more focused on activation and exhaustion in T lymphocytes, we included more antibodies against activation markers and co\u2010inhibitory molecules (immune checkpoints) rather than the presence of na\u00efve or memory T cells. Also OMIP\u2010031 has overlap with a panel aimed at immune checkpoint expression  20 , which reports the following markers: CD3, CD4, CD8, CD69, CD44, CD45RA, CD27, CD62L, KLRG127, CD127, PD\u20101, CTLA4, TIM\u20103, LAG\u20103, and CD45. Our panel includes all of these markers except for CD45RA, CD27, CD62L, KLG127, and LAG\u20103. Previously, three other mass cytometry panels have been published. They focus on the characterization of human peripheral leukocytes (OMIP\u201034), human head and neck cancer (OMIP\u201045), and the quantification of calcium sensors and channels in lymphocyte subsets  21 ,  22 ,  23 . This is the first mass cytometry OMIP for a comprehensive characterization of the mouse immune system. All data used generated during the optimization and verification of this panel can be found in FlowRepository under ID: FR\u2010FCM\u2010ZYUF.",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "Cell identification",
+        "fluorophore": null,
+        "clone": null,
+        "purpose": null
+      },
+      {
+        "marker": "Barcodes",
+        "fluorophore": "103\u2013110Pd",
+        "clone": null,
+        "purpose": "Staining standardization and doublet discrimination"
+      },
+      {
+        "marker": "Iridium",
+        "fluorophore": "191\u2013193Ir",
+        "clone": null,
+        "purpose": "Cell identification"
+      },
+      {
+        "marker": "Cisplatin",
+        "fluorophore": "194\u2013195Pt",
+        "clone": null,
+        "purpose": "Live/dead discrimination"
+      },
+      {
+        "marker": "Cell classification",
+        "fluorophore": null,
+        "clone": null,
+        "purpose": null
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "89Y",
+        "clone": "30\u2010F11",
+        "purpose": "All leukocytes"
+      },
+      {
+        "marker": "CD3e",
+        "fluorophore": "152Sm",
+        "clone": "145\u20102C11",
+        "purpose": "T lymphocytes"
+      },
+      {
+        "marker": "TCRb",
+        "fluorophore": "169Tm",
+        "clone": "H57\u2010597",
+        "purpose": "T a/b lymphocyte receptor"
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "145Nd",
+        "clone": "RM4\u20105",
+        "purpose": "T helper lymphocytes"
+      },
+      {
+        "marker": "Foxp3 (FJK16s)",
+        "fluorophore": "158Gd",
+        "clone": "FJK\u201016s",
+        "purpose": "Regulatory T lymphocytes"
+      },
+      {
+        "marker": "CD8b",
+        "fluorophore": "168Er",
+        "clone": "536.7",
+        "purpose": "Cytotoxic T lymphocytes"
+      },
+      {
+        "marker": "CD127 (IL-7Ra)",
+        "fluorophore": "175Lu",
+        "clone": "A7R34",
+        "purpose": "Memory T lymphocytes"
+      },
+      {
+        "marker": "CD28",
+        "fluorophore": "151Eu",
+        "clone": "37.51",
+        "purpose": "T lymphocytes, natural killer cells"
+      },
+      {
+        "marker": "Ly-6G",
+        "fluorophore": "141Pr",
+        "clone": "1A8",
+        "purpose": "Granulocytes"
+      },
+      {
+        "marker": "Ly-6C",
+        "fluorophore": "150Nd",
+        "clone": "HK1.4",
+        "purpose": "Monocytes, macrophages"
+      },
+      {
+        "marker": "CD11b (Mac-1)",
+        "fluorophore": "148Nd",
+        "clone": "M1/70",
+        "purpose": "Macrophages, microglia, dendritic cells, granulocytes"
+      },
+      {
+        "marker": "CD11c",
+        "fluorophore": "209Bi",
+        "clone": "N418",
+        "purpose": "Dendritic cells"
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "144Nd",
+        "clone": "Sa14\u20102",
+        "purpose": "Monocytes"
+      },
+      {
+        "marker": "CD88",
+        "fluorophore": "161Dy",
+        "clone": "20/70",
+        "purpose": "Monocytes, macrophages, neutrophils, eosinophils"
+      },
+      {
+        "marker": "MHC class 2 I-A/I-E",
+        "fluorophore": "174Yb",
+        "clone": "M5/114.15.2",
+        "purpose": "Antigen presenting cells, T lymphocyte activation?"
+      },
+      {
+        "marker": "TMEM119",
+        "fluorophore": "146Nd",
+        "clone": "106\u20136",
+        "purpose": "Microglia"
+      },
+      {
+        "marker": "CD49d",
+        "fluorophore": "176Yb",
+        "clone": "R1\u20102",
+        "purpose": "Exclusion marker for microglia"
+      },
+      {
+        "marker": "CD169 (Siglec-1)",
+        "fluorophore": "142Nd",
+        "clone": "3D6.112",
+        "purpose": "Dendritic cells, macrophages, microglia"
+      },
+      {
+        "marker": "CD206 (Mannose receptor)",
+        "fluorophore": "160Gd",
+        "clone": "C068C2",
+        "purpose": "Macrophages, dendritic cells"
+      },
+      {
+        "marker": "Siglec H",
+        "fluorophore": "166Er",
+        "clone": "440c",
+        "purpose": "Plasmacytoid dendritic cells, Microglia"
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "153Eu",
+        "clone": "90",
+        "purpose": "B lymphocyte (pre\u2010cursors), macrophages"
+      },
+      {
+        "marker": "aGFP",
+        "fluorophore": "173Yb",
+        "clone": "454,505",
+        "purpose": "Tumor cells"
+      },
+      {
+        "marker": "Migration",
+        "fluorophore": null,
+        "clone": null,
+        "purpose": null
+      },
+      {
+        "marker": "CCR2",
+        "fluorophore": "165Ho",
+        "clone": "475,301",
+        "purpose": "Monocyte chemotaxis"
+      },
+      {
+        "marker": "CCR6",
+        "fluorophore": "156Gd",
+        "clone": "29\u20102L17",
+        "purpose": "Dendritic cell\u2010 and lymphocyte chemotaxis"
+      },
+      {
+        "marker": "CD54 (ICAM-1)",
+        "fluorophore": "163Dy",
+        "clone": "YN1/1.7.4",
+        "purpose": "Leukocyte extravasation"
+      },
+      {
+        "marker": "Activation",
+        "fluorophore": null,
+        "clone": null,
+        "purpose": null
+      },
+      {
+        "marker": "Ly-6A/E (Sca-1)",
+        "fluorophore": "164Dy",
+        "clone": "D7",
+        "purpose": "Hematopoietic stem cell marker/ activation of lymphocytes"
+      },
+      {
+        "marker": "Ki-67",
+        "fluorophore": "172Yb",
+        "clone": "B56",
+        "purpose": "Cell proliferation"
+      },
+      {
+        "marker": "CD69",
+        "fluorophore": "143Nd",
+        "clone": "H1.2F3",
+        "purpose": "Activated T lymphocytes"
+      },
+      {
+        "marker": "CD44",
+        "fluorophore": "171Yb",
+        "clone": "IM7",
+        "purpose": "Activated lymphocytes"
+      },
+      {
+        "marker": "CD150 (SLAM, IPO-3)",
+        "fluorophore": "167Er",
+        "clone": "TC15\u201012F12.2",
+        "purpose": "Activated lymphocytes and dendritic cells"
+      },
+      {
+        "marker": "Immune checkpoints",
+        "fluorophore": null,
+        "clone": null,
+        "purpose": null
+      },
+      {
+        "marker": "CD152 (CTLA-4)",
+        "fluorophore": "154Sm",
+        "clone": "UC10\u20104B9",
+        "purpose": "Co\u2010inhibitory molecule"
+      },
+      {
+        "marker": "CD279 (PD-1)",
+        "fluorophore": "159Tb",
+        "clone": "J43",
+        "purpose": "Co\u2010inhibitory molecule"
+      },
+      {
+        "marker": "CD274 (PD-L1)",
+        "fluorophore": "155Gd",
+        "clone": "10F.9G2",
+        "purpose": "PD1 ligand"
+      },
+      {
+        "marker": "CD366 (Tim-3)",
+        "fluorophore": "162Dy",
+        "clone": "RMT3\u201023",
+        "purpose": "Co\u2010inhibitory molecule"
+      },
+      {
+        "marker": "Free channels",
+        "fluorophore": null,
+        "clone": null,
+        "purpose": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "root",
+      "children": [
+        {
+          "name": "Cells",
+          "markers": [
+            "Iridium"
+          ],
+          "marker_logic": "Iridium+",
+          "gate_type": "scatter",
+          "is_critical": true,
+          "children": [
+            {
+              "name": "Live Cells",
+              "markers": [
+                "Cisplatin"
+              ],
+              "marker_logic": "Cisplatin-",
+              "gate_type": "viability",
+              "is_critical": true,
+              "children": [
+                {
+                  "name": "CD45+ Leukocytes",
+                  "markers": [
+                    "CD45"
+                  ],
+                  "marker_logic": "CD45+",
+                  "gate_type": "lineage",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "T Lymphocytes",
+                      "markers": [
+                        "CD3e",
+                        "TCRb"
+                      ],
+                      "marker_logic": "CD3e+ TCRb+",
+                      "gate_type": "lineage",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "CD4+ T Helper Lymphocytes",
+                          "markers": [
+                            "CD4"
+                          ],
+                          "marker_logic": "CD4+",
+                          "gate_type": "subset",
+                          "is_critical": true,
+                          "children": [
+                            {
+                              "name": "Regulatory T Lymphocytes",
+                              "markers": [
+                                "Foxp3"
+                              ],
+                              "marker_logic": "Foxp3+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CD8+ Cytotoxic T Lymphocytes",
+                          "markers": [
+                            "CD8b"
+                          ],
+                          "marker_logic": "CD8b+",
+                          "gate_type": "subset",
+                          "is_critical": true,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Myeloid Cells",
+                      "markers": [
+                        "CD11b"
+                      ],
+                      "marker_logic": "CD11b+",
+                      "gate_type": "lineage",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "Granulocytes",
+                          "markers": [
+                            "Ly-6G"
+                          ],
+                          "marker_logic": "Ly-6G+",
+                          "gate_type": "subset",
+                          "is_critical": true,
+                          "children": []
+                        },
+                        {
+                          "name": "Non-Granulocytes",
+                          "markers": [
+                            "Ly-6G"
+                          ],
+                          "marker_logic": "Ly-6G-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "Microglia",
+                              "markers": [
+                                "TMEM119",
+                                "CD49d"
+                              ],
+                              "marker_logic": "TMEM119+ CD49d-",
+                              "gate_type": "subset",
+                              "is_critical": true,
+                              "children": []
+                            },
+                            {
+                              "name": "CNS-Associated Macrophages",
+                              "markers": [
+                                "TMEM119",
+                                "CD49d"
+                              ],
+                              "marker_logic": "TMEM119- CD49d+",
+                              "gate_type": "subset",
+                              "is_critical": true,
+                              "children": [
+                                {
+                                  "name": "Monocytes",
+                                  "markers": [
+                                    "Ly-6C",
+                                    "MHC class 2 I-A/I-E"
+                                  ],
+                                  "marker_logic": "Ly-6C+ MHC-II-",
+                                  "gate_type": "subset",
+                                  "is_critical": true,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Monocyte-Derived Macrophages",
+                                  "markers": [
+                                    "Ly-6C",
+                                    "MHC class 2 I-A/I-E"
+                                  ],
+                                  "marker_logic": "Ly-6C+ MHC-II+",
+                                  "gate_type": "subset",
+                                  "is_critical": false,
+                                  "children": []
+                                },
+                                {
+                                  "name": "Macrophages",
+                                  "markers": [
+                                    "Ly-6C",
+                                    "MHC class 2 I-A/I-E"
+                                  ],
+                                  "marker_logic": "Ly-6C- MHC-II+",
+                                  "gate_type": "subset",
+                                  "is_critical": true,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Dendritic Cells",
+                      "markers": [
+                        "CD11c",
+                        "MHC class 2 I-A/I-E"
+                      ],
+                      "marker_logic": "CD11c+ MHC-II+",
+                      "gate_type": "lineage",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "Plasmacytoid Dendritic Cells",
+                          "markers": [
+                            "Siglec H"
+                          ],
+                          "marker_logic": "Siglec-H+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "CD45- Non-Leukocytes",
+                  "markers": [
+                    "CD45"
+                  ],
+                  "marker_logic": "CD45-",
+                  "gate_type": "lineage",
+                  "is_critical": false,
+                  "children": [
+                    {
+                      "name": "GFP+ Tumor Cells",
+                      "markers": [
+                        "aGFP"
+                      ],
+                      "marker_logic": "GFP+",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "is_critical": true
+    }
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 43 markers",
+      "Parsed Table 1 for metadata",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 6489 chars of gating text from body"
+    ]
+  }
+}

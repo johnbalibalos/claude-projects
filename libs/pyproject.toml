@@ -20,4 +20,4 @@ dev = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["checkpoint*", "mcp_tester*"]
+include = ["checkpoint*", "mcp_tester*", "model_client*", "hypothesis_pipeline*", "paper_download*", "results_processor*"]

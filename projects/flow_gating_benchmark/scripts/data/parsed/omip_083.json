@@ -1,0 +1,345 @@
+{
+  "test_case_id": "OMIP-083",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-083",
+  "doi": "10.1002/cyto.a.24545",
+  "pmc_id": "PMC9310743",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "PBMCs",
+    "species": "humans",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Overview of the 21\u2010marker, 18\u2010color monocyte\u2010centric panel on human PBMCs. PBMCs were density\u2010separated from Cyto\u2010Chex blood collection tubes (Streck, La Vista, NE), stained and acquired on a 3\u2010laser Cytek Aurora (Cytek biosciences, Fremont, CA). Initially, the sample is cleaned by excluding variable flow rate during acquisition (typically experienced at the start and end of sample acquisition), doublets, debris and antibody aggregates (A, i\u2010vi). Following cleaning, CD45 +  (A, vii) and CD66b \u2212  (A, viii) leukocytes are sequentially gated. Several lineage markers (CD3, CD19, CD56, CD123) are conjugated to the same fluorochrome to facilitate efficient exclusion of all other nonmonocyte cells (A, ix). Within the same plot that Lin +  leukocytes are excluded, the monocyte population is defined as TLR2 +  (A, ix). As such, the monocyte population is defined as: CD45 + /CD66b \u2212 /Lin \u2212 /TLR2 + . Monocytes display their characteristic expression of CD14 and CD16 (B, i). Separating classical (CD14 ++ /CD16 \u2212 ) monocytes from all other monocyte subsets (CD14 var /CD16 var ) can be achieved in this plot. From here, classical monocytes are confirmed to display their expected pattern of CCR2 and CX 3 CR1 (B, ii). Residual classical monocytes are defined in B, iii as those cells which were originally gated as \u2018other monocyte subsets\u2019 from the parent population but which subsequently show CCR2 and CX 3 CR1 expression patterns identical to classical monocytes. This population is removed from downstream analysis. From here, a true population of \u2018other monocyte subsets\u2019 is defined (B, iii) and subsequently divided into intermediate (CCR2 + /SLAN \u2212 ) monocytes and two subsets of nonclassical monocytes based on expression of SLAN: SLAN +  (CCR2 \u2212 /SLAN + ) nonclassical and SLAN \u2212  (CCR2 \u2212 /SLAN \u2212 ) monocytes (B, iv). High\u2010dimensional analysis with the UMAP algorithm was conducted on PBMCs from two individuals across three timepoints (for a total of six samples) (C). Data were cleaned (as demonstrated in A, i\u2010vi) and CD45 +  events from these six samples were combined and used for this analysis. Manual gating of the four monocyte populations was overlaid on this two\u2010dimensional rendering (C, i). UMAP analysis demonstrates the ease of discriminating the monocyte population from all other leukocytes using TLR2 (C, ii). Heatmap overlays also demonstrate the distinct expression levels of CD14 (C, iii), CD16 (C, iv), CCR2 (C, v), CX 3 CR1 (C, vi) and SLAN (C, vii) within these monocyte populations. Once identified, these four monocyte subsets were interrogated for their expression of a further nine markers (D); each monocyte subset shows distinctive expression profiles",
+    "full_text_gating": "This 21\u2010marker, 18\u2010color panel was developed to accurately delineate monocyte subsets by manual gating and, once successfully gated, to characterize monocyte function in\u2010depth. This panel was optimized on human peripheral blood mononuclear cells (PBMCs) density\u2010separated from whole blood drawn into Cyto\u2010Chex blood collection tubes (BCTs; Streck, La Vista, NE) from healthy adults. All samples were analyzed on a three\u2010laser (violet\u2010blue\u2010red) Aurora full spectrum flow cytometer (Cytek Biosciences, Fremont, CA). Deep phenotyping was achieved by minimizing the number of channels used to exclude nonmonocyte cells and maximizing the number of markers included to monitor monocyte immune status. This panel was specifically designed to interrogate cell\u2010surface expression of monocyte\u2010centric antigens to reduce handling time and complexity, which are desirable characteristics of a clinically applicable protocol. Although not tested on cryopreserved PBMCs or with alternative BCTs, we anticipate that this panel could be used on these sample types with minimal optimization. For optimal staining, we recommend the use of density\u2010separated PBMCs over red blood cell (RBC)\u2010lysed whole blood. In supplementary material, we highlight our step\u2010wise troubleshooting to achieve optimal staining of this panel.\n\nAcute and chronic inflammatory diseases are often associated with significant risk of progression and recurrence. This risk is amplified by the lack of accurate clinical risk\u2010stratification tools for prediction of survival from morbidity and mortality. Due to their heterogeneity and plasticity, the role of monocytes in propagating and maintaining many inflammatory diseases is well\u2010established. Interrogating the dynamics of monocyte phenotype in these clinical contexts may provide a tool both for better understanding of pathology and for predicting disease course. To this end, we have developed a 21\u2010marker, 18\u2010color immunophenotyping panel for deep monocyte analysis in human peripheral blood (Table\u00a0 1 ). This is the second optimized multicolor immunofluorescence panel (OMIP) to utilize full spectrum flow cytometry [ 1 ]. Analysis of the full spectrum of each fluorochrome as well as analysis of the autofluorescence spectrum of cells\u2010of\u2010interest allows for the use of fluorochrome combinations that are unable to be differentiated by conventional cytometry and increases the resolution of cell populations [ 2 ]. Of particular interest to the aims of this OMIP, which contains many markers co\u2010expressed on monocytes, the reduced level of spreading error seen with full spectrum flow cytometry aided in resolving issues of spread with co\u2010expressed markers.\n\nMany published OMIPs aim to enumerate many cellular subtypes from blood [ 1 ,  3 ,  4 ,  5 ,  6 ,  7 ] (Table\u00a0 1 ). However, there is also a need to focus on deep phenotyping of individual subsets that are implicated in disease progression and survival. While these deep phenotyping panels exist for other peripheral subsets (namely T cells, B cells and dendritic cells [DCs]), there remains room to introduce such a flow cytometry\u2010based panel for peripheral innate subsets, such as monocytes and neutrophils. Here, we expand on existing OMIPs by presenting a monocyte\u2010centric panel that is designed to exclude nonmonocyte cells, identify and delineate four monocyte subsets and, once identified, to phenotypically characterize each subset.\n\nCirculating human monocytes are conventionally divided into three subsets as follows [ 8 ,  9 ]: classical (CD14 ++ /CD16 \u2212 ), intermediate (CD14 + /CD16 + ), and nonclassical (CD14 \u2212 /CD16 ++ ). These subsets differ in their function: classical monocytes contribute to the host's pro\u2010inflammatory defense mechanisms, while intermediate monocytes are attuned toward antigen presentation, and nonclassical monocytes play a role in vascular patrolling and surveillance [ 18 ,  19 ]. Here, we expand on these definitions by further subsetting nonclassical monocytes based on expression of SLAN (6\u2010sulfo LacNAc), a carbohydrate modification of P\u2010selectin glycoprotein ligand\u20101 (PSGL\u20101). Within nonclassical monocytes, we can define a SLAN +  (CD14 \u2212 /CD16 ++ /SLAN + ) and a SLAN \u2212  (CD14 \u2212 /CD16 ++ /SLAN \u2212 ) subset [ 10 ,  11 ,  12 ,  13 ]. SLAN +  nonclassical monocytes been shown to be both phenotypically and functionally different from their SLAN \u2212  counterparts [ 11 ,  13 ]. Originally classified as DCs, SLAN +  nonclassical monocytes are now recognized as a bona fide monocyte subset [ 14 ], as transcriptional profiling has indicated their closer relationship with the monocyte compartment than with the DC compartment [ 15 ]. As such, inclusion of SLAN in this panel offers users the ability to examine this subset, distinct from other nonclassical monocytes. A full list of the antibodies used in this panel is given in Table\u00a0 2 .\n\nFigure\u00a0 1  demonstrates the gating strategy for excluding nonmonocytes (Figure\u00a0 1A ) and delineating the four monocyte subsets (Figure\u00a0 1B ). Six markers across three detectors were designated to exclude nonmonocytes. Nonleukocytes (contaminating platelets and red blood cells) were excluded by gating on CD45 +  cells (Figure\u00a0 1A \n , vii ) and granulocytes (neutrophils and eosinophils) were excluded by gating on CD45 + /CD66b \u2212  cells (Figure\u00a0 1A \n , viii ). Lineage markers for T cells (CD3), B cells (CD19), Natural Killer cells (CD56), and both plasmacytoid DCs and basophils (CD123) were assigned to the same fluorophore (FITC). As such, monocytes were defined as lineage \u2212  (Lin \u2212 ). In conjunction with these lineage markers, TLR2 was used as a pan\u2010monocyte marker to pull out a clean monocyte population (TLR2 + /Lin \u2212 ) (Figure\u00a0 1A \n , ix ). TLR2 is similarly and highly expressed across classical, intermediate and nonclassical monocytes, noted both here and by others [ 16 ,  17 ,  18 ]. Similar and high expression across subsets is desirable for a pan marker and, here, eliminates HLA\u2010DR (variably expressed) and CD86 (dimly expressed) ( \n Figure S9  of  Data S1 \n ), both of which are commonly cited as pan\u2010monocyte markers elsewhere [ 9 ,  19 ,  20 ]. In this panel, the total monocyte population is thus defined as CD45 + /CD66b \u2212 /Lin \u2212 /TLR2 + . At this stage of gating (Figure\u00a0 1A \n ix ), we also eliminate Lin \u2212 /TLR2 low  cells. As such, we define monocytes as strictly TLR2 + .\n\nOverview of the 21\u2010marker, 18\u2010color monocyte\u2010centric panel on human PBMCs. PBMCs were density\u2010separated from Cyto\u2010Chex blood collection tubes (Streck, La Vista, NE), stained and acquired on a 3\u2010laser Cytek Aurora (Cytek biosciences, Fremont, CA). Initially, the sample is cleaned by excluding variable flow rate during acquisition (typically experienced at the start and end of sample acquisition), doublets, debris and antibody aggregates (A, i\u2010vi). Following cleaning, CD45 +  (A, vii) and CD66b \u2212  (A, viii) leukocytes are sequentially gated. Several lineage markers (CD3, CD19, CD56, CD123) are conjugated to the same fluorochrome to facilitate efficient exclusion of all other nonmonocyte cells (A, ix). Within the same plot that Lin +  leukocytes are excluded, the monocyte population is defined as TLR2 +  (A, ix). As such, the monocyte population is defined as: CD45 + /CD66b \u2212 /Lin \u2212 /TLR2 + . Monocytes display their characteristic expression of CD14 and CD16 (B, i). Separating classical (CD14 ++ /CD16 \u2212 ) monocytes from all other monocyte subsets (CD14 var /CD16 var ) can be achieved in this plot. From here, classical monocytes are confirmed to display their expected pattern of CCR2 and CX 3 CR1 (B, ii). Residual classical monocytes are defined in B, iii as those cells which were originally gated as \u2018other monocyte subsets\u2019 from the parent population but which subsequently show CCR2 and CX 3 CR1 expression patterns identical to classical monocytes. This population is removed from downstream analysis. From here, a true population of \u2018other monocyte subsets\u2019 is defined (B, iii) and subsequently divided into intermediate (CCR2 + /SLAN \u2212 ) monocytes and two subsets of nonclassical monocytes based on expression of SLAN: SLAN +  (CCR2 \u2212 /SLAN + ) nonclassical and SLAN \u2212  (CCR2 \u2212 /SLAN \u2212 ) monocytes (B, iv). High\u2010dimensional analysis with the UMAP algorithm was conducted on PBMCs from two individuals across three timepoints (for a total of six samples) (C). Data were cleaned (as demonstrated in A, i\u2010vi) and CD45 +  events from these six samples were combined and used for this analysis. Manual gating of the four monocyte populations was overlaid on this two\u2010dimensional rendering (C, i). UMAP analysis demonstrates the ease of discriminating the monocyte population from all other leukocytes using TLR2 (C, ii). Heatmap overlays also demonstrate the distinct expression levels of CD14 (C, iii), CD16 (C, iv), CCR2 (C, v), CX 3 CR1 (C, vi) and SLAN (C, vii) within these monocyte populations. Once identified, these four monocyte subsets were interrogated for their expression of a further nine markers (D); each monocyte subset shows distinctive expression profiles\n\nHaving defined total monocytes, close attention must be paid to manually gate each monocyte subset, particularly given that each has distinctive functions. This is commonly achieved by visualizing the total monocyte population by CD14 and CD16 expression (Figure\u00a0 1B \n i ). The majority of the population is CD14 ++ /CD16 \u2212  (an expression pattern that defines classical monocytes) and the remaining \u201ctail\u201d of monocytes (inclusive of both intermediate and nonclassical monocytes) show increasing expression of CD16 and decreasing expression of CD14. The task of manually gating all monocyte subsets by CD14 and CD16 is, thus, difficult as these subsets sit along a gradient of CD14 and CD16 expression. This is a particular problem for defining intermediate monocytes which, by virtue of their name, express an intermediate phenotype between the classical and nonclassical subsets. As such, intermediate monocytes are frequently manually gated from other subsets at an arbitrary level of CD14 and CD16 expression. Our gating strategy accounts for this gradient effect by defining each of the monocyte subsets with a larger set of markers (CD14, CD16, CCR2, CX 3 CR1, SLAN) rather than relying solely on CD14 and CD16 expression.\n\nSeparating classical monocytes from all other monocytes is routinely and accurately achieved by examining CD16 and CD14 expression (Figure\u00a0 1B \n i ). As such, classical monocytes are identified as CD45 + /CD66b \u2212 /Lin \u2212 /TLR2 + /CD14 ++ /CD16 \u2212 . All other subsets are defined in this plot as CD14 var /CD16 var . We also place a confirmatory gate around this classical monocyte population using both CCR2 and CX 3 CR1 (Figure\u00a0 1B \n , ii ): compared to all other monocyte subsets, classical monocytes are CCR2 high /CX 3 CR1 low . We additionally apply this confirmatory gate to CD14 var /CD16 var  monocytes to identify and exclude residual classical monocytes (Figure\u00a0 1B \n , iii ). Also within Figure\u00a0 1B \n , iii , the remaining monocyte subsets (intermediate and nonclassical) are gated as CCR2 low /CX 3 CR1 high  compared to classical monocytes.\n\nThe next task is accurate separation of intermediate and nonclassical monocyte subsets, which requires markers that are differentially expressed between these populations. Markers that satisfy this requirement include CCR2, CXCR4, CD36, and SLAN. Of particular interest, nonclassical monocytes are well\u2010cited as negative for CCR2 [ 10 ,  11 ,  12 ,  21 ,  22 ,  23 ], CXCR4 [ 21 ,  23 ] and CD36 [ 21 ,  22 ,  24 ], whereas intermediate monocytes show variable expression of all three markers. The nonclassical phenotype can therefore be described as CCR2 \u2212 /CXCR4 \u2212 /CD36 \u2212 , and are phenotypically distinct from all other monocyte subsets, which can be described as CCR2 var /CXCR4 var /CD36 var . As described earlier, the addition of SLAN also allows for discrimination of two nonclassical populations (SLAN +  vs. SLAN \u2212 ). In our hands, CCR2 worked best for identifying nonclassical (CCR2 \u2212 ) away from intermediate (CCR2 + ) monocytes, compared to both CXCR4 and CD36 ( \n Figure S11  of  Data S1 \n ) and were therefore defined as shown in Figure\u00a0 1B \n , iv . Intermediate monocytes are thus identified as CD45 + /CD66b \u2212 /Lin \u2212 /TLR2 + /CD14 + /CD16 + /CX 3 CR1 low /CCR2 + . In conjunction with SLAN, CCR2 \u2212  nonclassical monocytes could be further delineated into SLAN +  (CD45 + /CD66b \u2212 /Lin \u2212 /TLR2 + /CD14 \u2212 /CD16 ++ /CX 3 CR1 low /CCR2 \u2212 /SLAN + ) and SLAN \u2212  (CD45 + /CD66b \u2212 /Lin \u2212 /TLR2 + /CD14 \u2212 /CD16 ++ /CX 3 CR1 low /CCR2 \u2212 /SLAN \u2212 ) subsets. Based on  Figure \n \n 1 \n A,B \n , all four monocyte subsets can be defined using 12 markers (CD45, CD66b, CD3, CD19, CD56, CD123, TLR2, CD14, CD16, CCR2, CX 3 CR1, SLAN) across nine detectors. In Figure\u00a0 1B \n , i , there is a population of CD14 low CD16 \u2212 ; these cells are excluded from analysis as their expression pattern of both CD14 and CD16 is uncharacteristic of monocytes.\n\nCD45 +  events from each of six PBMC samples were combined to visualize the four manually gated monocyte subsets using the UMAP algorithm (Figure\u00a0 1C \n , i ) [ 25 ]. Heatmap overlays for TLR2, CD14, CD16, CCR2, CX 3 CR1, and SLAN (Figure\u00a0 1C \n , ii\u2010vii ) demonstrate the differential expression patterns across the four monocyte subsets. In Figure\u00a0 1C \n , i and ii , we can see that TLR2 low  cells are excluded from analysis; strictly TLR2 +  cells are defined as monocytes.\n\nHaving identified these four subsets, we can interrogate various effector functions including: 1) heterotypic aggregation (CD42b), 2) adhesion (CD11b, CD11c), 3) pattern recognition (TLR2), 4) antigen presentation (HLA\u2010DR, CD86), 5) the PD\u20101 pathway (PD\u20101), 6) chemokine receptor expression (CCR2, CX 3 CR1, CXCR4), 7) Fc receptor expression (CD16, CD64) and 8) scavenging receptor expression (CD36). The expression patterns of these markers across each monocyte subset are shown in Figure\u00a0 1D . This is a nonexhaustive list but provides a broad overview of monocyte function. If users were interested in probing other functions, we suggest using the 12 core markers for defining each subset and, from here, any markers of interest could be swapped in or, in the case of additional lasers, added alongside the functional markers listed above.\n\nOptimization was conducted on peripheral blood anticoagulated and preserved in Cyto\u2010Chex BCTs (Streck). Preserving at the time of blood draw allows for a \u2018snapshot\u2019 of cellular phenotyping that is not provided by other BCTs, where storage time before processing may influence live cell phenotyping. The use of a preservative eliminates the use of a viability dye in this panel ( \n Figure S3  of  Data S1 \n ) but, if other BCTs were used, we suggest that Zombie\u2010NIR (BioLegend, San Diego, CA) could be added to this panel without further optimization. As our ultimate goal is to use this panel for assessing monocyte immune status as it relates to disease course in our model of interest, we prioritized the use of this BCT over more traditional anticoagulants (e.g., ethylenediaminetetraacetic acid [EDTA]). This allows for potentially extended times between blood draw and processing, which is the type of flexibility required for clinical blood processing. However, cells collected in these tubes, being preserved, are not appropriate for downstream functional assays. We believe this panel could be used on blood anticoagulated with EDTA or another anticoagulant of choice with minimal optimization, which would provide the opportunity to interrogate monocytes  in vitro  if required by the user.\n\nTroubleshooting of this panel centered on four aspects: 1) optimizing a core panel that is crucial for enumerating each monocyte subset, 2) choice of reagents used during isolation and staining of cells, 3) investigating sequential staining for selected markers, and 4) investigating alternative fluorochrome choices where necessary. To clearly present this information to the reader, we have constructed two supplementary materials.\u00a0 \n Data S1 \n  focuses on panel optimization and marker\u2010fluorochrome selection.  \n Data S2 \n  focuses on the steps taken to optimize the staining pattern of a subset of monocyte\u2010centric markers included in this 21\u2010marker, 18\u2010color panel. During troubleshooting, particular attention was paid to optimizing staining of CD16, a crucial monocyte marker, which was ultimately resolved by systematically reviewing alternative fluorochromes, staining reagents and the protocol for isolating cells from peripheral blood (Figures S1\u2013S4 of  \n Data S2 \n ). Second to this, alternative staining protocols were trialed for the three cytokine receptors (CCR2, CX 3 CR1, CXCR4) as well as CD14 and, ultimately, these four markers were sequentially stained to achieve optimal results ( \n Figures S5  and  S6  of  Data S2 \n ). We also outline our decision regarding which single\u2010stained controls (cell versus beads) should be used for unmixing this monocyte\u2010centric panel ( \n Figures S14\u2013S16  of  Data S1 \n ). The final staining protocol is outlined in  \n Section S15  of  Data S1 \n .\n\nIn summary, our 21\u2010marker, 18\u2010color monocyte\u2010centric panel is designed to identify four peripheral monocyte subsets and interrogate monocyte phenotype across a wide range of functional pathways. This panel consists of a core of 12 markers across nine fluorochromes (CD45, CD66b, CD3, CD19, CD56, CD123, TLR2, CD14, CD16, CCR2, CX 3 CR1, and SLAN) to delineate these subsets and a further nine markers (CXCR4, CD36, CD11c, CD11b, HLA\u2010DR, CD86, CD42b, CD64, PD\u20101) can be used to probe monocyte immune status across eight unique functional pathways (Table\u00a0 2 ). This panel has broad applicability to study inflammatory conditions that are known to induce changes in monocyte phenotype and can be used to determine the clinical utility of deep monocyte phenotyping for predicting disease course.\n\nSeveral published OMIPs (OMIP\u2010023 [ 3 ], OMIP\u2010024 [ 4 ], OMIP\u2010034 [ 5 ], OMIP\u2010038 [ 6 ], OMIP\u2010042 [ 7 ], OMIP\u2010069 [ 1 ]), which broadly aim to characterize major leukocyte subsets in human peripheral blood, gate on the monocyte population. Most gate on the monocyte population using one or a combination of CD14 and HLA\u2010DR (OMIP\u2010023 [ 3 ], OMIP\u2010024 [ 4 ], OMIP\u2010034 [ 5 ], OMIP\u2010038 [ 6 ], OMIP\u2010042 [ 7 ]). Similarly, most also identify the three monocyte populations (classical, intermediate, nonclassical) using both CD14 and CD16 (OMIP\u2010023 [ 3 ], OMIP\u2010024 [ 4 ], OMIP\u2010038 [ 6 ], OMIP\u2010069 [ 1 ]). Here, we expand on these definitions for each monocyte subset, provide an alternative gating strategy for identifying these subsets and demonstrate how this panel can be utilized to analyze monocyte phenotype in\u2010depth.\n\nWhole blood was obtained from healthy volunteers under ethical approval (19/CEN/129) by the Health and Disability Ethics Committee, New Zealand.\n\nSeveral published OMIPs (OMIP\u2010023 [ 3 ], OMIP\u2010024 [ 4 ], OMIP\u2010034 [ 5 ], OMIP\u2010038 [ 6 ], OMIP\u2010042 [ 7 ], OMIP\u2010069 [ 1 ]), which broadly aim to characterize major leukocyte subsets in human peripheral blood, gate on the monocyte population. Most gate on the monocyte population using one or a combination of CD14 and HLA\u2010DR (OMIP\u2010023 [ 3 ], OMIP\u2010024 [ 4 ], OMIP\u2010034 [ 5 ], OMIP\u2010038 [ 6 ], OMIP\u2010042 [ 7 ]). Similarly, most also identify the three monocyte populations (classical, intermediate, nonclassical) using both CD14 and CD16 (OMIP\u2010023 [ 3 ], OMIP\u2010024 [ 4 ], OMIP\u2010038 [ 6 ], OMIP\u2010069 [ 1 ]). Here, we expand on these definitions for each monocyte subset, provide an alternative gating strategy for identifying these subsets and demonstrate how this panel can be utilized to analyze monocyte phenotype in\u2010depth.",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD45",
+        "fluorophore": "Alexa Fluor 532",
+        "clone": "HI30",
+        "purpose": "ID leukocytes"
+      },
+      {
+        "marker": "CD66b",
+        "fluorophore": "PE\u2010Dazzle 594",
+        "clone": "G10F5",
+        "purpose": "Exclude neutrophils and eosinophils"
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "FITC",
+        "clone": "SK7",
+        "purpose": "Exclude pan\u2010T cells"
+      },
+      {
+        "marker": "CD123",
+        "fluorophore": "FITC",
+        "clone": "6H6",
+        "purpose": "Exclude basophils and pDCs"
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "FITC",
+        "clone": "SJ25C1",
+        "purpose": "Exclude B cells"
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "FITC",
+        "clone": "HCD56",
+        "purpose": "Exclude NK cells"
+      },
+      {
+        "marker": "TLR2",
+        "fluorophore": "PE",
+        "clone": "11G7",
+        "purpose": "ID monocytes, pattern recognition receptor expression"
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "BV570",
+        "clone": "M5E2",
+        "purpose": "ID monocyte subsets"
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "BV421",
+        "clone": "3G8",
+        "purpose": "ID monocyte subsets, Fc receptor expression"
+      },
+      {
+        "marker": "SLAN",
+        "fluorophore": "VioBlue",
+        "clone": "DD\u20101",
+        "purpose": "ID monocyte subsets"
+      },
+      {
+        "marker": "CCR2",
+        "fluorophore": "APC\u2010Fire 750",
+        "clone": "K036C2",
+        "purpose": "ID monocyte subsets, cytokine receptor expression"
+      },
+      {
+        "marker": "CX3CR1",
+        "fluorophore": "PerCP\u2010Cy5.5",
+        "clone": "2A9\u20101",
+        "purpose": "Cytokine receptor expression"
+      },
+      {
+        "marker": "CXCR4",
+        "fluorophore": "BV785",
+        "clone": "125G",
+        "purpose": null
+      },
+      {
+        "marker": "CD36",
+        "fluorophore": "VioGreen",
+        "clone": "AC106",
+        "purpose": "Scavenger receptor expression"
+      },
+      {
+        "marker": "CD11c",
+        "fluorophore": "PE\u2010Cy5",
+        "clone": "3.9",
+        "purpose": "Adhesion receptor expression"
+      },
+      {
+        "marker": "CD11b",
+        "fluorophore": "BV650",
+        "clone": "ICRF44",
+        "purpose": null
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "BV480",
+        "clone": "G46\u20106",
+        "purpose": "Antigen presentation"
+      },
+      {
+        "marker": "CD86",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "BU63",
+        "purpose": null
+      },
+      {
+        "marker": "CD42b",
+        "fluorophore": "APC",
+        "clone": "HIP1",
+        "purpose": "Heterotypic aggregation"
+      },
+      {
+        "marker": "CD64",
+        "fluorophore": "BV605",
+        "clone": "10.1",
+        "purpose": "Fc receptor expression"
+      },
+      {
+        "marker": "PD-1",
+        "fluorophore": "BV750",
+        "clone": "EH12.2H7",
+        "purpose": "Examine the PD\u20101 pathway"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "root",
+      "is_critical": true,
+      "children": [
+        {
+          "name": "Time Gate (Stable Flow)",
+          "markers": [
+            "Time"
+          ],
+          "marker_logic": "Stable flow rate",
+          "gate_type": "scatter",
+          "is_critical": true,
+          "children": [
+            {
+              "name": "Singlets",
+              "markers": [
+                "FSC-A",
+                "FSC-H"
+              ],
+              "marker_logic": "FSC-A vs FSC-H diagonal",
+              "gate_type": "scatter",
+              "is_critical": true,
+              "children": [
+                {
+                  "name": "Cells (Debris Exclusion)",
+                  "markers": [
+                    "FSC-A",
+                    "SSC-A"
+                  ],
+                  "marker_logic": "FSC-A+ SSC-A+",
+                  "gate_type": "scatter",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "Antibody Aggregate Exclusion",
+                      "markers": [],
+                      "marker_logic": "Exclude antibody aggregates",
+                      "gate_type": "scatter",
+                      "is_critical": false,
+                      "children": [
+                        {
+                          "name": "CD45+ Leukocytes",
+                          "markers": [
+                            "CD45"
+                          ],
+                          "marker_logic": "CD45+",
+                          "gate_type": "lineage",
+                          "is_critical": true,
+                          "children": [
+                            {
+                              "name": "CD66b- Leukocytes",
+                              "markers": [
+                                "CD66b"
+                              ],
+                              "marker_logic": "CD66b-",
+                              "gate_type": "lineage",
+                              "is_critical": true,
+                              "children": [
+                                {
+                                  "name": "Total Monocytes",
+                                  "markers": [
+                                    "CD3",
+                                    "CD19",
+                                    "CD56",
+                                    "CD123",
+                                    "TLR2"
+                                  ],
+                                  "marker_logic": "Lin- (CD3- CD19- CD56- CD123-) TLR2+",
+                                  "gate_type": "lineage",
+                                  "is_critical": true,
+                                  "children": [
+                                    {
+                                      "name": "Classical Monocytes",
+                                      "markers": [
+                                        "CD14",
+                                        "CD16"
+                                      ],
+                                      "marker_logic": "CD14++ CD16-",
+                                      "gate_type": "subset",
+                                      "is_critical": true,
+                                      "children": [
+                                        {
+                                          "name": "Classical Monocytes (Confirmed)",
+                                          "markers": [
+                                            "CCR2",
+                                            "CX3CR1"
+                                          ],
+                                          "marker_logic": "CCR2high CX3CR1low",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "Other Monocyte Subsets (CD14var/CD16var)",
+                                      "markers": [
+                                        "CD14",
+                                        "CD16"
+                                      ],
+                                      "marker_logic": "CD14var CD16var",
+                                      "gate_type": "subset",
+                                      "is_critical": false,
+                                      "children": [
+                                        {
+                                          "name": "Residual Classical Monocytes (Excluded)",
+                                          "markers": [
+                                            "CCR2",
+                                            "CX3CR1"
+                                          ],
+                                          "marker_logic": "CCR2high CX3CR1low",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "True Other Monocyte Subsets",
+                                          "markers": [
+                                            "CCR2",
+                                            "CX3CR1"
+                                          ],
+                                          "marker_logic": "CCR2low CX3CR1high",
+                                          "gate_type": "subset",
+                                          "is_critical": false,
+                                          "children": [
+                                            {
+                                              "name": "Intermediate Monocytes",
+                                              "markers": [
+                                                "CCR2",
+                                                "SLAN"
+                                              ],
+                                              "marker_logic": "CCR2+ SLAN-",
+                                              "gate_type": "subset",
+                                              "is_critical": true,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "SLAN+ Nonclassical Monocytes",
+                                              "markers": [
+                                                "CCR2",
+                                                "SLAN"
+                                              ],
+                                              "marker_logic": "CCR2- SLAN+",
+                                              "gate_type": "subset",
+                                              "is_critical": true,
+                                              "children": []
+                                            },
+                                            {
+                                              "name": "SLAN- Nonclassical Monocytes",
+                                              "markers": [
+                                                "CCR2",
+                                                "SLAN"
+                                              ],
+                                              "marker_logic": "CCR2- SLAN-",
+                                              "gate_type": "subset",
+                                              "is_critical": true,
+                                              "children": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 21 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 19678 chars of gating text from body"
+    ]
+  }
+}

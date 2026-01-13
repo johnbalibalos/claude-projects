@@ -1,0 +1,191 @@
+{
+  "test_case_id": "PMC10953338",
+  "source_type": "omip_paper",
+  "omip_id": null,
+  "doi": "10.1002/cyto.a.24782",
+  "pmc_id": "PMC10953338",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Collagenase digested human tissue: human skin, intestine, type II mucosa (e.g., vagina, cervix)",
+    "species": "human",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Gating strategy to identify CD3+ TRM cells in human anogenital tissues. Cells isolated from healthy human large bowel were stained and acquired on the BD FACSymphony A5 instrument. Cells were gated on single cells (FSC\u2010A/FSC\u2010H), CD45 +  lymphocytes (CD45/CD3) and live cells (FVS UV440/FSC\u2010H). HLA\u2010DR is used to gate on CD3 +  T cells, to account for the bright HLA\u2010DR +  autofluorescent mononuclear phagocyte cells spreading into the CD3 channel. On CD3 \u2212  cells, pDCs are identified using CD123 and HLA\u2010DR. On CD3 +  T cells, an additional tight gate is drawn around the lymphocyte cluster (FSC\u2010A/SSC\u2010A) to remove any additional contaminating mononuclear phagocytes. CD4 +  T cells and CD8 +  T cells are gated separately, and TRM subsets are gated on using CD69 and CD103 (non\u2010TRM: CD69 \u2212 CD103 \u2212 ; CD103 \u2212  TRM: CD69 + CD103 \u2212 ; CD103 +  TRM: CD69 + CD103 + ). Labia dermal cells are included to compare CD103 +  TRMs in different tissues. (B) Histograms of markers expressed by labia dermal TRM subsets, split into CD4 +  and CD8 +  subsets. (C, D) Alternative representative FACS plots of those markers are presented as a histogram (E, F) Other marker expressions are represented using a variety of tissues where expression is prominent. (E) Representative expressions of CD94 on CD3 + CD8 +  cells and HLA\u2010DQ on CD3 +  HLA\u2010DR +  T cells from labia. (F) Representative images of CCR6, CCR10, and CCR7 expression on CD3 +  T cells from the large bowel, CD38 expression on CD3 +  T cells from the vagina epidermis, and CD154 expression on CD3 +  T cells from the small bowel. Representative figures are color\u2010coordinated: large bowel\u2009=\u2009white, labia dermis\u2009=\u2009grey, vagina epidermis\u2009=\u2009orange, small bowel\u2009=\u2009light\u2010red. [Color figure can be viewed at  wileyonlinelibrary.com ]",
+    "full_text_gating": "Tissue\u2010resident memory cells (TRMs) are an experienced first\u2010line effector cell defense against reinfection [ 1 ,  2 ,  3 ]. In chronic HIV infected individuals, CD3 + CD4 +  T cells are depleted in intestinal mucosa [ 4 ], and cervical CD4 +  TRMs are a preferentially infected cell target for human immunodeficiency virus (HIV) [ 5 ]. In herpes simplex virus infection, mucosal CD4 +  and CD8 +  TRMs have been proposed as key targets for vaccines. The ability to accurately identify subsets of T cells within tissues will provide a foundation for understanding the pathology of diseases and assist in the development of therapeutic strategies [ 1 ,  3 ]. We have designed a 24\u2010color surface phenotyping panel to comprehensively phenotype CD4 +  and CD8 +  T cell subsets residing in healthy human mucosal tissues. This panel may also be used on human skin or for comparison with diseased tissues. A challenge to phenotyping cells from tissues is the cleavage of surface markers caused by enzymes used to liberate cells from tissues. We designed this panel with considerations for the cleavage of surface proteins using enzyme\u2010optimized dissociation methods, and we successfully phenotyped TRMs in human epidermis, dermis, and lamina propria (Table\u00a0 1 ).\n\nThere are three types of tissue that make up the anorectal and genital tracts: skin, type I mucosa, and type II mucosa. Skin is made up of an outer epidermal layer, including a superficial impervious keratinized layer of dead cells (stratum corneum), and an underlying dermal layer separated by a basement membrane. Skin covers the outermost parts of the body. Type II mucosae, such as vagina and inner foreskin, have an epidermal layer and an underlying lamina propria, a structure similar to the dermis, and contains no or a minimal keratinized layer. Type II mucosa is often found between outer skin and type I mucosal surfaces. Type I mucosae, such as endo\u2010cervix and colorectal tissues, have a single layer of columnar epithelium, with underlying lamina propria.\n\nTRMs require enzymes to liberate them from tissues. For skin and type II mucosa, dispase breaks down the basement membrane between epidermal and dermal/lamina propria layers, allowing these layers to be independently studied. Collagenase is generally a blend of several enzymes that will break down collagen, freeing the cells from the tissue. Unfortunately, enzymatic digestion procedures are known for cleaving cell surface proteins on immune cells [ 6 ]. Some studies will rest their cells for a period of time to recover this protein expression [ 7 ], although this has been shown to not truly reflect the cells as they were in tissue [ 8 ]. This non\u2010specific cleavage of markers requires a series of optimization steps prior to panel development to be confident that the cells that are acquired are similar to those (in situ) within the tissue. A significant novelty of this publication is the application of our optimization protocols that minimize the effects of enzymatic cleavage on surface proteins [ 6 ,  9 ,  10 ]. This is primarily performed through the identification of the affected markers, and testing multiple antibody clones and alternative enzymes (Figures\u00a0 S3  and  S4 ).\n\nWe aimed to identify both CD4 +  and CD8 +  TRMs (Figure\u00a0 1 ). Markers associated with residency span homing (chemokine) receptors, those associated with cell maintenance in tissue, and those that differ from circulating and non\u2010resident tissue cells [ 11 ]. The best characterized receptors are CD69 and CD103, which delineate three main populations: CD69 \u2212 CD103 \u2212  non\u2010TRMs, and two CD69 +  TRM populations delineated by CD103 expression. Higher proportions of CD103 +  cells are found in CD8 +  TRMs, but it is expressed on both CD4 +  and CD8 +  T cells. CD103 +  TRMs have functional and migratory differences to the CD103 \u2212  counterpart [ 12 ,  13 ]. There can be large differences in expression of CD103 between tissues demonstrated in Figure\u00a0 1  (large bowel mucosae and labia dermis). A small cluster of CD69 \u2212 CD103 +  cells has been described as a TRM re\u2010entering circulation [ 14 ]. These cells exit through lymphatics, and so the lymph\u2010homing marker CCR7 was included to identify these cells. Markers associated with T cell tissue homing (CCR5, CCR6 [ 15 ]) and residency (CD127 [ 16 ], PD1 [ 11 ]) were also included.\n\nGating strategy to identify CD3+ TRM cells in human anogenital tissues. Cells isolated from healthy human large bowel were stained and acquired on the BD FACSymphony A5 instrument. Cells were gated on single cells (FSC\u2010A/FSC\u2010H), CD45 +  lymphocytes (CD45/CD3) and live cells (FVS UV440/FSC\u2010H). HLA\u2010DR is used to gate on CD3 +  T cells, to account for the bright HLA\u2010DR +  autofluorescent mononuclear phagocyte cells spreading into the CD3 channel. On CD3 \u2212  cells, pDCs are identified using CD123 and HLA\u2010DR. On CD3 +  T cells, an additional tight gate is drawn around the lymphocyte cluster (FSC\u2010A/SSC\u2010A) to remove any additional contaminating mononuclear phagocytes. CD4 +  T cells and CD8 +  T cells are gated separately, and TRM subsets are gated on using CD69 and CD103 (non\u2010TRM: CD69 \u2212 CD103 \u2212 ; CD103 \u2212  TRM: CD69 + CD103 \u2212 ; CD103 +  TRM: CD69 + CD103 + ). Labia dermal cells are included to compare CD103 +  TRMs in different tissues. (B) Histograms of markers expressed by labia dermal TRM subsets, split into CD4 +  and CD8 +  subsets. (C, D) Alternative representative FACS plots of those markers are presented as a histogram (E, F) Other marker expressions are represented using a variety of tissues where expression is prominent. (E) Representative expressions of CD94 on CD3 + CD8 +  cells and HLA\u2010DQ on CD3 +  HLA\u2010DR +  T cells from labia. (F) Representative images of CCR6, CCR10, and CCR7 expression on CD3 +  T cells from the large bowel, CD38 expression on CD3 +  T cells from the vagina epidermis, and CD154 expression on CD3 +  T cells from the small bowel. Representative figures are color\u2010coordinated: large bowel\u2009=\u2009white, labia dermis\u2009=\u2009grey, vagina epidermis\u2009=\u2009orange, small bowel\u2009=\u2009light\u2010red. [Color figure can be viewed at  wileyonlinelibrary.com ]\n\nIn early studies, TRMs were thought to be at the late stage of differentiation based on surface expressions. Recent studies suggest that TRMs can recirculate (CD4 +  TRMs in humans [ 14 ]; CD8 +  TRMs in mice: [ 17 ]) and, further, that they can revert to a central memory phenotype [ 17 ]. We have therefore included conventional memory markers (CD27, CD28, CCR7) to capture the memory T cell phenotype. In both CD4 +  and CD8 +  T cells, CD27 is used to delineate early differentiation (na\u00efve > central memory > transitional memory) from later subsets (effector > terminally differentiated memory). In blood, expression of CCR7, a lymph\u2010homing molecule, describes a TCM or na\u00efve cell. CD28 is a co\u2010stimulatory molecule, which is upregulated following antigen stimulation and is decreased during T cell exhaustion. Therefore, together, we can identify a na\u00efve cell (CCR7 + CD27 + CD28 lo ), central memory (CCR7 + CD27 + CD28 hi ), transitional memory (CCR7 \u2212 CD27 + CD28 hi ), effector memory (CCR7 \u2212 CD27 \u2212 CD28 hi ) and a terminally differentiated memory cell (CCR7 \u2212 CD27 \u2212 CD28 \u2212 ) in both CD4 +  and CD8 +  T cells.\n\nWe have also included two markers associated with the regulatory function of T cells: CD39 and TIGIT. CD39 is an exhaustion marker on virus\u2010specific CD8 +  T cells in chronic diseases [ 18 ] and can also disrupt the anti\u2010inflammatory responses [ 19 ]. CD8 + CD39 high  TRMs were recently associated with positive prognosis of breast cancer [ 20 ]. In another study, regulatory T cells that were CD39 high  remain more stable under inflammatory conditions, compared to CD39 low  Tregs which lose their FOXP3 expression [ 21 ]. TIGIT expression in CD4 +  T cells is associated with thymic regulatory T cells [ 22 ]. A recent study found a TIGIT + CD39 +  CD4 +  TRM subset enriched in mucosa in Crohn's disease [ 23 ].\n\nOn T cells, CD161 describes unique subsets in CD4 +  and CD8 +  T cells. In CD8 +  T cells, CD161 expression defines a cytotoxic cell, and may play a role in CD8 +  T cell homing to tissue [ 24 ]. In CD4 +  T cells, CD161, with CCR6 and CCR10 describe effector T cell subsets. Th17 and Th22 cells play an important role in tissue maintenance, have been implicated in HIV infection and transmission, and their dysregulation can affect the severity of autoimmune diseases. CD161 and CCR6 are identifying markers for Th17 cells, while CCR6 \u2212 CCR10 +  identifies Th22 cells. We did not include markers for identifying other CD4+ T cell subsets as their definition within tissue remains unsubstantiated and are not the primary focus of the panel.\n\nIn CD8 +  T cells, CD94, a C\u2010type lectin receptor thought to have a regulatory function [ 25 ], is found on tumor\u2010infiltrating cells and has been found on a unique cluster of CD8 +  T cells in Crohn's affected bowel tissue [ 23 ,  26 ], although a clear definition of its function on T cells remains largely elusive.\n\nThe study of T cell activation has applications across a range of disciplines, such as virology, autoimmune, transplant immunology, among others. We have included a range of activation markers to define early\u2010 and late\u2010activation specifically chosen for tissue\u2010derived cells. HLA\u2010DR is a late\u2010activation marker, often expressed at low levels on activated T cells compared to mononuclear phagocytes. Another late activation marker, HLA\u2010DQ, was brought to our attention by its differential expression in single\u2010cell RNA sequencing data (Figure\u00a0 S8 ; [ 27 ,  28 ,  29 ]). CD154 (CD40LG) binds CD40 on antigen presenting cells and is required for Th17 polarization [ 30 ]. It is an early activation marker that was differentially expressed in transcriptomic analysis and played a role in Crohn's disease [ 23 ]. CD38, an early activation marker, is involved in cell adhesion and signal transduction [ 31 ]. Due to donor\u2010to\u2010donor variability, low, mild, or high amounts of inflammation may markedly influence proportions and expressions of activated cells. We are able to show low expressions of CD154 (small bowel) and CD38 (vagina epidermis) owing to the likely inflamed status of those individual tissues (Figure\u00a0 1 ). CD123 was also included to identify and measure the presence of plasmacytoid dendritic (pDC) cells, which accumulate in inflamed [ 32 ] or virally infected tissue [ 33 ]. All reagents are summarised in Table\u00a0 2 .\n\nMany OMIPs have focused on phenotyping human T cell subsets and activation, though all are in the context of blood\u2010derived lymphocytes. Particularly, OMIP\u2010071 extensively covers both the memory and effector T cell subsets of both CD4 +  and CD8 +  T cells. However, they primarily use chemokine receptors for the identification of effector subsets. In tissue, using chemokine receptors to identify helper T cell subsets are somewhat confounded, as they are more often described as markers for homing to specific tissues; CCR6 to gut, CXCR6 to lung, and so forth. Further, the use of chemokine receptors in tissues would require careful curation, as they are particularly prone to enzymatic cleavage. OMIP\u2010082 and \u2010070 have designed panels for use in enzymatically liberated human tissue cells; the panel presented in OMIP\u2010070 was designed for the identification of NK cells, whereby CD56 was consistently cleaved and fortunately resolved by using an alternative target, NKp46; they did not test alternative enzyme products, as was performed in OMIP\u201082 and in this OMIP. The panel design in OMIP\u201082 is focused on identifying innate lymphoid cells, NK cells, MAIT cells, and gamma\u2010delta T cells in gastrointestinal tissues, which does not require dispase digestion to investigate cells in epidermal and dermal tissues. Currently, there is no OMIP that optimizes the combination of enzyme\u2010digestion combined with antibody\u2010clone selection to identify TRMs from both the epidermis and dermis of human tissues.",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD45",
+        "fluorophore": "BB790",
+        "clone": "HI30",
+        "purpose": "Leukocytes"
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "NovaFluor B610\u201070s",
+        "clone": "UCHT1",
+        "purpose": "T lymphocyte"
+      },
+      {
+        "marker": "Viability",
+        "fluorophore": "FVS UV440",
+        "clone": null,
+        "purpose": "Viability"
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "BV605",
+        "clone": "G46\u20106",
+        "purpose": "Gate out MNPs; Late Activation on T cell"
+      },
+      {
+        "marker": "CD123",
+        "fluorophore": "PE\u2010CY5",
+        "clone": "6H6",
+        "purpose": "Plasmacytoid Dendritic Cell"
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BUV805",
+        "clone": "OKT4",
+        "purpose": "Helper T cell"
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "BUV496",
+        "clone": "SK1",
+        "purpose": "Cytotoxic T cell"
+      },
+      {
+        "marker": "CD94",
+        "fluorophore": "AF700",
+        "clone": "KLRD1",
+        "purpose": "Subset: Functional marker of T cells"
+      },
+      {
+        "marker": "CD69",
+        "fluorophore": "BB700",
+        "clone": "FN50",
+        "purpose": "TRM subset"
+      },
+      {
+        "marker": "CD103",
+        "fluorophore": "PEVio615",
+        "clone": "REA803",
+        "purpose": "TRM subset"
+      },
+      {
+        "marker": "CD127",
+        "fluorophore": "PE\u2010CY7",
+        "clone": "R34.34",
+        "purpose": "TRM; tissue homeostasis"
+      },
+      {
+        "marker": "PD-1",
+        "fluorophore": "BV711",
+        "clone": "EH12.1",
+        "purpose": "TRM"
+      },
+      {
+        "marker": "CCR7",
+        "fluorophore": "BV421",
+        "clone": "2\u2010L1\u2010A",
+        "purpose": "Na\u00efve; TCM; Lymph homing"
+      },
+      {
+        "marker": "CD27",
+        "fluorophore": "BV786",
+        "clone": "L128",
+        "purpose": "Memory: TCM"
+      },
+      {
+        "marker": "CD28",
+        "fluorophore": "BUV395",
+        "clone": "CD28.2",
+        "purpose": "Memory: differentiation"
+      },
+      {
+        "marker": "CD161",
+        "fluorophore": "BUV615",
+        "clone": "HP3G10",
+        "purpose": "CD4: Th17; CD8: cytotoxicity"
+      },
+      {
+        "marker": "CCR6",
+        "fluorophore": "BV650",
+        "clone": "11A9",
+        "purpose": "Subset: Th17; Tissue homing"
+      },
+      {
+        "marker": "CCR10",
+        "fluorophore": "APC",
+        "clone": "1B5",
+        "purpose": "Subset: Th22"
+      },
+      {
+        "marker": "CD39",
+        "fluorophore": "BV480",
+        "clone": "TU66",
+        "purpose": "Immunoregulation"
+      },
+      {
+        "marker": "TIGIT",
+        "fluorophore": "PE",
+        "clone": "A15153G",
+        "purpose": "Immunoregulation"
+      },
+      {
+        "marker": "CCR5",
+        "fluorophore": "VioB515",
+        "clone": "REA245",
+        "purpose": "Tissue homeostasis; HIV entry"
+      },
+      {
+        "marker": "HLA-DQ",
+        "fluorophore": "BUV563",
+        "clone": "TU169",
+        "purpose": "Late Activation; Differentially expressed in RNA\u2010seq"
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "APC\u2010Fire810",
+        "clone": "HIT2",
+        "purpose": "Early Activation"
+      },
+      {
+        "marker": "CD154",
+        "fluorophore": "BUV737",
+        "clone": "TRAP1",
+        "purpose": "Early Activation"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "Unknown",
+      "children": [],
+      "is_critical": true
+    },
+    "_extraction_note": "Hierarchy needs manual curation from gating_description"
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 24 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 11971 chars of gating text from body"
+    ]
+  }
+}

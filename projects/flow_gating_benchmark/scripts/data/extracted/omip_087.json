@@ -1,0 +1,245 @@
+{
+  "test_case_id": "OMIP-087",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-087",
+  "doi": "10.1002/cyto.a.24707",
+  "pmc_id": "PMC12244433",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": null,
+    "species": null,
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Manual gating of OMIP. (A) Canonical cell lineages. First, all leukocyte populations were identified as CD45+ (89Y for sample of interest and 111Cd for reference cells). Dendritic cells (DCs) were identified as CD14-CD19-CD3-HLA-DR + CD11c+, monocytes as CD3-CD19-CD14+, B cells as CD3-CD14-CD19+, and NK cells as CD3-CD14-CD19-CD16 + CD56+. CD4 T cells identified as CD3 + CD4+, CD8 T cells as CD3 + CD8+, and TCR\u03b3\u03b4 T cells as CD3 + TCR\u03b3\u03b4+. (B) CD4 T cell memory subsets were determined using markers CD45RA, CCR7, CD28, CD95, CD99, and CCR10. Na\u00efve T cells defined as CD45RA + CCR7 + CD28 + CD95\u2212, stem cell memory as CD45RA + CCR7 + CD28 + CD95+, central memory as CD45RA-CCR7 + CD28 + CD95+, transitional memory as CD45RA-CCR7-CD28 + CD95+, effector memory as CD45RA-CCR7-CD28-CD95+, and terminal effectors as CD45RA + CCR7-CD28-CD95+. CD99hi and CCR10+ are enriched on memory CD4 T cells. (C) CD4 T cell helper subsets. Helper subsets were defined using OMIP-017 gating strategy using the chemokine receptors CCR4, CXCR3, CCR10, and CCR6. T reg  were identified as CD25 HI CD127-FoxP3+ and T FH  were defined as CXCR5+. (D) Activation markers CD25, Ki-67, CD38, CD57, and HLA-DR on CD4 T cells. Activation/exhaustion marker PD-1, survival marker Bcl-2 and long lived memory marker CD127 on CD4 T cells",
+    "full_text_gating": "This study describes the development of a panel for detailed investigation of T cell phenotypes and frequencies in people. Our interest is in understanding CD4 T cell memory recovery in people living with HIV (PLWH) following antiretroviral therapy (ART) initiation [ 1 \u2013 4 ]. HIV infection greatly depletes CD4 T cell numbers but also dysregulates CD4 T cell memory formation [ 5 ]. Moreover, the volume of blood available for study is often limited in these populations. To address the challenges of both sample limitation and depleted CD4 T cell numbers in PLWH we developed a CD4 T cell focused mass cytometry panel. This panel will also be useful for studies in the areas of burn recovery, transplantation and cancer, which often involve patients who are immunosuppressed and therefore have limited number of T cells. This panel allows the identification of helper subsets-T H1 , T H2 , T H17 , T H17.1 , T H9 , T H22 , T reg , T FH , memory subsets (recent thymic emigrants, na\u00efve, stem cell memory, central memory, transitional memory, effector memory, terminal effector), activation markers (CD25, HLA-DR, CD38), activation/exhaustion marker PD-1, survival marker Bcl-2, and cell cycling marker Ki-67 ( Table 1 ). While the 32 parameter panel described here can be used to investigate many aspects of T cell biology, it can also be easily adapted. For example, the 50 marker capacity of mass cytometry [ 6 ] allows markers to be added as per researchers\u2019 needs. Alternatively, components of this panel can be used to build very distinct phenotyping panels. For example, the lineage markers described here could be used as the backbone in a new panel.\n\nThis panel identifies multiple cell lineages (B cells, NK cells, monocytes, CD4 T cells, CD8 T cells and TCR\u03b3\u03b4 T cells). While the gating strategy presented here ( Figure 1 ) largely focuses on CD4 and CD8 T cells, this panel can also be used to identify B cells (CD19 + ), plasmablasts (CD19 + CD27 + CD38 hi ), NK cell subsets (CD56 bright CD16 \u2212 , CD56 dim CD16 + CD57 \u2212 , and CD56 dim CD16 + CD57 + ) and monocyte subsets (classical (CD14 + CD16 \u2212 ), nonclassical (CD14 dim CD16 + ), and intermediate (CD14 + CD16 + )). CD4 T cells were identified as CD3 + CD4+, CD8 T cells as CD3 + CD8+ and TCR\u03b3\u03b4 T cells as CD3 + TCR\u03b3\u03b4+. CD4 T cell memory subsets were determined using markers CD45RA, CCR7, CD28, CD95, CD99, and CCR10: na\u00efve (CD45RA + CCR7 + CD28 + CD95\u2212), stem cell memory (CD45RA + CCR7 + CD28 + CD95+), central memory (CD45RA-CCR7 + CD28 + CD95+), transitional memory (CD45RA-CCR7-CD28 + CD95+), effector memory (CD45RA-CCR7-CD28-CD95+), and terminal effectors (CD45RA + CCR7-CD28-CD95+). CD99 and CCR10 have been shown to be enriched on memory CD4 T cells [ 7 ]. Helper subsets were defined using OMIP-017 gating strategy using the chemokine receptors CCR4, CXCR3, CCR10, and CCR6 [ 8 ]. Regulatory T cells (T reg ) were identified as CD25 HI CD127-FoxP3+ and follicular helper T cells (T FH ) were defined as CXCR5 + CD45RA-. Activation markers CD25, Ki-67, CD38, CD57, and HLA-DR were examined on CD4 T cells as well as the activation/exhaustion marker PD-1. Finally, we examined survival marker Bcl-2 and long lived memory marker CD127 on CD4 T cells.\n\nTo optimize this panel we first assigned each marker to a metal isotope, choosing lower signal isotopes for highly expressed markers and higher signal isotopes for lowly expressed markers. In addition, while spill over in mass cytometry is minimal, it can occur due to overabundance of an ion spreading into mass + 1 or mass-1 channels, oxide formation or isotopic impurities. Therefore, lowly expressed markers were not place in mass + 1, mass-1, or mass-16 of a highly expressed marker [ 9 ]. We experimentally confirmed that we did not have spill over from one channel into another using the method recommended by Fluidigm and detailed further in the  Supporting Information , online portion of this OMIP. Because spill over is predictable, once we experimentally confirmed that there was no spill over in our panel, metal minus one controls (similar to fluorescent minus one controls in flow cytometry) are not necessary, further reducing cell requirements. To effectively capture small populations such as stem cell memory T cells, we routinely collected 700,000 events (on average 380,000 DNA+ live cells) with a minimum of 20,000 CD4 T cells collected. This cell number also allows for detection of subpopulations within CD4 T cells at a frequency of 1% with a coefficient of variation of 7% [ 10 ]. To account for batch effects, cryopreserved PBMCs derived from a single buffy coat from the same healthy donor were spiked (1:5 reference: sample) into every sample for every experiment and labeled with CD45 111Cd [ 11 ,  12 ]. Using these methods, we have developed a highly reproducible and robust mass cytometry panel capable of detecting all major cell lineages and detailed characterization of T cell subsets that can be used for clinical trials investigating cancer, infectious disease and autoimmunity.",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD45",
+        "fluorophore": "89Y",
+        "clone": "HI30",
+        "purpose": "Pan leukocytes"
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "111Cd",
+        "clone": "HI30",
+        "purpose": "Pan leukocytes"
+      },
+      {
+        "marker": "CD56 (NCAM)",
+        "fluorophore": "176Yb",
+        "clone": "N901",
+        "purpose": "NK cells"
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "209Bi",
+        "clone": "3G8",
+        "purpose": "NK cells"
+      },
+      {
+        "marker": "CD11c",
+        "fluorophore": "146Nd",
+        "clone": "3.9",
+        "purpose": "Dendritic cells"
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "151Eu",
+        "clone": "M5E2",
+        "purpose": "Monocytes"
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "142Nd",
+        "clone": "HIB19",
+        "purpose": "B cells"
+      },
+      {
+        "marker": "CD3\u03b5",
+        "fluorophore": "115In",
+        "clone": "UCHT1",
+        "purpose": "T cells"
+      },
+      {
+        "marker": "TCR\u03b3\u03b4",
+        "fluorophore": "173Yb",
+        "clone": "B1",
+        "purpose": "TCR\u03b3\u03b4 T cells"
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "145Nd",
+        "clone": "RPA-T4",
+        "purpose": "T helper cells"
+      },
+      {
+        "marker": "CD8a",
+        "fluorophore": "168Er",
+        "clone": "SK1",
+        "purpose": "CD8 T cells"
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "143Nd",
+        "clone": "HI100",
+        "purpose": "T cell memory"
+      },
+      {
+        "marker": "CCR7",
+        "fluorophore": "167Er",
+        "clone": "G043H7",
+        "purpose": "T cell memory"
+      },
+      {
+        "marker": "CD28",
+        "fluorophore": "160Gd",
+        "clone": "CD28.2",
+        "purpose": "T cell memory"
+      },
+      {
+        "marker": "CD27",
+        "fluorophore": "158Gd",
+        "clone": "L128",
+        "purpose": "T cell memory"
+      },
+      {
+        "marker": "CD95/Fas",
+        "fluorophore": "164Dy",
+        "clone": "DX2",
+        "purpose": "T cell memory"
+      },
+      {
+        "marker": "CD99",
+        "fluorophore": "147Sm",
+        "clone": "3B2/TA8",
+        "purpose": "T cell memory"
+      },
+      {
+        "marker": "CD127 (IL-7Ra)",
+        "fluorophore": "165Ho",
+        "clone": "A019D5",
+        "purpose": "T cell memory"
+      },
+      {
+        "marker": "CCR6",
+        "fluorophore": "141Pr",
+        "clone": "11A9",
+        "purpose": "Th subsets"
+      },
+      {
+        "marker": "CCR4",
+        "fluorophore": "149Sm",
+        "clone": "L291H4",
+        "purpose": "Th subsets"
+      },
+      {
+        "marker": "CXCR5",
+        "fluorophore": "153Eu",
+        "clone": "RF8B2",
+        "purpose": "Th subsets"
+      },
+      {
+        "marker": "CXCR3",
+        "fluorophore": "156Gd",
+        "clone": "G025H7",
+        "purpose": "Th subsets"
+      },
+      {
+        "marker": "CCR5",
+        "fluorophore": "171Yb",
+        "clone": "NP-6G4",
+        "purpose": "Th subsets"
+      },
+      {
+        "marker": "CCR10",
+        "fluorophore": "175Lu",
+        "clone": "314,305",
+        "purpose": "Th subsets"
+      },
+      {
+        "marker": "FoxP3",
+        "fluorophore": "159 Tb",
+        "clone": "259D/C7",
+        "purpose": "Treg"
+      },
+      {
+        "marker": "Bcl-2",
+        "fluorophore": "152Sm",
+        "clone": "100",
+        "purpose": "Survival"
+      },
+      {
+        "marker": "CD279 (PD-1)",
+        "fluorophore": "155Gd",
+        "clone": "EH12.2H7",
+        "purpose": "Activation/Exhaustion"
+      },
+      {
+        "marker": "Ki-67",
+        "fluorophore": "162Dy",
+        "clone": "B56",
+        "purpose": "Cell cycling"
+      },
+      {
+        "marker": "CD57",
+        "fluorophore": "166Er",
+        "clone": "HCD57",
+        "purpose": "Senescence"
+      },
+      {
+        "marker": "CD25 (IL-2R)",
+        "fluorophore": "169Tm",
+        "clone": "2A3",
+        "purpose": "Activation"
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "170Er",
+        "clone": "L243",
+        "purpose": "Activation"
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "172Yb",
+        "clone": "HIT2",
+        "purpose": "Activation"
+      },
+      {
+        "marker": "CD31",
+        "fluorophore": "144Nd",
+        "clone": "Wm59",
+        "purpose": "Recent thymic emigrants"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "Unknown",
+      "children": [],
+      "is_critical": true
+    },
+    "_extraction_note": "Hierarchy needs manual curation from gating_description"
+  },
+  "_extraction_metadata": {
+    "tables_found": 1,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 1 as panel: 33 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 5044 chars of gating text from body"
+    ]
+  }
+}

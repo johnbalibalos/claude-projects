@@ -13,21 +13,27 @@ Generates a condition matrix and runs all combinations with checkpointing.
 from __future__ import annotations
 
 import json
-import os
 import sys
-import time
-from dataclasses import dataclass, field
 from datetime import datetime
 from itertools import product
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
-# Add parent to path for checkpoint import
+# Import from sibling package
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from checkpoint import CheckpointedRunner
 
 from .base import ContextBuilder, Evaluator, PromptStrategy, ToolRegistry
 from .context import get_context_builder
+
+# Use shared model_client library
+sys.path.insert(0, str(Path(__file__).parent.parent / "model_client"))
+# Import PipelineConfig from config module (avoid circular import at runtime)
+# Use TYPE_CHECKING for type hints only
+from typing import TYPE_CHECKING
+
+from model_client import AnthropicClient, ClientConfig, ModelResponse, OpenAIClient
+
 from .models import (
     ContextLevel,
     ExperimentResults,
@@ -37,14 +43,49 @@ from .models import (
     TrialInput,
     TrialResult,
 )
-from .rag import RAGProvider, NoRAGProvider, get_provider_for_mode
+from .rag import NoRAGProvider, RAGProvider, get_provider_for_mode
 from .strategies import get_strategy
 
-# Import PipelineConfig from config module (avoid circular import at runtime)
-# Use TYPE_CHECKING for type hints only
-from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .config import PipelineConfig
+
+
+class ProgressReporter:
+    """Handles progress reporting for pipeline execution."""
+
+    def __init__(self, name: str, conditions: list, trial_count: int, total: int):
+        self.name = name
+        self.conditions = conditions
+        self.trial_count = trial_count
+        self.total = total
+
+    def print_header(self) -> None:
+        """Print experiment header."""
+        print(f"\n{'='*60}")
+        print(f"HYPOTHESIS PIPELINE: {self.name}")
+        print(f"{'='*60}")
+        print(f"Trial inputs: {self.trial_count}")
+        print(f"Conditions: {len(self.conditions)}")
+        print(f"Total trials: {self.total}")
+        print("\nCondition matrix:")
+        for cond in self.conditions:
+            print(f"  - {cond.name}")
+        print(f"{'='*60}\n")
+
+    def print_progress(self, completed: int, cond_name: str, trial_id: str) -> None:
+        """Print progress line start."""
+        pct = (completed + 1) / self.total * 100
+        print(f"[{pct:5.1f}%] {cond_name} / {trial_id}...", end=" ", flush=True)
+
+    def print_result(self, result: TrialResult) -> None:
+        """Print trial result."""
+        if result.error:
+            print(f"ERROR: {result.error[:50]}")
+        else:
+            score_str = ", ".join(
+                f"{k}={v:.2f}" for k, v in list(result.scores.items())[:3]
+            )
+            print(f"{score_str}, {result.latency_seconds:.1f}s")
 
 
 class HypothesisPipeline:
@@ -92,7 +133,8 @@ class HypothesisPipeline:
         self._init_rag_providers(rag_providers)
         self._init_context_builders(context_builders)
         self._init_strategies(strategies)
-        self._init_model_client()
+
+        # Model clients are created on-demand via create_client()
 
         # Generate conditions
         self.conditions = self._generate_conditions()
@@ -140,24 +182,6 @@ class HypothesisPipeline:
             if reasoning_type not in self.strategies:
                 type_config = self.config.strategy_configs.get(reasoning_type.value, {})
                 self.strategies[reasoning_type] = get_strategy(reasoning_type, **type_config)
-
-    def _init_model_client(self) -> None:
-        """Initialize model client."""
-        try:
-            from anthropic import Anthropic
-            self.anthropic_client = Anthropic(
-                api_key=os.environ.get("ANTHROPIC_API_KEY")
-            )
-        except ImportError:
-            self.anthropic_client = None
-
-        try:
-            from openai import OpenAI
-            self.openai_client = OpenAI(
-                api_key=os.environ.get("OPENAI_API_KEY")
-            )
-        except ImportError:
-            self.openai_client = None
 
     def _generate_conditions(self) -> list[HypothesisCondition]:
         """Generate all condition combinations from config."""
@@ -251,117 +275,37 @@ class HypothesisPipeline:
         condition: HypothesisCondition,
     ) -> tuple[str, list[dict], int, int]:
         """
-        Call the model and handle tool use.
+        Call the model.
 
         Returns:
             Tuple of (response, tool_calls, input_tokens, output_tokens)
         """
-        tool_calls = []
-        input_tokens = 0
-        output_tokens = 0
-
-        # Get tools if enabled
-        tools = None
-        if condition.tools_enabled:
-            tools = self.tool_registry.get_anthropic_tools(condition.tool_names)
-
-        # Dispatch to appropriate client
+        # Create client based on model type
+        config = ClientConfig()
         if "claude" in condition.model.lower():
-            return self._call_anthropic(prompt, condition, tools)
+            client = AnthropicClient(config)
         elif "gpt" in condition.model.lower():
-            return self._call_openai(prompt, condition)
+            client = OpenAIClient(config)
         else:
             raise ValueError(f"Unknown model: {condition.model}")
 
-    def _call_anthropic(
-        self,
-        prompt: str,
-        condition: HypothesisCondition,
-        tools: list[dict] | None,
-    ) -> tuple[str, list[dict], int, int]:
-        """Call Anthropic API with tool support."""
-        if not self.anthropic_client:
-            raise RuntimeError("Anthropic client not available")
-
+        # Build messages
         messages = [{"role": "user", "content": prompt}]
-        tool_calls = []
 
-        kwargs = {
-            "model": condition.model,
-            "max_tokens": condition.max_tokens,
-            "temperature": condition.temperature,
-            "messages": messages,
-        }
-        if tools:
-            kwargs["tools"] = tools
+        # Get tools if enabled
+        kwargs = {}
+        if condition.tools_enabled:
+            kwargs["tools"] = self.tool_registry.get_anthropic_tools(condition.tool_names)
 
-        response = self.anthropic_client.messages.create(**kwargs)
-
-        input_tokens = response.usage.input_tokens
-        output_tokens = response.usage.output_tokens
-
-        # Handle tool use loop
-        tool_call_count = 0
-        while response.stop_reason == "tool_use" and tool_call_count < self.config.max_tool_calls:
-            tool_use_blocks = [b for b in response.content if b.type == "tool_use"]
-
-            if not tool_use_blocks:
-                break
-
-            tool_results = []
-            for block in tool_use_blocks:
-                result = self.tool_registry.execute(block.name, block.input)
-                tool_calls.append({
-                    "tool": block.name,
-                    "input": block.input,
-                    "output": result,
-                })
-                tool_results.append({
-                    "type": "tool_result",
-                    "tool_use_id": block.id,
-                    "content": json.dumps(result),
-                })
-                tool_call_count += 1
-
-            messages.append({"role": "assistant", "content": response.content})
-            messages.append({"role": "user", "content": tool_results})
-
-            kwargs["messages"] = messages
-            response = self.anthropic_client.messages.create(**kwargs)
-
-            input_tokens += response.usage.input_tokens
-            output_tokens += response.usage.output_tokens
-
-        # Extract text response
-        raw_response = ""
-        for block in response.content:
-            if hasattr(block, "text"):
-                raw_response += block.text
-
-        return raw_response, tool_calls, input_tokens, output_tokens
-
-    def _call_openai(
-        self,
-        prompt: str,
-        condition: HypothesisCondition,
-    ) -> tuple[str, list[dict], int, int]:
-        """Call OpenAI API."""
-        if not self.openai_client:
-            raise RuntimeError("OpenAI client not available")
-
-        response = self.openai_client.chat.completions.create(
+        response: ModelResponse = client.generate(
+            messages,
             model=condition.model,
             max_tokens=condition.max_tokens,
             temperature=condition.temperature,
-            messages=[{"role": "user", "content": prompt}],
+            **kwargs,
         )
 
-        return (
-            response.choices[0].message.content,
-            [],
-            response.usage.prompt_tokens,
-            response.usage.completion_tokens,
-        )
+        return response.content, [], response.usage.input_tokens, response.usage.output_tokens
 
     def _run_trial(
         self,
@@ -436,26 +380,19 @@ class HypothesisPipeline:
             conditions=self.conditions,
         )
 
-        # Build list of all (trial, condition) pairs
         all_pairs = [
             (trial, cond)
             for trial in self.trial_inputs
             for cond in self.conditions
         ]
-
         total = len(all_pairs)
 
-        if verbose:
-            print(f"\n{'='*60}")
-            print(f"HYPOTHESIS PIPELINE: {self.config.name}")
-            print(f"{'='*60}")
-            print(f"Trial inputs: {len(self.trial_inputs)}")
-            print(f"Conditions: {len(self.conditions)}")
-            print(f"Total trials: {total}")
-            print(f"\nCondition matrix:")
-            for cond in self.conditions:
-                print(f"  - {cond.name}")
-            print(f"{'='*60}\n")
+        # Setup progress reporting
+        reporter = ProgressReporter(
+            self.config.name, self.conditions, len(self.trial_inputs), total
+        ) if verbose else None
+        if reporter:
+            reporter.print_header()
 
         # Iterate with checkpointing
         for trial, cond in self.checkpoint.iterate(
@@ -465,27 +402,18 @@ class HypothesisPipeline:
             key = f"{trial.id}_{cond.name}"
             completed, _ = self.checkpoint.progress()
 
-            if verbose:
-                pct = (completed + 1) / total * 100
-                print(f"[{pct:5.1f}%] {cond.name} / {trial.id}...", end=" ", flush=True)
+            if reporter:
+                reporter.print_progress(completed, cond.name, trial.id)
 
             result = self._run_trial(trial, cond)
             results.trials.append(result)
-
-            # Save to checkpoint
             self.checkpoint.save_result(key, result.to_dict())
 
-            if verbose:
-                if result.error:
-                    print(f"ERROR: {result.error[:50]}")
-                else:
-                    score_str = ", ".join(
-                        f"{k}={v:.2f}" for k, v in list(result.scores.items())[:3]
-                    )
-                    print(f"{score_str}, {result.latency_seconds:.1f}s")
+            if reporter:
+                reporter.print_result(result)
 
         # Load any previously completed trials not in current run
-        for key, data in self.checkpoint.get_all_results().items():
+        for _key, data in self.checkpoint.get_all_results().items():
             if not any(
                 t.trial_id == data["trial_id"] and t.condition_name == data["condition_name"]
                 for t in results.trials

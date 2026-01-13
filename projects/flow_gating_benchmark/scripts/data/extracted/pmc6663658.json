@@ -1,0 +1,202 @@
+{
+  "test_case_id": "PMC6663658",
+  "source_type": "omip_paper",
+  "omip_id": null,
+  "doi": "10.1002/cyto.a.23753",
+  "pmc_id": "PMC6663658",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Cryopreserved PBMC",
+    "species": "human",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Example of the staining and gating strategy for PBMC stimulated with staphylococcal enterotoxin B (SEB). PBMC from a healthy adult were stimulated for 6 h with SEB. (A) Gating hierarchy to identify lineages. Initial gating on time (seconds) to exclude any events early in collection if there are pressure fluctuations, singlet gating on forward scatter height vs. area, exclusion of aggregates (only one example shown, but several sequential gates on various parameters are used), and live cell gating. Monocytes are gated as either CD14+ or high for side scatter and the upper right graph shows three monocyte subsets based on CD14 vs. CD16. Non\u2010monocytes are gated as CD14\u2010SS lo  and then scatter gated on lymphocytes. The gating scheme avoids any overlapping subsets as shown in supplemental figure 4. Thus, conventional CD4+ and CD8+ T cells are gated as CD3+, then \u03b3\u03b4\u2010, not CD26\u2009+\u2009CD161+ (containing MAIT cells), and not CD16+ OR CD56+ (containing NKT cells). (B) Functional markers for CD4+ and CD8+ T cells. A gate is applied for each cytokine, and Boolean gates are created to identify cells expressing different combinations of markers. The single function gates are sometimes chosen vs. a parameter that displays some FMO spreading to allow for angled gates. Most gates are copied, applied to all lineages, and then cloned so that any changes to the gate on one lineage changes that gate for all lineages. However, the IL\u201022 gate was uniquely lower for CD4 T cells (compared to other lineages) since the CD8 reagent caused some spreading into IL\u201022 and thus requiring a higher gate for all other lineages that express CD8. (C) Additional functional and non\u2010functional markers for CD4+ and CD8+ T cells. Perforin and granzyme A are constitutive but can be examined as co\u2010expression with another functional marker. (D) NK T cells gated as CD16+ OR CD56+ on CD3+ \u03b3\u03b4\u2010 T cells. Expression of CD4 vs. CD8 is shown, but all the other markers are also gated on the NK T cells. (E) NK cell subsets defined by CD16 vs. CD56 on CD3\u2010 lymphocytes. (F) MAIT cells identified as CD3+ \u03b3\u03b4\u2010 CD26\u2009+\u2009CD161+ and then V\u03b17.2+. The Va7.2+ cells are predominantly CD8+; however, the V\u03b17.2\u2010 cells are predominantly CD4+ and are likely not MAIT cells. For all gates, none are placed lower than that defined by FMO controls. Some gates are placed higher to improve the specificity, for example, for the functional markers based on the background as observed in the unstimulated controls (Online Fig. 6). The labels above each graph indicate the cells included in that graph.",
+    "full_text_gating": null,
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "Perforin",
+        "fluorophore": "FITC",
+        "clone": "B\u2010D48",
+        "purpose": "Function"
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "BB660",
+        "clone": "M\u03d5P9",
+        "purpose": "Monocytes"
+      },
+      {
+        "marker": "IL2",
+        "fluorophore": "BB700",
+        "clone": "MQ1\u201017H12",
+        "purpose": "Function"
+      },
+      {
+        "marker": "IL22",
+        "fluorophore": "PE",
+        "clone": "22URTI",
+        "purpose": "Function"
+      },
+      {
+        "marker": "KLRG1 (MAFA)",
+        "fluorophore": "PE\u2010Dazzle 594",
+        "clone": "SA231A2",
+        "purpose": "Differentiation"
+      },
+      {
+        "marker": "CXCR3",
+        "fluorophore": "PE\u2010Cy5",
+        "clone": "1C6/CXCR3",
+        "purpose": "T helper class"
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "PE\u2010Cy5.5",
+        "clone": "CMSSB",
+        "purpose": "NK, NKT"
+      },
+      {
+        "marker": "CD154",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "24\u201331",
+        "purpose": "Function"
+      },
+      {
+        "marker": "IL4",
+        "fluorophore": "APC",
+        "clone": "MP4\u201025D2",
+        "purpose": "Function"
+      },
+      {
+        "marker": "Granzyme A",
+        "fluorophore": "Alx700",
+        "clone": "CB9",
+        "purpose": "Function"
+      },
+      {
+        "marker": "TCRv\u03b17.2",
+        "fluorophore": "APC\u2010Cy7",
+        "clone": "3C10",
+        "purpose": "MAIT"
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "BUV395",
+        "clone": "UCHT1",
+        "purpose": "T cell lineage"
+      },
+      {
+        "marker": "Viability",
+        "fluorophore": "UViD",
+        "clone": "NA",
+        "purpose": "Viability"
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "BUV496",
+        "clone": "HI100",
+        "purpose": "Differentiation"
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "BUV563",
+        "clone": "RPA\u2010T8",
+        "purpose": "T cell lineage"
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "BUV661",
+        "clone": "G46\u20106",
+        "purpose": "Activation"
+      },
+      {
+        "marker": "IL17a",
+        "fluorophore": "BUV737",
+        "clone": "N49\u2010653",
+        "purpose": "Function"
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BUV805",
+        "clone": "RPA\u2010T4",
+        "purpose": "T cell lineage"
+      },
+      {
+        "marker": "IFNy",
+        "fluorophore": "V450",
+        "clone": "B27",
+        "purpose": "Function"
+      },
+      {
+        "marker": "TCR \u03b3\u03b4",
+        "fluorophore": "BV510",
+        "clone": "11F2",
+        "purpose": "\u03b3\u03b4 T cell lineage"
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "BV570",
+        "clone": "3G8",
+        "purpose": "NK, NKT"
+      },
+      {
+        "marker": "CCR6 (CD196)",
+        "fluorophore": "BV605",
+        "clone": "11\u2010A9",
+        "purpose": "T helper class"
+      },
+      {
+        "marker": "CD161",
+        "fluorophore": "BV650",
+        "clone": "DX12",
+        "purpose": "MAIT"
+      },
+      {
+        "marker": "CD26",
+        "fluorophore": "BV711",
+        "clone": "M\u2010A261",
+        "purpose": "MAIT"
+      },
+      {
+        "marker": "TNF\u03b1",
+        "fluorophore": "BV750",
+        "clone": "MAb11",
+        "purpose": "Function"
+      },
+      {
+        "marker": "CCR7 (CD197)",
+        "fluorophore": "BV785",
+        "clone": "G043H7",
+        "purpose": "Differentiation"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "Unknown",
+      "children": [],
+      "is_critical": true
+    },
+    "_extraction_note": "Hierarchy needs manual curation from gating_description"
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 26 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1"
+    ]
+  }
+}

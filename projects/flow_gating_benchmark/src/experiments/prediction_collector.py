@@ -23,7 +23,7 @@ from pathlib import Path
 from typing import Any
 
 from curation.schemas import TestCase
-from utils.checkpoint import CheckpointManager
+from utils.serializable import SerializableMixin
 
 from .conditions import ExperimentCondition
 from .llm_client import create_client
@@ -31,7 +31,7 @@ from .prompts import build_prompt
 
 
 @dataclass
-class Prediction:
+class Prediction(SerializableMixin):
     """Raw LLM prediction before scoring.
 
     Provenance is tracked via run_id which references the manifest.json
@@ -53,37 +53,6 @@ class Prediction:
     def key(self) -> tuple:
         """Unique key for deduplication."""
         return (self.bootstrap_run, self.test_case_id, self.model, self.condition)
-
-    def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary for JSON serialization."""
-        return {
-            "test_case_id": self.test_case_id,
-            "model": self.model,
-            "condition": self.condition,
-            "bootstrap_run": self.bootstrap_run,
-            "raw_response": self.raw_response,
-            "prompt": self.prompt,
-            "tokens_used": self.tokens_used,
-            "timestamp": self.timestamp.isoformat(),
-            "error": self.error,
-            "run_id": self.run_id,
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> Prediction:
-        """Create from dictionary."""
-        return cls(
-            test_case_id=data["test_case_id"],
-            model=data["model"],
-            condition=data["condition"],
-            bootstrap_run=data["bootstrap_run"],
-            raw_response=data["raw_response"],
-            prompt=data.get("prompt", ""),
-            tokens_used=data.get("tokens_used", 0),
-            timestamp=datetime.fromisoformat(data["timestamp"]),
-            error=data.get("error"),
-            run_id=data.get("run_id", ""),
-        )
 
 
 @dataclass
@@ -142,9 +111,6 @@ class PredictionCollector:
         self._checkpoint_dir = Path(self.config.checkpoint_dir) if self.config.checkpoint_dir else None
         self._jsonl_path = self._checkpoint_dir / "predictions.jsonl" if self._checkpoint_dir else None
 
-        # Legacy JSON checkpoint manager (for backwards compatibility)
-        self._checkpoint = CheckpointManager(self.config.checkpoint_dir)
-
         # Track predictions
         self._predictions: list[Prediction] = []
         self._completed: set[tuple] = set()
@@ -157,32 +123,18 @@ class PredictionCollector:
         return len(self.test_cases) * len(self.conditions) * self.config.n_bootstrap
 
     def load_checkpoint(self) -> list[Prediction]:
-        """Load predictions from checkpoint files.
+        """Load predictions from JSONL checkpoint.
 
-        Supports both JSONL (preferred) and legacy JSON formats.
         Predictions with errors are excluded from the completed set,
         so they will be retried on resume.
         """
-        predictions = []
-
-        # Try JSONL first (new format)
-        if self._jsonl_path and self._jsonl_path.exists():
-            predictions = self._load_jsonl()
-        # Fall back to legacy JSON
-        elif self._checkpoint_dir:
-            legacy_path = self._checkpoint_dir / "predictions.json"
-            if legacy_path.exists():
-                predictions, _ = self._checkpoint.load_with_keys(
-                    "predictions.json",
-                    Prediction,
-                    key_fn=lambda p: p.key,
-                )
+        predictions = self._load_jsonl() if self._jsonl_path and self._jsonl_path.exists() else []
 
         # Only mark error-free predictions as completed (retry errors on resume)
         successful = [p for p in predictions if not p.error]
         errored = [p for p in predictions if p.error]
         self._completed = {p.key for p in successful}
-        self._predictions = successful  # Pre-populate for final save
+        self._predictions = successful
 
         if predictions:
             print(f"Loaded {len(predictions)} predictions from checkpoint")
@@ -229,10 +181,14 @@ class PredictionCollector:
             f.write(line)
 
     def save_checkpoint(self, predictions: list[Prediction] | None = None) -> None:
-        """Save predictions to legacy JSON checkpoint file (for compatibility)."""
+        """Save predictions to JSON file (final output, not for checkpointing)."""
+        if not self._checkpoint_dir:
+            return
         if predictions is None:
             predictions = self._predictions
-        self._checkpoint.save(predictions, "predictions.json")
+        output_path = self._checkpoint_dir.parent / "predictions.json"
+        with open(output_path, "w") as f:
+            json.dump([p.to_dict() for p in predictions], f, indent=2)
 
     def _add_prediction(self, prediction: Prediction) -> None:
         """Add prediction to memory and append to JSONL checkpoint."""
@@ -368,7 +324,7 @@ class PredictionCollector:
             return
 
         # Process each provider with its own worker pool
-        for _provider, pending_tasks in pending_by_provider.items():
+        for pending_tasks in pending_by_provider.values():
             # Get worker count for this provider (use first model in group)
             sample_model = pending_tasks[0][1].model
             workers = self.config.get_parallel_workers(sample_model)

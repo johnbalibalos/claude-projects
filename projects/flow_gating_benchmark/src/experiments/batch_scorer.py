@@ -16,12 +16,13 @@ from typing import Any
 from curation.schemas import TestCase
 from evaluation.scorer import GatingScorer
 from utils.checkpoint import CheckpointManager
+from utils.serializable import SerializableMixin
 
 from .prediction_collector import Prediction
 
 
 @dataclass
-class ScoringResult:
+class ScoringResult(SerializableMixin):
     """Result of scoring a prediction against ground truth."""
 
     # Identity
@@ -49,41 +50,6 @@ class ScoringResult:
     def key(self) -> tuple:
         """Unique key for deduplication."""
         return (self.bootstrap_run, self.test_case_id, self.model, self.condition)
-
-    def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary for JSON serialization."""
-        return {
-            "test_case_id": self.test_case_id,
-            "model": self.model,
-            "condition": self.condition,
-            "bootstrap_run": self.bootstrap_run,
-            "hierarchy_f1": self.hierarchy_f1,
-            "structure_accuracy": self.structure_accuracy,
-            "critical_gate_recall": self.critical_gate_recall,
-            "hallucination_rate": self.hallucination_rate,
-            "parse_success": self.parse_success,
-            "raw_response": self.raw_response,  # Full response for judge evaluation
-            "ground_truth_gates": self.ground_truth_gates,
-            "error": self.error,
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> ScoringResult:
-        """Create from dictionary."""
-        return cls(
-            test_case_id=data["test_case_id"],
-            model=data["model"],
-            condition=data["condition"],
-            bootstrap_run=data["bootstrap_run"],
-            hierarchy_f1=data["hierarchy_f1"],
-            structure_accuracy=data["structure_accuracy"],
-            critical_gate_recall=data["critical_gate_recall"],
-            hallucination_rate=data.get("hallucination_rate", 0.0),
-            parse_success=data["parse_success"],
-            raw_response=data["raw_response"],
-            ground_truth_gates=data.get("ground_truth_gates", []),
-            error=data.get("error"),
-        )
 
 
 class BatchScorer:

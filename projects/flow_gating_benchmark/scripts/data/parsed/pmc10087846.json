@@ -1,0 +1,558 @@
+{
+  "test_case_id": "PMC10087846",
+  "source_type": "omip_paper",
+  "omip_id": null,
+  "doi": "10.1002/cyto.a.24683",
+  "pmc_id": "PMC10087846",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Fresh or cryopreserved PBMC",
+    "species": "cattle",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Gating strategy of the cattle B\u2010cell panel into 24 minor subsets. (A) the gating strategy followed from all events to the S\u2010Ig(L) vs CD21 populations. (B) S\u2010Ig(L) versus CD21 further sub\u2010gated into CD71 vs CD20 subsets for each of the four major subsets. (C) the 24 minor subsets identified as the CD138 +  and CD138 \u2212  from the three previous subsets in B. the parent population for each of the 24 minor subsets are listed above each gated population [Color figure can be viewed at  wileyonlinelibrary.com ]",
+    "full_text_gating": "As our knowledge of immune cell subsets and their functions increases, so does the need to identify and measure alterations in their phenotype and frequency. The mammalian B\u2010cell population consists of several functionally distinct subsets that together comprise the major mediator of humeral immunity [ 1 ,  2 ]. The development of na\u00efve B cells (B Na\u00efve ) is important for long\u2010term immune protection [ 3 ,  4 ,  5 ]. Driving the development of antibody secreting cells (ASC) and memory B cells (B Mem ) is an essential requirement of many vaccines that elicit neutralizing antibody responses [ 6 ,  7 ,  8 ]. Furthermore, these subsets are often the source of therapeutic antibody candidates (as vaccines or immunotherapies) against infectious diseases [ 6 ,  7 ,  8 ]. Regulatory B cells (B Reg ) also play a vital role in suppressing infectious diseases [ 9 ,  10 ]. Consequently, the identification and relative quantification of B\u2010cell subsets is a fundamental requirement when evaluating pathogen or vaccine\u2010induced immune responses and ultimately the development of better strategies to control diseases [ 1 ].\n\nThe capability to dissect B\u2010cell responses at high resolution is limited in many non\u2010model species through a combination of limited reagents, the lack of knowledge of species\u2010specific B\u2010cell markers and standardized methods [ 11 ,  12 ]. This is certainly the case for cattle, a key food producing species and crucial for human nutrition globally, as a universal B\u2010cell lineage marker (i.e., CD19) and reagents against other well\u2010known B\u2010cell subsets (e.g., IgD and CD38) are lacking [ 13 ]. As technologies to design and deliver protective immunogens continue to emerge rapidly, it is essential to evaluate their applicability in other species as part of one health approaches. Consequently, there is a need to study cattle B\u2010cell responses and their maturation at a high resolution.\n\nWe have developed a flow cytometry panel using the existing antibodies against cell surface markers based on knowledge in humans and mice [ 14 ] (Table  1 ). With no pan B\u2010cell markers known in cattle, such as CD19, CD72, or CD79\u03b1, we resolved B cells from other lymphocytes using CD14 (CCG33, [ 15 ]) to exclude the monocytes, CD40 (IL\u2010A158, [ 16 ]) as a B\u2010cell lineage marker, and included previously described cattle B\u2010cell markers such as CD21 (CC21, [ 17 ,  18 ]) and surface immunoglobulin light\u2010chain (S\u2010Ig(L), IL\u2010A58, [ 17 ,  19 ]) [ 2 ,  20 ] (Table  2 ). Subsets within these populations were further identified using the activation and differentiation markers CD71 (IL\u2010A165, [ 21 ]), CD20 (MEM\u201097, [ 22 ]), and CD138 (recombinant\u2010F1.20/A, [Personal comm. Washington State University]).\n\nBased on well\u2010characterized human and mouse B\u2010cell populations, we hypothesize that these markers will identify five major subsets of B cells in cattle lymphocytes (Online Table\u00a0 3 ): B Na\u00efve , B Mem , B Reg , PB, and PC [ 14 ]. The panel further allows for more in\u2010depth characterization of cattle B cells into 24 phenotypically unique subsets, following the gating strategy set out in Figure\u00a0 1 ; however, the functional discrimination and therefore importance between these subsets remains to be determined (Tables\u00a0 1  and  2 ).\n\nGating strategy of the cattle B\u2010cell panel into 24 minor subsets. (A) the gating strategy followed from all events to the S\u2010Ig(L) vs CD21 populations. (B) S\u2010Ig(L) versus CD21 further sub\u2010gated into CD71 vs CD20 subsets for each of the four major subsets. (C) the 24 minor subsets identified as the CD138 +  and CD138 \u2212  from the three previous subsets in B. the parent population for each of the 24 minor subsets are listed above each gated population [Color figure can be viewed at  wileyonlinelibrary.com ]\n\nSummary table for optimized multicolour immunofluorescence panel\n\nReagents used for optimized multicolour immunofluorescence panel\n\nOur gating strategy consists of plotting CD40 against CD14 to select \u201cclassical\u201d (CD40 + CD14 \u2212 ) B cells. Although CD3 and CD8\u03b1 are often used as a dump channel to isolate cattle B cells, their inclusion did not significantly improve separation (Online Figure\u00a0 8 ). After identifying B cells, S\u2010Ig(L) was plotted against CD21, allowing discrimination of four putative cattle B\u2010cell populations: CD21 \u2212 S\u2010Ig(L) + and CD21 + S\u2010Ig(L) \u2212  single\u2010positive (SP), CD21 + S\u2010Ig(L) +  double\u2010positive (DP), and CD21 \u2212 S\u2010Ig(L) \u2212  double\u2010negative (DN) cells (Figure\u00a0 1  A. Next, each population was further sub\u2010divided by comparing CD71 against CD20 and sub\u2010gated into CD71 +  CD20 \u2212  SP, CD71 + CD20 +  DP, and CD71 \u2212  populations (Figure\u00a0 1 B). Lastly, each of these sub\u2010gates were divided as either CD138 +  or CD138 \u2212  (Figure\u00a0 1  C), resulting in 24 minor subsets of cattle B cells. An important step while labeling the PBMCs is to first stain the cells with the CD20 antibody before adding any of the other antibodies in the panel (Online Figure\u00a0 10 ).\n\nBy identifying functional subsets of B cells, this panel has the potential to dramatically improve our understanding of cattle immune responses to infection and vaccination, moving toward addressing some of the problems highlighted in both Entrican et al. and Barroso et al., for example, the lack of reagents to study the developmental cascade of cattle B cells [ 11 ,  13 ]. Additionally, the panel allows the enrichment or isolation of specific single B cells or their populations to further study function, specificity, and drive antibody discovery.",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "Ig(L)",
+        "fluorophore": "DyLight 405",
+        "clone": "IL\u2010A58",
+        "purpose": "B\u2010cell lineage, B\u2010cell subset"
+      },
+      {
+        "marker": "CD20",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "MEM\u201097",
+        "purpose": "B\u2010cell development"
+      },
+      {
+        "marker": "CD21",
+        "fluorophore": "FITC",
+        "clone": "CC21",
+        "purpose": "B\u2010cell lineage, B\u2010cell subset"
+      },
+      {
+        "marker": "CD40",
+        "fluorophore": "PerCP\u2010Cy5.5",
+        "clone": "IL\u2010A158",
+        "purpose": "Co\u2010stimulatory, B\u2010cell lineage marker"
+      },
+      {
+        "marker": "CD71",
+        "fluorophore": "APC",
+        "clone": "IL\u2010A165",
+        "purpose": "Activation marker, activated B cells"
+      },
+      {
+        "marker": "CD138",
+        "fluorophore": "PE\u2010Texas Red",
+        "clone": "r(F1.20/A)",
+        "purpose": "Distinguishing of ASCs (PC vs. PB)"
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "PE",
+        "clone": "CCG33",
+        "purpose": "Dump, monocyte lineage marker"
+      },
+      {
+        "marker": "LIVE/DEAD",
+        "fluorophore": "Near\u2010IR",
+        "clone": "\u2013",
+        "purpose": "Viability"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "root",
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
+          "marker_logic": "FSC-A vs FSC-H",
+          "gate_type": "scatter",
+          "is_critical": true,
+          "children": [
+            {
+              "name": "Live cells",
+              "markers": [
+                "LIVE/DEAD"
+              ],
+              "marker_logic": "LIVE/DEAD-",
+              "gate_type": "viability",
+              "is_critical": true,
+              "children": [
+                {
+                  "name": "B cells (CD40+ CD14-)",
+                  "markers": [
+                    "CD40",
+                    "CD14"
+                  ],
+                  "marker_logic": "CD40+ CD14-",
+                  "gate_type": "lineage",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "CD21+ S-Ig(L)+ DP",
+                      "markers": [
+                        "CD21",
+                        "Ig(L)"
+                      ],
+                      "marker_logic": "CD21+ S-Ig(L)+",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": [
+                        {
+                          "name": "CD71+ CD20- SP",
+                          "markers": [
+                            "CD71",
+                            "CD20"
+                          ],
+                          "marker_logic": "CD71+ CD20-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "CD138+",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "CD138-",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CD71+ CD20+ DP",
+                          "markers": [
+                            "CD71",
+                            "CD20"
+                          ],
+                          "marker_logic": "CD71+ CD20+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "CD138+",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "CD138-",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CD71-",
+                          "markers": [
+                            "CD71"
+                          ],
+                          "marker_logic": "CD71-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "CD138+",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "CD138-",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CD21- S-Ig(L)+ SP",
+                      "markers": [
+                        "CD21",
+                        "Ig(L)"
+                      ],
+                      "marker_logic": "CD21- S-Ig(L)+",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": [
+                        {
+                          "name": "CD71+ CD20- SP",
+                          "markers": [
+                            "CD71",
+                            "CD20"
+                          ],
+                          "marker_logic": "CD71+ CD20-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "CD138+",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "CD138-",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CD71+ CD20+ DP",
+                          "markers": [
+                            "CD71",
+                            "CD20"
+                          ],
+                          "marker_logic": "CD71+ CD20+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "CD138+",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "CD138-",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CD71-",
+                          "markers": [
+                            "CD71"
+                          ],
+                          "marker_logic": "CD71-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "CD138+",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "CD138-",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CD21+ S-Ig(L)- SP",
+                      "markers": [
+                        "CD21",
+                        "Ig(L)"
+                      ],
+                      "marker_logic": "CD21+ S-Ig(L)-",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": [
+                        {
+                          "name": "CD71+ CD20- SP",
+                          "markers": [
+                            "CD71",
+                            "CD20"
+                          ],
+                          "marker_logic": "CD71+ CD20-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "CD138+",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "CD138-",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CD71+ CD20+ DP",
+                          "markers": [
+                            "CD71",
+                            "CD20"
+                          ],
+                          "marker_logic": "CD71+ CD20+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "CD138+",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "CD138-",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CD71-",
+                          "markers": [
+                            "CD71"
+                          ],
+                          "marker_logic": "CD71-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "CD138+",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "CD138-",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CD21- S-Ig(L)- DN",
+                      "markers": [
+                        "CD21",
+                        "Ig(L)"
+                      ],
+                      "marker_logic": "CD21- S-Ig(L)-",
+                      "gate_type": "subset",
+                      "is_critical": false,
+                      "children": [
+                        {
+                          "name": "CD71+ CD20- SP",
+                          "markers": [
+                            "CD71",
+                            "CD20"
+                          ],
+                          "marker_logic": "CD71+ CD20-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "CD138+",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "CD138-",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CD71+ CD20+ DP",
+                          "markers": [
+                            "CD71",
+                            "CD20"
+                          ],
+                          "marker_logic": "CD71+ CD20+",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "CD138+",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "CD138-",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CD71-",
+                          "markers": [
+                            "CD71"
+                          ],
+                          "marker_logic": "CD71-",
+                          "gate_type": "subset",
+                          "is_critical": false,
+                          "children": [
+                            {
+                              "name": "CD138+",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138+",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            },
+                            {
+                              "name": "CD138-",
+                              "markers": [
+                                "CD138"
+                              ],
+                              "marker_logic": "CD138-",
+                              "gate_type": "subset",
+                              "is_critical": false,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "is_critical": true
+    }
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 8 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 5481 chars of gating text from body"
+    ]
+  }
+}

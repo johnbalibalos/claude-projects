@@ -1,0 +1,221 @@
+{
+  "test_case_id": "PMC9298022",
+  "source_type": "omip_paper",
+  "omip_id": null,
+  "doi": "10.1002/cyto.a.24510",
+  "pmc_id": "PMC9298022",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "PBMC",
+    "species": "human",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Manual gating strategy and algorithmic analysis. ( A ) Before the identification of individual subsets, debris, doublets and dead cells were removed. ( B ) Cell lineages were identified based on the expression of the following phenotypes: CD56+ (NK cells), CD56\u2212CD3+\u2009\u03b3\u03b4TCR+ (\u03b3\u03b4T cells), CD3+\u03b3\u03b4TCR\u2010CD56+ T cells, CD3+\u03b3\u03b4TCR\u2212CD56\u2212CD4+ (T helper cells) and CD3+\u03b3\u03b4TCR\u2212CD56\u2212CD8+ (T cytotoxic cells). ( C ) CD4+ T cells were delineated into CD25+FoxP3+ Tregs and non\u2010Treg cells. Activation of Tregs was evaluated based on the expression of CD39. Furthermore, expression of PD1, TIGIT, and Tim3 identifying highly suppressive Tregs was evaluated. Cells in the non\u2010Treg gate were divided into individual T helper subsets based on the combination of chemokine receptors. These cells were first gated for perforin+CD27\u2212CTL cells and perforin\u2212 cells. The perforin\u2212 cells were gated for CCR10+\u2009CCR4+\u2009CCR6+ Th22 cells, CCR10+\u2009CCR4+CCR6\u2212 ThGM\u2010CSF, CCR10\u2212CCR4+CCR6\u2212 Th2 cells, CCR10\u2212CCR4+CCR6+ Th17 cells, CCR10\u2010CCR4\u2010CCR6+CXCR3\u2212 Th9 cells and CCR10\u2212CCR4\u2212CCR6+/\u2212CXCR3+ Th1 cells. Thymic function was evaluated on CD4+ gated cell via identification of CD45RA+CD62L+CD95\u2212CD31+ cells. ( D ) Gated CD8+ cells were subtyped into individual memory subsets based on CD45RA and CD62L and expression of inhibitory receptors, activation markers and perforin was evaluated. Inhibiting receptors are only weakly expressed on T cells from healthy donors, and therefore we show a comparison between healthy and patients after HSCT. ( E ) Gating of \u03b3\u03b4T cells based on CD57\u2212NKG2A+ cytokine\u2010producing cells, CD57+NKG2A\u2212 terminally differentiated cytotoxic cells and CD57\u2212NKG2A\u2212 with intermediate phenotype. Expression of perforin and TIGIT on these cells is depicted using a histogram. ( F ) NK cells were subtyped based on the expression of CD56 and CD16, and a comparison of a healthy donor and post\u2010HSCT patient is shown. CD56hiCD16\u2010 cells represent less differentiated cytokine\u2010producing cells characterized by low expression perforin and high expression of CD27, whereas CD56loCD16+ cells express high levels of perforin and lack NKG2A and CD27. These cells include a subset of CD57+NKG2C+ memory\u2010like NK cells. ( G ) CD56+ T cells can be divided into three main lineages based on CD4 and CD8. The CD4+ cells are enriched with cytotoxic perforin expressing cells mostly terminally differentiated, as evident by expression of CD57. The CD8+ cell can be split into two subsets based on the expression of NKG2C. These subsets show distinct differentiation status, as evident by the expression patterns of CD45RA and CD62L. ( H ) Identification of individual cell types was performed on gated live single cells using the Embedding Guided by Self\u2010Organizing Map (EmbedSOM) algorithm\u00a0[ 20 ]. Expression pattern of markers on individual cell subsets is show in  Figure S8 . FSC, forward\u2010scatter; SSC, side\u2010scatter [Color figure can be viewed at  wileyonlinelibrary.com ]",
+    "full_text_gating": "Hematopoietic stem cell transplantation (HSCT) remains the only curative treatment available to patients with acute myeloid leukemia (AML) and myelodysplastic syndrome (MDS) [ 1 ,  2 ]. Furthermore, it is indicated as a treatment for other malignant and non\u2010malignant diseases [ 3 ,  4 ,  5 ]. Although HSCT represents the most effective immunotherapy to date, it is associated with severe post\u2010transplant complications that are the result of improper immune system function. These include relapse of the original disease, graft\u2010versus\u2010host\u2010disease (GvHD) and infectious complications, such as reactivation of latent human cytomegalovirus (HCMV) infection [ 6 ]. Therefore, monitoring markers of immune system dysfunction is highly sought as it opens up the possibility for early therapeutic intervention. For example, the transfer of virus\u2010specific T cells is actively investigated in clinical trials for the treatment of viral complications [ 7 ].\n\nFlow cytometry represents the method of choice when evaluating the status of the post\u2010transplant immune system as it can identify quantitative and qualitative differences between the regenerating and healthy immune system (Table\u00a0 1 ).\n\nTherefore, we have developed a 29\u2010color panel to monitor the reconstitution of NK (natural killer) cell and T cell subpopulations as they are the major drivers of anti\u2010leukemia and anti\u2010pathogen responses as well as gatekeepers of tissue tolerance.\n\nNK cells represent the first lymphocyte population to recover after HSCT and play an essential role in controlling viral infections and mediating the graft\u2010versus\u2010leukemia (GvL) effect [ 8 ,  9 ,  10 ].\n\nHowever, their function, that is, cytotoxicity and cytokine production, is heavily impaired, and it can take up to 6\u00a0months until full functionality is restored [ 11 ,  12 ]. To be able to comprehensively monitor the reconstitution of the NK cell compartment, we have included several types of maturation, functional and qualitative markers (Table\u00a0 2 ).\n\nAbbreviations: AF, Alexa Fluor; APC, Allophycocyanin; BB, Brilliant Blue; BUV, Brilliant Ultraviolet; BV, Brilliant Violet; Cy, cyanine; PB, Pacific blue; PE, R\u2010phycoerythrin.\n\nMaturation of the NK cell compartment is monitored based on the identification of the four major subsets. These include CD56hiCD16\u2212 cells representing producers of cytokines such as interferon\u2010gamma (IFN\u03b3) and tumor necrosis factor alpha (TNF\u03b1) [ 13 ], CD56loCD16+ highly differentiated cytotoxic cells, CD56hiCD16+ cells representing a transitional phenotype sharing functional characteristics with CD56hiCD16\u2212 and CD56loCD16+ such as cytotoxicity and cytokine production, and CD56loCD16\u2212 which is a heterogeneous population composed of activated NK cells that downregulate CD16 and potential precursors of the CD56loCD16+ subset [ 14 ,  15 ].\n\nHSCT does not only affect the distribution of NK cell subsets but has also been shown to affect their functional properties, such as the production of perforin and IFN\u03b3 [ 16 ]. Therefore, we have included perforin and Tim3 as a proposed regulator of IFN\u03b3 production in NK cells [ 12 ]. Furthermore, regarding relapse of the original disease expression of activating receptors NKG2D and DNAM\u20101 and inhibitory receptors, NKG2A and TIGIT are monitored due to their role in leukemia immune escape [ 17 ,  18 ,  19 ].\n\nT cells represent the orchestrators of adaptive immunity and are indispensable for long\u2010lasting protective immune responses. In comparison to NK cells, their reconstitution is more complex as it is highly influenced by the type of graft, that is, umbilical cord blood, bone marrow, mobilized blood stem cells [ 20 ]. Two pathways of reconstitution exist, namely homeostatic expansion and de novo differentiation via the thymus [ 11 ].\n\nIn this panel, we define two main subsets of T cells based on the type of T cell receptor (TCR), namely \u03b3\u03b4TCR+ cells and \u03b3\u03b4TCR\u2212, which we consider to be \u03b1\u03b2 T cells. We further subtype \u03b1\u03b2 T cells based on CD56 expression into CD56+ T cells and classical T cells (Figure\u00a0 1 ).\n\nManual gating strategy and algorithmic analysis. ( A ) Before the identification of individual subsets, debris, doublets and dead cells were removed. ( B ) Cell lineages were identified based on the expression of the following phenotypes: CD56+ (NK cells), CD56\u2212CD3+\u2009\u03b3\u03b4TCR+ (\u03b3\u03b4T cells), CD3+\u03b3\u03b4TCR\u2010CD56+ T cells, CD3+\u03b3\u03b4TCR\u2212CD56\u2212CD4+ (T helper cells) and CD3+\u03b3\u03b4TCR\u2212CD56\u2212CD8+ (T cytotoxic cells). ( C ) CD4+ T cells were delineated into CD25+FoxP3+ Tregs and non\u2010Treg cells. Activation of Tregs was evaluated based on the expression of CD39. Furthermore, expression of PD1, TIGIT, and Tim3 identifying highly suppressive Tregs was evaluated. Cells in the non\u2010Treg gate were divided into individual T helper subsets based on the combination of chemokine receptors. These cells were first gated for perforin+CD27\u2212CTL cells and perforin\u2212 cells. The perforin\u2212 cells were gated for CCR10+\u2009CCR4+\u2009CCR6+ Th22 cells, CCR10+\u2009CCR4+CCR6\u2212 ThGM\u2010CSF, CCR10\u2212CCR4+CCR6\u2212 Th2 cells, CCR10\u2212CCR4+CCR6+ Th17 cells, CCR10\u2010CCR4\u2010CCR6+CXCR3\u2212 Th9 cells and CCR10\u2212CCR4\u2212CCR6+/\u2212CXCR3+ Th1 cells. Thymic function was evaluated on CD4+ gated cell via identification of CD45RA+CD62L+CD95\u2212CD31+ cells. ( D ) Gated CD8+ cells were subtyped into individual memory subsets based on CD45RA and CD62L and expression of inhibitory receptors, activation markers and perforin was evaluated. Inhibiting receptors are only weakly expressed on T cells from healthy donors, and therefore we show a comparison between healthy and patients after HSCT. ( E ) Gating of \u03b3\u03b4T cells based on CD57\u2212NKG2A+ cytokine\u2010producing cells, CD57+NKG2A\u2212 terminally differentiated cytotoxic cells and CD57\u2212NKG2A\u2212 with intermediate phenotype. Expression of perforin and TIGIT on these cells is depicted using a histogram. ( F ) NK cells were subtyped based on the expression of CD56 and CD16, and a comparison of a healthy donor and post\u2010HSCT patient is shown. CD56hiCD16\u2010 cells represent less differentiated cytokine\u2010producing cells characterized by low expression perforin and high expression of CD27, whereas CD56loCD16+ cells express high levels of perforin and lack NKG2A and CD27. These cells include a subset of CD57+NKG2C+ memory\u2010like NK cells. ( G ) CD56+ T cells can be divided into three main lineages based on CD4 and CD8. The CD4+ cells are enriched with cytotoxic perforin expressing cells mostly terminally differentiated, as evident by expression of CD57. The CD8+ cell can be split into two subsets based on the expression of NKG2C. These subsets show distinct differentiation status, as evident by the expression patterns of CD45RA and CD62L. ( H ) Identification of individual cell types was performed on gated live single cells using the Embedding Guided by Self\u2010Organizing Map (EmbedSOM) algorithm\u00a0[ 20 ]. Expression pattern of markers on individual cell subsets is show in  Figure S8 . FSC, forward\u2010scatter; SSC, side\u2010scatter [Color figure can be viewed at  wileyonlinelibrary.com ]\n\n\u03b3\u03b4 T cells represent a bridge between innate and adaptive responses, they recognize infected or malignant cells either through the expression of activating receptors which they share with NK cells like NKG2D, NKG2C and DNAM\u20101 or by recognition through their TCR, that recognizes phosphoantigens including intermediates from the isoprenoid biosynthesis pathway [ 21 ,  22 ]. In our panel, we subtype \u03b3\u03b4 T cells based on the expression of CD57 and NKG2A into CD57\u2009+\u2009NKG2A\u2212 terminally differentiated highly cytotoxic cells, CD57\u2212NKG2A\u2212 cytotoxic cells and cytokine\u2010producing CD57\u2010NKG2A+ cells. Furthermore, we are able to evaluate the expression of costimulatory molecules such as NKG2D, which mediates TCR unrestricted effector functions, and CD27 which has been proposed to co\u2010stimulate and thereby boost recognition of target cells via TCR [ 23 ].\n\nNKT\u2010like cells represent another subset of T cells that share similarities with NK cells. In our panel, we define them as CD3\u2009+\u2009\u03b3\u03b4TCR\u2010CD56+ cells. It has to be noted that this population is highly heterogeneous, and besides, NKT\u2010like cells contain CD1d\u2010restricted type I (iNKT) and type II NKT cells; however, these represent a minority [ 24 ]. Currently, it has been proposed that NKT\u2010like cells arise from classical T\u2010cells that start to express NK cell markers after prolonged antigen stimulation [ 25 ]. Their physiological role is currently under investigation. As there is no clear agreement about the nomenclature of these cells, we further refer to them as CD56+ T cells. In our panel, we identify three subsets of CD56+ T cells: CD4+, CD8+, and CD4\u2212 CD8\u2212 (DN) cells. We further subdivide the CD8 subset into NKG2C\u2212 and NKG2C+ cells as these might represent cells with specific roles for HCMV. These cells are dominated by the CD45RA+ CD62L\u2212 effector phenotype, are highly cytotoxic and lack expression of the NKG2A receptor. CD4+ CD56+ T cells are also highly differentiated with an effector memory phenotype. These cells contain a substantial population of cytotoxic cells, as evidenced by the expression of perforin and CD57.\n\nClassical T cells are defined in our panel as CD3\u2009+\u2009CD56\u2009\u2212\u2009\u03b3\u03b4TCR\u2212, however it has to be noted that the population of CD3\u2009+\u2009CD56\u2009\u2212\u2009\u03b3\u03b4TCR\u2212 is actually heterogeneous and includes true classical \u03b1\u03b2T cells and mucosal\u2010associated invariant T (MAIT) cells characterized by the expression of an invariant \u03b1\u03b2TCR [ 26 ]. \u03b1\u03b2T cells are the centerpiece of adaptive immune responses. However, they are heavily affected by HSCT. The most prominent change, when compared to healthy, is the inverse ratio of CD4:CD8 T cells which is caused by faster regeneration of CD8+ T cells that reach normal levels in 100\u2009days, whereas CD4+ T cell regeneration can take up to a year [ 11 ,  27 ]. As mentioned above, reconstitution in the months after HSCT is driven by the homeostatic expansion of T cells contained in the graft. However, the only way of reconstituting a broad TCR repertoire that can efficiently protect against invading pathogens is through the thymus [ 28 ]. To monitor the thymic output, we use the measurement of recent thymic emigrants (RTE) in the na\u00efve CD4 compartment based on the expression of CD31 [ 29 ]. CD8+ T cells reconstitute faster, but there is currently no validated marker for CD8+ RTEs; therefore, we monitor only the emergence of na\u00efve CD8+ T cells defined as CD45RA\u2009+\u2009CD62L\u2009+\u2009CD95\u2212.\n\nAs early post\u2010transplant responses heavily rely on CD8+ T cells, we have included several types of markers for assessing the functional status of the CD8+ T cell compartment. First of all, we monitor the distribution of different memory subsets such as CD45RA\u2009+\u2009CD62L\u2009+\u2009CD95+ memory stem cells (Tscm), CD45RA\u2009\u2212\u2009CD62L+ central memory cells (Tcm), CD45RA\u2009\u2212\u2009CD62L\u2212 effector memory cells (Tem), and finally CD45RA\u2009+\u2009CD62L\u2212 effector cells (Teff). Besides that, we have also included activation markers such as the early activation marker CD69, CD25, and perforin as a marker for effector function.\n\nFurthermore, we included markers of T cell exhaustion and senescence, that is, PD1, TIGIT, Tim3, and CD57, as these are important when considering AML relapse [ 30 ,  31 ,  32 ].\n\nCD4+ T cells are the main regulators of innate and adaptive immune responses. We have designed our panel to separate the main T helper (Th) subsets, that is, CD25\u2009+\u2009FoxP3 regulatory T cells (Tregs), perforin+ CD27\u2212 Th cytotoxic lymphocytes (ThCTL), CCR10\u2010CCR4\u2010CXCR3+ Th1, CCR10\u2009+\u2009CCR4\u2009+\u2009CCR6+ Th22, CCR10\u2009\u2212\u2009CCR4\u2009+\u2009CCR6+ Th17, CCR10\u2009\u2212\u2009CCR4\u2009+\u2009CCR6\u2212 Th2, CCR10\u2009+\u2009CCR4\u2009+\u2009CCR6\u2212 Th granulocyte\u2010macrophage colony\u2010stimulating factor (ThGM\u2010CSF), and finally CCR10\u2009\u2212\u2009CCR4\u2009\u2212\u2009CXCR3\u2009\u2212\u2009CCR6+ Th9 cells.\n\nMonitoring of Tregs in this panel is a priority as they have been shown to adversely affect anti\u2010leukemic responses and can influence the occurrence of GvHD [ 33 ,  34 ,  35 ]. We monitor Th\u2010like Treg phenotypes, as it has been proposed that Tregs mirror the effector cells they suppress [ 36 ]. Additionally, we included markers of highly suppressive Tregs, i.e., CD39, PD1, Tim3 and TIGIT [ 37 ,  38 ].\n\nAnother priority of our panel is the identification of exhaustion markers on Th1 and ThCTL cells, as these represent important mediators of antiviral and anti\u2010leukemic responses [ 39 ,  40 ].\n\nOther non\u2010Treg subsets like Th17 and Th22 can play an important role in immunity against bacterial pathogens causing post\u2010HSCT complications such as  Pseudomonas aeruginosa, Streptococcus pneumonie or Pneumocystis jirovecii  [ 41 ,  42 ,  43 ]. Finally, we utilized the EmbedSOM algorithm to identify important cell subsets from live single cells (Figure\u00a0 1H ). [ 20 ].\n\nAdditional details regarding cell phenotypes and markers can be found in the online material.\n\nT cell reconstitution is also a priority of the panel and therefore it maps the emergence of RTE defined similarly to OMIP 013 and monitors the differentiation status Th subsets similarly to OMIP 017 and 030. In contrast to OMIP 030, it defines memory subsets using CD62L and identifies cytotoxic CD4 T cells as a unique subset. Furthermore, our panel allows for deeper analysis of Treg function through evaluation of CD39 expression similarly to OMIP 004 and 015, and identification of highly suppressive populations based on expression of PD1, TIGIT, Tim3. Similarly, to OMIP 037 and 050 our panel detects markers of exhaustion, senescence and activation, but also allows to map these markers to individual Th subsets.",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD62L",
+        "fluorophore": "BUV395",
+        "clone": "DREG\u201056",
+        "purpose": "T cell differentiation"
+      },
+      {
+        "marker": "Viability",
+        "fluorophore": "Live\u2010Dead Blue",
+        "clone": "\u2014",
+        "purpose": "Viability"
+      },
+      {
+        "marker": "CD69",
+        "fluorophore": "BUV496",
+        "clone": "FN50",
+        "purpose": "NK and T cell activation marker"
+      },
+      {
+        "marker": "CCR6 (CD196)",
+        "fluorophore": "BUV563",
+        "clone": "11A9",
+        "purpose": "Chemokine receptor; Th subset identification"
+      },
+      {
+        "marker": "CD27",
+        "fluorophore": "BUV615",
+        "clone": "M\u2010T271",
+        "purpose": "T cell differentiation"
+      },
+      {
+        "marker": "PD1 (CD279)",
+        "fluorophore": "BUV661",
+        "clone": "EH12.1",
+        "purpose": "T cell inhibitory receptor"
+      },
+      {
+        "marker": "CD25",
+        "fluorophore": "BUV737",
+        "clone": "2A3",
+        "purpose": "T cell activation; Treg identification"
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "BUV805",
+        "clone": "RPA\u2010T8",
+        "purpose": "CD8 T cell and NKT\u2010like cell lineage marker"
+      },
+      {
+        "marker": "NKG2A (CD159a)",
+        "fluorophore": "BV421",
+        "clone": "131411",
+        "purpose": "NK and NKT\u2010like cell inhibitory receptor"
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "PB",
+        "clone": "HI100",
+        "purpose": "T cell differentiation"
+      },
+      {
+        "marker": "Tim3",
+        "fluorophore": "BV480",
+        "clone": "7D3",
+        "purpose": "T cell inhibitory receptor"
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BV570",
+        "clone": "RPA\u2010T4",
+        "purpose": "CD4 T cell lineage marker"
+      },
+      {
+        "marker": "CD57",
+        "fluorophore": "BV605",
+        "clone": "QA17A04",
+        "purpose": "T cell and NK cell differentiation"
+      },
+      {
+        "marker": "CD95",
+        "fluorophore": "BV650",
+        "clone": "DX2",
+        "purpose": "T cell activation and differentiation"
+      },
+      {
+        "marker": "\u03b3\u03b4TCR",
+        "fluorophore": "BV711",
+        "clone": "11F2",
+        "purpose": "\u03b3\u03b4 T cells"
+      },
+      {
+        "marker": "DNAM-1 (CD226)",
+        "fluorophore": "BV750",
+        "clone": "DX11",
+        "purpose": "T cell and NK cell activating receptor"
+      },
+      {
+        "marker": "CD31",
+        "fluorophore": "BV786",
+        "clone": "WM59",
+        "purpose": "Adhesion molecule; identification of RTE"
+      },
+      {
+        "marker": "CCR10",
+        "fluorophore": "BB515",
+        "clone": "1B5",
+        "purpose": "Chemokine receptor; Th subset identification"
+      },
+      {
+        "marker": "CCR4 (CD194)",
+        "fluorophore": "BB700",
+        "clone": "1G1",
+        "purpose": "Chemokine receptor; Th subset identification"
+      },
+      {
+        "marker": "TIGIT",
+        "fluorophore": "BB750",
+        "clone": "741182",
+        "purpose": "T cell and NK cell inhibitory receptor"
+      },
+      {
+        "marker": "NKG2D (CD314)",
+        "fluorophore": "BB790",
+        "clone": "1D11",
+        "purpose": "NK cell activating receptor"
+      },
+      {
+        "marker": "NKG2C (CD159c)",
+        "fluorophore": "PE",
+        "clone": "FAB138P",
+        "purpose": "NK cell activating receptor"
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "PE\u2010CF594",
+        "clone": "NCAM16.2",
+        "purpose": "NK cell and NKT\u2010like cell lineage marker"
+      },
+      {
+        "marker": "CXCR3 (CD183)",
+        "fluorophore": "PE\u2010Cy5",
+        "clone": "1C6/CXCR3",
+        "purpose": "Chemokine receptor; Th subset identification"
+      },
+      {
+        "marker": "FoxP3",
+        "fluorophore": "PE\u2010Cy5.5",
+        "clone": "PCH101",
+        "purpose": "Master transcription factor for Tregs"
+      },
+      {
+        "marker": "CD39",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "A1",
+        "purpose": "Treg activation marker"
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "AF647",
+        "clone": "UCHT1",
+        "purpose": "T cell and NKT\u2010like cell lineage marker"
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "AF700",
+        "clone": "3G8",
+        "purpose": "NK cell differentiation"
+      },
+      {
+        "marker": "Perforin",
+        "fluorophore": "APC Fire750",
+        "clone": "B\u2010D48",
+        "purpose": "Cytolytic function"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "Unknown",
+      "children": [],
+      "is_critical": true
+    },
+    "_extraction_note": "Hierarchy needs manual curation from gating_description"
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 29 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 13416 chars of gating text from body"
+    ]
+  }
+}

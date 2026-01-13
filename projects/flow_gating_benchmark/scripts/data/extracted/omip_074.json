@@ -1,0 +1,161 @@
+{
+  "test_case_id": "OMIP-074",
+  "source_type": "omip_paper",
+  "omip_id": "OMIP-074",
+  "doi": "10.1002/cyto.a.24341",
+  "pmc_id": "PMC8453800",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Fresh or cryopreserved PBMC",
+    "species": "human",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Gating strategy for phenotyping IgG and IgA subclasses on human B cells. (A) Example staining and gating of viable lymphocytes from human PBMC identified through sequential gating of time, single events, lymphocytes by light scatter and viable cells based on lack of signal with viability dye. (B) B cells can be identified by CD19 +  and/or CD20 +  expression. (C) The B cell population can be used to analyze B cell subsets based on CD21 and CD27 which enables the assessment of memory B cell maturation states (AM, activated memory; RM, resting memory; TLM, tissue\u2010like memory) and BCR light chain usage. (D) Class\u2010switched B cells can be defined based on the lack of IgD and IgM. A less strict gate was used as some markers such as IgG PE\u2010Cy5 show low levels of SSE into channels V570 and G710. This potentially causes contamination with na\u00efve B cells expressing low levels of IgM and IgD which will be excluded in the subsequent gating of IgG or IgA expressing B cells as shown in (F). (E) Mutual exclusive expression of IgG and IgE helps identify IgE +  class\u2010switched B cells. (F) Identification and enumeration of IgA +  and IgG +  subclass B cells is performed following a pre\u2010gate on IgD \u2212 IgM \u2212  class\u2010switched B cells to increase resolution of potentially dim markers. All anti\u2010subclass antibodies co\u2010stain with the appropriate anti\u2010isotype antibody. Shown is data from one healthy individual [Color figure can be viewed at  wileyonlinelibrary.com ]",
+    "full_text_gating": "Antibody discovery research has been instrumental in facilitating the isolation and characterization of therapeutic monoclonal antibodies (mAbs) for cancer [ 1 ], autoimmune diseases [ 2 ], and infectious diseases, such as influenza and human immunodeficiency virus\u20101 (HIV\u20101) [ 3 ,  4 ]. The approaches to human antibody isolation include B cell immortalization, yeast or phage display, single B cell culture, and antigen\u2010specific single B cell sorting [ 5 ]. The latter two methods rely on single\u2010cell sorting of memory B cells and typically employ a dump/exclusion gate to remove contaminating T cells (CD3 \u2212 CD4 \u2212 CD8 \u2212 ), monocytes/macrophages (CD14 \u2212 ) and dead cells (viability dye), and a staining panel to include B cell markers (CD19 + CD20 + ) and class\u2010switched memory B cell markers (IgD \u2212 IgM \u2212 IgG + CD27 + ). Unfortunately, none of these antibody isolation methods are designed to capture B cell immunoglobulin subclass information which is typically assessed by separate analysis of serum or plasma samples by enzyme\u2010linked immunosorbent assay (ELISA). Likewise, flow\u2010based methods to provide a simultaneous readout of both antibody specificity and subclass rely on assaying soluble antibodies present in serum or plasma samples rather than phenotyping B cells directly [ 6 ]. Despite relatively minor differences in amino acid sequence, each immunoglobulin subclass has important functional differences with respect to antigen binding and stimulation of Fc receptor\u2010mediated phagocytosis, antibody\u2010dependent cell\u2010mediated cytotoxicity (ADCC), and complement activation [ 7 ]. Thus, with growing interest in mining the antibody repertoire to identify functional antigen\u2010specific mAbs from individual B cells, we designed and optimized a panel to capture antibody subclass information at the single\u2010cell level (Figure\u00a0 1 , Table\u00a0 2 , Figures\u00a0 S1  and  S2 ).\n\nGating strategy for phenotyping IgG and IgA subclasses on human B cells. (A) Example staining and gating of viable lymphocytes from human PBMC identified through sequential gating of time, single events, lymphocytes by light scatter and viable cells based on lack of signal with viability dye. (B) B cells can be identified by CD19 +  and/or CD20 +  expression. (C) The B cell population can be used to analyze B cell subsets based on CD21 and CD27 which enables the assessment of memory B cell maturation states (AM, activated memory; RM, resting memory; TLM, tissue\u2010like memory) and BCR light chain usage. (D) Class\u2010switched B cells can be defined based on the lack of IgD and IgM. A less strict gate was used as some markers such as IgG PE\u2010Cy5 show low levels of SSE into channels V570 and G710. This potentially causes contamination with na\u00efve B cells expressing low levels of IgM and IgD which will be excluded in the subsequent gating of IgG or IgA expressing B cells as shown in (F). (E) Mutual exclusive expression of IgG and IgE helps identify IgE +  class\u2010switched B cells. (F) Identification and enumeration of IgA +  and IgG +  subclass B cells is performed following a pre\u2010gate on IgD \u2212 IgM \u2212  class\u2010switched B cells to increase resolution of potentially dim markers. All anti\u2010subclass antibodies co\u2010stain with the appropriate anti\u2010isotype antibody. Shown is data from one healthy individual [Color figure can be viewed at  wileyonlinelibrary.com ]\n\nThis panel was developed as part of an antibody isolation pipeline and is primarily used for index sorting of single class\u2010switched or antigen\u2010specific B cells enabling deeper phenotyping of B cells identified to express antigen\u2010specific BCR. We verified the performance of the panel on a sorter (FACSAria III, configuration in Table\u00a0 S1 ) and an analyzer (FACSymphony, configuration in Table\u00a0 S2 ) as shown in Figure\u00a0 S3 .\n\nTherefore, the panel can be used on different platforms equipped with distinct hardware. To maintain compatibility with the analyzer and cell sorter laser and filter configurations, three blue laser detectors, and all ultraviolet laser detectors were excluded from consideration in panel development (Tables\u00a0 S1  and  S2 ).\n\nB cells can be defined by expression of the pan B cell markers CD19 and CD20 with the combination facilitating discrimination of plasmablasts (which downregulate CD20 but retain CD19 expression) from all other B cell subsets in the periphery (Figure\u00a0 1B ). While pre\u2010gating of class\u2010switched IgD\u2010IgM\u2010 cells is sufficient for further analysis of IgA and IgG subclasses, we also included CD21 and CD27 to delineate additional memory B cell populations, including activated memory (CD21 low CD27 + ), resting memory (CD21 high CD27 + ), and exhausted memory (CD21 low CD27 \u2212 ) B cells [ 8 ] (Figure\u00a0 1C ).\n\nWe briefly considered the inclusion of markers against T cells, natural killer (NK) cells, and monocytes to increase the purity of cells analyzed and sorted. However, in order to include antibodies against all immunoglobulin isotypes as well as IgA and IgG subclasses, we removed antibodies typically used for a dump channel as the total number of non\u2010B cell markers expressed in the CD19 +  population was minimal for all donors tested (Figure\u00a0 S4 ).\n\nAdditionally, positive gating on immunoglobulin isotypes further minimizes the likelihood of including cells that express non\u2010B cell surface proteins in analysis or sorting.\n\nPan\u2010IgA, pan\u2010IgG, IgD, IgM, and IgE were included to define immunoglobulin isotypes of individual B cells while IgA and IgG subclasses were delineated using IgA1, IgA2, IgG1, IgG2, IgG3, and IgG4 (Figures\u00a0 1E  and  S5 A\u2013C).\n\nWe verified that immunoglobulin isotypes are exclusively expressed, each subclass within the IgA and IgG isotypes is exclusively expressed, and all isotype cells are accounted for by the sum of the subclasses (e.g., IgA1\u2009+\u2009IgA2\u00a0=\u00a0pan IgA; IgG1\u2009+\u2009IgG2\u2009+\u2009IgG3\u2009+\u2009IgG4\u00a0=\u00a0pan IgG) (Figure\u00a0 [Link] ,  [Link] B\u2013D). We also employed stepwise, sequential staining to prevent competition between immunoglobulin isotype\u2010 and subclass\u2010specific antibodies (Figure\u00a0 S6 ) and included anti\u2010kappa and anti\u2010lambda chain antibodies in the panel to confirm functional B cell receptor expression (Figures\u00a0 1C  and  S7 ).\n\nIn summary, this panel allows for thorough analysis and targeted isolation of single B cells based on immunoglobulin isotype and subclass expression. This is especially relevant as each IgG subclass has been shown to have a unique profile that reflects its distinct structure, FcR binding and signaling capacity, immune complex formation, complement activation, and resulting downstream effector functions [ 7 ,  9 ]. Thus, the ability to characterize B cell IgA/IgG subclass profile at the single B cell level will facilitate a better understanding of the link between antibody specificity, effector function, and protective efficacy in various human diseases [ 10 ].\n\nFigure S1 Concatenate display of titrations for all reagents used in the final panel.  Reagents were titrated using unstained lymphocytes or B cells pre\u2010stained with anti\u2010CD19, anti\u2010CD20, anti\u2010IgD and anti\u2010IgM as indicated. Biotin\u2010labeled anti\u2010IgG2 was detected using streptavidin PE\u2010CF594 and streptavidin\u2010BV750 was titrated using cells pre\u2010stained with biotin\u2010labeled anti\u2010IgG1. Optimal titers, selected based on visual inspection, are highlighted in red.\n\nFigure S3 Validation of anti\u2010subclass antibodies. A)  A pre\u2010gate on IgD\u2010IgM\u2010 B cells is used to assist in the identification of IgA+ and IgG+ B cells.  B)  Antibodies against IgA1 and IgA2 account for all IgA+ B cells.  C)  Antibodies against IgG1, IgG2, IgG3, and IgG4 account for all IgG+ B cells.  D)  Expression of individual IgG subclasses is mutually exclusive.\n\nFigure S7 Non\u2010B cell marker expression on live\u2009+\u2009CD19+ cells. A)  FACS plots for Donor 1 displaying expression of non\u2010B cell markers CD3 (clone SK7, ThermoFisher), CD14 (clone M5E2, BD Biosciences), CD16 (clone 3G8, BD Biosciences) and CD56 (clone NCAM16.2, BD Biosciences) in a Live+CD19+ population compared with total lymphocytes.  B)  Very few non\u2010B cells are captured in the Live+CD19+ gate relative to the total number of Live+CD19+ B cells (45,573). Among 3 donors tested, less than 4% of Live+CD19+ cells would be expected to express one or more non\u2010 B cell markers.\n\nFigure S10 Panel iteration #6.  Example staining and gating of human PBMC using reagents from panel iteration #6 as listed in Online Table 5.\n\nFigure S11 Panel iteration #7.  Example staining and gating of human PBMC using reagents from panel iteration #7 as listed in Online Table 5.\n\nTable S4 Custom and in\u2010house conjugated reagents.  Anti\u2010IgA1 and anti\u2010IgD reagents were ordered unlabeled from Southern Biotech and labeled with PerCP\u2010Cy5.5 and PE\u2010Cy5.5, respectively, using Lightning\u2010Link Antibody Labeling Kits from Novus Biologicals. BD, Becton Dickinson.",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD19",
+        "fluorophore": "PE\u2010Dazzle 594",
+        "clone": "HIB19",
+        "purpose": "Lineage"
+      },
+      {
+        "marker": "CD20",
+        "fluorophore": "Alexa Fluor 700",
+        "clone": "2H7",
+        "purpose": "B\u2010Cell Subset"
+      },
+      {
+        "marker": "CD27",
+        "fluorophore": "BV650",
+        "clone": "O323",
+        "purpose": null
+      },
+      {
+        "marker": "CD21",
+        "fluorophore": "BV605",
+        "clone": "B\u2010ly4",
+        "purpose": null
+      },
+      {
+        "marker": "IgA",
+        "fluorophore": "DyLight 405",
+        "clone": "Polyclonal (Goat)",
+        "purpose": "Immunoglobulin Isotype"
+      },
+      {
+        "marker": "IgD",
+        "fluorophore": "PE\u2010Cy5.5",
+        "clone": "IADB6 (IA6\u20102)",
+        "purpose": null
+      },
+      {
+        "marker": "IgE",
+        "fluorophore": "APC\u2010Fire 750",
+        "clone": "MHE\u201018",
+        "purpose": null
+      },
+      {
+        "marker": "IgG",
+        "fluorophore": "PE\u2010Cy5",
+        "clone": "G18\u2010145",
+        "purpose": null
+      },
+      {
+        "marker": "IgM",
+        "fluorophore": "BV570",
+        "clone": "MHM\u201088",
+        "purpose": null
+      },
+      {
+        "marker": "IgA1",
+        "fluorophore": "PerCP\u2010Cy5.5",
+        "clone": "B3506B4",
+        "purpose": "Immunoglobulin subclass"
+      },
+      {
+        "marker": "IgA2",
+        "fluorophore": "PE\u2010Vio770",
+        "clone": "IS11\u201021E11",
+        "purpose": null
+      },
+      {
+        "marker": "IgG1",
+        "fluorophore": "PE",
+        "clone": "HP6001",
+        "purpose": null
+      },
+      {
+        "marker": "IgG2",
+        "fluorophore": "Biotin",
+        "clone": "HP6002",
+        "purpose": null
+      },
+      {
+        "marker": "Biotin",
+        "fluorophore": "Streptavidin\u2010BV750",
+        "clone": null,
+        "purpose": null
+      },
+      {
+        "marker": "IgG3",
+        "fluorophore": "Alexa Fluor 488",
+        "clone": "HP6050",
+        "purpose": null
+      },
+      {
+        "marker": "IgG4",
+        "fluorophore": "APC",
+        "clone": "SAG4",
+        "purpose": null
+      },
+      {
+        "marker": "IgKappa",
+        "fluorophore": "BV711",
+        "clone": "G20\u2010193",
+        "purpose": "Immunoglobulin light chain"
+      },
+      {
+        "marker": "IgLambda",
+        "fluorophore": "BV786",
+        "clone": "JDC\u201012",
+        "purpose": null
+      },
+      {
+        "marker": "Dead Cells",
+        "fluorophore": "Aqua Blue",
+        "clone": null,
+        "purpose": "Viability"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "Unknown",
+      "children": [],
+      "is_critical": true
+    },
+    "_extraction_note": "Hierarchy needs manual curation from gating_description"
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 19 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 8780 chars of gating text from body"
+    ]
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "test_case_id": "PMC6972618",
+  "source_type": "omip_paper",
+  "omip_id": null,
+  "doi": "10.1002/cyto.a.23907",
+  "pmc_id": "PMC6972618",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Whole peripheral blood, cord blood, PBMCs, nasal aspirate, and tracheal aspirate samples",
+    "species": "human",
+    "application": null,
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "Example gating strategy and t\u2010SNE analysis for visualization of ILCs (including NK cells), granulocytes, MAIT, NKT\u2010like cells, and other T cell populations in pediatric clinical samples. Abbreviations: B, counting beads; L\u2009+\u2009G, lymphocyte and granulocyte gate; LD, live/dead; GRAN, granulocytes; MON, monocytes; LYM, lymphocytes; NEU, neutrophils; EOS, eosinophils; ILC, innate lymphoid cells; MAIT, mucosal\u2010associated invariant T cells; NK, natural killer cells; NKT\u2010like, natural killer T like cells; ?, Unidentified populations. [Color figure can be viewed at  http://wileyonlinelibrary.com ]",
+    "full_text_gating": "This 14\u2010color, 16\u2010antibody OMIP was designed for enumeration of leukocyte responses in pediatric samples, where sample volumes and cell numbers can be very low. Leukocytes identified by this panel include all major members of the innate lymphoid cell (ILC) family (ILC1s, ILC2s, and ILC3s), natural killer cells (NK cells), granulocytes (neutrophils and eosinophils), T\u2010cells (CD4 +  and CD8 + ), mucosal\u2010associated invariant T cells (MAIT cells) and NKT\u2010like cells. The protocol was optimized using small volumes of peripheral blood and validated in airway samples obtained from children (<\u20092\u2009years of age) admitted to a pediatric intensive care unit (PICU). Given this backdrop, this OMIP is widely applicable to clinical research using low volume or paucicellular samples, such as studies of innate and adaptive immune responses in infants and children, with potential clinical application in diagnostics and monitoring of patients by pediatricians.\n\nThe immaturity of the immune system in early life renders infants vulnerable to infectious diseases, particularly those of the gastrointestinal and respiratory tracts. According to the World Health Organization, acute lower respiratory tract infections are the leading cause of death and hospitalization in children globally  1 . How the immune system matures in early life is not fully understood. A better understanding of the nature of the immune and inflammatory response to infection in infants and why some infants develop disease could help to identify new clinical biomarkers, treatments, and prophylactics.\n\nOne of the major hurdles in the field of neonatal and pediatric immunology is obtaining relevant samples, which is limited by ethical restrictions on the volume and number of samples that can be taken. As a result, much of our understanding of cellular immunity in infants comes from studies of umbilical cord blood. Less is known about immunity in more mature infants, and less still is known about immunity to infection at mucosal sites, such as the lung  2 ,  3 ,  4 . Moreover, the use of invasive procedures to obtain, for example, lower airway samples cannot be justified in healthy infants. It is important, therefore, that techniques are developed that facilitate the characterization of the immune response in small\u2010volume and paucicellular samples, particularly from sites of infection where sampling is limited. In designing this OMIP  5  we focused on developing a panel to enumerate the innate lymphoid cell (ILC), granulocyte and T\u2010cell responses in infants, particularly those with a lung infection (Table  1 ). To reflect the challenging situation of limited amounts of blood and airway samples from infants we optimized this panel using a small volume (300\u2009\u03bcl) of adult peripheral blood. Pitoiset et al. (2018) were able to detect regulatory T cells (Tregs) in as little as 60\u2009\u03bcl of whole blood from children  6  and others have demonstrated the feasibility of detecting T cell subsets and Type 2 ILCs within pediatric airway samples  7 ,  8 .\n\nThe recently discovered ILCs have been implicated in playing a pivotal role in immune responses to viral and bacterial pathogens, and they are particularly abundant at mucosal sites  9 ,  10 ,  11 . There are three main subsets of ILC; ILC1s, ILC2s, and ILC3s, which may mirror CD4 +  T helper 1 (Th1), Th2, and Th17 subsets, whereas NK cells may complement the cytokine profile and function of CD8 +  T cells  12 . ILCs comprise only 0.1 to 0.01% of lymphocytes in adult blood  13  and most published methods for detection of ILCs are optimized on relatively large volumes of peripheral blood, however, since ILCs are relatively abundant in children we anticipated relatively high frequencies in small volume pediatric samples  8 ,  14 ,  15 . Immunophenotyping ILCs can be challenging as they are defined as lineage negative lymphocytes, which lack specific markers, including CD3 (T cells), CD19 (B cells), CD34 (progenitor cells), Fc\u03b5R1\u03b1 (mast cells) and CD1a, CD123, BDCA2 (plasmacytoid dendritic cells, pDC)  15 ,  16 . Accordingly, while designing this panel we made sure that a very stringent gating strategy was utilized to obtain a pure ILC subset. We used biaxial gating to delineate ILCs as lineage negative, CD127 (IL\u20107 receptor\u2010\u03b1) positive, live lymphocytes. We distinguished ILC subsets using surface expression of prostaglandin D 2  receptor chemoattractant receptor\u2010homologous molecule expressed on Th2 cells (CRTH2) and CD117 (c\u2010Kit)  8 ,  10 ,  17 . In designing this OMIP other components of the cellular immune response were included, which gives this panel broad applicability to other pediatric clinical studies. These were myeloid cells (neutrophils, eosinophils), invariant T cells (mucosal invariant T cells (MAITs) and NKT\u2010like cells) and adaptive T cells (CD4 +  and CD8 + ). By immunophenotyping whole blood, rather than peripheral blood mononuclear cells (PBMC), we reduced the processing time and retained granulocyte populations. All fluorochrome\u2010conjugated antibodies were titrated during panel optimization and are listed in Table  2 .\n\nAntibodies used in the optimized multicolor immunofluorescence panel (OMIP\u2010062)\n\nLineage cocktail includes the following antibodies: CD14, CD19, CD123, Fc\u03b5R1\u03b1.\n\nAntibodies used to define the lineage negative population, but not part of the lineage cocktail.\n\nCells were delineated using the following gating strategy: FSC/SSC, single cells, live cells. Granulocytes, monocytes, and lymphocytes were gated using FSC and the CD45 cell marker (Fig.  1 A). Within the granulocyte population, neutrophils were defined as CD16 H CD66b +/\u2212  and eosinophils as CD16 +/\u2010 CD66b +  (Fig.  1 B). Within the lymphocyte gate, the markers CD56 and CD3 were used to identify NK cells (CD56 + CD3 \u2212 ), conventional T lymphocytes (CD3 + CD56 \u2212 ) and NKT\u2010like cells (CD56 + CD3 + ) (Fig.  1 D)  18 ,  19 ,  20 . NK cells were further subdivided into CD56 H CD16 L  and CD56 L CD16 H  populations according to the CD56 and CD16 density (Fig.  1 E). T lymphocytes (CD3 + CD56 \u2212 ) were segregated into CD4 +  or CD8 +  T cells (Fig.  1 H). Th2 and Tc2 cells were defined within the CD4 +  and CD8 +  T cell subsets, respectively, using the CRTH2 surface marker, as these Type\u20102 cytokine\u2010producing cells express high levels of CRTH2  8 ,  21  (Fig.  1 F,G). Within CD8 +  T cells, we also identified MAIT cells. MAIT cells are invariant T lymphocytes which respond to riboflavin metabolites in the context of the MHC class I related molecule MR1  22 ,  23 . MAIT cells were identified within the CD3 + CD56 \u2212 CD8 +  gate as CD161 H V\u03b17.2 + cells (Fig.  1 I). NKT cells are conventionally described as CD3 + CD56 +  lymphocytes  24 ,  25 , however, the use of these markers alone defines a heterogeneous population of lymphocytes, which we designate here as \u201cNKT\u2010like\u201d cells. CD56 can be expressed by many CD3 +  lymphocyte subpopulations, including invariant NKT cells (iNKT cells), and some \u03b3\u03b4 T cells and MAIT cells (which have previously been described as mucosal NKT cells)  26 ,  27 . Strategies to define these subpopulations are discussed further in the Supporting Information ( Part B ). Finally, ILCs were defined using the following gating strategy: live, single, CD45 +  lymphocytes, lineage (CD3, CD56, CD14, CD19, CD123, Fc\u03b5R1\u03b1) negative, and CD127 +  cells (Fig.  1 C); ILC1s were defined as CD117 \u2212 CRTH2 \u2212 , ILC2s as CRTH2 +  CD117 int , and ILC3s as CD117 + CRTH2 \u2212 \n 15 ,  28 .\n\nExample gating strategy and t\u2010SNE analysis for visualization of ILCs (including NK cells), granulocytes, MAIT, NKT\u2010like cells, and other T cell populations in pediatric clinical samples. Abbreviations: B, counting beads; L\u2009+\u2009G, lymphocyte and granulocyte gate; LD, live/dead; GRAN, granulocytes; MON, monocytes; LYM, lymphocytes; NEU, neutrophils; EOS, eosinophils; ILC, innate lymphoid cells; MAIT, mucosal\u2010associated invariant T cells; NK, natural killer cells; NKT\u2010like, natural killer T like cells; ?, Unidentified populations. [Color figure can be viewed at  http://wileyonlinelibrary.com ]\n\nTo further analyze different populations of cells in this OMIP, unbiased high dimensional stoichiometry (t\u2010SNE) analysis was performed on live, single, CD45 +  cells incorporating the lymphocyte, granulocyte, and monocyte gates (Fig.  1 J). In this example, t\u2010SNE not only revealed that all the populations of cells segregated according to the gating strategy illustrated in Figure  1 A\u2013I but additionally discriminated distinct or poorly defined populations. Therefore, this 14\u2010color flow panel can be used to delineate other unknown populations using high\u2010dimensional data visualization techniques  29 .\n\nFollowing optimization on adult peripheral blood, we confirmed that the panel was suitable for staining umbilical cord blood, and peripheral blood, tracheal aspirate, and nasal aspirate samples from infants. The inclusion of CD45 in the panel allowed us to separate leukocytes from structural cells, such as epithelial cells, found in airway samples. Concentrations of antibodies were kept the same for analysis of different samples as they gave the same optimal separation between positive and negative populations; however, the protocol for staining airway samples was more methodically complicated and included the use of Fc block. Counting beads were included to allow absolute counts of cell numbers. Detailed information on the panel development and optimization can be found in the Supporting Information ( Part B ).",
+    "cross_references": [],
+    "pdf_verified": false,
+    "extraction_source": "pmc_xml"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD127 (IL-7R\u03b1)",
+        "fluorophore": "BV421",
+        "clone": "A019D5",
+        "purpose": "ILCs"
+      },
+      {
+        "marker": "CD14 a",
+        "fluorophore": "BV510",
+        "clone": "63D3",
+        "purpose": "Lineage"
+      },
+      {
+        "marker": "CD19 a",
+        "fluorophore": "BV510",
+        "clone": "HIB19",
+        "purpose": "Lineage"
+      },
+      {
+        "marker": "Fc\u03b5RI\u03b1 a",
+        "fluorophore": "BV510",
+        "clone": "AER\u201037 (CRA\u20101)",
+        "purpose": "Lineage"
+      },
+      {
+        "marker": "CD123 a",
+        "fluorophore": "BV510",
+        "clone": "6H6",
+        "purpose": "Lineage"
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BV605",
+        "clone": "RPA\u2010T4",
+        "purpose": "CD4 +  T cells"
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "BV650",
+        "clone": "3G8",
+        "purpose": "NK cells/neutrophils"
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "BV711",
+        "clone": "SK1",
+        "purpose": "CD8 +  T cells"
+      },
+      {
+        "marker": "TCR V\u03b17.2",
+        "fluorophore": "BV785",
+        "clone": "3C10",
+        "purpose": "MAIT cells"
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "FITC",
+        "clone": "HI30",
+        "purpose": "Leukocytes"
+      },
+      {
+        "marker": "CD117 (c-kit)",
+        "fluorophore": "PerCP\u2010Cy5.5",
+        "clone": "A3C6E2",
+        "purpose": "ILC3"
+      },
+      {
+        "marker": "CD3 b",
+        "fluorophore": "PE",
+        "clone": "OKT3",
+        "purpose": "T cells"
+      },
+      {
+        "marker": "CD161",
+        "fluorophore": "PE\u2010Dazzle",
+        "clone": "HP\u20103G10",
+        "purpose": "MAIT cells"
+      },
+      {
+        "marker": "CD56 (NCAM) b",
+        "fluorophore": "PE\u2010Cy7",
+        "clone": "5.1H11",
+        "purpose": "NK/NKT\u2010like cells"
+      },
+      {
+        "marker": "CD294 (CRTH2)",
+        "fluorophore": "AF647",
+        "clone": "BM16",
+        "purpose": "ILC2/Th2/Tc2 subsets"
+      },
+      {
+        "marker": "CD66b",
+        "fluorophore": "AF700",
+        "clone": "G10F5",
+        "purpose": "Eosinophils"
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "Near IR\u2010fluorescent reactive dye",
+        "clone": "n/a",
+        "purpose": "Viability"
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": null,
+      "gate_type": "Unknown",
+      "children": [],
+      "is_critical": true
+    },
+    "_extraction_note": "Hierarchy needs manual curation from gating_description"
+  },
+  "_extraction_metadata": {
+    "tables_found": 2,
+    "figures_found": 1,
+    "notes": [
+      "Parsed table 2 as panel: 17 markers",
+      "Parsed Table 1 for metadata",
+      "Extracted gating description from Figure 1",
+      "Extracted 9505 chars of gating text from body"
+    ]
+  }
+}
