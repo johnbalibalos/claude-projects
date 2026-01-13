@@ -21,22 +21,17 @@
   },
   "panel": {
     "entries": [
-      {
-        "marker": "CD4",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
-      },
-      {
-        "marker": "CD8",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
-      }
+      {"marker": "IL-2", "fluorophore": "PerCP-Cy5.5", "clone": null, "channel": null, "vendor": null, "cat_number": null},
+      {"marker": "IL-4", "fluorophore": "Ax488", "clone": null, "channel": null, "vendor": null, "cat_number": null},
+      {"marker": "IL-10", "fluorophore": "PE", "clone": null, "channel": null, "vendor": null, "cat_number": null},
+      {"marker": "IFN-g", "fluorophore": "APC", "clone": null, "channel": null, "vendor": null, "cat_number": null},
+      {"marker": "TNF-a", "fluorophore": "PE-Cy7", "clone": null, "channel": null, "vendor": null, "cat_number": null},
+      {"marker": "CD3", "fluorophore": "Ax700", "clone": null, "channel": null, "vendor": null, "cat_number": null},
+      {"marker": "CD4", "fluorophore": "APC-Cy7", "clone": null, "channel": null, "vendor": null, "cat_number": null},
+      {"marker": "CD8", "fluorophore": "QD605", "clone": null, "channel": null, "vendor": null, "cat_number": null},
+      {"marker": "CD14", "fluorophore": "PacBlu", "clone": null, "channel": null, "vendor": null, "cat_number": null},
+      {"marker": "CD19", "fluorophore": "eFluor450", "clone": null, "channel": null, "vendor": null, "cat_number": null},
+      {"marker": "ViViD", "fluorophore": "ViViD", "clone": null, "channel": null, "vendor": null, "cat_number": null}
     ]
   },
   "gating_hierarchy": {
@@ -51,52 +46,55 @@
           "markers": [],
           "marker_logic": "FSC-A vs FSC-H",
           "gate_type": "Unknown",
+          "is_critical": true,
           "children": [
             {
-              "name": "Live cells",
-              "markers": [],
-              "marker_logic": "Viability-",
+              "name": "Live CD3+ T cells",
+              "markers": ["ViViD", "CD3", "CD14", "CD19"],
+              "marker_logic": "ViViD- CD3+ CD14- CD19-",
               "gate_type": "Unknown",
+              "is_critical": true,
               "children": [
                 {
                   "name": "Lymphocytes",
                   "markers": [],
                   "marker_logic": "FSC vs SSC",
                   "gate_type": "Unknown",
+                  "is_critical": true,
                   "children": [
                     {
-                      "name": "T cells",
-                      "markers": [],
-                      "marker_logic": "CD3+",
+                      "name": "CD4+ T cells",
+                      "markers": ["CD4", "CD8"],
+                      "marker_logic": "CD4+ CD8-",
                       "gate_type": "Unknown",
+                      "is_critical": true,
                       "children": [
-                        {
-                          "name": "CD4+ T cells",
-                          "markers": [],
-                          "marker_logic": "CD4+ CD8-",
-                          "gate_type": "Unknown",
-                          "children": [],
-                          "is_critical": false
-                        },
-                        {
-                          "name": "CD8+ T cells",
-                          "markers": [],
-                          "marker_logic": "CD4- CD8+",
-                          "gate_type": "Unknown",
-                          "children": [],
-                          "is_critical": false
-                        }
-                      ],
-                      "is_critical": false
+                        {"name": "IFN-g+", "markers": ["IFN-g"], "marker_logic": "IFN-g+", "gate_type": "Unknown", "children": [], "is_critical": false},
+                        {"name": "TNF-a+", "markers": ["TNF-a"], "marker_logic": "TNF-a+", "gate_type": "Unknown", "children": [], "is_critical": false},
+                        {"name": "IL-2+", "markers": ["IL-2"], "marker_logic": "IL-2+", "gate_type": "Unknown", "children": [], "is_critical": false},
+                        {"name": "IL-4+", "markers": ["IL-4"], "marker_logic": "IL-4+", "gate_type": "Unknown", "children": [], "is_critical": false},
+                        {"name": "IL-10+", "markers": ["IL-10"], "marker_logic": "IL-10+", "gate_type": "Unknown", "children": [], "is_critical": false}
+                      ]
+                    },
+                    {
+                      "name": "CD8+ T cells",
+                      "markers": ["CD4", "CD8"],
+                      "marker_logic": "CD4- CD8+",
+                      "gate_type": "Unknown",
+                      "is_critical": true,
+                      "children": [
+                        {"name": "IFN-g+", "markers": ["IFN-g"], "marker_logic": "IFN-g+", "gate_type": "Unknown", "children": [], "is_critical": false},
+                        {"name": "TNF-a+", "markers": ["TNF-a"], "marker_logic": "TNF-a+", "gate_type": "Unknown", "children": [], "is_critical": false},
+                        {"name": "IL-2+", "markers": ["IL-2"], "marker_logic": "IL-2+", "gate_type": "Unknown", "children": [], "is_critical": false},
+                        {"name": "IL-4+", "markers": ["IL-4"], "marker_logic": "IL-4+", "gate_type": "Unknown", "children": [], "is_critical": false},
+                        {"name": "IL-10+", "markers": ["IL-10"], "marker_logic": "IL-10+", "gate_type": "Unknown", "children": [], "is_critical": false}
+                      ]
                     }
-                  ],
-                  "is_critical": true
+                  ]
                 }
-              ],
-              "is_critical": true
+              ]
             }
-          ],
-          "is_critical": true
+          ]
         }
       ],
       "is_critical": true
