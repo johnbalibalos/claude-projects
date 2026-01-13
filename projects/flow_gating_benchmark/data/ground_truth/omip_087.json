@@ -190,8 +190,12 @@
       "marker_logic": null,
       "children": [
         {
-          "name": "Leukocytes",
-          "marker_logic": "CD45+",
+          "name": "DNA+",
+          "marker_logic": "DNA+ (live cells)",
+          "children": [
+            {
+              "name": "Leukocytes",
+              "marker_logic": "CD45+",
           "children": [
             {
               "name": "T cells",
@@ -233,12 +237,54 @@
                     },
                     {
                       "name": "T regulatory cells",
-                      "marker_logic": "CD25+ CD127- FoxP3+",
+                      "marker_logic": "CD25hi CD127- FoxP3+",
                       "children": []
                     },
                     {
                       "name": "T follicular helper cells",
-                      "marker_logic": "CXCR5+",
+                      "marker_logic": "CXCR5+ CD45RA-",
+                      "children": []
+                    },
+                    {
+                      "name": "CCR4+ CXCR3-",
+                      "marker_logic": "CCR4+ CXCR3-",
+                      "children": [
+                        {
+                          "name": "Th2",
+                          "marker_logic": "CCR6- CCR10-",
+                          "children": []
+                        },
+                        {
+                          "name": "Th17",
+                          "marker_logic": "CCR6+ CCR10-",
+                          "children": []
+                        },
+                        {
+                          "name": "Th22",
+                          "marker_logic": "CCR10+ CXCR3-",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CCR4- CXCR3+",
+                      "marker_logic": "CCR4- CXCR3+",
+                      "children": [
+                        {
+                          "name": "Th1",
+                          "marker_logic": "CCR6- CCR10-",
+                          "children": []
+                        },
+                        {
+                          "name": "Th17.1",
+                          "marker_logic": "CCR6+ CCR10-",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Th9",
+                      "marker_logic": "CCR4+ CCR6-",
                       "children": []
                     }
                   ]
@@ -288,23 +334,63 @@
             },
             {
               "name": "NK cells",
-              "marker_logic": "CD3- CD14- CD19- CD16+ CD56+",
-              "children": []
+              "marker_logic": "CD3- CD14- CD19- CD16+ and/or CD56+",
+              "children": [
+                {
+                  "name": "CD56bright NK cells",
+                  "marker_logic": "CD56bright CD16-",
+                  "children": []
+                },
+                {
+                  "name": "CD56dim CD57- NK cells",
+                  "marker_logic": "CD56dim CD16+ CD57-",
+                  "children": []
+                },
+                {
+                  "name": "CD56dim CD57+ NK cells",
+                  "marker_logic": "CD56dim CD16+ CD57+",
+                  "children": []
+                }
+              ]
             },
             {
               "name": "B cells",
               "marker_logic": "CD3- CD14- CD19+",
-              "children": []
+              "children": [
+                {
+                  "name": "Plasmablasts",
+                  "marker_logic": "CD27+ CD38hi",
+                  "children": []
+                }
+              ]
             },
             {
               "name": "Monocytes",
               "marker_logic": "CD3- CD19- CD14+",
-              "children": []
+              "children": [
+                {
+                  "name": "Classical Monocytes",
+                  "marker_logic": "CD14+ CD16-",
+                  "children": []
+                },
+                {
+                  "name": "Intermediate Monocytes",
+                  "marker_logic": "CD14+ CD16+",
+                  "children": []
+                },
+                {
+                  "name": "Nonclassical Monocytes",
+                  "marker_logic": "CD14dim CD16+",
+                  "children": []
+                }
+              ]
             },
             {
               "name": "Dendritic cells",
               "marker_logic": "CD14- CD19- CD3- HLA-DR+ CD11c+",
               "children": []
+            }
+          ]
             }
           ]
         }
