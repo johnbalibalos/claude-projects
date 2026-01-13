@@ -313,7 +313,7 @@ def run_single_call(
             test_case,
             template_name=condition.prompt_strategy,
             context_level=condition.context_level,
-            rag_mode=condition.rag_mode,
+            reference=condition.reference,
         )
 
         response = client.call(prompt)
@@ -382,7 +382,7 @@ def run_cli_batch(
                 test_case,
                 template_name=condition.prompt_strategy,
                 context_level=condition.context_level,
-                rag_mode=condition.rag_mode,
+                reference=condition.reference,
             )
 
             for bootstrap_run in range(1, config.n_bootstrap + 1):

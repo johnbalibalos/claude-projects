@@ -5,7 +5,7 @@ Demonstrates how to use the hypothesis_pipeline library to run experiments
 with different combinations of:
 - Reasoning strategies (direct, CoT, WoT)
 - Context levels (minimal, standard, rich)
-- RAG modes (none, oracle, vector)
+- Reference modes: none, oracle (static HIPC injection), vector (real RAG)
 - Tool configurations (with/without FlowKit MCP)
 
 Usage:
@@ -15,7 +15,6 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 from pathlib import Path
 from typing import Any
@@ -23,26 +22,24 @@ from typing import Any
 # Add libs to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent / "libs"))
 
+from curation.omip_extractor import load_all_test_cases
+from curation.schemas import TestCase
+from evaluation.metrics import evaluate_prediction
+from evaluation.response_parser import parse_llm_response
 from hypothesis_pipeline import (
-    HypothesisPipeline,
-    PipelineConfig,
-    ReasoningType,
+    ChainOfThoughtStrategy,
     ContextLevel,
-    RAGMode,
-    TrialInput,
     Evaluator,
+    HypothesisPipeline,
+    OracleRAGProvider,
+    PipelineConfig,
+    RAGMode,
+    ReasoningType,
+    RichContextBuilder,
     ToolConfig,
     ToolRegistry,
-    ChainOfThoughtStrategy,
-    OracleRAGProvider,
-    RichContextBuilder,
+    TrialInput,
 )
-
-from curation.schemas import TestCase
-from curation.omip_extractor import load_all_test_cases
-from evaluation.response_parser import parse_llm_response
-from evaluation.metrics import evaluate_prediction
-
 
 # =============================================================================
 # CUSTOM EVALUATOR FOR GATING BENCHMARK
@@ -273,22 +270,22 @@ def load_trial_inputs(test_cases_dir: str) -> list[TrialInput]:
     trials = []
     for tc in test_cases:
         # Base prompt
-        prompt = f"""You are an expert flow cytometrist. Given the following flow cytometry panel information, predict the gating hierarchy that an expert would use for data analysis.
+        prompt = """You are an expert flow cytometrist. Given the following flow cytometry panel information, predict the gating hierarchy that an expert would use for data analysis.
 
 Predict the complete gating hierarchy, starting from "All Events" through quality control gates (time, singlets, live/dead) to final cell population identification.
 
 Return your answer as a JSON object with this structure:
-{{
+{
     "name": "Gate Name",
     "markers": ["marker1", "marker2"],
     "children": [
-        {{
+        {
             "name": "Child Gate",
             "markers": ["marker3"],
             "children": [...]
-        }}
+        }
     ]
-}}"""
+}"""
 
         # Create trial input
         trial = TrialInput(
@@ -323,7 +320,7 @@ def _extract_oracle_context(tc: TestCase) -> str:
 
     extract_gates(tc.gating_hierarchy.root)
 
-    return f"Expected gating hierarchy:\n" + "\n".join(gates)
+    return "Expected gating hierarchy:\n" + "\n".join(gates)
 
 
 def create_pipeline(
@@ -475,11 +472,12 @@ def main():
         help="Context levels to test",
     )
     parser.add_argument(
-        "--rag",
+        "--reference",
         nargs="+",
         default=["none"],
         choices=["none", "oracle", "vector"],
-        help="RAG modes to test",
+        dest="rag",  # Keep internal name for library compatibility
+        help="Reference/retrieval modes: none, oracle (static HIPC), vector (real RAG)",
     )
     parser.add_argument(
         "--with-tools",

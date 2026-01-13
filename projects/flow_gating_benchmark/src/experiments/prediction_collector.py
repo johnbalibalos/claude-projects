@@ -261,7 +261,7 @@ class PredictionCollector:
                     test_case,
                     template_name=condition.prompt_strategy,
                     context_level=condition.context_level,
-                    rag_mode=condition.rag_mode,
+                    reference=condition.reference,
                 )
 
                 for bootstrap_run in range(1, self.config.n_bootstrap + 1):
@@ -386,7 +386,7 @@ class PredictionCollector:
             test_case,
             template_name=condition.prompt_strategy,
             context_level=condition.context_level,
-            rag_mode=condition.rag_mode,
+            reference=condition.reference,
         )
 
         return self._make_call(test_case, condition, bootstrap_run, prompt, client)

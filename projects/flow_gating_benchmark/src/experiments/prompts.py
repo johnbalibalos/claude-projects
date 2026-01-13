@@ -4,7 +4,7 @@ Prompt templates for gating hierarchy prediction.
 Defines different prompting strategies:
 - Direct: Simple instruction
 - Chain-of-thought: Encourages step-by-step reasoning
-- RAG modes: none, oracle (HIPC definitions)
+- Reference modes: none, hipc (static context injection)
 """
 
 from __future__ import annotations
@@ -15,10 +15,10 @@ from typing import Literal
 from curation.schemas import TestCase
 
 # =============================================================================
-# HIPC RAG CONTEXT (Oracle mode)
+# HIPC REFERENCE CONTEXT (Static injection, not retrieval-based RAG)
 # =============================================================================
 
-HIPC_RAG_CONTEXT = """## Reference: HIPC 2016 Standardized Cell Definitions
+HIPC_REFERENCE = """## Reference: HIPC 2016 Standardized Cell Definitions
 Source: https://www.nature.com/articles/srep20686
 
 ### Quality Control Gates (Required)
@@ -236,7 +236,7 @@ def build_prompt(
     test_case: TestCase,
     template_name: str = "direct",
     context_level: str = "standard",
-    rag_mode: str = "none",
+    reference: str = "none",
 ) -> str:
     """
     Build a complete prompt for a test case.
@@ -245,7 +245,7 @@ def build_prompt(
         test_case: TestCase with panel and context
         template_name: Which prompt template to use
         context_level: How much context to include
-        rag_mode: RAG mode - "none" or "oracle" (HIPC definitions)
+        reference: Reference mode - "none" or "hipc" (HIPC definitions)
 
     Returns:
         Complete prompt string
@@ -260,9 +260,9 @@ def build_prompt(
 
     context = formatter(test_case)
 
-    # Inject HIPC reference for oracle RAG mode
-    if rag_mode == "oracle":
-        context = HIPC_RAG_CONTEXT + "\n\n" + context
+    # Inject HIPC reference for static context augmentation
+    if reference == "hipc":
+        context = HIPC_REFERENCE + "\n\n" + context
 
     return template.template.format(
         context=context,

@@ -75,7 +75,7 @@ def run_predict(
     resume: bool,
     max_cases: int | None = None,
     run_id: str = "",
-    rag_modes: list[str] | None = None,
+    references: list[str] | None = None,
 ) -> list[Prediction]:
     """Phase 1: Collect predictions from LLMs."""
     print_phase("PREDICTION COLLECTION")
@@ -91,7 +91,7 @@ def run_predict(
         models=models,
         context_levels=["minimal", "standard"],
         prompt_strategies=["direct", "cot"],
-        rag_modes=rag_modes or ["none"],
+        references=references or ["none"],
     )
     print(f"Generated {len(conditions)} conditions")
 
@@ -329,10 +329,11 @@ def main():
         help=f"Judge prompt style: {', '.join(JUDGE_STYLES)} (default: default)",
     )
     parser.add_argument(
-        "--rag-modes",
+        "--reference",
         nargs="+",
         default=["none"],
-        help="RAG modes to test: none, oracle (default: none)",
+        dest="references",
+        help="Reference modes: none, hipc (static HIPC injection). Default: none",
     )
 
     args = parser.parse_args()
@@ -371,7 +372,7 @@ def main():
                 resume=args.resume,
                 max_cases=args.max_cases,
                 run_id=ctx.run_id,  # Pass run_id for provenance
-                rag_modes=args.rag_modes,
+                references=args.references,
             )
 
         if args.phase in ["score", "all"]:

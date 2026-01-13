@@ -22,12 +22,12 @@ class ExperimentCondition:
     model: str
     context_level: Literal["minimal", "standard", "rich"]
     prompt_strategy: Literal["direct", "cot"]
-    rag_mode: Literal["none", "oracle"] = "none"
+    reference: Literal["none", "hipc"] = "none"  # Static context injection (not RAG)
 
     @property
     def condition_id(self) -> str:
         """Unique identifier for this condition."""
-        return f"{self.model}_{self.context_level}_{self.prompt_strategy}_{self.rag_mode}"
+        return f"{self.model}_{self.context_level}_{self.prompt_strategy}_{self.reference}"
 
 
 # Available models for testing
@@ -87,15 +87,15 @@ CONTEXT_LEVELS = ["minimal", "standard", "rich"]
 # Prompting strategies
 PROMPT_STRATEGIES = ["direct", "cot"]
 
-# RAG modes
-RAG_MODES = ["none", "oracle"]
+# Reference context modes (static injection, not retrieval-based RAG)
+REFERENCE_MODES = ["none", "hipc"]
 
 
 def get_all_conditions(
     models: list[str] | None = None,
     context_levels: list[str] | None = None,
     prompt_strategies: list[str] | None = None,
-    rag_modes: list[str] | None = None,
+    references: list[str] | None = None,
 ) -> list[ExperimentCondition]:
     """
     Generate all experimental conditions.
@@ -104,7 +104,7 @@ def get_all_conditions(
         models: Models to include (default: all)
         context_levels: Context levels to include (default: all)
         prompt_strategies: Prompting strategies (default: all)
-        rag_modes: RAG modes to include (default: ["none"] for backward compat)
+        references: Reference context modes (default: ["none"])
 
     Returns:
         List of all condition combinations
@@ -118,17 +118,17 @@ def get_all_conditions(
     if prompt_strategies is None:
         prompt_strategies = PROMPT_STRATEGIES
 
-    if rag_modes is None:
-        rag_modes = ["none"]  # Default to no RAG for backward compatibility
+    if references is None:
+        references = ["none"]  # Default to no reference injection
 
     conditions = []
-    for model, context, strategy, rag in product(models, context_levels, prompt_strategies, rag_modes):
+    for model, context, strategy, ref in product(models, context_levels, prompt_strategies, references):
         condition = ExperimentCondition(
-            name=f"{model}_{context}_{strategy}_{rag}",
+            name=f"{model}_{context}_{strategy}_{ref}",
             model=MODELS.get(model, model),
             context_level=context,
             prompt_strategy=strategy,
-            rag_mode=rag,
+            reference=ref,
         )
         conditions.append(condition)
 

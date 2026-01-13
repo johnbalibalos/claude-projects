@@ -79,7 +79,7 @@ def main():
             test_case,
             template_name=condition.prompt_strategy,
             context_level=condition.context_level,
-            rag_mode=condition.rag_mode,
+            reference=condition.reference,
         )
 
         print(f"  [{i+1}/{len(blocked_keys)}] {test_case_id} | {condition_name} | run {bootstrap_run}")

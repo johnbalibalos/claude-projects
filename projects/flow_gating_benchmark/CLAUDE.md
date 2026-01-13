@@ -179,30 +179,30 @@ flow_gating_benchmark/
 
 ## Ground Truth OMIPs
 
-### Valid OMIPs for Benchmarking (6 test cases)
+### Valid OMIPs for Benchmarking (9 test cases)
 
 These OMIPs have complete panel data, verified hierarchies, and fresh predictions:
 
 | OMIP | Species | Focus | Technology | Description | Gates |
 |------|---------|-------|------------|-------------|-------|
+| 008 | Human | T cells | Flow | T cell cytokine production following stimulation | 16 |
 | 022 | Human | T cells | Flow | Antigen-specific T-cell functionality and memory | 12 |
 | 074 | Human | B cells | Flow | IgG and IgA subclass phenotyping | 22 |
 | 076 | Murine | Pan | Flow | High-dimensional T-cell, B-cell, and APC phenotyping | 18 |
 | 077 | Human | Pan | Flow | All principal leukocyte populations (broad panel) | 20 |
 | 083 | Human | Pan | Flow | 21-marker 18-color in-depth phenotyping | 10 |
 | 087 | Human | T cells | CyTOF | 32-parameter mass cytometry for CD4/CD8 memory subsets | 24 |
+| 095 | Murine | Pan | Spectral | 40-color deep immunophenotyping of murine lymphoid tissues | 64 |
+| 101 | Human | Pan | Flow | Broad immunophenotyping of myeloid and lymphoid lineages | 57 |
 
 ### Staging (`data/staging/`) - OMIPs with known issues
 
 | OMIP | Issue | Status |
 |------|-------|--------|
-| 008 | Stale predictions, PMC XML lacks full text | ⚠ Exclude |
 | 025 | Incomplete panel verification | ⚠ Exclude |
 | 035 | Incomplete panel verification | ⚠ Exclude |
 | 053 | Incomplete panel verification | ⚠ Exclude |
 | 064 | Empty hierarchy | ❌ Invalid |
-| 095 | Stale predictions, PMC XML lacks full text | ⚠ Exclude |
-| 101 | Stale predictions, PMC XML lacks full text | ⚠ Exclude |
 
 To activate an excluded OMIP: verify panel completeness, rerun predictions, and validate against PDF.
 
