@@ -37,8 +37,7 @@ python scripts/run_modular_pipeline.py \
     --phase all \
     --models gemini-2.0-flash \
     --test-cases data/staging \
-    --n-bootstrap 10 \
-    --force
+    --n-bootstrap 10
 ```
 
 ---
@@ -249,8 +248,7 @@ pytest tests/ -v
 python scripts/run_modular_pipeline.py \
     --phase all \
     --models gemini-2.0-flash \
-    --max-cases 1 \
-    --force
+    --max-cases 1
 ```
 
 ---
