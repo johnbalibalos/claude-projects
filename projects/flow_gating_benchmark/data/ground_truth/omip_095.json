@@ -1122,13 +1122,37 @@
                                       "is_critical": false
                                     },
                                     {
-                                      "name": "pre-mNKs",
+                                      "name": "CD4- Siglec-H-",
                                       "markers": [
-                                        "NK1.1"
+                                        "CD4",
+                                        "Siglec-H"
                                       ],
-                                      "marker_logic": "NK1.1+",
+                                      "marker_logic": "CD4- Siglec-H-",
                                       "gate_type": "Unknown",
-                                      "children": [],
+                                      "children": [
+                                        {
+                                          "name": "CD11b+ pre-mNKs",
+                                          "markers": [
+                                            "CD11b",
+                                            "NK1.1"
+                                          ],
+                                          "marker_logic": "CD11b+ NK1.1+",
+                                          "gate_type": "Unknown",
+                                          "children": [],
+                                          "is_critical": false
+                                        },
+                                        {
+                                          "name": "CD11b- pre-mNKs",
+                                          "markers": [
+                                            "CD11b",
+                                            "NK1.1"
+                                          ],
+                                          "marker_logic": "CD11b- NK1.1+",
+                                          "gate_type": "Unknown",
+                                          "children": [],
+                                          "is_critical": false
+                                        }
+                                      ],
                                       "is_critical": false
                                     }
                                   ],
