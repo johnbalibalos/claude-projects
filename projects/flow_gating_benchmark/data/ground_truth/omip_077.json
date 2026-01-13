@@ -227,7 +227,7 @@
                                 {
                                   "name": "Progenitors",
                                   "markers": [],
-                                  "marker_logic": "CD34+ (CD34 vs CD193)",
+                                  "marker_logic": "CD34+ CD193- (CD34 vs CD193)",
                                   "gate_type": "Rectangle",
                                   "children": [],
                                   "is_critical": false
@@ -235,7 +235,7 @@
                                 {
                                   "name": "Basophils",
                                   "markers": [],
-                                  "marker_logic": "CD193+ (CD34 vs CD193)",
+                                  "marker_logic": "CD34- CD193+ (CD34 vs CD193)",
                                   "gate_type": "Rectangle",
                                   "children": [],
                                   "is_critical": false
@@ -263,11 +263,20 @@
                                       "is_critical": false
                                     },
                                     {
-                                      "name": "NK cells",
+                                      "name": "CD14- HLA-DR-",
                                       "markers": [],
-                                      "marker_logic": "HLA-DR- CD14- CD56+ (CD56 vs CD16)",
+                                      "marker_logic": "CD14- HLA-DR- (HLA-DR vs CD14)",
                                       "gate_type": "Rectangle",
-                                      "children": [],
+                                      "children": [
+                                        {
+                                          "name": "NK cells",
+                                          "markers": [],
+                                          "marker_logic": "CD56+ and/or CD16+ (CD56 vs CD16, exclude CD16- CD56-)",
+                                          "gate_type": "Polygon",
+                                          "children": [],
+                                          "is_critical": false
+                                        }
+                                      ],
                                       "is_critical": false
                                     },
                                     {
