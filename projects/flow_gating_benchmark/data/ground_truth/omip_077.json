@@ -280,15 +280,15 @@
                                       "is_critical": false
                                     },
                                     {
-                                      "name": "HLA-DR+ and/or CD14+",
+                                      "name": "Monocytes",
                                       "markers": [],
-                                      "marker_logic": "HLA-DR+ and/or CD14+ (HLA-DR vs CD14)",
+                                      "marker_logic": "CD14+ and/or CD16+ (CD16 vs CD14)",
                                       "gate_type": "Polygon",
                                       "children": [
                                         {
                                           "name": "Classical monocytes",
                                           "markers": [],
-                                          "marker_logic": "CD14+ CD16- (CD16 vs CD14)",
+                                          "marker_logic": "CD14+ CD16-",
                                           "gate_type": "Rectangle",
                                           "children": [],
                                           "is_critical": false
@@ -296,7 +296,7 @@
                                         {
                                           "name": "Intermediate monocytes",
                                           "markers": [],
-                                          "marker_logic": "CD14+ CD16+ (CD16 vs CD14)",
+                                          "marker_logic": "CD14+ CD16+",
                                           "gate_type": "Rectangle",
                                           "children": [],
                                           "is_critical": false
@@ -304,13 +304,16 @@
                                         {
                                           "name": "Non-classical monocytes",
                                           "markers": [],
-                                          "marker_logic": "CD14- CD16+ (CD16 vs CD14)",
+                                          "marker_logic": "CD14- CD16+",
                                           "gate_type": "Rectangle",
                                           "children": [],
                                           "is_critical": false
-                                        },
-                                        {
-                                          "name": "CD14- CD16-",
+                                        }
+                                      ],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "CD14- CD16-",
                                           "markers": [],
                                           "marker_logic": "CD14- CD16-",
                                           "gate_type": "Rectangle",
@@ -324,15 +327,15 @@
                                               "is_critical": false
                                             },
                                             {
-                                              "name": "CD19- CD38dim",
+                                              "name": "CD19- CD38int",
                                               "markers": [],
-                                              "marker_logic": "CD19- CD38dim",
+                                              "marker_logic": "CD19- CD38int (CD19 vs CD38)",
                                               "gate_type": "Rectangle",
                                               "children": [
                                                 {
                                                   "name": "CD1c+ mDCs",
                                                   "markers": [],
-                                                  "marker_logic": "CD1c+ (CD141 vs CD123)",
+                                                  "marker_logic": "CD1c+ CD123- (CD1c vs CD123)",
                                                   "gate_type": "Rectangle",
                                                   "children": [],
                                                   "is_critical": false
@@ -340,17 +343,26 @@
                                                 {
                                                   "name": "pDCs",
                                                   "markers": [],
-                                                  "marker_logic": "CD123+ (CD141 vs CD123)",
+                                                  "marker_logic": "CD123+ CD1c- (CD1c vs CD123)",
                                                   "gate_type": "Rectangle",
                                                   "children": [],
                                                   "is_critical": false
                                                 },
                                                 {
-                                                  "name": "CD141+ mDCs",
+                                                  "name": "CD1c- CD123-",
                                                   "markers": [],
-                                                  "marker_logic": "CD141+ CD1c- CD123- (CD141 vs CD123)",
+                                                  "marker_logic": "CD1c- CD123- (CD1c vs CD123)",
                                                   "gate_type": "Rectangle",
-                                                  "children": [],
+                                                  "children": [
+                                                    {
+                                                      "name": "CD141+ mDCs",
+                                                      "markers": [],
+                                                      "marker_logic": "CD123int CD141+ (CD141 vs CD123)",
+                                                      "gate_type": "Rectangle",
+                                                      "children": [],
+                                                      "is_critical": false
+                                                    }
+                                                  ],
                                                   "is_critical": false
                                                 }
                                               ],
