@@ -1,0 +1,23 @@
+[
+  {
+    "pmc_id": "PMC10843696",
+    "omip_id": "OMIP-095",
+    "title": "OMIP-095: 40-Color spectral flow cytometry delineates all major leukocyte populations in murine lymphoid tissues",
+    "doi": "10.1002/cyto.a.24788",
+    "xml_path": "../projects/flow_gating_benchmark/data/papers/xml/PMC10843696.xml"
+  },
+  {
+    "pmc_id": "PMC10958279",
+    "omip_id": "OMIP-101",
+    "title": "OMIP-101: 27-color flow cytometry panel for immunophenotyping of major leukocyte populations in fixed whole blood",
+    "doi": "10.1002/cyto.a.24827",
+    "xml_path": "../projects/flow_gating_benchmark/data/papers/xml/PMC10958279.xml"
+  },
+  {
+    "pmc_id": "PMC3418807",
+    "omip_id": "OMIP-008",
+    "title": "OMIP-008: Measurement of Th1 and Th2 cytokine polyfunctionality of human T cells",
+    "doi": "10.1002/cyto.a.22035",
+    "xml_path": "../projects/flow_gating_benchmark/data/papers/xml/PMC3418807.xml"
+  }
+]
