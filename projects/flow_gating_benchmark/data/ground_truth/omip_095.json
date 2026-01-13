@@ -502,9 +502,11 @@
                                     {
                                       "name": "Germinal center B cells",
                                       "markers": [
-                                        "CD38"
+                                        "CD38",
+                                        "IgM",
+                                        "IgD"
                                       ],
-                                      "marker_logic": "CD38lo",
+                                      "marker_logic": "CD38lo IgM- IgD-",
                                       "gate_type": "Unknown",
                                       "children": [],
                                       "is_critical": false
