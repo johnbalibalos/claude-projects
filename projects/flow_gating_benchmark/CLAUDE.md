@@ -56,9 +56,6 @@ Evaluate whether LLMs can predict flow cytometry gating strategies from panel in
 # Cost estimate only
 python scripts/run_full_benchmark.py --estimate
 
-# Dry run (mock API calls)
-python scripts/run_full_benchmark.py --dry-run --n-bootstrap 1 -y
-
 # Full run with 3 bootstrap iterations
 python scripts/run_full_benchmark.py --n-bootstrap 3 -y
 
@@ -80,7 +77,7 @@ python scripts/run_modular_pipeline.py \
     --force
 
 # Run phases independently
-python scripts/run_modular_pipeline.py --phase predict --dry-run  # Collect predictions
+python scripts/run_modular_pipeline.py --phase predict --max-cases 1 --force  # Test with 1 case
 python scripts/run_modular_pipeline.py --phase score              # Score cached predictions
 python scripts/run_modular_pipeline.py --phase judge              # Run LLM judge
 ```
@@ -94,7 +91,6 @@ python scripts/run_modular_pipeline.py --phase judge              # Run LLM judg
 | `--test-cases` | `data/ground_truth` | Directory with test case JSON files |
 | `--n-bootstrap` | `1` | Number of runs per condition (for variance estimation) |
 | `--max-cases` | None | Limit number of test cases (for quick testing) |
-| `--dry-run` | False | Use mock LLM client (no API calls, no cost) |
 | `--force` | False | Skip cost confirmation hook |
 | `--resume` | False | Resume from checkpoint |
 | `--output` | `results/modular_pipeline` | Output directory |
@@ -284,12 +280,22 @@ MODELS = {
 
 ## Debugging
 
+### Testing Philosophy
+
+**Always test with real API calls** - run 1 test case to verify proper responses instead of mock/dry-run modes. This ensures you catch real issues like:
+- API authentication problems
+- Response parsing failures
+- Rate limiting behavior
+- Token limit truncation
+
+For testing pipeline mechanics (checkpointing, file I/O, data flow), write unit tests in `tests/` instead.
+
 ### Quick Testing (Real API, Minimal Cost)
 
-For testing bug fixes or code changes, use the cheapest model with minimal cases:
+For testing bug fixes or code changes, use the cheapest model with 1 case:
 
 ```bash
-# Real API test (~$0.01) - validates prompts and parsing work
+# Real API test (~$0.01) - validates end-to-end
 python scripts/run_modular_pipeline.py \
     --phase all \
     --models gemini-2.0-flash \
@@ -297,23 +303,20 @@ python scripts/run_modular_pipeline.py \
     --n-bootstrap 1 \
     --max-cases 1 \
     --force
+
+# Verify response is valid (not truncated, parseable JSON)
+python -c "
+import json
+with open('results/modular_pipeline/predictions.json') as f:
+    p = json.load(f)[0]
+resp = p['raw_response']
+print(f'Length: {len(resp)}')
+print(f'Balanced braces: {resp.count(chr(123)) == resp.count(chr(125))}')
+print(f'Preview: {resp[:200]}...')
+"
 ```
 
-Requires `GOOGLE_API_KEY`. Use `--dry-run` instead of `--force` to test pipeline mechanics without API calls.
-
-### Quick Validation (Dry Run)
-
-```bash
-# Mock API calls - tests pipeline mechanics only
-python scripts/run_modular_pipeline.py \
-    --phase all \
-    --models claude-sonnet-cli \
-    --n-bootstrap 1 \
-    --dry-run
-
-# Check checkpoint
-cat results/modular_pipeline/predictions.json | python -m json.tool | head -50
-```
+Requires `GOOGLE_API_KEY`.
 
 ### Common Issues
 

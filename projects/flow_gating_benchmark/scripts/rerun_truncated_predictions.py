@@ -3,12 +3,23 @@
 Rerun only truncated predictions with higher max_tokens.
 
 Identifies predictions with unbalanced braces (truncated JSON) and reruns
-them with increased token limit.
+them with increased token limit. Supports checkpointing for resumable runs.
 
 Usage:
-    python scripts/rerun_truncated_predictions.py --dry-run
+    # Show truncated count and cost estimate
+    python scripts/rerun_truncated_predictions.py
+
+    # Run with higher token limit
     python scripts/rerun_truncated_predictions.py --force --max-tokens 30000
+
+    # Filter to specific models
     python scripts/rerun_truncated_predictions.py --models gemini-2.5-flash --force
+
+    # Resume from checkpoint after interruption
+    python scripts/rerun_truncated_predictions.py --force --resume
+
+    # Resume with fewer workers if rate limited
+    python scripts/rerun_truncated_predictions.py --force --resume --workers 5
 """
 
 import argparse
@@ -16,6 +27,7 @@ import json
 import os
 import random
 import sys
+import threading
 import time
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -26,6 +38,51 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from curation.omip_extractor import load_all_test_cases
+
+
+class CheckpointManager:
+    """Thread-safe checkpoint manager for incremental saves."""
+
+    def __init__(self, checkpoint_path: Path):
+        self.checkpoint_path = checkpoint_path
+        self.lock = threading.Lock()
+        self.results = []
+        self.completed_keys = set()
+
+    def load(self) -> set:
+        """Load existing checkpoint, return set of completed keys."""
+        if self.checkpoint_path.exists():
+            with open(self.checkpoint_path) as f:
+                self.results = json.load(f)
+            self.completed_keys = {
+                self._make_key(r) for r in self.results
+            }
+            print(f"Loaded checkpoint with {len(self.results)} completed results")
+        return self.completed_keys
+
+    def _make_key(self, pred: dict) -> tuple:
+        """Create unique key for a prediction."""
+        return (pred["model"], pred["test_case_id"], pred["condition"], pred.get("bootstrap_run", 0))
+
+    def add_result(self, result: dict):
+        """Add a result and save checkpoint (thread-safe)."""
+        with self.lock:
+            self.results.append(result)
+            self.completed_keys.add(self._make_key(result))
+            # Save checkpoint after each result
+            self._save()
+
+    def _save(self):
+        """Save checkpoint to disk."""
+        # Write to temp file first, then rename for atomicity
+        temp_path = self.checkpoint_path.with_suffix(".json.tmp")
+        with open(temp_path, "w") as f:
+            json.dump(self.results, f, indent=2)
+        temp_path.rename(self.checkpoint_path)
+
+    def get_results(self) -> list:
+        """Get all results."""
+        return self.results
 
 
 def is_truncated(response: str) -> bool:
@@ -78,6 +135,39 @@ def call_gemini(prompt: str, api_key: str, model_name: str, max_tokens: int,
     raise last_error
 
 
+def _merge_predictions(predictions_path: Path, original_predictions: list, rerun_results: list):
+    """Merge rerun results with original predictions file."""
+    print("\nMerging with original predictions...")
+
+    # Create lookup for rerun results
+    rerun_keys = {
+        (r["model"], r["test_case_id"], r["condition"], r.get("bootstrap_run", 0)): r
+        for r in rerun_results
+    }
+
+    merged = []
+    replaced = 0
+    for p in original_predictions:
+        key = (p["model"], p["test_case_id"], p["condition"], p.get("bootstrap_run", 0))
+        if key in rerun_keys:
+            merged.append(rerun_keys[key])
+            replaced += 1
+        else:
+            merged.append(p)
+
+    # Backup original
+    backup = predictions_path.with_suffix(".json.bak")
+    if not backup.exists():  # Don't overwrite existing backup
+        predictions_path.rename(backup)
+        print(f"  Backed up original to: {backup}")
+    else:
+        print(f"  Backup already exists: {backup}")
+
+    with open(predictions_path, "w") as f:
+        json.dump(merged, f, indent=2)
+    print(f"  Merged {replaced} predictions into: {predictions_path}")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Rerun truncated predictions with higher token limit")
     parser.add_argument("--predictions", type=Path,
@@ -94,16 +184,20 @@ def main():
                         help="Filter to specific models (default: all truncated)")
     parser.add_argument("--workers", type=int, default=20,
                         help="Parallel workers (default: 20)")
-    parser.add_argument("--dry-run", action="store_true", help="Test without API calls")
     parser.add_argument("--force", action="store_true", help="Skip confirmation")
     parser.add_argument("--merge", action="store_true",
                         help="Merge with original predictions file")
+    parser.add_argument("--checkpoint", type=Path,
+                        default=Path("results/multi_judge_run/rerun_checkpoint.json"),
+                        help="Checkpoint file for resumable runs")
+    parser.add_argument("--resume", action="store_true",
+                        help="Resume from checkpoint (skip already completed)")
 
     args = parser.parse_args()
 
     # Get API key
     api_key = os.environ.get("GOOGLE_API_KEY")
-    if not api_key and not args.dry_run:
+    if not api_key:
         print("ERROR: GOOGLE_API_KEY not set")
         sys.exit(1)
 
@@ -151,9 +245,53 @@ def main():
     estimated_cost = len(truncated) * 0.15
     print(f"\nEstimated cost: ~${estimated_cost:.2f}")
 
-    if not args.dry_run and not args.force:
-        print("\nUse --dry-run to test or --force to proceed")
+    if not args.force:
+        print("\nUse --force to proceed")
         sys.exit(0)
+
+    # Initialize checkpoint manager
+    checkpoint = CheckpointManager(args.checkpoint)
+    completed_keys = set()
+
+    if args.resume:
+        completed_keys = checkpoint.load()
+        # Filter out already completed predictions
+        original_count = len(truncated)
+        truncated = [
+            p for p in truncated
+            if (p["model"], p["test_case_id"], p["condition"], p.get("bootstrap_run", 0)) not in completed_keys
+        ]
+        skipped = original_count - len(truncated)
+        if skipped > 0:
+            print(f"\nResuming: skipping {skipped} already completed, {len(truncated)} remaining")
+
+    if not truncated:
+        print("No predictions to rerun (all completed or none truncated)")
+        if args.resume:
+            rerun_results = checkpoint.get_results()
+            # Skip to merge/save if we have results
+            if rerun_results:
+                print(f"\nUsing {len(rerun_results)} results from checkpoint")
+                # Jump to stats and save section
+                new_complete = [r for r in rerun_results if not is_truncated(r.get("raw_response", "")) and not r.get("error")]
+                still_trunc = [r for r in rerun_results if is_truncated(r.get("raw_response", ""))]
+                errors = [r for r in rerun_results if r.get("error")]
+
+                print("\n## Results")
+                print(f"  Fixed (now complete): {len(new_complete)}")
+                print(f"  Still truncated: {len(still_trunc)}")
+                print(f"  Errors: {len(errors)}")
+
+                # Save final output
+                with open(args.output, "w") as f:
+                    json.dump(rerun_results, f, indent=2)
+                print(f"\nSaved rerun results to: {args.output}")
+
+                # Merge if requested
+                if args.merge:
+                    _merge_predictions(args.predictions, predictions, rerun_results)
+                print("\nDone!")
+        return
 
     # Load test cases for prompts
     test_cases = load_all_test_cases(args.test_cases)
@@ -162,11 +300,13 @@ def main():
     # Build prompts module
     from experiments.prompts import build_prompt
 
-    print(f"\nRerunning {len(truncated)} predictions with max_tokens={args.max_tokens}...")
+    total_to_run = len(truncated)
+    already_done = len(completed_keys)
+    print(f"\nRerunning {total_to_run} predictions with max_tokens={args.max_tokens}...")
     print(f"Workers: {args.workers}")
+    print(f"Checkpoint: {args.checkpoint}")
 
-    rerun_results = []
-    completed = 0
+    completed = already_done
 
     def rerun_one(pred):
         """Rerun a single prediction."""
@@ -194,15 +334,6 @@ def main():
             rag_mode=rag_mode,
         )
 
-        if args.dry_run:
-            return {
-                **pred,
-                "raw_response": '{"name": "All Events", "children": []}',
-                "tokens_used": 100,
-                "rerun": True,
-                "max_tokens": args.max_tokens,
-            }
-
         try:
             # Use model name directly (Gemini SDK handles resolution)
             api_model = pred["model"]
@@ -226,12 +357,14 @@ def main():
                 "rerun_attempted": True,
             }
 
+    total_target = total_to_run + already_done
+
     with ThreadPoolExecutor(max_workers=args.workers) as executor:
         futures = {executor.submit(rerun_one, p): p for p in truncated}
 
         for future in as_completed(futures):
             result = future.result()
-            rerun_results.append(result)
+            checkpoint.add_result(result)  # Save to checkpoint immediately
             completed += 1
 
             # Check if still truncated
@@ -239,10 +372,13 @@ def main():
             status = "TRUNC" if still_truncated else "OK" if not result.get("error") else "ERR"
             resp_len = len(result.get("raw_response", ""))
 
-            pct = completed / len(truncated) * 100
-            print(f"\r  Progress: {completed}/{len(truncated)} ({pct:.1f}%) | {status} | len={resp_len}", end="", flush=True)
+            pct = completed / total_target * 100
+            print(f"\r  Progress: {completed}/{total_target} ({pct:.1f}%) | {status} | len={resp_len}", end="", flush=True)
 
     print()
+
+    # Get all results (including any from resumed checkpoint)
+    rerun_results = checkpoint.get_results()
 
     # Stats
     new_complete = [r for r in rerun_results if not is_truncated(r.get("raw_response", "")) and not r.get("error")]
@@ -254,37 +390,14 @@ def main():
     print(f"  Still truncated: {len(still_trunc)}")
     print(f"  Errors: {len(errors)}")
 
-    # Save rerun results
+    # Save final rerun results
     with open(args.output, "w") as f:
         json.dump(rerun_results, f, indent=2)
     print(f"\nSaved rerun results to: {args.output}")
 
     # Optionally merge with original
     if args.merge:
-        print("\nMerging with original predictions...")
-
-        # Create lookup for rerun results
-        rerun_keys = {(r["model"], r["test_case_id"], r["condition"], r.get("bootstrap_run", 0)): r
-                      for r in rerun_results}
-
-        merged = []
-        replaced = 0
-        for p in predictions:
-            key = (p["model"], p["test_case_id"], p["condition"], p.get("bootstrap_run", 0))
-            if key in rerun_keys:
-                merged.append(rerun_keys[key])
-                replaced += 1
-            else:
-                merged.append(p)
-
-        # Backup original
-        backup = args.predictions.with_suffix(".json.bak")
-        args.predictions.rename(backup)
-        print(f"  Backed up original to: {backup}")
-
-        with open(args.predictions, "w") as f:
-            json.dump(merged, f, indent=2)
-        print(f"  Merged {replaced} predictions into: {args.predictions}")
+        _merge_predictions(args.predictions, predictions, rerun_results)
 
     print("\nDone!")
 
