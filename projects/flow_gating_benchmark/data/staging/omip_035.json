@@ -8,7 +8,7 @@
   "wsp_validated": false,
   "context": {
     "sample_type": "721.221 stimulated PBMC",
-    "species": "unknown",
+    "species": "rhesus macaque",
     "application": "Define the functional capability of various NK cell subsets",
     "tissue": null,
     "disease_state": null,
@@ -24,36 +24,74 @@
   "panel": {
     "entries": [
       {
-        "marker": "Mamu-KIR3DL01",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "marker": "Live/dead",
+        "fluorophore": "Near infrared",
+        "clone": null
       },
       {
-        "marker": "Mamu-KIR3DL05",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "marker": "CD45",
+        "fluorophore": "BV786",
+        "clone": "D058-1283"
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "PE-CF594",
+        "clone": "SP34-2"
+      },
+      {
+        "marker": "CD20",
+        "fluorophore": "PE-CF594",
+        "clone": "2H7"
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "BV711",
+        "clone": "RPA-T8"
       },
       {
         "marker": "CD16",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "fluorophore": "Pacific Blue",
+        "clone": "3G8"
       },
       {
         "marker": "CD56",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": "B159"
+      },
+      {
+        "marker": "NKG2A/C",
+        "fluorophore": "PE-Cy7",
+        "clone": "Z199"
+      },
+      {
+        "marker": "Mamu-KIR3DL01",
+        "fluorophore": "PE",
+        "clone": "1C7"
+      },
+      {
+        "marker": "Mamu-KIR3DL05",
+        "fluorophore": "APC",
+        "clone": "2H5"
+      },
+      {
+        "marker": "IFN-g",
+        "fluorophore": "FITC",
+        "clone": "B27"
+      },
+      {
+        "marker": "TNF-a",
+        "fluorophore": "Alexa700",
+        "clone": "mAb11"
+      },
+      {
+        "marker": "CD107a",
+        "fluorophore": "BV605",
+        "clone": "H4A3"
+      },
+      {
+        "marker": "Granzyme B",
+        "fluorophore": "BV510",
+        "clone": "GB11"
       }
     ]
   },
@@ -179,17 +217,17 @@
     }
   },
   "validation": {
-    "paper_source": null,
+    "paper_source": "nihms866639.pdf",
     "wsp_extraction_match": null,
     "discrepancies": [],
-    "curator_notes": null,
-    "validation_date": null
+    "curator_notes": "Panel updated from PDF Table 2. 14 markers extracted with fluorophores and clones.",
+    "validation_date": "2026-01-13"
   },
   "metadata": {
     "curation_date": "2026-01-09",
     "curator": "claude-extraction",
     "flowkit_version": null,
-    "last_updated": "2026-01-09"
+    "last_updated": "2026-01-13"
   },
   "difficulty": "medium"
 }
