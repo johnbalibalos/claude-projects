@@ -256,37 +256,55 @@
                                           "markers": [],
                                           "marker_logic": "CD14++ CD16-",
                                           "gate_type": "Rectangle",
-                                          "children": [],
+                                          "children": [
+                                            {
+                                              "name": "Classical Monocytes 2",
+                                              "markers": [],
+                                              "marker_logic": "CX3CR1lo CCR2hi",
+                                              "gate_type": "Rectangle",
+                                              "children": [],
+                                              "is_critical": false
+                                            }
+                                          ],
                                           "is_critical": false
                                         },
                                         {
                                           "name": "Other Monocyte Subsets",
                                           "markers": [],
-                                          "marker_logic": "CD14var CD16var",
+                                          "marker_logic": "CD16mid-hi CD14var",
                                           "gate_type": "Rectangle",
                                           "children": [
                                             {
-                                              "name": "Intermediate Monocytes",
+                                              "name": "CX3CR1+ CCR2lo-int",
                                               "markers": [],
-                                              "marker_logic": "CCR2+ SLAN-",
+                                              "marker_logic": "CX3CR1+ CCR2lo-int",
                                               "gate_type": "Rectangle",
-                                              "children": [],
-                                              "is_critical": false
-                                            },
-                                            {
-                                              "name": "SLAN+ Nonclassical Monocytes",
-                                              "markers": [],
-                                              "marker_logic": "CCR2- SLAN+",
-                                              "gate_type": "Rectangle",
-                                              "children": [],
-                                              "is_critical": false
-                                            },
-                                            {
-                                              "name": "SLAN- Nonclassical Monocytes",
-                                              "markers": [],
-                                              "marker_logic": "CCR2- SLAN-",
-                                              "gate_type": "Rectangle",
-                                              "children": [],
+                                              "children": [
+                                                {
+                                                  "name": "Intermediate Monocytes",
+                                                  "markers": [],
+                                                  "marker_logic": "CCR2+ SLAN-",
+                                                  "gate_type": "Rectangle",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                },
+                                                {
+                                                  "name": "SLAN- Nonclassical Monocytes",
+                                                  "markers": [],
+                                                  "marker_logic": "CCR2- SLAN-",
+                                                  "gate_type": "Rectangle",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                },
+                                                {
+                                                  "name": "SLAN+ Nonclassical Monocytes",
+                                                  "markers": [],
+                                                  "marker_logic": "CCR2- SLAN+",
+                                                  "gate_type": "Rectangle",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                }
+                                              ],
                                               "is_critical": false
                                             }
                                           ],
