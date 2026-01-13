@@ -153,10 +153,10 @@ def get_skills_system_prompt():
 ## Flow Cytometry Gating Skills:
 
 ### Standard QC Workflow
-Every gating strategy MUST start with these QC gates in order:
+Every gating strategy SHOULD start with these QC gates in order:
 1. **Time Gate**: Plot Time vs any parameter, exclude unstable regions
 2. **Cell Gate**: FSC-A vs SSC-A, exclude debris (low FSC/SSC corner)
-3. **Singlet Gate**: FSC-A vs FSC-H, select diagonal population (removes doublets)
+3. **Singlet Gate**: FSC-A vs FSC-H, select diagonal population (removes doublets), SSC-A vs SSC-H is acceptable if included
 4. **Live Gate**: Viability dye negative (7-AAD-, Zombie-, DAPI-, etc.)
 
 ### Lineage Identification
@@ -179,8 +179,10 @@ CD3+ (T Cells)
 ### B Cell Hierarchy
 CD19+ or CD20+ (B Cells)
 ├── Naive (IgD+CD27-)
-├── Memory (IgD-CD27+)
-└── Plasmablasts (CD38++CD27++)
+├── Unswitched Memory (IgD+CD27+)
+├── Switched Memory (IgD-CD27+)
+├── Double Negative (IgD-CD27-)
+└── Plasmablasts (CD38++CD27++) these are CD20-, so only from CD19+
 
 ### NK Cell Hierarchy
 CD3-CD56+ (NK Cells)
