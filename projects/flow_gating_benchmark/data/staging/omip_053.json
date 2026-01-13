@@ -12,7 +12,7 @@
     "application": "Human CD4+ Treg identification, enumeration, sorting, and classification",
     "tissue": null,
     "disease_state": null,
-    "additional_notes": "Inter-convertible panel with ATREG (intra-nuclear markers including FoxP3, HELIOS, Ki67) and BTREG (surface markers only for sorting including TIGIT, CD226, CD38, CD39). Identifies 3 Treg-defining populations: TDP-1 (CD127lo/CD25hi/FoxP3+), TDP-2 (resting vs activated Treg by CD45RA/FoxP3), TDP-3 (thymic Treg by FoxP3/HELIOS). NOTE: Current panel extraction incomplete - full panel has 17 markers across both sub-panels.",
+    "additional_notes": "Inter-convertible panel with ATREG (intra-nuclear markers including FoxP3, HELIOS, Ki67) and BTREG (surface markers only for sorting including TIGIT, CD226, CD38, CD39). Identifies 3 Treg-defining populations: TDP-1 (CD127lo/CD25hi/FoxP3+), TDP-2 (resting vs activated Treg by CD45RA/FoxP3), TDP-3 (thymic Treg by FoxP3/HELIOS).",
     "cross_references": [
       "OMIP-004",
       "OMIP-006",
@@ -24,20 +24,90 @@
   "panel": {
     "entries": [
       {
+        "marker": "Dead cells",
+        "fluorophore": "Fixable blue",
+        "clone": null
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "BV650",
+        "clone": "RPA-T8"
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": "UCHT1"
+      },
+      {
         "marker": "CD4",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "fluorophore": "BV510",
+        "clone": "OKT4"
+      },
+      {
+        "marker": "CD127",
+        "fluorophore": "BV421",
+        "clone": "A019D5"
+      },
+      {
+        "marker": "CD25",
+        "fluorophore": "PE/Dazzle594",
+        "clone": "BC96"
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "BV711",
+        "clone": "HI100"
+      },
+      {
+        "marker": "CCR7",
+        "fluorophore": "PE",
+        "clone": "G043H7"
+      },
+      {
+        "marker": "HLA-DR",
+        "fluorophore": "FITC",
+        "clone": "L243"
       },
       {
         "marker": "FoxP3",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "fluorophore": "APC",
+        "clone": "206D"
+      },
+      {
+        "marker": "HELIOS",
+        "fluorophore": "PE-Cy7",
+        "clone": "22F6",
+        "notes": "ATREG panel only"
+      },
+      {
+        "marker": "Ki-67",
+        "fluorophore": "BUV395",
+        "clone": "B56",
+        "notes": "ATREG panel only"
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "BUV395",
+        "clone": "HIT2",
+        "notes": "BTREG panel only - shares channel with Ki-67"
+      },
+      {
+        "marker": "CD39",
+        "fluorophore": "APC/Fire750",
+        "clone": "A1",
+        "notes": "BTREG panel only"
+      },
+      {
+        "marker": "CD226",
+        "fluorophore": "PE-Cy7",
+        "clone": "11A8",
+        "notes": "BTREG panel only - shares channel with HELIOS"
+      },
+      {
+        "marker": "TIGIT",
+        "fluorophore": "APC",
+        "clone": "MBSA43",
+        "notes": "BTREG panel only - shares channel with FoxP3"
       }
     ]
   },
@@ -67,25 +137,93 @@
                   "gate_type": "Unknown",
                   "children": [
                     {
-                      "name": "CD4+ T cells",
+                      "name": "CD3+ T cells",
                       "markers": [],
-                      "marker_logic": "CD4+",
+                      "marker_logic": "CD3+ CD8-",
                       "gate_type": "Unknown",
                       "children": [
                         {
-                          "name": "FoxP3+ Treg",
+                          "name": "CD4+ T cells",
                           "markers": [],
-                          "marker_logic": "FoxP3+",
+                          "marker_logic": "CD4+",
                           "gate_type": "Unknown",
-                          "children": [],
-                          "is_critical": false
-                        },
-                        {
-                          "name": "FoxP3- non-Treg",
-                          "markers": [],
-                          "marker_logic": "FoxP3-",
-                          "gate_type": "Unknown",
-                          "children": [],
+                          "children": [
+                            {
+                              "name": "TDP-1: CD127lo CD25hi",
+                              "markers": [],
+                              "marker_logic": "CD127lo CD25hi",
+                              "gate_type": "Unknown",
+                              "children": [
+                                {
+                                  "name": "FoxP3+ Treg",
+                                  "markers": [],
+                                  "marker_logic": "FoxP3+",
+                                  "gate_type": "Unknown",
+                                  "children": [],
+                                  "is_critical": false
+                                }
+                              ],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "TDP-2: CD45RA vs FoxP3",
+                              "markers": [],
+                              "marker_logic": "CD45RA +/- FoxP3 +/-",
+                              "gate_type": "Unknown",
+                              "children": [
+                                {
+                                  "name": "Resting Treg",
+                                  "markers": [],
+                                  "marker_logic": "CD45RA+ FoxP3lo",
+                                  "gate_type": "Unknown",
+                                  "children": [],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "Activated Treg",
+                                  "markers": [],
+                                  "marker_logic": "CD45RA- FoxP3hi",
+                                  "gate_type": "Unknown",
+                                  "children": [],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "Non-Treg",
+                                  "markers": [],
+                                  "marker_logic": "CD45RA- FoxP3lo",
+                                  "gate_type": "Unknown",
+                                  "children": [],
+                                  "is_critical": false
+                                }
+                              ],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "TDP-3: FoxP3 vs HELIOS (ATREG)",
+                              "markers": [],
+                              "marker_logic": "FoxP3 +/- HELIOS +/-",
+                              "gate_type": "Unknown",
+                              "children": [
+                                {
+                                  "name": "Thymic Treg",
+                                  "markers": [],
+                                  "marker_logic": "FoxP3+ HELIOS+",
+                                  "gate_type": "Unknown",
+                                  "children": [],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "Peripheral Treg",
+                                  "markers": [],
+                                  "marker_logic": "FoxP3+ HELIOS-",
+                                  "gate_type": "Unknown",
+                                  "children": [],
+                                  "is_critical": false
+                                }
+                              ],
+                              "is_critical": false
+                            }
+                          ],
                           "is_critical": false
                         }
                       ],
@@ -105,17 +243,17 @@
     }
   },
   "validation": {
-    "paper_source": null,
+    "paper_source": "nihms-1017368.pdf",
     "wsp_extraction_match": null,
     "discrepancies": [],
-    "curator_notes": null,
-    "validation_date": null
+    "curator_notes": "Panel updated from PDF Table 2. 16 markers extracted across ATREG/BTREG sub-panels with fluorophores and clones. Gating hierarchy expanded with TDP-1, TDP-2, TDP-3 populations.",
+    "validation_date": "2026-01-13"
   },
   "metadata": {
     "curation_date": "2026-01-09",
     "curator": "claude-extraction",
     "flowkit_version": null,
-    "last_updated": "2026-01-09"
+    "last_updated": "2026-01-13"
   },
-  "difficulty": "easy"
+  "difficulty": "medium"
 }

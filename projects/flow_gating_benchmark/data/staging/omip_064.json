@@ -9,10 +9,10 @@
   "context": {
     "sample_type": "PBMC",
     "species": "human",
-    "application": "Extensive phenotyping of NK cells, ILCs, MAIT cells, and \u03b3\u03b4 T cells",
+    "application": "Extensive phenotyping of NK cells, ILCs, MAIT cells, and gd T cells",
     "tissue": null,
     "disease_state": null,
-    "additional_notes": "27-color panel for malaria vaccine trial immune monitoring. Focus on innate lymphoid cells (ILC1/2/3), NK cell subsets and activation (CD56dim/bright, adaptive NK via NKG2C/CD57/FC\u03b5RI\u03b3), MAIT cells (CD161+TCRv\u03b17.2+), and \u03b3\u03b4 T cells (including V\u03b42 subset). Extensive NK phenotyping markers: NKG2A, NKG2C, NKG2D, NKp30, NKp46, CD38, CD57, CD27. Ki67 for proliferation. NOTE: Current panel extraction incomplete - full panel has 27 markers.",
+    "additional_notes": "27-color panel for malaria vaccine trial immune monitoring. Focus on innate lymphoid cells (ILC1/2/3), NK cell subsets and activation (CD56dim/bright, adaptive NK via NKG2C/CD57/FCeRIg), MAIT cells (CD161+TCRva7.2+), and gd T cells (including Vd2 subset). Extensive NK phenotyping markers: NKG2A, NKG2C, NKG2D, NKp30, NKp46, CD38, CD57, CD27. Ki67 for proliferation.",
     "cross_references": [
       "OMIP-029",
       "OMIP-039",
@@ -28,138 +28,138 @@
     "entries": [
       {
         "marker": "CD16",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "BUV395",
+        "clone": "3G8"
       },
       {
         "marker": "Viability",
-        "fluorophore": null,
+        "fluorophore": "Fixable blue",
         "clone": null
       },
       {
         "marker": "CD3",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "BUV496",
+        "clone": "UCHT1"
       },
       {
         "marker": "CD19",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "BUV563",
+        "clone": "SJ25C1"
       },
       {
         "marker": "HLA-DR",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "BUV661",
+        "clone": "G46-6"
       },
       {
         "marker": "CD27",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "BUV737",
+        "clone": "M-T271"
       },
       {
         "marker": "CD8",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "BUV805",
+        "clone": "SK1"
       },
       {
-        "marker": "TCRgammadelta",
-        "fluorophore": null,
-        "clone": null
+        "marker": "TCRgd",
+        "fluorophore": "BV421",
+        "clone": "B1"
       },
       {
         "marker": "NKG2D",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "BV480",
+        "clone": "1D11"
       },
       {
         "marker": "CD56",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "BV570",
+        "clone": "HCD56"
       },
       {
         "marker": "Vd2 TCR",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "BV605",
+        "clone": "B6"
       },
       {
         "marker": "CD38",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "BV650",
+        "clone": "HIT2"
       },
       {
         "marker": "CD57",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "BV711",
+        "clone": "QA17A04"
       },
       {
         "marker": "CD4",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "BV750",
+        "clone": "SK3"
       },
       {
         "marker": "TCRva7.2",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "BV786",
+        "clone": "3C10"
       },
       {
-        "marker": "FcER1g",
-        "fluorophore": null,
-        "clone": null
+        "marker": "FCeRIg",
+        "fluorophore": "FITC",
+        "clone": "polyclonal"
       },
       {
-        "marker": "Ki67",
-        "fluorophore": null,
-        "clone": null
+        "marker": "Ki-67",
+        "fluorophore": "BB660",
+        "clone": "B56"
       },
       {
         "marker": "CD14",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": "M5E2"
       },
       {
         "marker": "CD127",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "BB790",
+        "clone": "A019D5"
       },
       {
         "marker": "NKp46",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "PE",
+        "clone": "9E2"
       },
       {
         "marker": "CRTh2",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "PE-CF594",
+        "clone": "BM16"
       },
       {
         "marker": "CD33",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "PE-Cy5",
+        "clone": "WM53"
       },
       {
         "marker": "c-kit",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "PE-Cy5.5",
+        "clone": "YB5.B8"
       },
       {
         "marker": "NKG2A",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "PE-Cy7",
+        "clone": "Z199"
       },
       {
-        "marker": "CD337/NKp30",
-        "fluorophore": null,
-        "clone": null
+        "marker": "NKp30",
+        "fluorophore": "APC",
+        "clone": "P30-15"
       },
       {
         "marker": "NKG2C",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "Ax700",
+        "clone": "134591"
       },
       {
         "marker": "CD161",
-        "fluorophore": null,
-        "clone": null
+        "fluorophore": "APC-Fire750",
+        "clone": "HP-3G10"
       }
     ]
   },
@@ -189,46 +189,29 @@
                   "gate_type": "Unknown",
                   "children": [
                     {
-                      "name": "T cells",
+                      "name": "CD3+ T cells",
                       "markers": [],
-                      "marker_logic": "CD3+",
+                      "marker_logic": "CD3+ CD14- CD19-",
                       "gate_type": "Unknown",
                       "children": [
                         {
-                          "name": "MAIT cells",
+                          "name": "gd T cells",
                           "markers": [],
-                          "marker_logic": "CD3+",
-                          "gate_type": "Unknown",
-                          "children": [],
-                          "is_critical": false
-                        },
-                        {
-                          "name": "\u03b3\u03b4 T cells",
-                          "markers": [],
-                          "marker_logic": "CD3+",
-                          "gate_type": "Unknown",
-                          "children": [],
-                          "is_critical": false
-                        }
-                      ],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "Innate Lymphoid Cells",
-                      "markers": [],
-                      "marker_logic": "CD3-",
-                      "gate_type": "Unknown",
-                      "children": [
-                        {
-                          "name": "NK cells",
-                          "markers": [],
-                          "marker_logic": "CD3-",
+                          "marker_logic": "TCRgd+",
                           "gate_type": "Unknown",
                           "children": [
                             {
-                              "name": "Activated NK cells",
+                              "name": "Vd2+ gd T cells",
                               "markers": [],
-                              "marker_logic": "activation markers+",
+                              "marker_logic": "Vd2 TCR+",
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "Vd2- gd T cells",
+                              "markers": [],
+                              "marker_logic": "Vd2 TCR-",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -237,11 +220,112 @@
                           "is_critical": false
                         },
                         {
-                          "name": "Other ILC subsets",
+                          "name": "ab T cells",
                           "markers": [],
-                          "marker_logic": "CD3-",
+                          "marker_logic": "TCRgd-",
                           "gate_type": "Unknown",
-                          "children": [],
+                          "children": [
+                            {
+                              "name": "MAIT cells",
+                              "markers": [],
+                              "marker_logic": "CD161+ TCRva7.2+",
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "CD4+ T cells",
+                              "markers": [],
+                              "marker_logic": "CD4+ CD8-",
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "CD8+ T cells",
+                              "markers": [],
+                              "marker_logic": "CD4- CD8+",
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        }
+                      ],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "CD3- cells",
+                      "markers": [],
+                      "marker_logic": "CD3- CD14- CD19-",
+                      "gate_type": "Unknown",
+                      "children": [
+                        {
+                          "name": "NK cells",
+                          "markers": [],
+                          "marker_logic": "CD56+ and/or CD16+",
+                          "gate_type": "Unknown",
+                          "children": [
+                            {
+                              "name": "CD56bright NK",
+                              "markers": [],
+                              "marker_logic": "CD56bright CD16-",
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "CD56dim NK",
+                              "markers": [],
+                              "marker_logic": "CD56dim CD16+",
+                              "gate_type": "Unknown",
+                              "children": [
+                                {
+                                  "name": "Adaptive NK",
+                                  "markers": [],
+                                  "marker_logic": "NKG2C+ CD57+ FCeRIg-",
+                                  "gate_type": "Unknown",
+                                  "children": [],
+                                  "is_critical": false
+                                }
+                              ],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "ILC precursor",
+                          "markers": [],
+                          "marker_logic": "CD127+ CD56- CD16- CD117+",
+                          "gate_type": "Unknown",
+                          "children": [
+                            {
+                              "name": "ILC1",
+                              "markers": [],
+                              "marker_logic": "CRTh2- c-kit-",
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "ILC2",
+                              "markers": [],
+                              "marker_logic": "CRTh2+",
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "ILC3",
+                              "markers": [],
+                              "marker_logic": "CRTh2- c-kit+",
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            }
+                          ],
                           "is_critical": false
                         }
                       ],
@@ -260,10 +344,18 @@
       "is_critical": true
     }
   },
+  "validation": {
+    "paper_source": "nihms-1684062.pdf",
+    "wsp_extraction_match": null,
+    "discrepancies": [],
+    "curator_notes": "Panel updated from PDF Table 2. 27 markers extracted with fluorophores and clones. Gating hierarchy expanded with NK, ILC, MAIT, and gd T cell populations.",
+    "validation_date": "2026-01-13"
+  },
   "metadata": {
     "curation_date": "2026-01-11",
     "curator": "manual",
-    "notes": "Panel markers added; hierarchy pending curation"
+    "flowkit_version": null,
+    "last_updated": "2026-01-13"
   },
-  "difficulty": "easy"
+  "difficulty": "hard"
 }

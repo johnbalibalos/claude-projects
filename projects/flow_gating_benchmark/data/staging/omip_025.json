@@ -22,148 +22,84 @@
   "panel": {
     "entries": [
       {
+        "marker": "Live/Dead",
+        "fluorophore": "AViD",
+        "clone": null
+      },
+      {
         "marker": "CD3",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "fluorophore": "BV570",
+        "clone": "UCHT1"
       },
       {
         "marker": "CD4",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "fluorophore": "BUV395",
+        "clone": "SK3"
       },
       {
         "marker": "CD8",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "fluorophore": "BV711",
+        "clone": "SK1"
       },
       {
         "marker": "CD14",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
-      },
-      {
-        "marker": "CD19",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "fluorophore": "BV510",
+        "clone": "M5E2"
       },
       {
         "marker": "CD45RA",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "fluorophore": "APC-H7",
+        "clone": "HI100"
       },
       {
         "marker": "CCR7",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "fluorophore": "BV785",
+        "clone": "G043H7"
       },
       {
         "marker": "CXCR5",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "fluorophore": "PE-eFluor610",
+        "clone": "MU5UBEE"
       },
       {
-        "marker": "PD1",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "marker": "PD-1",
+        "fluorophore": "PE-Cy7",
+        "clone": "eBio J105"
       },
       {
         "marker": "CD56",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "fluorophore": "BV650",
+        "clone": "HCD56"
       },
       {
-        "marker": "IFN-\u03b3",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "marker": "IFN-g",
+        "fluorophore": "V450",
+        "clone": "B27"
       },
       {
         "marker": "IL-2",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "fluorophore": "PE",
+        "clone": "MQ1-17H12"
       },
       {
-        "marker": "TNF-\u03b1",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "marker": "TNF-a",
+        "fluorophore": "FITC",
+        "clone": "MAb11"
       },
       {
         "marker": "IL-4",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": "8D4-8"
       },
       {
-        "marker": "IL-17A",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "marker": "IL-21",
+        "fluorophore": "APC",
+        "clone": "3A3-N2"
       },
       {
-        "marker": "CD107a",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
-      },
-      {
-        "marker": "Perforin",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
-      },
-      {
-        "marker": "Live/Dead",
-        "fluorophore": null,
-        "clone": null,
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
+        "marker": "CD154",
+        "fluorophore": "BV605",
+        "clone": "24-31"
       }
     ]
   },
@@ -215,7 +151,7 @@
                             {
                               "name": "Follicular helper T cells",
                               "markers": [],
-                              "marker_logic": "CXCR5+ PD1+",
+                              "marker_logic": "CXCR5+ PD-1+",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -223,7 +159,7 @@
                             {
                               "name": "CD4+ Functional subsets",
                               "markers": [],
-                              "marker_logic": "IFN-\u03b3 +/- IL-2 +/- TNF-\u03b1 +/- IL-4 +/- IL-17A +/-",
+                              "marker_logic": "IFN-g +/- IL-2 +/- TNF-a +/- IL-4 +/- IL-21 +/-",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -248,7 +184,7 @@
                             {
                               "name": "CD8+ Functional subsets",
                               "markers": [],
-                              "marker_logic": "IFN-\u03b3 +/- IL-2 +/- TNF-\u03b1 +/- CD107a +/- Perforin +/-",
+                              "marker_logic": "IFN-g +/- IL-2 +/- TNF-a +/- CD154 +/-",
                               "gate_type": "Unknown",
                               "children": [],
                               "is_critical": false
@@ -262,13 +198,13 @@
                     {
                       "name": "NK cells",
                       "markers": [],
-                      "marker_logic": "CD3- CD56+ CD14- CD19-",
+                      "marker_logic": "CD3- CD56+ CD14-",
                       "gate_type": "Unknown",
                       "children": [
                         {
                           "name": "NK Functional subsets",
                           "markers": [],
-                          "marker_logic": "IFN-\u03b3 +/- TNF-\u03b1 +/- CD107a +/- Perforin +/-",
+                          "marker_logic": "IFN-g +/- TNF-a +/-",
                           "gate_type": "Unknown",
                           "children": [],
                           "is_critical": false
@@ -290,17 +226,17 @@
     }
   },
   "validation": {
-    "paper_source": null,
+    "paper_source": "nihms694613.pdf",
     "wsp_extraction_match": null,
     "discrepancies": [],
-    "curator_notes": null,
-    "validation_date": null
+    "curator_notes": "Panel updated from PDF Table 2. 16 markers extracted with fluorophores and clones.",
+    "validation_date": "2026-01-13"
   },
   "metadata": {
     "curation_date": "2026-01-09",
     "curator": "claude-extraction",
     "flowkit_version": null,
-    "last_updated": "2026-01-09"
+    "last_updated": "2026-01-13"
   },
   "difficulty": "medium"
 }
