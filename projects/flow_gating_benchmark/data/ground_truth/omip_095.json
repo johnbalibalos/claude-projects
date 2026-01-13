@@ -600,7 +600,30 @@
                                               ],
                                               "marker_logic": "CD11c+ I-A/I-E+",
                                               "gate_type": "Unknown",
-                                              "children": [],
+                                              "children": [
+                                                {
+                                                  "name": "cDC1s",
+                                                  "markers": [
+                                                    "CD8a",
+                                                    "CD11b"
+                                                  ],
+                                                  "marker_logic": "CD8a+ CD11b-",
+                                                  "gate_type": "Unknown",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                },
+                                                {
+                                                  "name": "cDC2s",
+                                                  "markers": [
+                                                    "CD11b",
+                                                    "CD8a"
+                                                  ],
+                                                  "marker_logic": "CD11b+ CD8a-",
+                                                  "gate_type": "Unknown",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                }
+                                              ],
                                               "is_critical": false
                                             },
                                             {
@@ -649,7 +672,41 @@
                                                       ],
                                                       "marker_logic": "CX3CR1int CD11b+",
                                                       "gate_type": "Unknown",
-                                                      "children": [],
+                                                      "children": [
+                                                        {
+                                                          "name": "Classical Monocytes",
+                                                          "markers": [
+                                                            "Ly6C",
+                                                            "CD62L"
+                                                          ],
+                                                          "marker_logic": "Ly6C+ CD62L+",
+                                                          "gate_type": "Unknown",
+                                                          "children": [],
+                                                          "is_critical": false
+                                                        },
+                                                        {
+                                                          "name": "Intermediate Monocytes",
+                                                          "markers": [
+                                                            "Ly6C",
+                                                            "CD62L"
+                                                          ],
+                                                          "marker_logic": "Ly6C+ CD62L-",
+                                                          "gate_type": "Unknown",
+                                                          "children": [],
+                                                          "is_critical": false
+                                                        },
+                                                        {
+                                                          "name": "Nonclassical Monocytes",
+                                                          "markers": [
+                                                            "Ly6C",
+                                                            "CD62L"
+                                                          ],
+                                                          "marker_logic": "Ly6C- CD62L-",
+                                                          "gate_type": "Unknown",
+                                                          "children": [],
+                                                          "is_critical": false
+                                                        }
+                                                      ],
                                                       "is_critical": false
                                                     },
                                                     {
