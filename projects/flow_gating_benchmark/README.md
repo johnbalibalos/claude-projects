@@ -2,6 +2,8 @@
 
 Evaluate LLM capabilities in predicting flow cytometry gating strategies from panel information.
 
+> **Status:** Active development. The evaluation framework is functional, but ground truth datasets require manual curation from OMIP papers. Results in any linked posts reflect work-in-progress and may be rerun as data quality improves.
+
 ## Latest Results
 
 See **[results/BENCHMARK_RESULTS_SUMMARY.md](results/BENCHMARK_RESULTS_SUMMARY.md)** for full analysis.
