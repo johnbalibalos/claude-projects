@@ -502,7 +502,7 @@ EXAMPLE_TEST_CASE = TestCase(
     ),
     metadata=CurationMetadata(
         curation_date=date.today(),
-        curator="John Balibalos",
+        curator="Anonymous",
         flowkit_version=None,
         last_updated=None,
     ),
