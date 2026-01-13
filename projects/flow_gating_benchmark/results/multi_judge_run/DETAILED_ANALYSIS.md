@@ -12,6 +12,8 @@
 4. [Example Predictions](#examples)
 5. [Hypotheses and Interpretations](#hypotheses)
 6. [Quality vs Consistency Tradeoff](#quality-consistency)
+7. [Non-Determinism at Temperature=0](#non-determinism)
+8. [Systematic Errors: Metric vs Judge Discrepancy](#systematic-errors)
 
 ---
 
@@ -298,6 +300,115 @@ For **production deployment:**
 For **research/evaluation:**
 - Single Claude run may not be representative
 - Need multiple samples to characterize model capability
+
+---
+
+## Non-Determinism at Temperature=0 {#non-determinism}
+
+A key finding from our n=10 bootstrap analysis: **LLMs produce different outputs even at temperature=0**.
+
+### Determinism by Model
+
+| Model | n=10 Groups | Deterministic | Det % | Avg Unique Responses |
+|-------|-------------|---------------|-------|---------------------|
+| claude-opus-4-cli | 52 | 1 | 1.9% | 8.4 |
+| claude-sonnet-4-cli | 52 | 0 | 0.0% | 9.9 |
+| gemini-2.0-flash | 104 | 14 | 13.5% | 1.9 |
+| gemini-2.5-flash | 52 | 0 | 0.0% | 2.0 |
+| gemini-2.5-pro | 52 | 0 | 0.0% | 4.1 |
+
+### Key Observations
+
+1. **Claude-sonnet is NEVER deterministic** - produces 9.9 unique responses per 10 runs
+2. **Claude models show highest variability** - opus: 8.4 unique, sonnet: 9.9 unique
+3. **gemini-2.0-flash is most consistent** - 13.5% deterministic, avg 1.9 unique
+4. **Even "consistent" Gemini models vary** - 0% groups produce identical output all 10 times
+
+### Implications for Benchmarking
+
+- Single-run benchmarks are **not representative** of model capability
+- Claude models require **multiple samples** to characterize performance
+- Bootstrap aggregation (n≥10) is essential for reliable evaluation
+
+---
+
+## Systematic Errors: Metric vs Judge Discrepancy {#systematic-errors}
+
+Comparing automated F1 scoring with LLM judge quality scores reveals systematic failure modes.
+
+### Judge >> Metric (Δ > 0.2): Parsing/Truncation Failures
+
+**Found: 94 cases** where the judge rated quality much higher than metrics measured.
+
+| Model | Test Case | Condition | Metric F1 | Judge Q | Δ |
+|-------|-----------|-----------|-----------|---------|---|
+| gemini-2.5-flash | OMIP-101 | minimal/direct | 0.000 | 1.00 | +1.00 |
+| gemini-2.5-flash | OMIP-022 | minimal/direct | 0.000 | 1.00 | +1.00 |
+| gemini-2.5-flash | OMIP-076 | minimal/direct | 0.000 | 0.90 | +0.90 |
+| gemini-2.5-flash | OMIP-074 | standard/direct | 0.000 | 0.90 | +0.90 |
+| gemini-2.5-flash | OMIP-087 | standard/direct | 0.000 | 0.90 | +0.90 |
+
+**Root Cause: Response Truncation**
+
+Analysis reveals gemini-2.5-flash responses are truncated mid-JSON:
+- **416/2,080 Gemini responses** (20%) have unbalanced braces (truncated)
+- **0/1,040 Claude responses** are truncated
+- Truncated responses → F1 = 0 (unparseable) but Judge sees valid partial structure
+
+**Example: OMIP-101 gemini-2.5-flash**
+```json
+{
+    "name": "All Events",
+    "children": [
+        {
+            "name": "Singlets",
+            "children": [
+                {
+                    "name": "Live Cells",
+                    "children": [
+                        {
+                            "name": "CD45+ Leukocytes",
+                            "children": [
+                                {
+// Response truncated here - missing closing braces
+```
+- Response length: 1,282 chars (vs typical 5,000+)
+- Brace balance: `{` = 8, `}` = 0
+- F1 = 0.000 (unparseable), Judge = 1.00 (recognized correct structure)
+
+### Metric >> Judge (Δ < -0.2): Quality Issues Missed by Metrics
+
+**Found: 21 cases** where metrics scored higher than judge assessment.
+
+| Model | Test Case | Condition | Metric F1 | Judge Q | Δ |
+|-------|-----------|-----------|-----------|---------|---|
+| claude-sonnet | OMIP-008 | standard/cot | 0.760 | 0.20 | -0.56 |
+| gemini-2.0-flash | OMIP-101 | minimal/cot | 0.468 | 0.00 | -0.47 |
+| gemini-2.0-flash | OMIP-064 | standard/direct | 0.437 | 0.00 | -0.44 |
+| claude-sonnet | OMIP-008 | minimal/direct | 0.737 | 0.30 | -0.44 |
+
+**Potential Causes:**
+1. **Hallucinated gates** matching ground truth names but wrong context
+2. **Semantic equivalence failures** - model used different terminology
+3. **Structure errors** - correct gates but wrong parent-child relationships
+
+### Breakdown by Model
+
+| Model | Judge >> Metric | Metric >> Judge | Aligned |
+|-------|-----------------|-----------------|---------|
+| claude | 26 | 9 | 17 |
+| gemini | 68 | 12 | 82 |
+
+**Interpretation:**
+- Gemini models have more parsing issues (68 Judge >> Metric)
+- Both model families have cases where Judge finds quality issues (21 total)
+- gemini-2.0-flash is best aligned (82 cases within ±0.2)
+
+### Implications
+
+1. **Truncation is a major confound** for gemini-2.5-flash - should increase max_tokens
+2. **Multi-modal evaluation** (metrics + judge) catches failures single methods miss
+3. **Semantic equivalence** detection needed in metrics (e.g., "CD4+ T cells" ≈ "Helper T cells")
 
 ---
 
