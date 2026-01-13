@@ -533,35 +533,23 @@
                                   "gate_type": "Unknown",
                                   "children": [
                                     {
-                                      "name": "NK1.1+",
+                                      "name": "NK cells",
                                       "markers": [
                                         "NK1.1"
                                       ],
                                       "marker_logic": "NK1.1+",
                                       "gate_type": "Unknown",
-                                      "children": [
-                                        {
-                                          "name": "NK cells",
-                                          "markers": [
-                                            "NK1.1",
-                                            "CD3e"
-                                          ],
-                                          "marker_logic": "NK1.1+ CD3e-",
-                                          "gate_type": "Unknown",
-                                          "children": [],
-                                          "is_critical": false
-                                        },
-                                        {
-                                          "name": "T cells",
-                                          "markers": [
-                                            "CD3e"
-                                          ],
-                                          "marker_logic": "CD3e+",
-                                          "gate_type": "Unknown",
-                                          "children": [],
-                                          "is_critical": false
-                                        }
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "T cells",
+                                      "markers": [
+                                        "CD3e"
                                       ],
+                                      "marker_logic": "CD3e+",
+                                      "gate_type": "Unknown",
+                                      "children": [],
                                       "is_critical": false
                                     },
                                     {
