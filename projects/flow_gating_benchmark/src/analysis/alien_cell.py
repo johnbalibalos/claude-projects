@@ -305,7 +305,7 @@ def run_alien_cell_example():
     }
 
     test = AlienCellTest()
-    new_hierarchy, mappings, context = test.create_alien_hierarchy(hierarchy)
+    _, mappings, context = test.create_alien_hierarchy(hierarchy)
 
     print("=== ALIEN CELL TEST EXAMPLE ===\n")
     print("MAPPINGS:")

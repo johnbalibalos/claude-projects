@@ -7,11 +7,10 @@ including panel information, gating hierarchies, and validation metadata.
 
 from __future__ import annotations
 
+import re
 from datetime import date
 from enum import Enum
 from typing import Literal
-
-import re
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -144,9 +143,9 @@ def parse_marker_logic_string(value: str) -> list[MarkerExpression]:
             continue
 
         if suffix == '+' or suffix == '+/low':
-            expressions.append(MarkerExpression(marker=marker, positive=True))
+            expressions.append(MarkerExpression(marker=marker, positive=True, level=None))
         elif suffix == '-':
-            expressions.append(MarkerExpression(marker=marker, positive=False))
+            expressions.append(MarkerExpression(marker=marker, positive=False, level=None))
         elif suffix in ('bright', 'high'):
             expressions.append(MarkerExpression(marker=marker, positive=True, level=suffix))
         elif suffix in ('dim', 'low'):
@@ -345,7 +344,12 @@ class TestCase(BaseModel):
 
     # Validation and metadata
     validation: ValidationInfo = Field(
-        default_factory=ValidationInfo,
+        default_factory=lambda: ValidationInfo(
+            paper_source=None,
+            wsp_extraction_match=None,
+            curator_notes=None,
+            validation_date=None,
+        ),
         description="Validation information",
     )
     metadata: CurationMetadata = Field(..., description="Curation metadata")
@@ -417,45 +421,53 @@ EXAMPLE_TEST_CASE = TestCase(
     flowrepository_id="FR-FCM-Z7YM",
     has_wsp=False,
     wsp_validated=False,
+    difficulty=Difficulty.EASY,
     context=ExperimentContext(
         sample_type="Human PBMC",
         species="human",
         application="Deep immunophenotyping of major immune lineages",
+        tissue=None,
+        disease_state=None,
+        additional_notes=None,
     ),
     panel=Panel(
         entries=[
-            PanelEntry(marker="CD3", fluorophore="BUV395", clone="UCHT1"),
-            PanelEntry(marker="CD4", fluorophore="BUV496", clone="SK3"),
-            PanelEntry(marker="CD8", fluorophore="BUV661", clone="SK1"),
-            PanelEntry(marker="CD19", fluorophore="BV605", clone="SJ25C1"),
-            PanelEntry(marker="CD45", fluorophore="BV421", clone="HI30"),
-            PanelEntry(marker="Live/Dead", fluorophore="Zombie NIR", clone=None),
+            PanelEntry(marker="CD3", fluorophore="BUV395", clone="UCHT1", channel=None, vendor=None, cat_number=None),
+            PanelEntry(marker="CD4", fluorophore="BUV496", clone="SK3", channel=None, vendor=None, cat_number=None),
+            PanelEntry(marker="CD8", fluorophore="BUV661", clone="SK1", channel=None, vendor=None, cat_number=None),
+            PanelEntry(marker="CD19", fluorophore="BV605", clone="SJ25C1", channel=None, vendor=None, cat_number=None),
+            PanelEntry(marker="CD45", fluorophore="BV421", clone="HI30", channel=None, vendor=None, cat_number=None),
+            PanelEntry(marker="Live/Dead", fluorophore="Zombie NIR", clone=None, channel=None, vendor=None, cat_number=None),
         ]
     ),
     gating_hierarchy=GatingHierarchy(
         root=GateNode(
             name="All Events",
+            notes=None,
             children=[
                 GateNode(
                     name="Time",
                     markers=["Time"],
                     is_critical=True,
+                    notes=None,
                     children=[
                         GateNode(
                             name="Singlets",
                             markers=["FSC-A", "FSC-H"],
                             is_critical=True,
+                            notes=None,
                             children=[
                                 GateNode(
                                     name="Live",
                                     markers=["Zombie NIR"],
-                                    marker_logic=[MarkerExpression(marker="Zombie NIR", positive=False)],
+                                    marker_logic=[MarkerExpression(marker="Zombie NIR", positive=False, level=None)],
                                     is_critical=True,
+                                    notes=None,
                                     children=[
                                         GateNode(
                                             name="CD45+",
                                             markers=["CD45"],
-                                            marker_logic=[MarkerExpression(marker="CD45", positive=True)],
+                                            marker_logic=[MarkerExpression(marker="CD45", positive=True, level=None)],
                                             notes="All leukocytes; go directly to lineage markers (no FSC/SSC lymphocyte gate)",
                                             children=[
                                                 # Plot CD19 vs CD3 first to separate T and B cells
@@ -463,8 +475,8 @@ EXAMPLE_TEST_CASE = TestCase(
                                                     name="T cells",
                                                     markers=["CD3", "CD19"],
                                                     marker_logic=[
-                                                        MarkerExpression(marker="CD3", positive=True),
-                                                        MarkerExpression(marker="CD19", positive=False),
+                                                        MarkerExpression(marker="CD3", positive=True, level=None),
+                                                        MarkerExpression(marker="CD19", positive=False, level=None),
                                                     ],
                                                     notes="CD3+ CD19- T lymphocytes",
                                                 ),
@@ -472,8 +484,8 @@ EXAMPLE_TEST_CASE = TestCase(
                                                     name="B cells",
                                                     markers=["CD19", "CD3"],
                                                     marker_logic=[
-                                                        MarkerExpression(marker="CD3", positive=False),
-                                                        MarkerExpression(marker="CD19", positive=True),
+                                                        MarkerExpression(marker="CD3", positive=False, level=None),
+                                                        MarkerExpression(marker="CD19", positive=True, level=None),
                                                     ],
                                                     notes="CD3- CD19+ B lymphocytes (CD20+ also acceptable)",
                                                 ),
@@ -491,5 +503,7 @@ EXAMPLE_TEST_CASE = TestCase(
     metadata=CurationMetadata(
         curation_date=date.today(),
         curator="John Balibalos",
+        flowkit_version=None,
+        last_updated=None,
     ),
 )

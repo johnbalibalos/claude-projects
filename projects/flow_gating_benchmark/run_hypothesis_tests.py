@@ -25,17 +25,73 @@ import argparse
 import json
 import logging
 import sys
+from dataclasses import dataclass, field
+from enum import Enum
 from pathlib import Path
 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
-from hypothesis_tests import (
-    AblationConfig,
-    HypothesisTestResult,
-    HypothesisTestRunner,
-)
-from hypothesis_tests.runner import HypothesisType
+
+# Stub classes for hypothesis testing framework (not yet fully implemented)
+class HypothesisType(str, Enum):
+    """Types of hypothesis tests available."""
+    FREQUENCY_CONFOUND = "frequency_confound"
+    ALIEN_CELL = "alien_cell"
+    FORMAT_ABLATION = "format_ablation"
+    COT_MECHANISTIC = "cot_mechanistic"
+    COGNITIVE_REFUSAL = "cognitive_refusal"
+
+
+@dataclass
+class AblationConfig:
+    """Configuration for hypothesis ablation tests."""
+    tests: list[HypothesisType] = field(default_factory=list)
+    model: str = "claude-sonnet-4-20250514"
+    output_dir: str = "./hypothesis_test_results"
+    dry_run: bool = False
+
+
+@dataclass
+class HypothesisTestResult:
+    """Result of hypothesis tests."""
+    tests_run: list[str] = field(default_factory=list)
+    results: dict = field(default_factory=dict)
+
+    def format_report(self) -> str:
+        """Format results as a human-readable report."""
+        lines = ["=" * 60, "HYPOTHESIS TEST RESULTS", "=" * 60, ""]
+        for test_name, result in self.results.items():
+            lines.append(f"\n{test_name.upper()}")
+            lines.append("-" * 40)
+            if isinstance(result, dict):
+                for key, value in result.items():
+                    lines.append(f"  {key}: {value}")
+            else:
+                lines.append(f"  {result}")
+        return "\n".join(lines)
+
+
+class HypothesisTestRunner:
+    """Runner for hypothesis tests (stub implementation)."""
+
+    def __init__(self, config: AblationConfig):
+        self.config = config
+        self.results: dict = {}
+
+    def run_frequency_correlation(self, population_scores: dict[str, float]) -> None:
+        """Run frequency correlation analysis."""
+        self.results["frequency_correlation"] = {
+            "n_populations": len(population_scores),
+            "status": "analysis_only",
+        }
+
+    def finalize(self) -> HypothesisTestResult:
+        """Finalize and return results."""
+        return HypothesisTestResult(
+            tests_run=[t.value for t in self.config.tests],
+            results=self.results,
+        )
 
 logging.basicConfig(
     level=logging.INFO,

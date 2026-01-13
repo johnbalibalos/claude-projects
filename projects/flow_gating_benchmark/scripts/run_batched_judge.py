@@ -36,13 +36,13 @@ PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 from curation.omip_extractor import load_all_test_cases  # noqa: E402
+from experiments.batch_scorer import ScoringResult  # noqa: E402
 from experiments.llm_client import create_client  # noqa: E402
 from experiments.llm_judge import (  # noqa: E402
     JUDGE_STYLES,
     flatten_hierarchy,
     format_prediction_for_judge,
 )
-from experiments.batch_scorer import ScoringResult  # noqa: E402
 
 
 @dataclass

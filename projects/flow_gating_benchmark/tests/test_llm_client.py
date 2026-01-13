@@ -1,10 +1,16 @@
 """Tests for LLM client module."""
 
 import subprocess
+import sys
+from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
-from experiments.llm_client import (
+
+# Add src to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+
+from experiments.llm_client import (  # pyright: ignore[reportMissingImports]
     CLI_MODEL_MAP,
     MODEL_REGISTRY,
     ClaudeCLIClient,

@@ -249,7 +249,7 @@ def main():
     still_trunc = [r for r in rerun_results if is_truncated(r.get("raw_response", ""))]
     errors = [r for r in rerun_results if r.get("error")]
 
-    print(f"\n## Results")
+    print("\n## Results")
     print(f"  Fixed (now complete): {len(new_complete)}")
     print(f"  Still truncated: {len(still_trunc)}")
     print(f"  Errors: {len(errors)}")

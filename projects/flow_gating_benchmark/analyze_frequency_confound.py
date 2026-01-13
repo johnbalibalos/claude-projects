@@ -12,7 +12,6 @@ Generates visualizations for presentation.
 
 import json
 import sys
-from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -44,13 +43,26 @@ def load_results(results_path: str) -> dict:
         return json.load(f)
 
 
+class PopulationData:
+    """Mutable container for population tracking data."""
+    def __init__(self):
+        self.f1_scores: list[float] = []
+        self.matches: int = 0
+        self.misses: int = 0
+
+
 def extract_population_scores(results: dict) -> dict[str, PopulationScore]:
     """
     Extract per-population performance metrics from benchmark results.
 
     Tracks both matches and misses to compute detection rates.
     """
-    population_data = defaultdict(lambda: {"f1_scores": [], "matches": 0, "misses": 0})
+    population_data: dict[str, PopulationData] = {}
+
+    def get_or_create(name: str) -> PopulationData:
+        if name not in population_data:
+            population_data[name] = PopulationData()
+        return population_data[name]
 
     for result in results.get("results", []):
         eval_data = result.get("evaluation", {})
@@ -59,31 +71,34 @@ def extract_population_scores(results: dict) -> dict[str, PopulationScore]:
         for gate in eval_data.get("matching_gates", []):
             # Normalize gate name
             name = gate.strip()
-            population_data[name]["matches"] += 1
+            data = get_or_create(name)
+            data.matches += 1
             # Matched gates have implicit F1 contribution
-            population_data[name]["f1_scores"].append(1.0)
+            data.f1_scores.append(1.0)
 
         # Track missing gates (in ground truth but not predicted)
         for gate in eval_data.get("missing_gates", []):
             name = gate.strip()
-            population_data[name]["misses"] += 1
-            population_data[name]["f1_scores"].append(0.0)
+            data = get_or_create(name)
+            data.misses += 1
+            data.f1_scores.append(0.0)
 
         # Track hallucinated gates (predicted but not in ground truth)
         for gate in eval_data.get("extra_gates", []):
             name = gate.strip()
             # Don't count these as misses, just note the hallucination
             if name not in population_data:
-                population_data[name]["f1_scores"].append(0.0)
+                data = get_or_create(name)
+                data.f1_scores.append(0.0)
 
     # Convert to PopulationScore objects
     scores = {}
     for name, data in population_data.items():
         scores[name] = PopulationScore(
             name=name,
-            f1_scores=data["f1_scores"],
-            match_count=data["matches"],
-            miss_count=data["misses"],
+            f1_scores=data.f1_scores,
+            match_count=data.matches,
+            miss_count=data.misses,
         )
 
     return scores

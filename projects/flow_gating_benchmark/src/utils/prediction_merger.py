@@ -117,7 +117,7 @@ def merge_jsonl_files(
             continue
 
         file_count = 0
-        with open(filepath, "r") as f:
+        with open(filepath) as f:
             for line in f:
                 line = line.strip()
                 if not line:
