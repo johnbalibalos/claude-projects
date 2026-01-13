@@ -456,12 +456,11 @@
                                     {
                                       "name": "Marginal zone B cells",
                                       "markers": [
-                                        "CD24",
                                         "CD38",
                                         "CD274",
                                         "CD40"
                                       ],
-                                      "marker_logic": "CD24+ CD38hi (CD274hi CD40hi)",
+                                      "marker_logic": "CD38hi CD274+ CD40+",
                                       "gate_type": "Unknown",
                                       "children": [],
                                       "is_critical": false
