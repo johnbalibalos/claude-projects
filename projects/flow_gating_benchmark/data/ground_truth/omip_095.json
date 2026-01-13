@@ -426,23 +426,21 @@
                                           "gate_type": "Unknown",
                                           "children": [
                                             {
-                                              "name": "T1 (early)",
+                                              "name": "Transitional 1",
                                               "markers": [
-                                                "IgD",
                                                 "CD62L"
                                               ],
-                                              "marker_logic": "CD62L- (by IgD)",
+                                              "marker_logic": "CD62L-",
                                               "gate_type": "Unknown",
                                               "children": [],
                                               "is_critical": false
                                             },
                                             {
-                                              "name": "T2 (intermediate)",
+                                              "name": "Transitional 2",
                                               "markers": [
-                                                "IgD",
                                                 "CD62L"
                                               ],
-                                              "marker_logic": "CD62L+ (by IgD)",
+                                              "marker_logic": "CD62L+",
                                               "gate_type": "Unknown",
                                               "children": [],
                                               "is_critical": false
