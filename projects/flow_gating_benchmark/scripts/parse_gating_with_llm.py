@@ -19,9 +19,8 @@ def get_client(provider: str):
         import anthropic
         return anthropic.Anthropic()
     elif provider == "google":
-        import google.generativeai as genai
-        genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
-        return genai
+        from google import genai
+        return genai.Client(api_key=os.environ.get("GOOGLE_API_KEY"))
     else:
         raise ValueError(f"Unknown provider: {provider}")
 

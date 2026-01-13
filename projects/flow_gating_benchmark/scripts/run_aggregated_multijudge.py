@@ -46,21 +46,27 @@ def call_gemini(prompt: str, api_key: str, dry_run: bool = False) -> tuple[str, 
     if dry_run:
         return "[DRY RUN] Mock response\nMEDIAN_QUALITY: 7\nCONSISTENCY: 8\nWORST_CASE: 5\nBEST_CASE: 9\nFAILURE_MODES: none\nRELIABILITY: high Good model\nSUMMARY: Mock summary", 100
 
-    import google.generativeai as genai
+    from google import genai
+    from google.genai import types
 
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-2.5-pro")
+    client = genai.Client(api_key=api_key)
 
-    response = model.generate_content(
-        prompt,
-        generation_config={
-            "max_output_tokens": 20000,
-            "temperature": 0.0,
-        },
+    generation_config = types.GenerateContentConfig(
+        max_output_tokens=20000,
+        temperature=0.0,
+    )
+
+    response = client.models.generate_content(
+        model="gemini-2.5-pro",
+        contents=prompt,
+        config=generation_config,
     )
 
     text = response.text if response.text else ""
-    tokens = response.usage_metadata.total_token_count if hasattr(response, "usage_metadata") else 0
+    tokens = 0
+    if response.usage_metadata:
+        tokens = (response.usage_metadata.prompt_token_count or 0) + \
+                 (response.usage_metadata.candidates_token_count or 0)
 
     return text, tokens
 
