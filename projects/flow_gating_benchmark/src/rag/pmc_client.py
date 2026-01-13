@@ -448,7 +448,7 @@ class OMIPPaperDownloader:
 
     Usage:
         downloader = OMIPPaperDownloader(
-            test_cases_dir=Path("data/ground_truth"),
+            test_cases_dir=Path("data/verified"),
             cache_dir=Path("data/papers"),
             email="your@email.com",
             api_key=os.environ.get("NCBI_API_KEY"),
@@ -679,7 +679,7 @@ def main():
     parser.add_argument(
         "--test-cases-dir",
         type=Path,
-        default=Path("data/ground_truth/synthetic"),
+        default=Path("data/verified/synthetic"),
         help="Directory containing test case JSON files (use synthetic/ or real/)",
     )
     parser.add_argument(

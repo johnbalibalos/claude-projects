@@ -524,7 +524,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     results_path = sys.argv[1]
-    ground_truth_dir = sys.argv[2] if len(sys.argv) > 2 else "data/ground_truth"
+    ground_truth_dir = sys.argv[2] if len(sys.argv) > 2 else "data/verified"
     output_dir = sys.argv[3] if len(sys.argv) > 3 else "results/reports"
 
     reports = generate_all_reports(results_path, ground_truth_dir, output_dir)

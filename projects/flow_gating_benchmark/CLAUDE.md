@@ -40,7 +40,7 @@ Evaluate whether LLMs can predict flow cytometry gating strategies from panel in
 
 ### Data Flow
 
-1. **Test Cases** (`data/ground_truth/*.json`) → Pydantic models
+1. **Test Cases** (`data/verified/*.json`) → Pydantic models
 2. **Conditions** (model × context × strategy) → Prompt templates
 3. **LLM Calls** (CLI rate-limited, API parallel) → Raw predictions
 4. **Scoring** (F1, structure, critical gates) → Metrics
@@ -88,7 +88,7 @@ python scripts/run_modular_pipeline.py --phase judge              # Run LLM judg
 |-----------|---------|-------------|
 | `--phase` | `all` | Which phase to run: `predict`, `score`, `judge`, or `all` |
 | `--models` | `claude-sonnet-cli` | Models to test (space-separated). Options: `gemini-2.0-flash`, `gemini-2.5-pro`, `claude-sonnet-cli`, `claude-opus-cli`, `gpt-4o` |
-| `--test-cases` | `data/ground_truth` | Directory with test case JSON files |
+| `--test-cases` | `data/verified` | Directory with test case JSON files |
 | `--n-bootstrap` | `1` | Number of runs per condition (for variance estimation) |
 | `--max-cases` | None | Limit number of test cases (for quick testing) |
 | `--force` | False | Skip cost confirmation hook |
@@ -168,7 +168,7 @@ flow_gating_benchmark/
 │   └── conftest.py                  # Shared fixtures
 │
 ├── data/
-│   └── ground_truth/                # OMIP test cases (JSON)
+│   └── verified/                    # OMIP test cases (JSON)
 │
 └── results/                         # Output directory
     ├── full_benchmark/              # Checkpoints and results
@@ -413,9 +413,9 @@ for model, stats in data['stats']['by_model'].items():
 
 ## Adding Test Cases
 
-1. Create `data/ground_truth/omip_XXX.json`
+1. Create `data/verified/omip_XXX.json`
 2. Follow schema in `src/curation/schemas.py`
-3. Validate: `python -c "from curation.omip_extractor import load_all_test_cases; print(len(load_all_test_cases('data/ground_truth')))"`
+3. Validate: `python -c "from curation.omip_extractor import load_all_test_cases; print(len(load_all_test_cases('data/verified')))"`
 
 ### Test Case Schema
 

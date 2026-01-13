@@ -188,7 +188,7 @@ def parse_args():
     parser.add_argument(
         "--ground-truth-dir",
         type=Path,
-        default=Path("data/ground_truth"),
+        default=Path("data/verified"),
         help="Directory with ground truth JSON files",
     )
 

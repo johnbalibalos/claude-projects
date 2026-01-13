@@ -54,5 +54,5 @@ def sample_panel():
 
 @pytest.fixture
 def ground_truth_dir():
-    """Path to ground truth test cases."""
-    return Path(__file__).parent.parent / "data" / "ground_truth"
+    """Path to verified test cases."""
+    return Path(__file__).parent.parent / "data" / "verified"

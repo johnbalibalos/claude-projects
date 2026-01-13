@@ -273,7 +273,7 @@ def main():
     parser.add_argument(
         "--test-cases",
         type=Path,
-        default=PROJECT_ROOT / "data" / "ground_truth",
+        default=PROJECT_ROOT / "data" / "verified",
         help="Directory with test cases",
     )
     parser.add_argument(

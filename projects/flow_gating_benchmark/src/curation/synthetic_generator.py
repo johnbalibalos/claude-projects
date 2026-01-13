@@ -10,7 +10,7 @@ Usage:
     from curation.synthetic_generator import SyntheticTestCaseGenerator
 
     gen = SyntheticTestCaseGenerator()
-    base = load_test_case("data/ground_truth/omip_074.json")
+    base = load_test_case("data/verified/omip_074.json")
 
     # Create variation with marker swaps
     varied = gen.from_template(base, marker_swaps={"CD3": "CD3e"})

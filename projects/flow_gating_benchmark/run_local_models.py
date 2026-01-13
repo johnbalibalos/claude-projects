@@ -120,7 +120,7 @@ def cmd_plan(args, models: list[str], contexts: list[str], strategies: list[str]
     from src.curation.omip_extractor import load_all_test_cases
 
     # Load test cases to get count
-    ground_truth_dir = Path(__file__).parent / "data" / "ground_truth"
+    ground_truth_dir = Path(__file__).parent / "data" / "verified"
 
     try:
         all_test_cases = load_all_test_cases(ground_truth_dir)
@@ -199,7 +199,7 @@ def cmd_run(args, models: list[str], contexts: list[str], strategies: list[str])
         return 1
 
     # Load test cases
-    ground_truth_dir = Path(__file__).parent / "data" / "ground_truth"
+    ground_truth_dir = Path(__file__).parent / "data" / "verified"
     all_test_cases = load_all_test_cases(ground_truth_dir)
 
     if not all_test_cases:

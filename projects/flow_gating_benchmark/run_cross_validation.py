@@ -49,8 +49,8 @@ def load_ground_truths(data_dir: Path) -> dict[str, dict]:
     """Load all ground truth test cases."""
     ground_truths = {}
 
-    # Load from ground_truth directory
-    gt_dir = data_dir / "ground_truth"
+    # Load from verified directory
+    gt_dir = data_dir / "verified"
     if gt_dir.exists():
         for gt_file in gt_dir.glob("*.json"):
             if gt_file.stem.startswith("omip_"):

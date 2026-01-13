@@ -5,7 +5,7 @@ import json
 from datetime import date
 from pathlib import Path
 
-OUTPUT_DIR = Path(__file__).parent.parent / "data" / "ground_truth"
+OUTPUT_DIR = Path(__file__).parent.parent / "data" / "verified"
 
 # Additional panels to balance the distribution
 ADDITIONAL_OMIPS = {

@@ -158,7 +158,7 @@ Examples:
     parser.add_argument(
         "--test-cases",
         type=str,
-        default="data/ground_truth",
+        default="data/verified",
         help="Directory containing test cases",
     )
 
