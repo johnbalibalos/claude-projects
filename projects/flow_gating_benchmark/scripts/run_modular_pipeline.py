@@ -23,9 +23,15 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-# Setup paths
-PROJECT_ROOT = Path(__file__).parent.parent
-sys.path.insert(0, str(PROJECT_ROOT / "src"))
+# Bootstrap libs path for shared utilities
+_script_dir = Path(__file__).resolve().parent
+_repo_root = _script_dir.parent.parent.parent
+sys.path.insert(0, str(_repo_root / "libs"))
+
+# Setup project paths consistently
+from paths import setup_project_paths  # noqa: E402
+paths = setup_project_paths(__file__)
+PROJECT_ROOT = paths["project_root"]
 
 from curation.omip_extractor import load_all_test_cases  # noqa: E402
 from experiments.batch_scorer import (  # noqa: E402

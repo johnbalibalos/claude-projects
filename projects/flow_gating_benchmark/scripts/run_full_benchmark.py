@@ -27,13 +27,18 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-# Setup paths
-PROJECT_ROOT = Path(__file__).parent.parent
-sys.path.insert(0, str(PROJECT_ROOT / "src"))
-sys.path.insert(0, str(PROJECT_ROOT.parent.parent / "libs"))
+# Bootstrap libs path for shared utilities
+_script_dir = Path(__file__).resolve().parent
+_repo_root = _script_dir.parent.parent.parent
+sys.path.insert(0, str(_repo_root / "libs"))
 
-# Load .env
-env_file = PROJECT_ROOT.parent.parent / ".env"
+# Setup project paths consistently
+from paths import setup_project_paths  # noqa: E402
+_paths = setup_project_paths(__file__)
+PROJECT_ROOT = _paths["project_root"]
+
+# Load .env from repo root
+env_file = _paths["repo_root"] / ".env"
 if env_file.exists():
     with open(env_file) as f:
         for line in f:
