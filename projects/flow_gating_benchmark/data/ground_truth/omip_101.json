@@ -337,68 +337,65 @@
                                           "is_critical": false,
                                           "children": [
                                             {
-                                              "name": "Non-T/B/NK myeloid",
+                                              "name": "Non HLA-DR- CD14-",
                                               "markers": [
-                                                "CD33",
-                                                "CD19",
-                                                "CD3",
-                                                "CD56"
+                                                "HLA-DR",
+                                                "CD14"
                                               ],
-                                              "marker_logic": "CD33+ CD19- CD3- CD56-",
+                                              "marker_logic": "NOT (HLA-DR- CD14-)",
                                               "gate_type": "Unknown",
                                               "is_critical": false,
                                               "children": [
                                                 {
-                                                  "name": "HLA-DR+ myeloid",
+                                                  "name": "Classical monocytes",
                                                   "markers": [
-                                                    "HLA-DR"
+                                                    "CD14",
+                                                    "CD16"
                                                   ],
-                                                  "marker_logic": "HLA-DR+",
+                                                  "marker_logic": "CD14+ CD16-",
+                                                  "gate_type": "Unknown",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "Intermediate monocytes",
+                                                  "markers": [
+                                                    "CD14",
+                                                    "CD16"
+                                                  ],
+                                                  "marker_logic": "CD14+ CD16+/low",
+                                                  "gate_type": "Unknown",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "Non-classical monocytes",
+                                                  "markers": [
+                                                    "CD14",
+                                                    "CD16"
+                                                  ],
+                                                  "marker_logic": "CD14- CD16+",
+                                                  "gate_type": "Unknown",
+                                                  "is_critical": false,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "name": "Double negative",
+                                                  "markers": [
+                                                    "CD14",
+                                                    "CD16"
+                                                  ],
+                                                  "marker_logic": "CD14- CD16-",
                                                   "gate_type": "Unknown",
                                                   "is_critical": false,
                                                   "children": [
                                                     {
-                                                      "name": "Classical monocytes",
-                                                      "markers": [
-                                                        "CD14",
-                                                        "CD16"
-                                                      ],
-                                                      "marker_logic": "CD14+ CD16-",
-                                                      "gate_type": "Unknown",
-                                                      "is_critical": false,
-                                                      "children": []
-                                                    },
-                                                    {
-                                                      "name": "Intermediate monocytes",
-                                                      "markers": [
-                                                        "CD14",
-                                                        "CD16"
-                                                      ],
-                                                      "marker_logic": "CD14+ CD16+/low",
-                                                      "gate_type": "Unknown",
-                                                      "is_critical": false,
-                                                      "children": []
-                                                    },
-                                                    {
-                                                      "name": "Non-classical monocytes",
-                                                      "markers": [
-                                                        "CD14",
-                                                        "CD16"
-                                                      ],
-                                                      "marker_logic": "CD14- CD16+",
-                                                      "gate_type": "Unknown",
-                                                      "is_critical": false,
-                                                      "children": []
-                                                    },
-                                                    {
                                                       "name": "mDCs",
                                                       "markers": [
-                                                        "CD14",
-                                                        "CD16",
-                                                        "HLA-DR",
-                                                        "CD11c"
+                                                        "CD11c",
+                                                        "HLA-DR"
                                                       ],
-                                                      "marker_logic": "CD14- CD16- HLA-DR+ CD11c+",
+                                                      "marker_logic": "CD11c+ HLA-DR+",
                                                       "gate_type": "Unknown",
                                                       "is_critical": false,
                                                       "children": []
