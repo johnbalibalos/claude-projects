@@ -39,16 +39,16 @@ This benchmark evaluates LLM capabilities in predicting flow cytometry gating hi
 | Parse Success Rate | 100% |
 | Error Count | 0 |
 
-### Model Rankings by F1 Score
+### Detailed Metrics by Model
 
-| Rank | Model | F1 Score | Std Dev |
-|------|-------|----------|---------|
-| 1 | gemini-2.5-pro | 0.361 | 0.162 |
-| 2 | gemini-2.0-flash | 0.340 | 0.134 |
-| 3 | claude-opus-4-20250514 | 0.330 | 0.179 |
-| 4 | claude-sonnet-4-20250514 | 0.326 | 0.130 |
-| 5 | claude-3-5-haiku-20241022 | 0.306 | 0.106 |
-| 6 | gemini-2.5-flash | 0.305 | 0.145 |
+| Model | Hierarchy F1 | Structure Acc | Critical Recall | Parse Rate | Errors |
+|-------|--------------|---------------|-----------------|------------|--------|
+| gemini-2.5-pro | 0.361 ± 0.162 | 0.085 ± 0.080 | 0.843 ± 0.123 | 100% | 0 |
+| gemini-2.0-flash | 0.340 ± 0.134 | 0.092 ± 0.107 | 0.842 ± 0.130 | 100% | 0 |
+| claude-opus-4-20250514 | 0.330 ± 0.179 | 0.109 ± 0.165 | 0.835 ± 0.135 | 100% | 0 |
+| claude-sonnet-4-20250514 | 0.326 ± 0.130 | 0.100 ± 0.152 | 0.829 ± 0.127 | 100% | 0 |
+| claude-3-5-haiku-20241022 | 0.306 ± 0.106 | 0.073 ± 0.090 | 0.803 ± 0.152 | 100% | 0 |
+| gemini-2.5-flash | 0.305 ± 0.145 | 0.097 ± 0.121 | 0.850 ± 0.150 | 100% | 0 |
 
 ---
 
