@@ -113,7 +113,7 @@
         "cat_number": null
       },
       {
-        "marker": "TCR\u03b2",
+        "marker": "TCRβ",
         "fluorophore": "BB700",
         "clone": "H57-597",
         "channel": null,
@@ -186,91 +186,58 @@
       "gate_type": "Unknown",
       "children": [
         {
-          "name": "Singlets",
+          "name": "Cells",
           "markers": [],
-          "marker_logic": "FSC-A vs FSC-H",
-          "gate_type": "Unknown",
+          "marker_logic": "SSC-A vs FSC-A",
+          "gate_type": "Polygon",
           "children": [
             {
-              "name": "Live cells",
+              "name": "Single cells",
               "markers": [],
-              "marker_logic": "Live/Dead-",
-              "gate_type": "Unknown",
+              "marker_logic": "FSC-W vs FSC-A",
+              "gate_type": "Polygon",
               "children": [
                 {
-                  "name": "Lymphocytes",
+                  "name": "Viable CD45+",
                   "markers": [],
-                  "marker_logic": "FSC vs SSC, CD45+",
-                  "gate_type": "Unknown",
+                  "marker_logic": "CD45+ Live/Dead-",
+                  "gate_type": "Rectangle",
                   "children": [
                     {
-                      "name": "B cells",
+                      "name": "CD4+ T cells",
                       "markers": [],
-                      "marker_logic": "TCR\u03b2- CD19+",
-                      "gate_type": "Unknown",
-                      "children": [
-                        {
-                          "name": "Plasma cells",
-                          "markers": [],
-                          "marker_logic": "CD138+ B220-",
-                          "gate_type": "Unknown",
-                          "children": [],
-                          "is_critical": false
-                        },
-                        {
-                          "name": "Plasmablasts",
-                          "markers": [],
-                          "marker_logic": "CD138+ B220+",
-                          "gate_type": "Unknown",
-                          "children": [],
-                          "is_critical": false
-                        },
-                        {
-                          "name": "Activated B cells",
-                          "markers": [],
-                          "marker_logic": "CD80+",
-                          "gate_type": "Unknown",
-                          "children": [],
-                          "is_critical": false
-                        },
-                        {
-                          "name": "Memory B cells",
-                          "markers": [],
-                          "marker_logic": "PD-L2+ IgD-",
-                          "gate_type": "Unknown",
-                          "children": [],
-                          "is_critical": false
-                        }
-                      ],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "T cells",
-                      "markers": [],
-                      "marker_logic": "TCR\u03b2+ CD4+",
-                      "gate_type": "Unknown",
+                      "marker_logic": "TCRβ+ CD4/CD19+",
+                      "gate_type": "Rectangle",
                       "children": [
                         {
                           "name": "Naive T cells",
                           "markers": [],
-                          "marker_logic": "CD44- CD62L+",
-                          "gate_type": "Unknown",
-                          "children": [],
-                          "is_critical": false
-                        },
-                        {
-                          "name": "Effector memory T cells",
-                          "markers": [],
-                          "marker_logic": "CD44+ CD62L-",
-                          "gate_type": "Unknown",
+                          "marker_logic": "CD62L+ CD44lo",
+                          "gate_type": "Rectangle",
                           "children": [],
                           "is_critical": false
                         },
                         {
                           "name": "Central memory T cells",
                           "markers": [],
-                          "marker_logic": "CD44+ CD62L+",
-                          "gate_type": "Unknown",
+                          "marker_logic": "CD62L+ CD44hi",
+                          "gate_type": "Rectangle",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Effector memory T cells",
+                          "markers": [],
+                          "marker_logic": "CD62L- CD44hi",
+                          "gate_type": "Rectangle",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Effector T cells",
+                          "markers": [],
+                          "marker_logic": "CD25+ Foxp3-",
+                          "gate_type": "Rectangle",
                           "children": [],
                           "is_critical": false
                         },
@@ -278,21 +245,13 @@
                           "name": "Regulatory T cells",
                           "markers": [],
                           "marker_logic": "CD25+ Foxp3+",
-                          "gate_type": "Unknown",
+                          "gate_type": "Rectangle",
                           "children": [
                             {
-                              "name": "ICOS+ Treg",
+                              "name": "ICOS+ CD44+ Treg",
                               "markers": [],
                               "marker_logic": "ICOS+ CD44+",
-                              "gate_type": "Unknown",
-                              "children": [],
-                              "is_critical": false
-                            },
-                            {
-                              "name": "Follicular regulatory T cells",
-                              "markers": [],
-                              "marker_logic": "CXCR5+ PD-1+",
-                              "gate_type": "Unknown",
+                              "gate_type": "Rectangle",
                               "children": [],
                               "is_critical": false
                             }
@@ -300,22 +259,144 @@
                           "is_critical": false
                         },
                         {
-                          "name": "T follicular helper cells",
+                          "name": "CXCR5+",
                           "markers": [],
-                          "marker_logic": "CXCR5+ PD-1+ ICOS+",
-                          "gate_type": "Unknown",
-                          "children": [],
+                          "marker_logic": "CXCR5+",
+                          "gate_type": "Rectangle",
+                          "children": [
+                            {
+                              "name": "T follicular helper cells",
+                              "markers": [],
+                              "marker_logic": "ICOS+ PD-1+",
+                              "gate_type": "Rectangle",
+                              "children": [
+                                {
+                                  "name": "T follicular regulatory cells",
+                                  "markers": [],
+                                  "marker_logic": "Foxp3+",
+                                  "gate_type": "Rectangle",
+                                  "children": [],
+                                  "is_critical": false
+                                }
+                              ],
+                              "is_critical": false
+                            }
+                          ],
                           "is_critical": false
                         }
                       ],
-                      "is_critical": false
+                      "is_critical": true
                     },
                     {
-                      "name": "ASC subsets",
+                      "name": "B cells",
                       "markers": [],
-                      "marker_logic": "TCR\u03b2- CD4/CD19-",
-                      "gate_type": "Unknown",
-                      "children": [],
+                      "marker_logic": "TCRβ- CD19+",
+                      "gate_type": "Rectangle",
+                      "children": [
+                        {
+                          "name": "Synd-1+",
+                          "markers": [],
+                          "marker_logic": "Synd-1+",
+                          "gate_type": "Rectangle",
+                          "children": [
+                            {
+                              "name": "Plasmablasts",
+                              "markers": [],
+                              "marker_logic": "MHC II+ IgM+",
+                              "gate_type": "Rectangle",
+                              "children": [],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Synd-1-",
+                          "markers": [],
+                          "marker_logic": "Synd-1-",
+                          "gate_type": "Rectangle",
+                          "children": [
+                            {
+                              "name": "CD80+ PD-L2+",
+                              "markers": [],
+                              "marker_logic": "CD80+ PD-L2+",
+                              "gate_type": "Rectangle",
+                              "children": [
+                                {
+                                  "name": "IgM+ Memory B cells",
+                                  "markers": [],
+                                  "marker_logic": "IgM+ IgD-",
+                                  "gate_type": "Rectangle",
+                                  "children": [],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "IgM+ IgD+ Memory B cells",
+                                  "markers": [],
+                                  "marker_logic": "IgM+ IgD+",
+                                  "gate_type": "Rectangle",
+                                  "children": [],
+                                  "is_critical": false
+                                }
+                              ],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "CD80+ PD-L2-",
+                              "markers": [],
+                              "marker_logic": "CD80+ PD-L2-",
+                              "gate_type": "Rectangle",
+                              "children": [
+                                {
+                                  "name": "MHC II+ PD-L2-",
+                                  "markers": [],
+                                  "marker_logic": "MHC II+ PD-L2-",
+                                  "gate_type": "Rectangle",
+                                  "children": [
+                                    {
+                                      "name": "Activated B cells",
+                                      "markers": [],
+                                      "marker_logic": "IgM+ IgD+",
+                                      "gate_type": "Rectangle",
+                                      "children": [],
+                                      "is_critical": false
+                                    }
+                                  ],
+                                  "is_critical": false
+                                }
+                              ],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        }
+                      ],
+                      "is_critical": true
+                    },
+                    {
+                      "name": "TCRβ- CD19-",
+                      "markers": [],
+                      "marker_logic": "TCRβ- CD4/CD19-",
+                      "gate_type": "Rectangle",
+                      "children": [
+                        {
+                          "name": "B220- Synd-1+",
+                          "markers": [],
+                          "marker_logic": "B220- Synd-1+",
+                          "gate_type": "Rectangle",
+                          "children": [
+                            {
+                              "name": "Plasma cells",
+                              "markers": [],
+                              "marker_logic": "MHC II- IgM+",
+                              "gate_type": "Rectangle",
+                              "children": [],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        }
+                      ],
                       "is_critical": false
                     }
                   ],
@@ -342,7 +423,7 @@
     "curation_date": "2026-01-09",
     "curator": "claude-extraction",
     "flowkit_version": null,
-    "last_updated": "2026-01-09"
+    "last_updated": "2026-01-13"
   },
-  "difficulty": "medium"
+  "difficulty": "hard"
 }

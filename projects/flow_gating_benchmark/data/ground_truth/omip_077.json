@@ -44,7 +44,7 @@
       {
         "marker": "CD14",
         "fluorophore": "BV711",
-        "clone": "M\u03a6P9",
+        "clone": "MΦP9",
         "channel": null,
         "vendor": null,
         "cat_number": null
@@ -147,155 +147,248 @@
       "gate_type": "Unknown",
       "children": [
         {
-          "name": "Singlets",
+          "name": "CD45+",
           "markers": [],
-          "marker_logic": "FSC-A vs FSC-H",
-          "gate_type": "Unknown",
+          "marker_logic": "CD45+ (SSC-A vs CD45)",
+          "gate_type": "Polygon",
           "children": [
             {
-              "name": "Live cells",
+              "name": "Scatter gate",
               "markers": [],
-              "marker_logic": "Viability-",
-              "gate_type": "Unknown",
+              "marker_logic": "SSC-A vs FSC-A",
+              "gate_type": "Polygon",
               "children": [
                 {
-                  "name": "Leukocytes",
+                  "name": "FSC Singlets",
                   "markers": [],
-                  "marker_logic": "CD45+",
-                  "gate_type": "Unknown",
+                  "marker_logic": "FSC-A vs FSC-H",
+                  "gate_type": "Polygon",
                   "children": [
                     {
-                      "name": "T cells",
+                      "name": "CD34- Leukocytes",
                       "markers": [],
-                      "marker_logic": "CD3+",
-                      "gate_type": "Unknown",
+                      "marker_logic": "CD34- (SSC-A vs CD34)",
+                      "gate_type": "Polygon",
                       "children": [
                         {
-                          "name": "NK-T cells",
+                          "name": "Granulocytes",
                           "markers": [],
-                          "marker_logic": "CD3+ CD56+",
-                          "gate_type": "Unknown",
-                          "children": [],
+                          "marker_logic": "SSC-hi CD14- (SSC-A vs CD14)",
+                          "gate_type": "Polygon",
+                          "children": [
+                            {
+                              "name": "CD15+",
+                              "markers": [],
+                              "marker_logic": "CD15+ (SSC-A vs CD15)",
+                              "gate_type": "Polygon",
+                              "children": [
+                                {
+                                  "name": "Neutrophils",
+                                  "markers": [],
+                                  "marker_logic": "CD193- (CD16 vs CD193)",
+                                  "gate_type": "Rectangle",
+                                  "children": [],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "Eosinophils",
+                                  "markers": [],
+                                  "marker_logic": "CD193+ (CD16 vs CD193)",
+                                  "gate_type": "Rectangle",
+                                  "children": [],
+                                  "is_critical": false
+                                }
+                              ],
+                              "is_critical": false
+                            }
+                          ],
                           "is_critical": false
-                        }
-                      ],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "NK cells",
-                      "markers": [],
-                      "marker_logic": "CD3- CD56+",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "B cells",
-                      "markers": [],
-                      "marker_logic": "CD19+ CD38-",
-                      "gate_type": "Unknown",
-                      "children": [
+                        },
                         {
-                          "name": "Marginal Zone B cells",
+                          "name": "PBMCs",
                           "markers": [],
-                          "marker_logic": "CD19+ CD1c+",
-                          "gate_type": "Unknown",
-                          "children": [],
-                          "is_critical": false
+                          "marker_logic": "SSC-int CD14+ AND SSC-lo CD14- (SSC-A vs CD14)",
+                          "gate_type": "Polygon",
+                          "children": [
+                            {
+                              "name": "T cells",
+                              "markers": [],
+                              "marker_logic": "CD3+ (CD14 vs CD3)",
+                              "gate_type": "Rectangle",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "CD3- CD14-",
+                              "markers": [],
+                              "marker_logic": "CD3- CD14-",
+                              "gate_type": "Rectangle",
+                              "children": [
+                                {
+                                  "name": "Progenitors",
+                                  "markers": [],
+                                  "marker_logic": "CD34+ CD193- (CD34 vs CD193)",
+                                  "gate_type": "Rectangle",
+                                  "children": [],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "Basophils",
+                                  "markers": [],
+                                  "marker_logic": "CD34- CD193+ (CD34 vs CD193)",
+                                  "gate_type": "Rectangle",
+                                  "children": [],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "CD34- CD193-",
+                                  "markers": [],
+                                  "marker_logic": "CD34- CD193-",
+                                  "gate_type": "Rectangle",
+                                  "children": [
+                                    {
+                                      "name": "CD14- HLA-DR-",
+                                      "markers": [],
+                                      "marker_logic": "CD14- HLA-DR- (HLA-DR vs CD14)",
+                                      "gate_type": "Rectangle",
+                                      "children": [
+                                        {
+                                          "name": "NK cells",
+                                          "markers": [],
+                                          "marker_logic": "CD56+ and/or CD16+ (CD56 vs CD16, exclude CD16- CD56-)",
+                                          "gate_type": "Polygon",
+                                          "children": [],
+                                          "is_critical": false
+                                        }
+                                      ],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Monocytes",
+                                      "markers": [],
+                                      "marker_logic": "CD14+ and/or CD16+ (CD16 vs CD14)",
+                                      "gate_type": "Polygon",
+                                      "children": [
+                                        {
+                                          "name": "Classical monocytes",
+                                          "markers": [],
+                                          "marker_logic": "CD14+ CD16-",
+                                          "gate_type": "Rectangle",
+                                          "children": [],
+                                          "is_critical": false
+                                        },
+                                        {
+                                          "name": "Intermediate monocytes",
+                                          "markers": [],
+                                          "marker_logic": "CD14+ CD16+",
+                                          "gate_type": "Rectangle",
+                                          "children": [],
+                                          "is_critical": false
+                                        },
+                                        {
+                                          "name": "Non-classical monocytes",
+                                          "markers": [],
+                                          "marker_logic": "CD14- CD16+",
+                                          "gate_type": "Rectangle",
+                                          "children": [],
+                                          "is_critical": false
+                                        }
+                                      ],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "CD14- CD16-",
+                                          "markers": [],
+                                          "marker_logic": "CD14- CD16-",
+                                          "gate_type": "Rectangle",
+                                          "children": [
+                                            {
+                                              "name": "B cells",
+                                              "markers": [],
+                                              "marker_logic": "CD19+ (CD19 vs CD38)",
+                                              "gate_type": "Rectangle",
+                                              "children": [
+                                                {
+                                                  "name": "Plasma cells",
+                                                  "markers": [],
+                                                  "marker_logic": "CD38++ CD1c- (CD1c vs CD38)",
+                                                  "gate_type": "Rectangle",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                },
+                                                {
+                                                  "name": "MZB cells",
+                                                  "markers": [],
+                                                  "marker_logic": "CD1c+ CD38lo (CD1c vs CD38)",
+                                                  "gate_type": "Rectangle",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                }
+                                              ],
+                                              "is_critical": false
+                                            },
+                                            {
+                                              "name": "CD19- CD38int",
+                                              "markers": [],
+                                              "marker_logic": "CD19- CD38int (CD19 vs CD38)",
+                                              "gate_type": "Rectangle",
+                                              "children": [
+                                                {
+                                                  "name": "CD1c+ mDCs",
+                                                  "markers": [],
+                                                  "marker_logic": "CD1c+ CD123- (CD1c vs CD123)",
+                                                  "gate_type": "Rectangle",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                },
+                                                {
+                                                  "name": "pDCs",
+                                                  "markers": [],
+                                                  "marker_logic": "CD123+ CD1c- (CD1c vs CD123)",
+                                                  "gate_type": "Rectangle",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                },
+                                                {
+                                                  "name": "CD1c- CD123-",
+                                                  "markers": [],
+                                                  "marker_logic": "CD1c- CD123- (CD1c vs CD123)",
+                                                  "gate_type": "Rectangle",
+                                                  "children": [
+                                                    {
+                                                      "name": "CD141+ mDCs",
+                                                      "markers": [],
+                                                      "marker_logic": "CD123int CD141+ (CD141 vs CD123)",
+                                                      "gate_type": "Rectangle",
+                                                      "children": [],
+                                                      "is_critical": false
+                                                    }
+                                                  ],
+                                                  "is_critical": false
+                                                }
+                                              ],
+                                              "is_critical": false
+                                            }
+                                          ],
+                                          "is_critical": false
+                                        }
+                                      ],
+                                      "is_critical": false
+                                    }
+                                  ],
+                                  "is_critical": false
+                                }
+                              ],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": true
                         }
                       ],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "Plasma cells",
-                      "markers": [],
-                      "marker_logic": "CD19+ CD38+ HLA-DR+",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "Classical monocytes",
-                      "markers": [],
-                      "marker_logic": "CD14+ CD16- HLA-DR+",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "Intermediate monocytes",
-                      "markers": [],
-                      "marker_logic": "CD14+ CD16+ HLA-DR+",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "Non-classical monocytes",
-                      "markers": [],
-                      "marker_logic": "CD14- CD16+ HLA-DR+",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "CD1c+ mDCs",
-                      "markers": [],
-                      "marker_logic": "CD14- CD19- CD1c+ HLA-DR+",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "CD141+ mDCs",
-                      "markers": [],
-                      "marker_logic": "CD14- CD19- CD141+ HLA-DR+",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "pDCs",
-                      "markers": [],
-                      "marker_logic": "CD14- CD19- CD123+ HLA-DR+",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "Neutrophils",
-                      "markers": [],
-                      "marker_logic": "CD16+ CD15+ HLA-DR-",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "Eosinophils",
-                      "markers": [],
-                      "marker_logic": "CD15+ CD193+",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "Basophils",
-                      "markers": [],
-                      "marker_logic": "CD123+ CD38+ CD193+",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
-                    },
-                    {
-                      "name": "Progenitor cells",
-                      "markers": [],
-                      "marker_logic": "CD34+",
-                      "gate_type": "Unknown",
-                      "children": [],
-                      "is_critical": false
+                      "is_critical": true
                     }
                   ],
-                  "is_critical": false
+                  "is_critical": true
                 }
               ],
               "is_critical": true
@@ -318,7 +411,7 @@
     "curation_date": "2026-01-09",
     "curator": "claude-extraction",
     "flowkit_version": null,
-    "last_updated": "2026-01-09"
+    "last_updated": "2026-01-13"
   },
   "difficulty": "hard"
 }

@@ -426,23 +426,21 @@
                                           "gate_type": "Unknown",
                                           "children": [
                                             {
-                                              "name": "T1 (early)",
+                                              "name": "Transitional 1",
                                               "markers": [
-                                                "IgD",
                                                 "CD62L"
                                               ],
-                                              "marker_logic": "CD62L- (by IgD)",
+                                              "marker_logic": "CD62L-",
                                               "gate_type": "Unknown",
                                               "children": [],
                                               "is_critical": false
                                             },
                                             {
-                                              "name": "T2 (intermediate)",
+                                              "name": "Transitional 2",
                                               "markers": [
-                                                "IgD",
                                                 "CD62L"
                                               ],
-                                              "marker_logic": "CD62L+ (by IgD)",
+                                              "marker_logic": "CD62L+",
                                               "gate_type": "Unknown",
                                               "children": [],
                                               "is_critical": false
@@ -456,12 +454,11 @@
                                     {
                                       "name": "Marginal zone B cells",
                                       "markers": [
-                                        "CD24",
                                         "CD38",
                                         "CD274",
                                         "CD40"
                                       ],
-                                      "marker_logic": "CD24+ CD38hi (CD274hi CD40hi)",
+                                      "marker_logic": "CD38hi CD274+ CD40+",
                                       "gate_type": "Unknown",
                                       "children": [],
                                       "is_critical": false
@@ -502,9 +499,11 @@
                                     {
                                       "name": "Germinal center B cells",
                                       "markers": [
-                                        "CD38"
+                                        "CD38",
+                                        "IgM",
+                                        "IgD"
                                       ],
-                                      "marker_logic": "CD38lo",
+                                      "marker_logic": "CD38lo IgM- IgD-",
                                       "gate_type": "Unknown",
                                       "children": [],
                                       "is_critical": false
@@ -533,7 +532,7 @@
                                   "gate_type": "Unknown",
                                   "children": [
                                     {
-                                      "name": "NK1.1+",
+                                      "name": "NK cells",
                                       "markers": [
                                         "NK1.1"
                                       ],
@@ -541,27 +540,71 @@
                                       "gate_type": "Unknown",
                                       "children": [
                                         {
-                                          "name": "NK cells",
+                                          "name": "CD127- NK cells",
                                           "markers": [
-                                            "NK1.1",
-                                            "CD3e"
+                                            "CD127"
                                           ],
-                                          "marker_logic": "NK1.1+ CD3e-",
+                                          "marker_logic": "CD127-",
                                           "gate_type": "Unknown",
-                                          "children": [],
-                                          "is_critical": false
-                                        },
-                                        {
-                                          "name": "T cells",
-                                          "markers": [
-                                            "CD3e"
+                                          "children": [
+                                            {
+                                              "name": "Terminal NK",
+                                              "markers": [
+                                                "CD11b",
+                                                "CD27"
+                                              ],
+                                              "marker_logic": "CD11b+ CD27-",
+                                              "gate_type": "Unknown",
+                                              "children": [],
+                                              "is_critical": false
+                                            },
+                                            {
+                                              "name": "DP NK",
+                                              "markers": [
+                                                "CD11b",
+                                                "CD27"
+                                              ],
+                                              "marker_logic": "CD11b+ CD27+",
+                                              "gate_type": "Unknown",
+                                              "children": [],
+                                              "is_critical": false
+                                            },
+                                            {
+                                              "name": "CD27+ NK",
+                                              "markers": [
+                                                "CD27",
+                                                "CD11b"
+                                              ],
+                                              "marker_logic": "CD27+ CD11b-",
+                                              "gate_type": "Unknown",
+                                              "children": [],
+                                              "is_critical": false
+                                            },
+                                            {
+                                              "name": "DN NK",
+                                              "markers": [
+                                                "CD11b",
+                                                "CD27"
+                                              ],
+                                              "marker_logic": "CD11b- CD27-",
+                                              "gate_type": "Unknown",
+                                              "children": [],
+                                              "is_critical": false
+                                            }
                                           ],
-                                          "marker_logic": "CD3e+",
-                                          "gate_type": "Unknown",
-                                          "children": [],
                                           "is_critical": false
                                         }
                                       ],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "T cells",
+                                      "markers": [
+                                        "CD3e"
+                                      ],
+                                      "marker_logic": "CD3e+",
+                                      "gate_type": "Unknown",
+                                      "children": [],
                                       "is_critical": false
                                     },
                                     {
@@ -612,7 +655,30 @@
                                               ],
                                               "marker_logic": "CD11c+ I-A/I-E+",
                                               "gate_type": "Unknown",
-                                              "children": [],
+                                              "children": [
+                                                {
+                                                  "name": "cDC1s",
+                                                  "markers": [
+                                                    "CD8a",
+                                                    "CD11b"
+                                                  ],
+                                                  "marker_logic": "CD8a+ CD11b-",
+                                                  "gate_type": "Unknown",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                },
+                                                {
+                                                  "name": "cDC2s",
+                                                  "markers": [
+                                                    "CD11b",
+                                                    "CD8a"
+                                                  ],
+                                                  "marker_logic": "CD11b+ CD8a-",
+                                                  "gate_type": "Unknown",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                }
+                                              ],
                                               "is_critical": false
                                             },
                                             {
@@ -661,7 +727,41 @@
                                                       ],
                                                       "marker_logic": "CX3CR1int CD11b+",
                                                       "gate_type": "Unknown",
-                                                      "children": [],
+                                                      "children": [
+                                                        {
+                                                          "name": "Classical Monocytes",
+                                                          "markers": [
+                                                            "Ly6C",
+                                                            "CD62L"
+                                                          ],
+                                                          "marker_logic": "Ly6C+ CD62L+",
+                                                          "gate_type": "Unknown",
+                                                          "children": [],
+                                                          "is_critical": false
+                                                        },
+                                                        {
+                                                          "name": "Intermediate Monocytes",
+                                                          "markers": [
+                                                            "Ly6C",
+                                                            "CD62L"
+                                                          ],
+                                                          "marker_logic": "Ly6C+ CD62L-",
+                                                          "gate_type": "Unknown",
+                                                          "children": [],
+                                                          "is_critical": false
+                                                        },
+                                                        {
+                                                          "name": "Nonclassical Monocytes",
+                                                          "markers": [
+                                                            "Ly6C",
+                                                            "CD62L"
+                                                          ],
+                                                          "marker_logic": "Ly6C- CD62L-",
+                                                          "gate_type": "Unknown",
+                                                          "children": [],
+                                                          "is_critical": false
+                                                        }
+                                                      ],
                                                       "is_critical": false
                                                     },
                                                     {
@@ -688,209 +788,6 @@
                                     }
                                   ],
                                   "is_critical": false
-                                },
-                                {
-                                  "name": "T cells",
-                                  "markers": [
-                                    "CD3e"
-                                  ],
-                                  "marker_logic": "CD3+",
-                                  "gate_type": "Unknown",
-                                  "children": [
-                                    {
-                                      "name": "Unconventional T cells (NK1.1 x TCRgd)",
-                                      "markers": [
-                                        "NK1.1",
-                                        "TCRgd"
-                                      ],
-                                      "marker_logic": "NK1.1 x TCRgd biaxial",
-                                      "gate_type": "Unknown",
-                                      "children": [
-                                        {
-                                          "name": "NKT cells",
-                                          "markers": [
-                                            "NK1.1",
-                                            "TCRgd"
-                                          ],
-                                          "marker_logic": "NK1.1+ TCRgd-",
-                                          "gate_type": "Unknown",
-                                          "children": [],
-                                          "is_critical": false
-                                        },
-                                        {
-                                          "name": "gd T cells",
-                                          "markers": [
-                                            "TCRgd",
-                                            "NK1.1"
-                                          ],
-                                          "marker_logic": "TCRgd+ NK1.1-",
-                                          "gate_type": "Unknown",
-                                          "children": [],
-                                          "is_critical": false
-                                        },
-                                        {
-                                          "name": "gdNKT cells",
-                                          "markers": [
-                                            "NK1.1",
-                                            "TCRgd"
-                                          ],
-                                          "marker_logic": "NK1.1+ TCRgd+",
-                                          "gate_type": "Unknown",
-                                          "children": [],
-                                          "is_critical": false
-                                        }
-                                      ],
-                                      "is_critical": false
-                                    },
-                                    {
-                                      "name": "Conventional T cells",
-                                      "markers": [
-                                        "NK1.1",
-                                        "TCRgd"
-                                      ],
-                                      "marker_logic": "NK1.1- TCRgd-",
-                                      "gate_type": "Unknown",
-                                      "children": [
-                                        {
-                                          "name": "CD4+ T cells",
-                                          "markers": [
-                                            "CD4",
-                                            "CD8a"
-                                          ],
-                                          "marker_logic": "CD4+ CD8-",
-                                          "gate_type": "Unknown",
-                                          "children": [
-                                            {
-                                              "name": "Treg-enriched",
-                                              "markers": [
-                                                "CD127",
-                                                "CD25"
-                                              ],
-                                              "marker_logic": "CD127lo CD25hi",
-                                              "gate_type": "Unknown",
-                                              "children": [
-                                                {
-                                                  "name": "cTreg-like",
-                                                  "markers": [
-                                                    "CD62L",
-                                                    "CD44"
-                                                  ],
-                                                  "marker_logic": "CD62Lhi CD44lo",
-                                                  "gate_type": "Unknown",
-                                                  "children": [],
-                                                  "is_critical": false
-                                                },
-                                                {
-                                                  "name": "eTreg-like",
-                                                  "markers": [
-                                                    "CD62L",
-                                                    "CD44"
-                                                  ],
-                                                  "marker_logic": "CD62Llo CD44hi",
-                                                  "gate_type": "Unknown",
-                                                  "children": [],
-                                                  "is_critical": false
-                                                }
-                                              ],
-                                              "is_critical": false
-                                            },
-                                            {
-                                              "name": "Naive CD4+",
-                                              "markers": [
-                                                "CD62L",
-                                                "CD44"
-                                              ],
-                                              "marker_logic": "CD62Lhi CD44lo",
-                                              "gate_type": "Unknown",
-                                              "children": [],
-                                              "is_critical": false
-                                            },
-                                            {
-                                              "name": "Central memory CD4+",
-                                              "markers": [
-                                                "CD62L",
-                                                "CD44"
-                                              ],
-                                              "marker_logic": "CD62Lhi CD44hi",
-                                              "gate_type": "Unknown",
-                                              "children": [],
-                                              "is_critical": false
-                                            },
-                                            {
-                                              "name": "Effector memory CD4+",
-                                              "markers": [
-                                                "CD62L",
-                                                "CD44"
-                                              ],
-                                              "marker_logic": "CD62Llo CD44hi",
-                                              "gate_type": "Unknown",
-                                              "children": [],
-                                              "is_critical": false
-                                            }
-                                          ],
-                                          "is_critical": true
-                                        },
-                                        {
-                                          "name": "CD8+ T cells",
-                                          "markers": [
-                                            "CD4",
-                                            "CD8a"
-                                          ],
-                                          "marker_logic": "CD4- CD8+",
-                                          "gate_type": "Unknown",
-                                          "children": [
-                                            {
-                                              "name": "Naive CD8+",
-                                              "markers": [
-                                                "CD62L",
-                                                "CD44"
-                                              ],
-                                              "marker_logic": "CD62Lhi CD44lo",
-                                              "gate_type": "Unknown",
-                                              "children": [],
-                                              "is_critical": false
-                                            },
-                                            {
-                                              "name": "Central memory CD8+",
-                                              "markers": [
-                                                "CD62L",
-                                                "CD44"
-                                              ],
-                                              "marker_logic": "CD62Lhi CD44hi",
-                                              "gate_type": "Unknown",
-                                              "children": [],
-                                              "is_critical": false
-                                            },
-                                            {
-                                              "name": "Effector memory CD8+",
-                                              "markers": [
-                                                "CD62L",
-                                                "CD44"
-                                              ],
-                                              "marker_logic": "CD62Llo CD44hi",
-                                              "gate_type": "Unknown",
-                                              "children": [],
-                                              "is_critical": false
-                                            }
-                                          ],
-                                          "is_critical": true
-                                        },
-                                        {
-                                          "name": "DN T cells",
-                                          "markers": [
-                                            "CD4",
-                                            "CD8a"
-                                          ],
-                                          "marker_logic": "CD4- CD8-",
-                                          "gate_type": "Unknown",
-                                          "children": [],
-                                          "is_critical": false
-                                        }
-                                      ],
-                                      "is_critical": true
-                                    }
-                                  ],
-                                  "is_critical": true
                                 },
                                 {
                                   "name": "NK cells",
@@ -1021,13 +918,37 @@
                                       "is_critical": false
                                     },
                                     {
-                                      "name": "pre-mNKs",
+                                      "name": "CD4- Siglec-H-",
                                       "markers": [
-                                        "NK1.1"
+                                        "CD4",
+                                        "Siglec-H"
                                       ],
-                                      "marker_logic": "NK1.1+",
+                                      "marker_logic": "CD4- Siglec-H-",
                                       "gate_type": "Unknown",
-                                      "children": [],
+                                      "children": [
+                                        {
+                                          "name": "CD11b+ pre-mNKs",
+                                          "markers": [
+                                            "CD11b",
+                                            "NK1.1"
+                                          ],
+                                          "marker_logic": "CD11b+ NK1.1+",
+                                          "gate_type": "Unknown",
+                                          "children": [],
+                                          "is_critical": false
+                                        },
+                                        {
+                                          "name": "CD11b- pre-mNKs",
+                                          "markers": [
+                                            "CD11b",
+                                            "NK1.1"
+                                          ],
+                                          "marker_logic": "CD11b- NK1.1+",
+                                          "gate_type": "Unknown",
+                                          "children": [],
+                                          "is_critical": false
+                                        }
+                                      ],
                                       "is_critical": false
                                     }
                                   ],

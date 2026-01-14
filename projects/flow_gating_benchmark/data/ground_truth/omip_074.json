@@ -265,7 +265,7 @@
                                 {
                                   "name": "IgA+ B cells",
                                   "markers": [],
-                                  "marker_logic": "IgA+",
+                                  "marker_logic": "IgA+ IgG-",
                                   "gate_type": "Unknown",
                                   "children": [
                                     {
@@ -377,7 +377,7 @@
     "curation_date": "2026-01-09",
     "curator": "claude-extraction",
     "flowkit_version": null,
-    "last_updated": "2026-01-09"
+    "last_updated": "2026-01-13"
   },
   "difficulty": "hard"
 }

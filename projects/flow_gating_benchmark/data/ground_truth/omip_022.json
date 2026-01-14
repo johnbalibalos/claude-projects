@@ -89,7 +89,7 @@
         "cat_number": null
       },
       {
-        "marker": "IFN-\u03b3",
+        "marker": "IFN-γ",
         "fluorophore": "V450",
         "clone": "B27",
         "channel": null,
@@ -156,85 +156,142 @@
         {
           "name": "Time Gate",
           "markers": [],
-          "marker_logic": "Time vs Events",
-          "gate_type": "Unknown",
+          "marker_logic": "TNF vs Time",
+          "gate_type": "Rectangle",
           "children": [
             {
               "name": "Singlets",
               "markers": [],
-              "marker_logic": "FSC-A vs FSC-H",
-              "gate_type": "Unknown",
+              "marker_logic": "FSC-H vs FSC-A",
+              "gate_type": "Polygon",
               "children": [
                 {
-                  "name": "Live cells",
+                  "name": "Viable CD3+",
                   "markers": [],
-                  "marker_logic": "Viability-",
-                  "gate_type": "Unknown",
+                  "marker_logic": "Dump- CD3+",
+                  "gate_type": "Rectangle",
                   "children": [
                     {
                       "name": "Lymphocytes",
                       "markers": [],
-                      "marker_logic": "CD14- CD19-",
-                      "gate_type": "Unknown",
+                      "marker_logic": "SSC-A vs FSC-A",
+                      "gate_type": "Polygon",
                       "children": [
                         {
-                          "name": "T cells",
+                          "name": "Aggregate 1",
                           "markers": [],
-                          "marker_logic": "CD3+",
-                          "gate_type": "Unknown",
+                          "marker_logic": "CCR7 vs CD4 (remove high outliers)",
+                          "gate_type": "Rectangle",
                           "children": [
                             {
-                              "name": "CD4+ T cells",
+                              "name": "Aggregate 2",
                               "markers": [],
-                              "marker_logic": "CD4+ CD8-",
-                              "gate_type": "Unknown",
+                              "marker_logic": "CD45RO vs CD8 (remove high outliers)",
+                              "gate_type": "Rectangle",
                               "children": [
                                 {
-                                  "name": "Memory Subsets",
+                                  "name": "CD4+ T cells",
                                   "markers": [],
-                                  "marker_logic": "CCR7 vs CD45RO",
-                                  "gate_type": "Unknown",
-                                  "children": [],
-                                  "is_critical": false
+                                  "marker_logic": "CD4+ CD8-",
+                                  "gate_type": "Rectangle",
+                                  "children": [
+                                    {
+                                      "name": "IL-2 vs IFN-γ",
+                                      "markers": [],
+                                      "marker_logic": "IL-2 vs IFN-γ",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "IL-2 vs TNF",
+                                      "markers": [],
+                                      "marker_logic": "IL-2 vs TNF",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "CD107a vs IFN-γ",
+                                      "markers": [],
+                                      "marker_logic": "CD107a vs IFN-γ",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "CD154 vs IL-17A",
+                                      "markers": [],
+                                      "marker_logic": "CD154 vs IL-17A",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "IL-22 vs IL-17A",
+                                      "markers": [],
+                                      "marker_logic": "IL-22 vs IL-17A",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    }
+                                  ],
+                                  "is_critical": true
                                 },
                                 {
-                                  "name": "Functional Analysis",
+                                  "name": "CD8+ T cells",
                                   "markers": [],
-                                  "marker_logic": "IFN-\u03b3, IL-2, TNF, IL-17A, IL-22, CD107a, CD154",
-                                  "gate_type": "Unknown",
-                                  "children": [],
-                                  "is_critical": false
+                                  "marker_logic": "CD4- CD8+",
+                                  "gate_type": "Rectangle",
+                                  "children": [
+                                    {
+                                      "name": "IL-2 vs IFN-γ",
+                                      "markers": [],
+                                      "marker_logic": "IL-2 vs IFN-γ",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "IL-2 vs TNF",
+                                      "markers": [],
+                                      "marker_logic": "IL-2 vs TNF",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "CD107a vs IFN-γ",
+                                      "markers": [],
+                                      "marker_logic": "CD107a vs IFN-γ",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "CD154 vs IL-17A",
+                                      "markers": [],
+                                      "marker_logic": "CD154 vs IL-17A",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "IL-22 vs IL-17A",
+                                      "markers": [],
+                                      "marker_logic": "IL-22 vs IL-17A",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    }
+                                  ],
+                                  "is_critical": true
                                 }
                               ],
-                              "is_critical": false
-                            },
-                            {
-                              "name": "CD8+ T cells",
-                              "markers": [],
-                              "marker_logic": "CD4- CD8+",
-                              "gate_type": "Unknown",
-                              "children": [
-                                {
-                                  "name": "Memory Subsets",
-                                  "markers": [],
-                                  "marker_logic": "CCR7 vs CD45RO",
-                                  "gate_type": "Unknown",
-                                  "children": [],
-                                  "is_critical": false
-                                },
-                                {
-                                  "name": "Functional Analysis",
-                                  "markers": [],
-                                  "marker_logic": "IFN-\u03b3, IL-2, TNF, IL-17A, IL-22, CD107a, CD154",
-                                  "gate_type": "Unknown",
-                                  "children": [],
-                                  "is_critical": false
-                                }
-                              ],
-                              "is_critical": false
+                              "is_critical": true
                             }
                           ],
-                          "is_critical": false
+                          "is_critical": true
                         }
                       ],
                       "is_critical": true
@@ -263,7 +320,7 @@
     "curation_date": "2026-01-09",
     "curator": "claude-extraction",
     "flowkit_version": null,
-    "last_updated": "2026-01-09"
+    "last_updated": "2026-01-13"
   },
   "difficulty": "medium"
 }
