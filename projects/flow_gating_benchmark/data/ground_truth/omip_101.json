@@ -489,95 +489,112 @@
                                                           ]
                                                         }
                                                       ]
-                                                    }
-                                                  ]
-                                                }
-                                              ]
-                                            },
-                                            {
-                                              "name": "NK cells",
-                                              "markers": [
-                                                "CD3",
-                                                "CD4",
-                                                "CD19",
-                                                "CD56"
-                                              ],
-                                              "marker_logic": "CD3- CD4- CD19- CD56+",
-                                              "gate_type": "Unknown",
-                                              "is_critical": false,
-                                              "children": [
-                                                {
-                                                  "name": "CD56dim NK cells",
-                                                  "markers": [
-                                                    "CD56",
-                                                    "CD16"
-                                                  ],
-                                                  "marker_logic": "CD56dim CD16+",
-                                                  "gate_type": "Unknown",
-                                                  "is_critical": false,
-                                                  "children": [
+                                                    },
                                                     {
-                                                      "name": "Cytotoxic CD56dim NK",
+                                                      "name": "CD19- CD56 variable",
                                                       "markers": [
-                                                        "Perforin",
-                                                        "Granzyme B"
+                                                        "CD19",
+                                                        "CD56"
                                                       ],
-                                                      "marker_logic": "Perforin+ and/or Granzyme B+",
+                                                      "marker_logic": "CD19- CD56 (variable)",
                                                       "gate_type": "Unknown",
                                                       "is_critical": false,
-                                                      "children": []
+                                                      "children": [
+                                                        {
+                                                          "name": "NK cells",
+                                                          "markers": [
+                                                            "CD56",
+                                                            "CD16"
+                                                          ],
+                                                          "marker_logic": "CD56+ CD16var",
+                                                          "gate_type": "Unknown",
+                                                          "is_critical": false,
+                                                          "children": [
+                                                            {
+                                                              "name": "CD56dim NK cells",
+                                                              "markers": [
+                                                                "CD56",
+                                                                "CD16"
+                                                              ],
+                                                              "marker_logic": "CD56dim CD16+",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": [
+                                                                {
+                                                                  "name": "Cytotoxic CD56dim NK",
+                                                                  "markers": [
+                                                                    "Perforin",
+                                                                    "Granzyme B"
+                                                                  ],
+                                                                  "marker_logic": "Perforin+ and/or Granzyme B+",
+                                                                  "gate_type": "Unknown",
+                                                                  "is_critical": false,
+                                                                  "children": []
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "name": "CD56bright CD16+ NK cells",
+                                                              "markers": [
+                                                                "CD56",
+                                                                "CD16"
+                                                              ],
+                                                              "marker_logic": "CD56bright CD16+",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "name": "CD56bright CD16- NK cells",
+                                                              "markers": [
+                                                                "CD56",
+                                                                "CD16"
+                                                              ],
+                                                              "marker_logic": "CD56bright CD16-",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "name": "Memory NK cells",
+                                                              "markers": [
+                                                                "CD57",
+                                                                "CD27"
+                                                              ],
+                                                              "marker_logic": "CD57/CD27 subsets",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "name": "Non-NK",
+                                                          "markers": [
+                                                            "CD56",
+                                                            "CD16"
+                                                          ],
+                                                          "marker_logic": "CD56- CD16-",
+                                                          "gate_type": "Unknown",
+                                                          "is_critical": false,
+                                                          "children": [
+                                                            {
+                                                              "name": "ILCs",
+                                                              "markers": [
+                                                                "CD127"
+                                                              ],
+                                                              "marker_logic": "CD127+",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
                                                     }
                                                   ]
-                                                },
-                                                {
-                                                  "name": "CD56bright CD16+ NK cells",
-                                                  "markers": [
-                                                    "CD56",
-                                                    "CD16"
-                                                  ],
-                                                  "marker_logic": "CD56bright CD16+",
-                                                  "gate_type": "Unknown",
-                                                  "is_critical": false,
-                                                  "children": []
-                                                },
-                                                {
-                                                  "name": "CD56bright CD16- NK cells",
-                                                  "markers": [
-                                                    "CD56",
-                                                    "CD16"
-                                                  ],
-                                                  "marker_logic": "CD56bright CD16-",
-                                                  "gate_type": "Unknown",
-                                                  "is_critical": false,
-                                                  "children": []
-                                                },
-                                                {
-                                                  "name": "Memory NK cells",
-                                                  "markers": [
-                                                    "CD57",
-                                                    "CD27"
-                                                  ],
-                                                  "marker_logic": "CD57/CD27 subsets",
-                                                  "gate_type": "Unknown",
-                                                  "is_critical": false,
-                                                  "children": []
                                                 }
                                               ]
-                                            },
-                                            {
-                                              "name": "ILCs",
-                                              "markers": [
-                                                "CD3",
-                                                "CD4",
-                                                "CD19",
-                                                "CD16",
-                                                "CD56",
-                                                "CD127"
-                                              ],
-                                              "marker_logic": "CD3- CD4- CD19- CD16- CD56- CD127+",
-                                              "gate_type": "Unknown",
-                                              "is_critical": false,
-                                              "children": []
                                             },
                                             {
                                               "name": "T cells",
