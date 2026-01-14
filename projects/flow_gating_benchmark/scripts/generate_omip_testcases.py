@@ -13,7 +13,7 @@ import json
 from datetime import date
 from pathlib import Path
 
-OUTPUT_DIR = Path(__file__).parent.parent / "data" / "ground_truth"
+OUTPUT_DIR = Path(__file__).parent.parent / "data" / "verified"
 
 # OMIP database with key information
 OMIP_DATABASE = {

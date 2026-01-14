@@ -538,7 +538,7 @@ def main():
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path("data/ground_truth/real"),
+        default=Path("data/verified/real"),
         help="Output directory for test case JSON files"
     )
     parser.add_argument(

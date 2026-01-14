@@ -233,7 +233,7 @@ def update_test_case(test_case: dict) -> dict:
 
 def main():
     """Update all ground truth test cases."""
-    ground_truth_dir = Path(__file__).parent.parent / "data" / "ground_truth"
+    ground_truth_dir = Path(__file__).parent.parent / "data" / "verified"
 
     if not ground_truth_dir.exists():
         print(f"Ground truth directory not found: {ground_truth_dir}")

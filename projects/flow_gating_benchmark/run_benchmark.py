@@ -215,7 +215,7 @@ def run_benchmark(args):
     client = Anthropic(api_key=api_key)
 
     # Load test cases
-    ground_truth_dir = Path(__file__).parent / "data" / "ground_truth"
+    ground_truth_dir = Path(__file__).parent / "data" / "verified"
     test_cases = load_all_test_cases(ground_truth_dir)
 
     if not test_cases:

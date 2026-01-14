@@ -50,7 +50,7 @@ Design and implement cross-validation with multiple judge models.
 
 ### Verify Staged OMIPs
 - [ ] Manual verification of 13 OMIPs in `data/staging/`
-- [ ] Move verified cases to `data/ground_truth/`
+- [ ] Move verified cases to `data/verified/`
 - [ ] Validate against original OMIP PDFs
 
 ### Statistical Rigor

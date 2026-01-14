@@ -413,7 +413,7 @@ def main() -> int:
     print(f"Data source: {config.get('data_source', 'unknown')}")
 
     # Load test cases
-    data_dir = project_dir / "data" / "ground_truth"
+    data_dir = project_dir / "data" / "verified"
     print(f"\nLoading test cases from {data_dir}:")
     test_cases = load_test_cases(config, data_dir)
 

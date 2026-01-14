@@ -15,7 +15,7 @@ Example usage:
 
     if result.success:
         test_case = result.test_case
-        test_case.save("data/ground_truth/real/")
+        test_case.save("data/verified/real/")
 """
 
 from __future__ import annotations
@@ -653,7 +653,7 @@ def extract_test_case(
 def batch_extract(
     omip_ids: list[str],
     llm_client: LLMClient | None = None,
-    output_dir: Path | str = "data/ground_truth/real",
+    output_dir: Path | str = "data/verified/real",
     **kwargs
 ) -> dict[str, CombinedExtractionResult]:
     """

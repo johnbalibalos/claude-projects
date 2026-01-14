@@ -80,7 +80,7 @@ python scripts/run_modular_pipeline.py [OPTIONS]
 |--------|---------|-------------|
 | `--phase` | `all` | `predict`, `score`, `judge`, or `all` |
 | `--models` | `claude-sonnet-cli` | Models to test (space-separated) |
-| `--test-cases` | `data/ground_truth` | Test case JSON directory |
+| `--test-cases` | `data/verified` | Test case JSON directory |
 | `--n-bootstrap` | `1` | Runs per condition (use 10 for variance) |
 | `--max-cases` | None | Limit test cases (for testing) |
 | `--output` | `results/modular_pipeline` | Output directory |
@@ -183,7 +183,7 @@ flow_gating_benchmark/
 │       └── cognitive_refusal.py
 ├── data/
 │   ├── staging/               # 13 OMIPs (test cases)
-│   └── ground_truth/          # Verified (move from staging)
+│   └── verified/              # Verified test cases
 ├── scripts/
 │   ├── run_modular_pipeline.py
 │   └── rerun_blocked.py       # Recover MAX_TOKENS failures
