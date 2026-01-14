@@ -187,13 +187,17 @@ class HypothesisPipeline:
         """Generate all condition combinations from config."""
         conditions = []
 
-        # Cartesian product of all dimensions
-        for model, reasoning, context, rag, tools in product(
+        # Use temperatures list if specified, otherwise use single temperature value
+        temperatures = self.config.temperatures or [self.config.temperature]
+
+        # Cartesian product of all dimensions (now including temperature)
+        for model, reasoning, context, rag, tools, temp in product(
             self.config.models,
             self.config.reasoning_types,
             self.config.context_levels,
             self.config.rag_modes,
             self.config.tool_configs,
+            temperatures,
         ):
             # Generate condition name
             name_parts = [
@@ -204,6 +208,9 @@ class HypothesisPipeline:
             ]
             if tools:
                 name_parts.append("tools")
+            # Only add temperature to name if we're varying it
+            if len(temperatures) > 1:
+                name_parts.append(f"t{temp:.1f}")
 
             condition = HypothesisCondition(
                 name="_".join(name_parts),
@@ -217,7 +224,7 @@ class HypothesisPipeline:
                 tools_enabled=bool(tools),
                 tool_names=tools,
                 max_tokens=self.config.max_tokens,
-                temperature=self.config.temperature,
+                temperature=temp,
             )
             conditions.append(condition)
 

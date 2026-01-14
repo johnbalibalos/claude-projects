@@ -21,7 +21,7 @@ from experiments.llm_client import GeminiClient  # noqa: E402
 def load_ground_truth(test_case_id: str) -> dict | None:
     """Load ground truth for a test case."""
     filename = test_case_id.lower().replace("-", "_") + ".json"
-    gt_path = PROJECT_ROOT / "data" / "ground_truth" / filename
+    gt_path = PROJECT_ROOT / "data" / "verified" / filename
 
     if not gt_path.exists():
         print(f"  Ground truth not found: {gt_path}")

@@ -95,24 +95,30 @@ def is_truncated(response: str) -> bool:
 def call_gemini(prompt: str, api_key: str, model_name: str, max_tokens: int,
                 max_retries: int = 5) -> tuple[str, int]:
     """Call Gemini API with exponential backoff retry."""
-    import google.generativeai as genai
+    from google import genai
+    from google.genai import types
 
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(model_name)
+    client = genai.Client(api_key=api_key)
+
+    generation_config = types.GenerateContentConfig(
+        max_output_tokens=max_tokens,
+        temperature=0.0,
+    )
 
     last_error = None
     for attempt in range(max_retries):
         try:
-            response = model.generate_content(
-                prompt,
-                generation_config={
-                    "max_output_tokens": max_tokens,
-                    "temperature": 0.0,
-                },
+            response = client.models.generate_content(
+                model=model_name,
+                contents=prompt,
+                config=generation_config,
             )
 
             text = response.text if response.text else ""
-            tokens = response.usage_metadata.total_token_count if hasattr(response, "usage_metadata") else 0
+            tokens = 0
+            if response.usage_metadata:
+                tokens = (response.usage_metadata.prompt_token_count or 0) + \
+                         (response.usage_metadata.candidates_token_count or 0)
 
             return text, tokens
 

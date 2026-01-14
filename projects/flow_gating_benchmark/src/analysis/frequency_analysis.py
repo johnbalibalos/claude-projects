@@ -279,7 +279,7 @@ def plot_frequency_vs_f1(
 
 def main():
     parser = argparse.ArgumentParser(description="Frequency vs Performance Analysis")
-    parser.add_argument("--gt-dir", type=Path, default=Path("data/ground_truth"),
+    parser.add_argument("--gt-dir", type=Path, default=Path("data/verified"),
                        help="Ground truth directory")
     parser.add_argument("--results", type=Path, help="Results JSON file")
     parser.add_argument("--cache", type=Path, default=Path("data/cache/pubmed_frequencies.json"),

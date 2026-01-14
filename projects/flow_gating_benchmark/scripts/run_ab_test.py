@@ -46,7 +46,7 @@ except ImportError:
 def load_test_cases(data_dir: Path) -> list[dict]:
     """Load all test cases from ground truth directory."""
     test_cases = []
-    gt_dir = data_dir / "ground_truth"
+    gt_dir = data_dir / "verified"
 
     for json_file in sorted(gt_dir.glob("*.json")):
         with open(json_file) as f:

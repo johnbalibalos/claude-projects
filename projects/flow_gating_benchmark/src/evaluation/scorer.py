@@ -321,6 +321,36 @@ def compute_metrics_by_test_case(results: list[ScoringResult]) -> dict[str, dict
     }
 
 
+# Known incomplete test cases (empty panel definitions)
+# These are excluded from aggregate statistics but can still be run
+INCOMPLETE_TEST_CASES = frozenset({
+    "OMIP-064",  # Empty panel - 27-color NK/ILC/MAIT panel
+    "OMIP-095",  # Empty panel - Spectral PBMC/Lymph
+})
+
+
+def filter_incomplete_results(
+    results: list[ScoringResult],
+    exclude: bool = True,
+) -> tuple[list[ScoringResult], list[ScoringResult]]:
+    """
+    Separate results into complete and incomplete test cases.
+
+    Args:
+        results: List of ScoringResults to filter
+        exclude: If True, return (complete, incomplete). If False, return (all, [])
+
+    Returns:
+        Tuple of (complete_results, incomplete_results)
+    """
+    if not exclude:
+        return results, []
+
+    complete = [r for r in results if r.test_case_id not in INCOMPLETE_TEST_CASES]
+    incomplete = [r for r in results if r.test_case_id in INCOMPLETE_TEST_CASES]
+    return complete, incomplete
+
+
 def filter_results(
     results: list[ScoringResult],
     *,
@@ -329,6 +359,7 @@ def filter_results(
     test_case_id: str | None = None,
     parse_success: bool | None = None,
     min_f1: float | None = None,
+    exclude_incomplete: bool = False,
 ) -> list[ScoringResult]:
     """
     Filter results by various criteria.
@@ -340,11 +371,15 @@ def filter_results(
         test_case_id: Filter by test case ID
         parse_success: Filter by parse success status
         min_f1: Filter by minimum F1 score
+        exclude_incomplete: If True, exclude results from incomplete test cases
 
     Returns:
         Filtered list of ScoringResults
     """
     filtered = results
+
+    if exclude_incomplete:
+        filtered, _ = filter_incomplete_results(filtered)
 
     if model is not None:
         filtered = [r for r in filtered if r.model == model]

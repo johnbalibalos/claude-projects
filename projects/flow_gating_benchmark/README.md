@@ -2,6 +2,8 @@
 
 Evaluate LLM capabilities in predicting flow cytometry gating strategies from panel information.
 
+> **Status:** Active development. The evaluation framework is functional, but ground truth datasets require manual curation from OMIP papers. Results in any linked posts reflect work-in-progress and may be rerun as data quality improves.
+
 ## Latest Results
 
 See **[results/BENCHMARK_RESULTS_SUMMARY.md](results/BENCHMARK_RESULTS_SUMMARY.md)** for full analysis.
@@ -37,8 +39,7 @@ python scripts/run_modular_pipeline.py \
     --phase all \
     --models gemini-2.0-flash \
     --test-cases data/staging \
-    --n-bootstrap 10 \
-    --force
+    --n-bootstrap 10
 ```
 
 ---
@@ -80,7 +81,7 @@ python scripts/run_modular_pipeline.py [OPTIONS]
 |--------|---------|-------------|
 | `--phase` | `all` | `predict`, `score`, `judge`, or `all` |
 | `--models` | `claude-sonnet-cli` | Models to test (space-separated) |
-| `--test-cases` | `data/ground_truth` | Test case JSON directory |
+| `--test-cases` | `data/verified` | Test case JSON directory |
 | `--n-bootstrap` | `1` | Runs per condition (use 10 for variance) |
 | `--max-cases` | None | Limit test cases (for testing) |
 | `--output` | `results/modular_pipeline` | Output directory |
@@ -183,7 +184,7 @@ flow_gating_benchmark/
 │       └── cognitive_refusal.py
 ├── data/
 │   ├── staging/               # 13 OMIPs (test cases)
-│   └── ground_truth/          # Verified (move from staging)
+│   └── verified/              # Verified test cases
 ├── scripts/
 │   ├── run_modular_pipeline.py
 │   └── rerun_blocked.py       # Recover MAX_TOKENS failures
@@ -249,8 +250,7 @@ pytest tests/ -v
 python scripts/run_modular_pipeline.py \
     --phase all \
     --models gemini-2.0-flash \
-    --max-cases 1 \
-    --force
+    --max-cases 1
 ```
 
 ---

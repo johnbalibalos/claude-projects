@@ -698,7 +698,7 @@ def run_benchmark(
 def main():
     parser = argparse.ArgumentParser(description="Run full gating benchmark")
     parser.add_argument("--test-cases", type=Path,
-                        default=PROJECT_ROOT / "data" / "ground_truth",
+                        default=PROJECT_ROOT / "data" / "verified",
                         help="Directory with test cases")
     parser.add_argument("--dry-run", action="store_true",
                         help="Mock API calls")

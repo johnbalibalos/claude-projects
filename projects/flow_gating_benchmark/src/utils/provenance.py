@@ -9,7 +9,7 @@ Usage:
 
     # Create at experiment start
     ctx = ExperimentContext.create(
-        ground_truth_dir=Path("data/ground_truth"),
+        ground_truth_dir=Path("data/verified"),
         config={"models": ["claude-sonnet-cli"], "n_bootstrap": 3},
     )
 
@@ -25,11 +25,11 @@ Reproducing an experiment:
 
     2. Verify dataset hasn't changed:
        python -c "from utils.provenance import hash_directory; \\
-                  print(hash_directory('data/ground_truth'))"
+                  print(hash_directory('data/verified'))"
        # Should match dataset_hash in experiment.json
 
     3. If dataset changed, find when it matched:
-       git log --oneline -- data/ground_truth/
+       git log --oneline -- data/verified/
        # Check out commit where ground truth had the right content
 
     4. Re-run the pipeline with same config from experiment.json

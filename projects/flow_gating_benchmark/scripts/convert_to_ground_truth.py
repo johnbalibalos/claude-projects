@@ -169,7 +169,7 @@ def main():
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path(__file__).parent.parent / "data" / "ground_truth",
+        default=Path(__file__).parent.parent / "data" / "verified",
         help="Directory for ground truth files"
     )
     parser.add_argument(

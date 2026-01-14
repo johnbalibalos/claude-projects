@@ -345,7 +345,7 @@ def main():
     )
     parser.add_argument(
         "--ground-truth-dir",
-        default="data/ground_truth",
+        default="data/verified",
         help="Directory containing ground truth JSON files",
     )
     parser.add_argument(

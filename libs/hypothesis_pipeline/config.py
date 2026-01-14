@@ -35,7 +35,8 @@ class PipelineConfig:
 
     # Model parameters
     max_tokens: int = 4096
-    temperature: float = 0.0
+    temperature: float = 0.0  # Default temperature (used if temperatures not specified)
+    temperatures: list[float] | None = None  # Temperature ablation dimension
     max_tool_calls: int = 30
 
     # Experiment execution settings
@@ -110,6 +111,10 @@ class PipelineConfig:
                 if isinstance(data["data_source"], str)
                 else data["data_source"]
             )
+
+        # Convert temperatures to list of floats if present
+        if "temperatures" in data and data["temperatures"] is not None:
+            data["temperatures"] = [float(t) for t in data["temperatures"]]
 
         # Convert paths
         if "checkpoint_dir" in data:

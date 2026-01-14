@@ -262,7 +262,7 @@ def main():
     parser = argparse.ArgumentParser(description="Generate detailed per-OMIP reports")
     parser.add_argument("results_file", type=Path, help="Experiment results JSON file")
     parser.add_argument("--ground-truth-dir", type=Path,
-                       default=Path("data/ground_truth"),
+                       default=Path("data/verified"),
                        help="Directory with ground truth files")
     parser.add_argument("--output-dir", type=Path,
                        default=Path("results/runs"),
