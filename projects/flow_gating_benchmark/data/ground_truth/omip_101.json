@@ -557,11 +557,12 @@
                                               "is_critical": true,
                                               "children": [
                                                 {
-                                                  "name": "T cells (B cell excluded)",
+                                                  "name": "CD19- HLA-DR variable",
                                                   "markers": [
-                                                    "CD19"
+                                                    "CD19",
+                                                    "HLA-DR"
                                                   ],
-                                                  "marker_logic": "CD19-",
+                                                  "marker_logic": "CD19- HLA-DR (variable)",
                                                   "gate_type": "Unknown",
                                                   "is_critical": false,
                                                   "children": [
@@ -621,11 +622,12 @@
                                                       ]
                                                     },
                                                     {
-                                                      "name": "\u03b1\u03b2 T cells",
+                                                      "name": "Double negative (\u03b3\u03b4TCR- V\u03b42-)",
                                                       "markers": [
-                                                        "\u03b3\u03b4 TCR"
+                                                        "\u03b3\u03b4 TCR",
+                                                        "V\u03b42"
                                                       ],
-                                                      "marker_logic": "\u03b3\u03b4TCR-",
+                                                      "marker_logic": "\u03b3\u03b4TCR- V\u03b42-",
                                                       "gate_type": "Unknown",
                                                       "is_critical": false,
                                                       "children": [
