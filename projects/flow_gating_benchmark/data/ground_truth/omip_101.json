@@ -576,48 +576,15 @@
                                                       "is_critical": false,
                                                       "children": [
                                                         {
-                                                          "name": "V\u03b42+ \u03b3\u03b4 T cells",
+                                                          "name": "Cytotoxic \u03b3\u03b4 T cells",
                                                           "markers": [
-                                                            "V\u03b42"
+                                                            "Perforin",
+                                                            "Granzyme B"
                                                           ],
-                                                          "marker_logic": "V\u03b42+",
+                                                          "marker_logic": "Perforin+ and/or Granzyme B+",
                                                           "gate_type": "Unknown",
                                                           "is_critical": false,
-                                                          "children": [
-                                                            {
-                                                              "name": "Cytotoxic V\u03b42+ \u03b3\u03b4 T",
-                                                              "markers": [
-                                                                "Perforin",
-                                                                "Granzyme B"
-                                                              ],
-                                                              "marker_logic": "Perforin+ and/or Granzyme B+",
-                                                              "gate_type": "Unknown",
-                                                              "is_critical": false,
-                                                              "children": []
-                                                            }
-                                                          ]
-                                                        },
-                                                        {
-                                                          "name": "V\u03b42- \u03b3\u03b4 T cells",
-                                                          "markers": [
-                                                            "V\u03b42"
-                                                          ],
-                                                          "marker_logic": "V\u03b42-",
-                                                          "gate_type": "Unknown",
-                                                          "is_critical": false,
-                                                          "children": [
-                                                            {
-                                                              "name": "Cytotoxic V\u03b42- \u03b3\u03b4 T",
-                                                              "markers": [
-                                                                "Perforin",
-                                                                "Granzyme B"
-                                                              ],
-                                                              "marker_logic": "Perforin+ and/or Granzyme B+",
-                                                              "gate_type": "Unknown",
-                                                              "is_critical": false,
-                                                              "children": []
-                                                            }
-                                                          ]
+                                                          "children": []
                                                         }
                                                       ]
                                                     },
