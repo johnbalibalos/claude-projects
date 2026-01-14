@@ -123,16 +123,8 @@
       },
       {
         "marker": "IgG2",
-        "fluorophore": "Biotin",
+        "fluorophore": "BV750",
         "clone": "HP6002",
-        "channel": null,
-        "vendor": null,
-        "cat_number": null
-      },
-      {
-        "marker": "Biotin",
-        "fluorophore": "Streptavidin-BV750",
-        "clone": null,
         "channel": null,
         "vendor": null,
         "cat_number": null
