@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any
 
 from evaluation.response_parser import parse_llm_response
-from utils.checkpoint import CheckpointManager
+from checkpoint import CheckpointManager
 
 from .llm_client import create_client
 

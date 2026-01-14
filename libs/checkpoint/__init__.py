@@ -1,18 +1,32 @@
 """
 Checkpoint library for resumable workflows.
 
-Provides CheckpointedRunner for iterating over work items with automatic
-save/resume capability.
+Provides two checkpoint patterns:
+- CheckpointedRunner: Iterator-based, saves after each item (for long-running loops)
+- CheckpointManager: List-based, saves/loads entire result sets (for batch operations)
 """
 
 from __future__ import annotations
 
 import json
 from collections.abc import Callable, Iterator
+from datetime import datetime
 from pathlib import Path
-from typing import Any, TypeVar
+from typing import Any, Protocol, TypeVar
 
 T = TypeVar("T")
+
+
+class Serializable(Protocol):
+    """Protocol for objects that can be serialized to/from dict."""
+
+    def to_dict(self) -> dict[str, Any]: ...
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "Serializable": ...
+
+
+S = TypeVar("S", bound=Serializable)
 
 
 class CheckpointedRunner:
@@ -154,4 +168,166 @@ class CheckpointedRunner:
             self.checkpoint_path.unlink()
 
 
-__all__ = ["CheckpointedRunner"]
+class CheckpointManager:
+    """
+    List-based checkpoint manager for batch save/load of serializable objects.
+
+    Unlike CheckpointedRunner which saves incrementally during iteration,
+    this class saves/loads entire result lists at once. Useful for batch
+    operations like scoring or judging where you want to checkpoint after
+    processing a full batch.
+
+    Usage:
+        manager = CheckpointManager(checkpoint_dir=Path("results/checkpoints"))
+
+        # Save results
+        manager.save(results, "predictions.json")
+
+        # Load and resume
+        results, completed_keys = manager.load_with_keys(
+            "predictions.json",
+            Prediction,
+            key_fn=lambda p: p.key
+        )
+    """
+
+    def __init__(self, checkpoint_dir: Path | str | None):
+        """
+        Initialize checkpoint manager.
+
+        Args:
+            checkpoint_dir: Directory for checkpoint files. If None, checkpointing is disabled.
+        """
+        self.checkpoint_dir = Path(checkpoint_dir) if checkpoint_dir else None
+
+    @property
+    def enabled(self) -> bool:
+        """Whether checkpointing is enabled."""
+        return self.checkpoint_dir is not None
+
+    def save(
+        self,
+        results: list[S],
+        filename: str,
+        *,
+        include_metadata: bool = True,
+    ) -> Path | None:
+        """
+        Save results to checkpoint file.
+
+        Args:
+            results: List of serializable objects (must have to_dict method)
+            filename: Checkpoint filename (e.g., "predictions.json")
+            include_metadata: Whether to include timestamp and count
+
+        Returns:
+            Path to saved file, or None if checkpointing disabled
+        """
+        if not self.enabled:
+            return None
+
+        self.checkpoint_dir.mkdir(parents=True, exist_ok=True)
+        filepath = self.checkpoint_dir / filename
+
+        data = [r.to_dict() for r in results]
+
+        if include_metadata:
+            output = {
+                "metadata": {
+                    "timestamp": datetime.now().isoformat(),
+                    "count": len(results),
+                },
+                "results": data,
+            }
+        else:
+            output = data
+
+        # Atomic write: write to temp file, then rename
+        temp_path = filepath.with_suffix(".tmp")
+        with open(temp_path, "w") as f:
+            json.dump(output, f, indent=2)
+        temp_path.rename(filepath)
+
+        return filepath
+
+    def load(
+        self,
+        filename: str,
+        result_class: type[S],
+    ) -> list[S]:
+        """
+        Load results from checkpoint file.
+
+        Args:
+            filename: Checkpoint filename
+            result_class: Class to deserialize into (must have from_dict classmethod)
+
+        Returns:
+            List of deserialized objects (empty if file doesn't exist or disabled)
+        """
+        if not self.enabled:
+            return []
+
+        filepath = self.checkpoint_dir / filename
+        if not filepath.exists():
+            return []
+
+        with open(filepath) as f:
+            data = json.load(f)
+
+        # Handle both formats: with metadata wrapper or raw list
+        if isinstance(data, dict) and "results" in data:
+            items = data["results"]
+        else:
+            items = data
+
+        return [result_class.from_dict(item) for item in items]
+
+    def load_with_keys(
+        self,
+        filename: str,
+        result_class: type[S],
+        key_fn: Callable[[S], tuple],
+    ) -> tuple[list[S], set[tuple]]:
+        """
+        Load results and build set of completed keys for resume logic.
+
+        Args:
+            filename: Checkpoint filename
+            result_class: Class to deserialize into
+            key_fn: Function to extract unique key from result
+
+        Returns:
+            Tuple of (results list, set of completed keys)
+        """
+        results = self.load(filename, result_class)
+        completed_keys = {key_fn(r) for r in results}
+        return results, completed_keys
+
+    def exists(self, filename: str) -> bool:
+        """Check if checkpoint file exists."""
+        if not self.enabled:
+            return False
+        return (self.checkpoint_dir / filename).exists()
+
+    def get_metadata(self, filename: str) -> dict[str, Any] | None:
+        """Get metadata from checkpoint file without loading all results."""
+        if not self.enabled:
+            return None
+
+        filepath = self.checkpoint_dir / filename
+        if not filepath.exists():
+            return None
+
+        with open(filepath) as f:
+            data = json.load(f)
+
+        if isinstance(data, dict) and "metadata" in data:
+            return data["metadata"]
+
+        # No metadata, return basic info
+        items = data if isinstance(data, list) else data.get("results", [])
+        return {"count": len(items)}
+
+
+__all__ = ["CheckpointedRunner", "CheckpointManager", "Serializable"]
