@@ -396,9 +396,6 @@
           ],
           "is_critical": true
         }
-      ],
-      "is_critical": true
-    }
   },
   "validation": {
     "paper_source": null,
