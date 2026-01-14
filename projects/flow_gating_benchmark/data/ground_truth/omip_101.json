@@ -416,49 +416,81 @@
                                           "is_critical": true,
                                           "children": [
                                             {
-                                              "name": "B cells",
+                                              "name": "CD3-",
                                               "markers": [
-                                                "CD3",
-                                                "CD4",
-                                                "CD56",
-                                                "CD19"
+                                                "CD3"
                                               ],
-                                              "marker_logic": "CD3- CD4- CD56- CD19+",
+                                              "marker_logic": "CD3-",
                                               "gate_type": "Unknown",
                                               "is_critical": false,
                                               "children": [
                                                 {
-                                                  "name": "Plasmablasts",
+                                                  "name": "CD4- CD19 variable",
                                                   "markers": [
-                                                    "CD38",
-                                                    "CD27"
+                                                    "CD4",
+                                                    "CD19"
                                                   ],
-                                                  "marker_logic": "CD38high CD27high",
+                                                  "marker_logic": "CD4- CD19 (variable)",
                                                   "gate_type": "Unknown",
                                                   "is_critical": false,
-                                                  "children": []
-                                                },
-                                                {
-                                                  "name": "Naive B cells",
-                                                  "markers": [
-                                                    "IgD",
-                                                    "CD27"
-                                                  ],
-                                                  "marker_logic": "IgD+ CD27-",
-                                                  "gate_type": "Unknown",
-                                                  "is_critical": false,
-                                                  "children": []
-                                                },
-                                                {
-                                                  "name": "Memory B cells",
-                                                  "markers": [
-                                                    "IgD",
-                                                    "CD27"
-                                                  ],
-                                                  "marker_logic": "IgD- CD27+",
-                                                  "gate_type": "Unknown",
-                                                  "is_critical": false,
-                                                  "children": []
+                                                  "children": [
+                                                    {
+                                                      "name": "B cells",
+                                                      "markers": [
+                                                        "CD19"
+                                                      ],
+                                                      "marker_logic": "CD19+",
+                                                      "gate_type": "Unknown",
+                                                      "is_critical": false,
+                                                      "children": [
+                                                        {
+                                                          "name": "Plasmablasts",
+                                                          "markers": [
+                                                            "CD38",
+                                                            "CD27"
+                                                          ],
+                                                          "marker_logic": "CD38++ CD27++",
+                                                          "gate_type": "Unknown",
+                                                          "is_critical": false,
+                                                          "children": []
+                                                        },
+                                                        {
+                                                          "name": "CD38- CD27- B cells",
+                                                          "markers": [
+                                                            "CD38",
+                                                            "CD27"
+                                                          ],
+                                                          "marker_logic": "CD38- CD27-",
+                                                          "gate_type": "Unknown",
+                                                          "is_critical": false,
+                                                          "children": [
+                                                            {
+                                                              "name": "Naive B cells",
+                                                              "markers": [
+                                                                "CD27",
+                                                                "IgD"
+                                                              ],
+                                                              "marker_logic": "CD27- IgD+",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "name": "Memory B cells",
+                                                              "markers": [
+                                                                "CD27",
+                                                                "IgD"
+                                                              ],
+                                                              "marker_logic": "CD27+ IgD-",
+                                                              "gate_type": "Unknown",
+                                                              "is_critical": false,
+                                                              "children": []
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
                                                 }
                                               ]
                                             },
