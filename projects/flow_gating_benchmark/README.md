@@ -4,34 +4,55 @@ Evaluate LLM capabilities in predicting flow cytometry gating strategies from pa
 
 > **Status:** Active development. The evaluation framework is functional, but ground truth datasets require manual curation from OMIP papers. Results in any linked posts reflect work-in-progress and may be rerun as data quality improves.
 
-## Latest Results
-
-> **⚠️ Results pending:** Clean rerun in progress on verified dataset with multiple F1 metrics.
+## Latest Results (Full Benchmark - Jan 2026)
 
 See **[results/BENCHMARK_RESULTS_SUMMARY.md](results/BENCHMARK_RESULTS_SUMMARY.md)** for full analysis.
 
-### F1 Comparison (placeholder - rerun pending)
+**Benchmark Configuration:**
+- 6 models × 12 conditions × 10 test cases × 3 bootstrap = 2,160 predictions
+- Judge: gemini-2.5-pro with 5 evaluation styles
 
-| Model | hierarchy_f1 | synonym_f1 | semantic_f1 | weighted_semantic_f1 |
-|-------|--------------|------------|-------------|----------------------|
-| gemini-2.0-flash | TBD | TBD | TBD | TBD |
-| claude-sonnet-4 | TBD | TBD | TBD | TBD |
-| claude-opus-4 | TBD | TBD | TBD | TBD |
+### F1 Scores (Hierarchy Matching)
 
-### Other Metrics (placeholder)
+| Model | F1 Score | Parse Rate |
+|-------|----------|------------|
+| **gemini-2.5-pro** | **0.361** | 100% |
+| gemini-2.0-flash | 0.340 | 100% |
+| claude-opus-4-20250514 | 0.330 | 100% |
+| claude-sonnet-4-20250514 | 0.326 | 100% |
+| claude-3-5-haiku-20241022 | 0.306 | 100% |
+| gemini-2.5-flash | 0.305 | 100% |
 
-| Model | Structure Acc | Critical Recall | Parse Rate |
-|-------|---------------|-----------------|------------|
-| gemini-2.0-flash | TBD | TBD | TBD |
-| claude-sonnet-4 | TBD | TBD | TBD |
-| claude-opus-4 | TBD | TBD | TBD |
+### LLM Judge Quality Scores
 
-**Key Questions Being Tested:**
-- Does semantic_f1 >> hierarchy_f1? (biological equivalence gap)
-- Which F1 metric best correlates with LLM judge scores?
-- Does the Sonnet-Opus gap shrink with semantic matching?
+| Model | Quality | Consistency |
+|-------|---------|-------------|
+| **gemini-2.5-pro** | **0.59** | 0.40 |
+| claude-opus-4-20250514 | 0.52 | 0.18 |
+| gemini-2.5-flash | 0.51 | 0.63 |
+| gemini-2.0-flash | 0.41 | **0.65** |
+| claude-sonnet-4-20250514 | 0.39 | 0.50 |
+| claude-3-5-haiku-20241022 | 0.34 | 0.13 |
 
-**Methodology Note:** In earlier testing with n=10 bootstrap runs, Claude models produced ~10 unique responses per 10 runs even at temperature=0. This non-determinism finding doesn't depend on ground truth quality—it measures output consistency, not correctness.
+### Key Findings
+
+**1. Synthetic vs Real-World Panels:**
+Models perform significantly better on template-generated CUSTOM-PBMC-001 (+0.19 F1) compared to OMIP papers, likely due to cleaner structure rather than reasoning vs memorization.
+
+| Model | OMIP F1 | CUSTOM F1 | Delta |
+|-------|---------|-----------|-------|
+| claude-sonnet-4-20250514 | 0.301 | 0.551 | **+0.25** |
+| gemini-2.5-flash | 0.283 | 0.504 | +0.22 |
+| claude-opus-4-20250514 | 0.310 | 0.506 | +0.20 |
+| gemini-2.5-pro | 0.343 | 0.527 | +0.18 |
+| claude-3-5-haiku-20241022 | 0.289 | 0.460 | +0.17 |
+| gemini-2.0-flash | 0.325 | 0.469 | +0.14 |
+
+**2. F1 vs Judge Disagreement:**
+F1 ranking differs from LLM judge ranking. gemini-2.5-pro leads both, but opus ranks higher by judge quality than F1 suggests.
+
+**3. Model Consistency:**
+gemini-2.0-flash and gemini-2.5-flash show highest consistency (0.63-0.65), while haiku and opus show lowest (0.13-0.18).
 
 ---
 
