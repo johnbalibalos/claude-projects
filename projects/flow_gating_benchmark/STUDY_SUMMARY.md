@@ -2,16 +2,21 @@
 
 ## Executive Summary
 
-This project evaluates whether **LLMs can predict flow cytometry gating strategies** from panel information. We test multiple models across varying experimental conditions and measure performance using multiple F1 metrics designed to capture both string-level and semantic-level correctness.
+This project evaluates whether **LLMs can predict flow cytometry gating strategies** from panel information. We test 6 models across 12 experimental conditions and measure performance using hierarchy F1, structure accuracy, critical gate recall, and LLM judge quality scores.
 
-### Key Finding (Preliminary)
+### Key Findings (January 2026 Benchmark)
 
-> **Results pending:** Clean rerun in progress on verified dataset with 4 F1 metric variants.
+| Finding | Result |
+|---------|--------|
+| **Best Model (F1)** | gemini-2.5-pro (0.361) |
+| **Best Model (Judge)** | gemini-2.5-pro (0.59) |
+| **HIPC Reference Impact** | +5.6% F1 |
+| **Rich Context Impact** | +8% F1 (pending re-evaluation) |
+| **Model Consistency** | Claude models highly non-deterministic at temp=0 |
 
-**Early observations:**
-- Weak correlation (r≈0.15) between string-based F1 and LLM judge scores
-- Models produce biologically correct but linguistically different gate names
-- Multiple F1 metrics needed to fairly evaluate across models
+**Benchmark Configuration:**
+- 6 models × 12 conditions × 10 test cases × 3 bootstrap = 2,160 predictions
+- Judge: gemini-2.5-pro with 5 evaluation styles
 
 ---
 
@@ -24,98 +29,63 @@ Flow cytometry gating requires predicting:
 2. **Hierarchy structure** - Parent-child relationships (e.g., T cells → CD4+ helper)
 3. **Critical gates** - Must-have QC gates (singlets, live/dead)
 
-Traditional evaluation:
-- **String F1**: Exact match after normalization (penalizes valid synonyms)
-- **Structure accuracy**: Parent-child relationships correct
+### Experimental Conditions (12 total)
 
-**Our hypothesis**: String-based F1 unfairly penalizes models that produce biologically correct but linguistically different gate names. Multiple F1 metrics are needed for fair evaluation.
-
----
-
-## Architecture
-
-```
-flow_gating_benchmark/
-├── src/
-│   ├── curation/                    # Ground truth data
-│   │   ├── schemas.py               # TestCase, Panel, GatingHierarchy
-│   │   └── omip_extractor.py        # Load test cases
-│   ├── experiments/                 # Pipeline
-│   │   ├── prediction_collector.py  # Parallel LLM calls
-│   │   ├── batch_scorer.py          # 4 F1 variants + metrics
-│   │   ├── llm_judge.py             # 5 judge styles
-│   │   └── llm_client.py            # Gemini, Claude, OpenAI
-│   └── evaluation/                  # Scoring
-│       ├── metrics.py               # hierarchy_f1, structure, critical
-│       ├── normalization.py         # 200+ gate synonyms
-│       ├── semantic_similarity.py   # MiniLM embeddings
-│       └── hierarchy.py             # Tree operations
-├── data/
-│   ├── verified/                    # 10 curated OMIPs
-│   └── staging/                     # 17 pending verification
-└── scripts/
-    └── run_modular_pipeline.py      # Main entry point
-```
+| Dimension | Options |
+|-----------|---------|
+| Context Level | minimal, standard, rich |
+| Prompt Strategy | direct, chain-of-thought |
+| Reference | none, HIPC gating standards |
 
 ---
 
-## F1 Metric Comparison
+## Results
 
-### Why Multiple F1 Metrics?
+### Model Performance (Ranked by F1)
 
-The core problem: **biologically equivalent names score as mismatches**.
+| Model | Hierarchy F1 | Structure Acc | Critical Recall | Hallucination | Parse Rate |
+|-------|--------------|---------------|-----------------|---------------|------------|
+| gemini-2.5-pro | 0.361 | 0.085 | 0.843 | 0.081 | 100% |
+| gemini-2.0-flash | 0.340 | 0.092 | 0.842 | 0.077 | 100% |
+| claude-opus-4-20250514 | 0.330 | 0.109 | 0.835 | 0.083 | 100% |
+| claude-sonnet-4-20250514 | 0.326 | 0.100 | 0.829 | 0.106 | 100% |
+| claude-3-5-haiku-20241022 | 0.306 | 0.073 | 0.803 | 0.090 | 100% |
+| gemini-2.5-flash | 0.305 | 0.097 | 0.850 | 0.067 | 100% |
 
-| Ground Truth | Prediction | String F1 | Biologically? |
-|--------------|------------|-----------|---------------|
-| `T cells` | `T Lymphocytes` | 0 | Same |
-| `CD4+ T cells` | `Helper T cells` | 0 | Same |
-| `Natural Killer cells` | `NK cells` | 0 | Same |
+### F1 by Condition
 
-### 4 F1 Variants
+| Condition | Mean F1 |
+|-----------|---------|
+| rich_direct_hipc | 0.357 |
+| rich_direct_none | 0.344 |
+| minimal_cot_hipc | 0.340 |
+| standard_cot_hipc | 0.340 |
+| standard_direct_hipc | 0.338 |
+| rich_cot_hipc | 0.334 |
+| standard_cot_none | 0.325 |
+| standard_direct_none | 0.324 |
+| minimal_direct_hipc | 0.322 |
+| rich_cot_none | 0.312 |
+| minimal_direct_none | 0.309 |
+| minimal_cot_none | 0.293 |
 
-| Metric | Method | What it catches |
-|--------|--------|-----------------|
-| `hierarchy_f1` | String normalization | "CD4+ T Cells" ↔ "CD4 positive T cells" |
-| `synonym_f1` | 200+ synonym dictionary | "T Lymphocytes" ↔ "T cells" ↔ "CD3+" |
-| `semantic_f1` | MiniLM embeddings (cosine ≥0.70) | "Helper T cells" ↔ "CD4+ T cells" |
-| `weighted_semantic_f1` | Confidence-weighted | Partial credit for 0.70-0.85 similarity |
+**Key Observations:**
+- HIPC reference consistently improves F1 (+5.6% average)
+- Rich context improves F1 (+8% vs minimal) - *caveat: results obtained when OMIP ID was included in prompt*
+- Direct prompting slightly outperforms CoT
 
-### Expected Pattern
+### OMIP vs Synthetic Panel Performance
 
-```
-hierarchy_f1 ≤ synonym_f1 ≤ semantic_f1
-```
+| Model | OMIP F1 | CUSTOM F1 | Delta |
+|-------|---------|-----------|-------|
+| claude-sonnet-4-20250514 | 0.301 | 0.551 | **+0.251** |
+| gemini-2.5-flash | 0.283 | 0.504 | +0.221 |
+| claude-opus-4-20250514 | 0.310 | 0.506 | +0.196 |
+| gemini-2.5-pro | 0.343 | 0.527 | +0.184 |
+| claude-3-5-haiku-20241022 | 0.289 | 0.460 | +0.171 |
+| gemini-2.0-flash | 0.325 | 0.469 | +0.143 |
 
-If `semantic_f1 >> hierarchy_f1`, models are producing biologically correct but linguistically different names.
-
----
-
-## Results (Placeholder - Rerun Pending)
-
-### F1 Comparison by Model
-
-| Model | hierarchy_f1 | synonym_f1 | semantic_f1 | weighted_semantic_f1 |
-|-------|--------------|------------|-------------|----------------------|
-| gemini-2.0-flash | TBD | TBD | TBD | TBD |
-| claude-sonnet-4 | TBD | TBD | TBD | TBD |
-| claude-opus-4 | TBD | TBD | TBD | TBD |
-
-### F1 Comparison by Condition
-
-| Condition | hierarchy_f1 | synonym_f1 | semantic_f1 | weighted_semantic_f1 |
-|-----------|--------------|------------|-------------|----------------------|
-| minimal_direct | TBD | TBD | TBD | TBD |
-| minimal_cot | TBD | TBD | TBD | TBD |
-| standard_direct | TBD | TBD | TBD | TBD |
-| standard_cot | TBD | TBD | TBD | TBD |
-
-### Other Metrics
-
-| Model | Structure Acc | Critical Recall | Hallucination Rate | Parse Rate |
-|-------|---------------|-----------------|--------------------| -----------|
-| gemini-2.0-flash | TBD | TBD | TBD | TBD |
-| claude-sonnet-4 | TBD | TBD | TBD | TBD |
-| claude-opus-4 | TBD | TBD | TBD | TBD |
+All models perform better on template-generated CUSTOM-PBMC-001 than on real OMIP papers. This likely reflects cleaner structure rather than reasoning vs memorization.
 
 ---
 
@@ -123,87 +93,62 @@ If `semantic_f1 >> hierarchy_f1`, models are producing biologically correct but 
 
 ### 5 Judge Styles
 
-| Style | Focus | Output |
-|-------|-------|--------|
-| `default` | Standard quality assessment | COMPLETENESS, ACCURACY, SCIENTIFIC, OVERALL (0-10) |
-| `validation` | Blind metric estimation | ESTIMATED_F1, ESTIMATED_STRUCTURE, CONFIDENCE |
-| `qualitative` | Structured feedback, no scores | ERRORS, MISSING_GATES, EXTRA_GATES, ACCEPT |
-| `orthogonal` | Dimensions F1 can't capture | CLINICAL_UTILITY, BIOLOGICAL_PLAUSIBILITY, HALLUCINATION_SEVERITY |
-| `binary` | Pass/fail decision | ACCEPTABLE (yes/no), RECOMMENDATION |
+| Style | Focus |
+|-------|-------|
+| default | Standard quality assessment |
+| validation | Error checking (missing gates, invalid markers) |
+| qualitative | Biological reasoning and domain appropriateness |
+| orthogonal | Completeness, specificity, clinical utility |
+| binary | Pass/fail threshold |
 
-### Judge Scores by Model (Placeholder)
+### Judge Scores by Model (Quality 0-1)
 
 | Model | default | validation | qualitative | orthogonal | binary |
 |-------|---------|------------|-------------|------------|--------|
-| gemini-2.0-flash | TBD | TBD | TBD | TBD | TBD |
-| claude-sonnet-4 | TBD | TBD | TBD | TBD | TBD |
-| claude-opus-4 | TBD | TBD | TBD | TBD | TBD |
+| gemini-2.5-pro | 0.59 | 0.58 | 0.61 | 0.58 | 0.58 |
+| claude-opus-4-20250514 | 0.52 | 0.50 | 0.51 | 0.51 | 0.50 |
+| gemini-2.5-flash | 0.51 | 0.51 | 0.52 | 0.52 | 0.54 |
+| gemini-2.0-flash | 0.41 | 0.45 | 0.41 | 0.42 | 0.41 |
+| claude-sonnet-4-20250514 | 0.39 | 0.41 | 0.43 | 0.41 | 0.41 |
+| claude-3-5-haiku-20241022 | 0.34 | 0.33 | 0.33 | 0.32 | 0.34 |
+
+### F1 vs Judge Ranking Comparison
+
+| Rank | F1 Score | Judge Quality |
+|------|----------|---------------|
+| 1 | gemini-2.5-pro | gemini-2.5-pro |
+| 2 | gemini-2.0-flash | claude-opus-4-20250514 |
+| 3 | claude-opus-4-20250514 | gemini-2.5-flash |
+| 4 | claude-sonnet-4-20250514 | gemini-2.0-flash |
+| 5 | claude-3-5-haiku-20241022 | claude-sonnet-4-20250514 |
+| 6 | gemini-2.5-flash | claude-3-5-haiku-20241022 |
+
+**Observation:** opus is underrated by F1 (rank #3) but ranks #2 by judge quality. F1 may penalize opus's output format.
 
 ---
 
-## Hypothesis Testing Framework
+## Model Consistency Analysis
 
-### Available Tests
+### Bootstrap Agreement (3 runs at temperature=0)
 
-| Test | Question | Key Metric |
-|------|----------|------------|
-| **Alien Cell** | Reasoning vs memorization? | F1 delta with nonsense names |
-| **Format Ablation** | Prose parsing or reasoning failure? | Format variance |
-| **Cognitive Refusal** | Context blind or over-cautious? | Forcing effect |
-| **Frequency Confound** | Token frequency or reasoning? | R² correlation |
+| Model | All Same (3/3) | All Different (3/3) |
+|-------|----------------|---------------------|
+| gemini-2.0-flash | 28% | 0% |
+| gemini-2.5-flash | 29% | 0% |
+| claude-sonnet-4-20250514 | 35% | 43% |
+| gemini-2.5-pro | 4% | 52% |
+| claude-3-5-haiku-20241022 | 1% | 92% |
+| claude-opus-4-20250514 | 1% | 96% |
 
-### Alien Cell Test
+**Key Finding:** Claude models are highly non-deterministic even at temperature=0. opus produces 3 completely different gating hierarchies for 96% of test cases.
 
-**Design:** Replace real cell names with nonsense while preserving marker logic.
-
+**Example:** opus produces 3 different hierarchies for CUSTOM-PBMC-001 (same prompt):
 ```
-Original: "CD3+ CD4+ CD25+ FoxP3+ → Regulatory T cells"
-Alien:    "CD3+ CD4+ CD25+ FoxP3+ → Glorp Cells"
+Bootstrap 1: All Events → Time Gate → Singlets → Live → CD45+ → T Cells → Tregs...
+Bootstrap 2: All Events → Singlets → Live → CD45+ → CD3+ T Cells → NKT-like...
+Bootstrap 3: All Events → Singlets → Live → Leukocytes → T Cells → Regulatory T...
 ```
-
-**Interpretation:**
-- Model succeeds on alien cells → Reasoning from markers
-- Model fails on alien cells → Pattern-matching from training data
-
-**Status:** Implemented (`src/analysis/alien_cell.py`), results pending.
-
----
-
-## Key Questions
-
-### 1. Biological Equivalence Gap
-
-**Question:** How much do models lose to string matching vs semantic equivalence?
-
-| Metric | Mean | Interpretation |
-|--------|------|----------------|
-| hierarchy_f1 - semantic_f1 | TBD | Gap size |
-
-**Expected:** Larger gap → more biologically correct but linguistically different predictions.
-
-### 2. F1-Judge Correlation
-
-**Question:** Which F1 metric best predicts LLM judge scores?
-
-| F1 Metric | Correlation with Judge | p-value |
-|-----------|------------------------|---------|
-| hierarchy_f1 | TBD (early: r≈0.15) | TBD |
-| synonym_f1 | TBD | TBD |
-| semantic_f1 | TBD | TBD |
-| weighted_semantic_f1 | TBD | TBD |
-
-**Implication:** If semantic_f1 correlates better, use it as primary metric.
-
-### 3. Sonnet-Opus Gap
-
-**Question:** Does the Sonnet-Opus performance gap shrink with semantic matching?
-
-**Context:** Sonnet's verbose naming ("T Cells (CD3+)") may inflate hierarchy_f1 vs Opus's terse output.
-
-| Model | hierarchy_f1 | semantic_f1 | Gap Change |
-|-------|--------------|-------------|------------|
-| claude-sonnet-4 | TBD | TBD | TBD |
-| claude-opus-4 | TBD | TBD | TBD |
+All biologically valid, but different structure and naming.
 
 ---
 
@@ -211,7 +156,7 @@ Alien:    "CD3+ CD4+ CD25+ FoxP3+ → Glorp Cells"
 
 ### Token Exhaustion
 
-Reasoning models (gemini-2.5-pro, claude-opus) use 70%+ of token budget for "thinking".
+Reasoning models use 70%+ of token budget for "thinking".
 
 | Model | Failure Rate | Affected OMIPs |
 |-------|--------------|----------------|
@@ -220,92 +165,52 @@ Reasoning models (gemini-2.5-pro, claude-opus) use 70%+ of token budget for "thi
 
 **Mitigation:** Increase `max_tokens` to 20000 for reasoning models.
 
-### Non-Determinism at Temperature=0
-
-Claude models produce ~10 unique responses per 10 runs even at temperature=0.
-
-| Model | Unique Responses / 10 Runs |
-|-------|----------------------------|
-| claude-sonnet-cli | ~10 |
-| claude-opus-cli | ~10 |
-| gemini-2.0-flash | ~3-5 |
-
-**Implication:** Use n_bootstrap ≥ 5 for reliable variance estimation.
-
 ### Ground Truth Quality
-
-Results depend on ground truth curation quality.
 
 | Dataset | OMIPs | Status |
 |---------|-------|--------|
 | verified/ | 10 | Manually validated |
-| staging/ | 17 | Pending verification |
+| staging/ | 13 | Pending verification |
+
+---
+
+## Conclusions
+
+### What We've Learned
+
+1. **gemini-2.5-pro leads** both F1 and judge metrics
+2. **F1 and judge rankings differ** - opus underrated by F1
+3. **Claude models highly non-deterministic** at temperature=0
+4. **HIPC reference helps** (+5.6% F1)
+5. **Synthetic panels easier** than real OMIP papers
+
+### Recommendations
+
+1. **For production:** Use gemini-2.0-flash (best consistency/cost ratio)
+2. **For quality:** Use gemini-2.5-pro (highest scores)
+3. **For evaluation:** Don't rely on F1 alone - use multi-judge
+4. **For variance:** Use n_bootstrap ≥ 3
 
 ---
 
 ## Reproducibility
 
-### Running the Benchmark
-
 ```bash
-cd flow_gating_benchmark
-
-# Set API keys
-export GOOGLE_API_KEY=...
-export ANTHROPIC_API_KEY=...  # Optional for CLI models
-
-# Full benchmark on verified data
+# Full benchmark
 python scripts/run_modular_pipeline.py \
     --phase all \
-    --models gemini-2.0-flash claude-sonnet-cli \
+    --models gemini-2.0-flash gemini-2.5-pro opus sonnet haiku gemini-2.5-flash \
     --test-cases data/verified \
-    --n-bootstrap 5
+    --n-bootstrap 3
 
-# Quick test (~$0.01)
-python scripts/run_modular_pipeline.py \
-    --phase all \
-    --models gemini-2.0-flash \
-    --max-cases 1 \
-    --force
+# Multi-judge evaluation
+python scripts/run_aggregated_multijudge.py \
+    --predictions results/full_benchmark_20260114/predictions.json \
+    --test-cases data/verified \
+    --output results/full_benchmark_20260114/multijudge
 ```
 
-### Expected Costs
-
-| Configuration | API Calls | Gemini Cost | Claude Cost |
-|---------------|-----------|-------------|-------------|
-| Quick test | 4 | ~$0.01 | ~$0.05 |
-| 10 OMIPs × 4 conditions | 40 | ~$0.40 | ~$2 |
-| + 5 bootstrap | 200 | ~$2 | ~$10 |
-| + LLM judge | +200 | ~$20 | - |
-
 ---
 
-## Conclusions (Preliminary)
-
-### What We've Learned
-
-1. **String F1 is insufficient** - Weak correlation with judge scores (r≈0.15)
-2. **Models produce valid synonyms** - "Helper T cells" vs "CD4+ T cells"
-3. **Multiple metrics needed** - 4 F1 variants capture different aspects
-4. **Judge styles matter** - 5 styles for comprehensive evaluation
-
-### Recommendations
-
-1. **Use semantic_f1** as primary metric (pending correlation analysis)
-2. **Include multi-judge** for qualitative assessment
-3. **Run n_bootstrap ≥ 5** for variance estimation
-4. **Test on verified OMIPs only** for reliable results
-
----
-
-## Next Steps
-
-1. Complete clean rerun with 4 F1 variants on verified OMIPs
-2. Analyze F1 metric correlations with judge scores
-3. Run Alien Cell test to distinguish reasoning vs memorization
-4. Update results tables with actual data
-
----
-
-*Study in progress - January 2026*
+*Benchmark completed: January 14, 2026*
 *Framework version: modular_pipeline_v2*
