@@ -14,9 +14,9 @@ This strongly supports the **reasoning hypothesis** over the **memorization hypo
 
 ---
 
-## The Critique Being Tested
+## What Is Being Tested
 
-> "You claim the model lacks reasoning. I claim the model just hasn't seen the token 'SLAN+' as often as 'CD3'. This is a data distribution issue, not a cognitive one."
+Is there a correlation between token frequency (how often has model seen terms like SLAN+ monocytes or CD3) vs performance?
 
 ### Hypotheses
 
