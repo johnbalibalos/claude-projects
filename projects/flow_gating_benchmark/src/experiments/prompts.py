@@ -219,8 +219,9 @@ def format_context_rich(test_case: TestCase) -> str:
     if test_case.context.additional_notes:
         additional.append(f"Notes: {test_case.context.additional_notes}")
 
-    if test_case.omip_id:
-        additional.append(f"Reference: {test_case.omip_id}")
+    # NOTE: Intentionally NOT including omip_id here.
+    # Including "Reference: OMIP-077" would let models retrieve from training
+    # data rather than reason from markers - defeating the benchmark purpose.
 
     return base + "\n".join(additional)
 

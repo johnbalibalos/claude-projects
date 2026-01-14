@@ -178,7 +178,7 @@ Application: T-cell subset analysis
 ...
 ```
 
-**Rich** - Adds panel size, complexity, notes (+8% F1 vs minimal):
+**Rich** - Adds panel size, complexity, notes:
 ```
 ## Experiment Information
 ...
@@ -188,8 +188,9 @@ Application: T-cell subset analysis
 Panel Size: 18 colors
 Complexity: hard
 Tissue: Peripheral blood
-Reference: OMIP-077
 ```
+
+*Note: OMIP ID intentionally excluded from rich context to prevent retrieval from training data.*
 
 ### Prompt Strategies
 

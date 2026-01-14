@@ -162,6 +162,8 @@ The consistent improvement on synthetic panels likely reflects:
 
 **Finding:** Rich context provides ~8% relative improvement over minimal context.
 
+**Caveat:** These results were obtained when rich context included `Reference: OMIP-XXX`, which may have allowed models to retrieve from training data rather than reason from markers. This has been fixed - re-evaluation pending.
+
 ### Strategy Impact
 
 | Strategy | Mean F1 |
@@ -211,7 +213,7 @@ The consistent improvement on synthetic panels likely reflects:
 
 ### For Prompt Design
 
-1. **Use rich context** when available (+8% F1)
+1. **Use rich context** when available (effect size pending re-evaluation)
 2. **Include HIPC reference** (+5.6% F1)
 3. **Prefer direct prompting** for most models (slightly better than CoT)
 
