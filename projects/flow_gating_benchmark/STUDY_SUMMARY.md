@@ -129,18 +129,18 @@ All models perform better on template-generated CUSTOM-PBMC-001 than on real OMI
 
 ## Model Consistency Analysis
 
-### Bootstrap Agreement (3 runs at temperature=0)
+### Bootstrap Agreement (3 runs)
 
-| Model | All Same (3/3) | All Different (3/3) |
-|-------|----------------|---------------------|
-| gemini-2.0-flash | 28% | 0% |
-| gemini-2.5-flash | 29% | 0% |
-| claude-sonnet-4-20250514 | 35% | 43% |
-| gemini-2.5-pro | 4% | 52% |
-| claude-3-5-haiku-20241022 | 1% | 92% |
-| claude-opus-4-20250514 | 1% | 96% |
+| Model | All Same (3/3) | All Different (3/3) | Temperature |
+|-------|----------------|---------------------|-------------|
+| gemini-2.0-flash | 28% | 0% | 0.0 (API) |
+| gemini-2.5-flash | 29% | 0% | 0.0 (API) |
+| claude-sonnet-4-20250514 | 35% | 43% | default (CLI) |
+| gemini-2.5-pro | 4% | 52% | 0.0 (API) |
+| claude-3-5-haiku-20241022 | 1% | 92% | default (CLI) |
+| claude-opus-4-20250514 | 1% | 96% | default (CLI) |
 
-**Key Finding:** Claude models are highly non-deterministic even at temperature=0. opus produces 3 completely different gating hierarchies for 96% of test cases.
+**Key Finding:** Claude models run via CLI cannot enforce temperature=0, so high variance is expected. Gemini models via API with temperature=0 are much more consistent.
 
 **Example:** opus produces 3 different hierarchies for CUSTOM-PBMC-001 (same prompt):
 ```

@@ -53,7 +53,7 @@ F1 ranking differs from LLM judge ranking. gemini-2.5-pro leads both, but opus r
 
 **3. Model Consistency (Bootstrap Agreement):**
 
-Claude models produce different outputs each run even at temperature=0:
+Claude models (run via CLI, default temperature) produce different outputs each run. Gemini models (API, temperature=0) are more consistent:
 
 | Model | All Same (3/3) | All Different (3/3) |
 |-------|----------------|---------------------|
