@@ -18,7 +18,7 @@ from evaluation.scorer import GatingScorer
 from evaluation.hierarchy import extract_gate_names
 from evaluation.metrics import compute_hierarchy_f1
 from evaluation.normalization import normalize_gate_semantic
-from utils.checkpoint import CheckpointManager
+from checkpoint import CheckpointManager
 from utils.serializable import SerializableMixin
 
 from .prediction_collector import Prediction
