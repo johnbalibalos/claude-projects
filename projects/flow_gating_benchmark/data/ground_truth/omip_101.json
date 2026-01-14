@@ -661,58 +661,60 @@
                                                                   "is_critical": false,
                                                                   "children": [
                                                                     {
-                                                                      "name": "Naive CD4+ T cells",
+                                                                      "name": "CCR7/CD45RA subsets",
                                                                       "markers": [
                                                                         "CCR7",
                                                                         "CD45RA"
                                                                       ],
-                                                                      "marker_logic": "CCR7+ CD45RA+",
+                                                                      "marker_logic": "CCR7 vs CD45RA",
                                                                       "gate_type": "Unknown",
                                                                       "is_critical": false,
-                                                                      "children": []
-                                                                    },
-                                                                    {
-                                                                      "name": "Central memory CD4+ T cells",
-                                                                      "markers": [
-                                                                        "CCR7",
-                                                                        "CD45RA"
-                                                                      ],
-                                                                      "marker_logic": "CCR7+ CD45RA-",
-                                                                      "gate_type": "Unknown",
-                                                                      "is_critical": false,
-                                                                      "children": []
-                                                                    },
-                                                                    {
-                                                                      "name": "Effector memory CD4+ T cells",
-                                                                      "markers": [
-                                                                        "CCR7",
-                                                                        "CD45RA"
-                                                                      ],
-                                                                      "marker_logic": "CCR7- CD45RA-",
-                                                                      "gate_type": "Unknown",
-                                                                      "is_critical": false,
-                                                                      "children": []
-                                                                    },
-                                                                    {
-                                                                      "name": "TEMRA CD4+ T cells",
-                                                                      "markers": [
-                                                                        "CCR7",
-                                                                        "CD45RA"
-                                                                      ],
-                                                                      "marker_logic": "CCR7- CD45RA+",
-                                                                      "gate_type": "Unknown",
-                                                                      "is_critical": false,
-                                                                      "children": []
-                                                                    },
-                                                                    {
-                                                                      "name": "Proliferating CD4+ T cells",
-                                                                      "markers": [
-                                                                        "Ki67"
-                                                                      ],
-                                                                      "marker_logic": "Ki67+",
-                                                                      "gate_type": "Unknown",
-                                                                      "is_critical": false,
-                                                                      "children": []
+                                                                      "children": [
+                                                                        {
+                                                                          "name": "Naive",
+                                                                          "markers": [
+                                                                            "CCR7",
+                                                                            "CD45RA"
+                                                                          ],
+                                                                          "marker_logic": "CCR7+ CD45RA+",
+                                                                          "gate_type": "Unknown",
+                                                                          "is_critical": false,
+                                                                          "children": []
+                                                                        },
+                                                                        {
+                                                                          "name": "Central memory",
+                                                                          "markers": [
+                                                                            "CCR7",
+                                                                            "CD45RA"
+                                                                          ],
+                                                                          "marker_logic": "CCR7+ CD45RA-",
+                                                                          "gate_type": "Unknown",
+                                                                          "is_critical": false,
+                                                                          "children": []
+                                                                        },
+                                                                        {
+                                                                          "name": "Effector memory",
+                                                                          "markers": [
+                                                                            "CCR7",
+                                                                            "CD45RA"
+                                                                          ],
+                                                                          "marker_logic": "CCR7- CD45RA-",
+                                                                          "gate_type": "Unknown",
+                                                                          "is_critical": false,
+                                                                          "children": []
+                                                                        },
+                                                                        {
+                                                                          "name": "TEMRA",
+                                                                          "markers": [
+                                                                            "CCR7",
+                                                                            "CD45RA"
+                                                                          ],
+                                                                          "marker_logic": "CCR7- CD45RA+",
+                                                                          "gate_type": "Unknown",
+                                                                          "is_critical": false,
+                                                                          "children": []
+                                                                        }
+                                                                      ]
                                                                     },
                                                                     {
                                                                       "name": "Cytotoxic CD4+ T cells",
@@ -735,6 +737,28 @@
                                                                       "gate_type": "Unknown",
                                                                       "is_critical": false,
                                                                       "children": []
+                                                                    },
+                                                                    {
+                                                                      "name": "CD57/CD27 subsets",
+                                                                      "markers": [
+                                                                        "CD57",
+                                                                        "CD27"
+                                                                      ],
+                                                                      "marker_logic": "CD57 vs CD27",
+                                                                      "gate_type": "Unknown",
+                                                                      "is_critical": false,
+                                                                      "children": []
+                                                                    },
+                                                                    {
+                                                                      "name": "HLA-DR+ Ki67+",
+                                                                      "markers": [
+                                                                        "HLA-DR",
+                                                                        "Ki67"
+                                                                      ],
+                                                                      "marker_logic": "HLA-DR+ Ki67+",
+                                                                      "gate_type": "Unknown",
+                                                                      "is_critical": false,
+                                                                      "children": []
                                                                     }
                                                                   ]
                                                                 },
@@ -749,58 +773,60 @@
                                                                   "is_critical": false,
                                                                   "children": [
                                                                     {
-                                                                      "name": "Naive CD8+ T cells",
+                                                                      "name": "CCR7/CD45RA subsets",
                                                                       "markers": [
                                                                         "CCR7",
                                                                         "CD45RA"
                                                                       ],
-                                                                      "marker_logic": "CCR7+ CD45RA+",
+                                                                      "marker_logic": "CCR7 vs CD45RA",
                                                                       "gate_type": "Unknown",
                                                                       "is_critical": false,
-                                                                      "children": []
-                                                                    },
-                                                                    {
-                                                                      "name": "Central memory CD8+ T cells",
-                                                                      "markers": [
-                                                                        "CCR7",
-                                                                        "CD45RA"
-                                                                      ],
-                                                                      "marker_logic": "CCR7+ CD45RA-",
-                                                                      "gate_type": "Unknown",
-                                                                      "is_critical": false,
-                                                                      "children": []
-                                                                    },
-                                                                    {
-                                                                      "name": "Effector memory CD8+ T cells",
-                                                                      "markers": [
-                                                                        "CCR7",
-                                                                        "CD45RA"
-                                                                      ],
-                                                                      "marker_logic": "CCR7- CD45RA-",
-                                                                      "gate_type": "Unknown",
-                                                                      "is_critical": false,
-                                                                      "children": []
-                                                                    },
-                                                                    {
-                                                                      "name": "TEMRA CD8+ T cells",
-                                                                      "markers": [
-                                                                        "CCR7",
-                                                                        "CD45RA"
-                                                                      ],
-                                                                      "marker_logic": "CCR7- CD45RA+",
-                                                                      "gate_type": "Unknown",
-                                                                      "is_critical": false,
-                                                                      "children": []
-                                                                    },
-                                                                    {
-                                                                      "name": "Proliferating CD8+ T cells",
-                                                                      "markers": [
-                                                                        "Ki67"
-                                                                      ],
-                                                                      "marker_logic": "Ki67+",
-                                                                      "gate_type": "Unknown",
-                                                                      "is_critical": false,
-                                                                      "children": []
+                                                                      "children": [
+                                                                        {
+                                                                          "name": "Naive",
+                                                                          "markers": [
+                                                                            "CCR7",
+                                                                            "CD45RA"
+                                                                          ],
+                                                                          "marker_logic": "CCR7+ CD45RA+",
+                                                                          "gate_type": "Unknown",
+                                                                          "is_critical": false,
+                                                                          "children": []
+                                                                        },
+                                                                        {
+                                                                          "name": "Central memory",
+                                                                          "markers": [
+                                                                            "CCR7",
+                                                                            "CD45RA"
+                                                                          ],
+                                                                          "marker_logic": "CCR7+ CD45RA-",
+                                                                          "gate_type": "Unknown",
+                                                                          "is_critical": false,
+                                                                          "children": []
+                                                                        },
+                                                                        {
+                                                                          "name": "Effector memory",
+                                                                          "markers": [
+                                                                            "CCR7",
+                                                                            "CD45RA"
+                                                                          ],
+                                                                          "marker_logic": "CCR7- CD45RA-",
+                                                                          "gate_type": "Unknown",
+                                                                          "is_critical": false,
+                                                                          "children": []
+                                                                        },
+                                                                        {
+                                                                          "name": "TEMRA",
+                                                                          "markers": [
+                                                                            "CCR7",
+                                                                            "CD45RA"
+                                                                          ],
+                                                                          "marker_logic": "CCR7- CD45RA+",
+                                                                          "gate_type": "Unknown",
+                                                                          "is_critical": false,
+                                                                          "children": []
+                                                                        }
+                                                                      ]
                                                                     },
                                                                     {
                                                                       "name": "Cytotoxic CD8+ T cells",
@@ -820,6 +846,28 @@
                                                                         "CD38"
                                                                       ],
                                                                       "marker_logic": "HLA-DR+ and/or CD38+",
+                                                                      "gate_type": "Unknown",
+                                                                      "is_critical": false,
+                                                                      "children": []
+                                                                    },
+                                                                    {
+                                                                      "name": "CD57/CD27 subsets",
+                                                                      "markers": [
+                                                                        "CD57",
+                                                                        "CD27"
+                                                                      ],
+                                                                      "marker_logic": "CD57 vs CD27",
+                                                                      "gate_type": "Unknown",
+                                                                      "is_critical": false,
+                                                                      "children": []
+                                                                    },
+                                                                    {
+                                                                      "name": "HLA-DR+ Ki67+",
+                                                                      "markers": [
+                                                                        "HLA-DR",
+                                                                        "Ki67"
+                                                                      ],
+                                                                      "marker_logic": "HLA-DR+ Ki67+",
                                                                       "gate_type": "Unknown",
                                                                       "is_critical": false,
                                                                       "children": []
