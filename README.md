@@ -26,18 +26,31 @@ This repository contains experimental tools and benchmarks for evaluating how LL
 
 An evaluation framework testing whether LLMs can predict appropriate gating hierarchies given marker panels and experimental context. Uses OMIP papers as ground truth.
 
-**Latest Results (Jan 2026):**
-- Sonnet 4: F1=0.384, Critical Gate Recall=83.9%
-- Task failure detection: Identifies when models ask questions vs. predicting
+**Key Innovation:** Multiple F1 metrics to capture biological equivalence beyond string matching.
+
+| Metric | Method | Purpose |
+|--------|--------|---------|
+| `hierarchy_f1` | String normalization | Baseline |
+| `synonym_f1` | 200+ synonym dictionary | Catches "T Lymphocytes" ↔ "T cells" |
+| `semantic_f1` | MiniLM embeddings | Catches "Helper T" ↔ "CD4+ T cells" |
+| `weighted_semantic_f1` | Confidence-weighted | Partial credit |
+
+**Latest Status (Jan 2026):**
+- Results pending: Clean rerun with 4 F1 variants in progress
+- Early finding: Weak correlation (r≈0.15) between string F1 and LLM judge scores
+- 5 LLM judge styles for comprehensive evaluation
+- Alien Cell test to distinguish reasoning vs memorization
+
+See **[STUDY_SUMMARY.md](projects/flow_gating_benchmark/STUDY_SUMMARY.md)** for full methodology.
 
 ```
 projects/flow_gating_benchmark/
 ├── src/
 │   ├── curation/      # OMIP data extraction and paper parsing
-│   ├── evaluation/    # Metrics, scoring, task failure detection
-│   ├── experiments/   # Experiment runner with multi-model support
-│   └── analysis/      # Manual review reports and visualization
-├── data/ground_truth/ # 8 curated OMIP gating hierarchies
+│   ├── evaluation/    # 4 F1 metrics, scoring, semantic similarity
+│   ├── experiments/   # Modular pipeline with multi-judge support
+│   └── analysis/      # Hypothesis tests (alien cell, format ablation)
+├── data/verified/     # 10 curated OMIP gating hierarchies
 └── scripts/           # CLI tools for running experiments
 ```
 
@@ -118,14 +131,15 @@ See individual project READMEs for specific instructions.
 ## Recent Updates (Jan 2026)
 
 ### Flow Gating Benchmark
-- Added **task failure detection** - identifies when models ask questions instead of predicting
-- Refactored evaluation into focused modules (normalization, hierarchy, task_failure)
-- Added **manual review report generator** with outlier detection
-- Multi-model LLM client supporting Anthropic, OpenAI, and Ollama
-- 8 OMIP test cases with ground truth hierarchies
+- Added **4 F1 metric variants** (hierarchy, synonym, semantic, weighted_semantic) for fair cross-model comparison
+- Implemented **5 LLM judge styles** (default, validation, qualitative, orthogonal, binary)
+- Built **Alien Cell test** to distinguish reasoning from memorization
+- **10 verified OMIPs** with curated ground truth hierarchies
+- Modular pipeline with checkpoint/resume support
+- Multi-model LLM client supporting Anthropic, Gemini, OpenAI, and Ollama
 
 ### Flow Panel Optimizer
-- MCP ablation studies comparing tool vs. no-tool performance
+- MCP ablation studies showing **88.6% improvement** in panel complexity with tools
 - Spectral similarity and spreading matrix calculations
 
 ## Research Context
