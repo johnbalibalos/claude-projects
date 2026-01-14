@@ -82,6 +82,8 @@ def run_predict(
     max_cases: int | None = None,
     run_id: str = "",
     references: list[str] | None = None,
+    max_tokens: int = 6000,
+    context_levels: list[str] | None = None,
 ) -> list[Prediction]:
     """Phase 1: Collect predictions from LLMs."""
     print_phase("PREDICTION COLLECTION")
@@ -95,7 +97,7 @@ def run_predict(
     # Generate conditions
     conditions = get_all_conditions(
         models=models,
-        context_levels=["minimal", "standard"],
+        context_levels=context_levels or ["minimal", "standard", "rich"],
         prompt_strategies=["direct", "cot"],
         references=references or ["none"],
     )
@@ -108,6 +110,7 @@ def run_predict(
         checkpoint_dir=output_dir / "checkpoints",
         dry_run=dry_run,
         run_id=run_id,  # Link predictions to experiment context
+        max_tokens=max_tokens,
         # Per-provider parallelism (defaults: gemini=50, anthropic=50, openai=50)
     )
 
@@ -341,6 +344,18 @@ def main():
         dest="references",
         help="Reference modes: none, hipc (static HIPC injection). Default: none",
     )
+    parser.add_argument(
+        "--max-tokens",
+        type=int,
+        default=6000,
+        help="Max output tokens for predictions (default: 6000)",
+    )
+    parser.add_argument(
+        "--context-levels",
+        nargs="+",
+        default=["minimal", "standard", "rich"],
+        help="Context levels to test (default: minimal standard rich)",
+    )
 
     args = parser.parse_args()
 
@@ -379,6 +394,8 @@ def main():
                 max_cases=args.max_cases,
                 run_id=ctx.run_id,  # Pass run_id for provenance
                 references=args.references,
+                max_tokens=args.max_tokens,
+                context_levels=args.context_levels,
             )
 
         if args.phase in ["score", "all"]:

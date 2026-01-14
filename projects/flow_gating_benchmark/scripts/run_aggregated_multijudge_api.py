@@ -267,7 +267,7 @@ def main():
     parser.add_argument("--predictions", type=Path,
                         default=Path("results/multi_judge_run/predictions.json"),
                         help="Predictions file")
-    parser.add_argument("--test-cases", type=Path, default=Path("data/staging"),
+    parser.add_argument("--test-cases", type=Path, default=Path("data/verified"),
                         help="Test cases directory")
     parser.add_argument("--output", type=Path,
                         default=Path("results/multi_judge_run"),

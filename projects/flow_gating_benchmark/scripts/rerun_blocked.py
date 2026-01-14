@@ -24,7 +24,7 @@ from experiments.prompts import build_prompt  # noqa: E402
 def main():
     parser = argparse.ArgumentParser(description="Rerun blocked predictions")
     parser.add_argument("--input", type=Path, required=True, help="Input results directory")
-    parser.add_argument("--test-cases", type=Path, default=PROJECT_ROOT / "data" / "staging")
+    parser.add_argument("--test-cases", type=Path, default=PROJECT_ROOT / "data" / "verified")
     parser.add_argument("--max-tokens", type=int, default=10000, help="Max tokens for rerun")
     # NOTE: dry-run disabled to prevent accidental mock runs
     # parser.add_argument("--dry-run", action="store_true", help="Don't actually call API")

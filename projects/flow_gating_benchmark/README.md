@@ -51,8 +51,26 @@ Models perform significantly better on template-generated CUSTOM-PBMC-001 (+0.19
 **2. F1 vs Judge Disagreement:**
 F1 ranking differs from LLM judge ranking. gemini-2.5-pro leads both, but opus ranks higher by judge quality than F1 suggests.
 
-**3. Model Consistency:**
-gemini-2.0-flash and gemini-2.5-flash show highest consistency (0.63-0.65), while haiku and opus show lowest (0.13-0.18).
+**3. Model Consistency (Bootstrap Agreement):**
+
+Claude models produce different outputs each run even at temperature=0:
+
+| Model | All Same (3/3) | All Different (3/3) |
+|-------|----------------|---------------------|
+| gemini-2.0-flash | 28% | **0%** |
+| gemini-2.5-flash | 29% | **0%** |
+| claude-sonnet-4-20250514 | 35% | 43% |
+| gemini-2.5-pro | 4% | 52% |
+| claude-3-5-haiku-20241022 | 1% | **92%** |
+| claude-opus-4-20250514 | 1% | **96%** |
+
+**Example:** opus produces 3 different hierarchies for CUSTOM-PBMC-001 (same prompt):
+```
+Bootstrap 1: All Events → Time Gate → Singlets → Live → CD45+ → T Cells → Tregs...
+Bootstrap 2: All Events → Singlets → Live → CD45+ → CD3+ T Cells → NKT-like...
+Bootstrap 3: All Events → Singlets → Live → Leukocytes → T Cells → Regulatory T...
+```
+All biologically valid, but different structure and naming.
 
 ---
 
@@ -136,7 +154,7 @@ python scripts/run_modular_pipeline.py [OPTIONS]
 
 ## Experimental Conditions
 
-Each model is tested with 4 conditions (2 context levels × 2 strategies):
+Each model is tested with **12 conditions** (3 context levels × 2 strategies × 2 reference modes):
 
 ### Context Levels
 
@@ -146,7 +164,7 @@ Each model is tested with 4 conditions (2 context levels × 2 strategies):
 Markers: CD3, CD4, CD8, CD45, CD19, Viability
 ```
 
-**Standard** - Adds experimental metadata (+25% F1 improvement):
+**Standard** - Adds experimental metadata:
 ```
 ## Experiment Information
 Sample Type: Human PBMC
@@ -154,13 +172,79 @@ Species: human
 Application: T-cell subset analysis
 
 ## Panel
-Markers: CD3, CD4, CD8, CD45, CD19, Viability
+- CD3: BUV395 (clone: UCHT1)
+- CD4: BV785 (clone: RPA-T4)
+- CD8: PE-Cy7 (clone: SK1)
+...
+```
+
+**Rich** - Adds panel size, complexity, notes (+8% F1 vs minimal):
+```
+## Experiment Information
+...
+## Panel
+...
+## Additional Information
+Panel Size: 18 colors
+Complexity: hard
+Tissue: Peripheral blood
+Reference: OMIP-077
 ```
 
 ### Prompt Strategies
 
-- **direct**: Output JSON hierarchy immediately
-- **cot**: Chain-of-thought reasoning before JSON output
+**Direct** - Output JSON hierarchy immediately:
+```
+You are an expert cytometrist. Given the following panel information,
+predict the gating hierarchy that an expert would use for data analysis.
+
+{context}
+
+## Task
+Predict the complete gating hierarchy, starting from "All Events" through
+appropriate quality control gates to final cell population identification.
+
+Return your answer as a JSON object...
+```
+
+**Chain-of-Thought (CoT)** - Reasoning before JSON output:
+```
+...
+## Task
+Before providing your final answer, briefly consider:
+- What technology is this (flow cytometry or mass cytometry/CyTOF)?
+- What quality control gates are needed?
+- What populations can this panel's markers identify?
+- How should gates be organized hierarchically?
+
+Use your expertise to determine the best approach for this specific panel.
+
+After your reasoning, provide the final hierarchy as a JSON object...
+```
+
+### Reference Modes
+
+**None** - No additional context
+
+**HIPC** - Injects HIPC 2016 standardized cell definitions (+5.6% F1):
+```
+## Reference: HIPC 2016 Standardized Cell Definitions
+Source: https://www.nature.com/articles/srep20686
+
+### Quality Control Gates (Required)
+- Time Gate: Exclude acquisition artifacts
+- Singlets: Doublet exclusion (FSC-A vs FSC-H)
+- Live cells: Viability dye negative
+
+### Major Lineage Definitions
+| Population | Markers | Parent |
+|------------|---------|--------|
+| T cells | CD3+ CD19- | Lymphocytes |
+| CD4+ T cells | CD3+ CD4+ CD8- | T cells |
+...
+
+{actual panel context follows}
+```
 
 ---
 
@@ -252,23 +336,20 @@ We compute multiple F1 scores to understand the gap between string matching and 
 
 ---
 
-## Test Cases (13 OMIPs)
+## Test Cases (10 verified)
 
-| OMIP | Species | Focus | Markers | Difficulty |
-|------|---------|-------|---------|------------|
-| 008 | Human | Th1/Th2 | 7 | Easy |
-| 053 | Human | Tregs | 7 | Easy |
-| 022 | Human | T memory | 12 | Medium |
-| 025 | Human | T/NK | 14 | Medium |
-| 035 | Macaque | NK | 14 | Medium |
-| 074 | Human | B cells | 22 | Medium |
-| 076 | Murine | T/B/APC | 18 | Hard |
-| 077 | Human | Pan-leuk | 20 | Hard |
-| 083 | Human | Monocytes | 21 | Hard |
-| 064 | Human | NK/ILC | 27 | Hard |
-| 087 | Human | CyTOF | 32 | Very Hard |
-| 095 | Human | Spectral | 40 | Hard |
-| 101 | Human | Whole blood | 32 | Hard |
+| Test Case | Species | Focus | Markers | Notes |
+|-----------|---------|-------|---------|-------|
+| CUSTOM-PBMC-001 | Human | Pan-immune | 18 | Synthetic (template-generated) |
+| OMIP-008 | Human | Th1/Th2 | 7 | T cell cytokines |
+| OMIP-022 | Human | T memory | 12 | Antigen-specific T cells |
+| OMIP-074 | Human | B cells | 22 | IgG/IgA subclasses |
+| OMIP-076 | Murine | T/B/APC | 18 | Pan-leukocyte |
+| OMIP-077 | Human | Pan-leuk | 20 | All principal leukocytes |
+| OMIP-083 | Human | Monocytes | 21 | Deep phenotyping |
+| OMIP-087 | Human | CyTOF | 32 | Mass cytometry |
+| OMIP-095 | Murine | Spectral | 40 | 40-color spectral |
+| OMIP-101 | Human | Whole blood | 32 | Myeloid + lymphoid |
 
 ---
 

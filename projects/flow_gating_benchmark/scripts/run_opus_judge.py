@@ -119,7 +119,7 @@ def main():
                         help=f"Judge styles to run (default: all). Options: {JUDGE_STYLES}")
     parser.add_argument("--output", type=Path, default=Path("results/multi_judge_run"),
                         help="Output directory")
-    parser.add_argument("--test-cases", type=Path, default=Path("data/staging"),
+    parser.add_argument("--test-cases", type=Path, default=Path("data/verified"),
                         help="Test cases directory")
 
     args = parser.parse_args()

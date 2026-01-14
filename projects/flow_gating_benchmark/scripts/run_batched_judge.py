@@ -706,7 +706,7 @@ def main():
     parser.add_argument(
         "--test-cases",
         type=Path,
-        default=PROJECT_ROOT / "data" / "staging",
+        default=PROJECT_ROOT / "data" / "verified",
         help="Ground truth directory",
     )
     parser.add_argument(
