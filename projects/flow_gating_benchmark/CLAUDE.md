@@ -231,10 +231,38 @@ All Events
 
 | Metric | Description | Range |
 |--------|-------------|-------|
-| `hierarchy_f1` | Gate name precision/recall | 0-1 |
+| `hierarchy_f1` | Gate name precision/recall (string normalization) | 0-1 |
+| `synonym_f1` | Gate matching via 200+ synonym dictionary | 0-1 |
+| `semantic_f1` | Gate matching via sentence embeddings (MiniLM) | 0-1 |
+| `weighted_semantic_f1` | Embedding-weighted by match confidence | 0-1 |
 | `structure_accuracy` | Parent-child relationships correct | 0-1 |
 | `critical_gate_recall` | Must-have gates present | 0-1 |
 | `hallucination_rate` | Gates not in panel | 0-1 |
+
+#### Multiple F1 Metrics: Why and How
+
+We compute **4 F1 variants** to understand the gap between string matching and semantic equivalence:
+
+| Metric | Method | Catches |
+|--------|--------|---------|
+| `hierarchy_f1` | String normalization | "CD4+ T Cells" ↔ "CD4 positive T cells" |
+| `synonym_f1` | 200+ dictionary | "T Lymphocytes" ↔ "T cells" ↔ "CD3+" |
+| `semantic_f1` | MiniLM embeddings | "Helper T cells" ↔ "CD4+ T cells" |
+| `weighted_semantic_f1` | Weighted embeddings | Same, but partial credit for ~0.7-0.85 similarity |
+
+**Expected pattern:** `hierarchy_f1 ≤ synonym_f1 ≤ semantic_f1`
+
+If semantic_f1 >> hierarchy_f1, the model is producing biologically correct but linguistically different names. If they're similar, string matching is sufficient.
+
+##### Preliminary Results (placeholder - rerun pending)
+
+| Model | hierarchy_f1 | synonym_f1 | semantic_f1 | weighted_semantic_f1 |
+|-------|--------------|------------|-------------|----------------------|
+| gemini-2.0-flash | TBD | TBD | TBD | TBD |
+| claude-sonnet-4 | TBD | TBD | TBD | TBD |
+| claude-opus-4 | TBD | TBD | TBD | TBD |
+
+*Results pending clean rerun on verified dataset.*
 
 #### Learnings: From F1 to Multi-Judge Paradigm
 

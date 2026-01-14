@@ -27,10 +27,29 @@
 - [x] 200+ gate synonym mappings
 - [x] Task failure detection (refusals, meta-questions)
 - [x] Critical gate recall (singlets, live)
+- [x] Multiple F1 metrics for comparison:
+  - `hierarchy_f1` - string normalization (baseline)
+  - `synonym_f1` - dictionary-based semantic matching
+  - `semantic_f1` - embedding-based (sentence-transformers)
+  - `weighted_semantic_f1` - embedding-weighted by confidence
 
 ---
 
 ## High Priority
+
+### F1 Metric Validation (In Progress)
+Clean rerun on verified dataset to validate multiple F1 metrics.
+
+- [ ] Run benchmark with all 4 F1 variants on verified OMIPs
+- [ ] Analyze F1 metric correlations (hierarchy vs synonym vs semantic)
+- [ ] Correlate each F1 variant with LLM judge scores
+- [ ] Determine which F1 best predicts biological correctness
+- [ ] Update results tables in README.md and CLAUDE.md
+
+**Key questions:**
+- Does semantic_f1 >> hierarchy_f1? (quantify biological equivalence gap)
+- Which F1 metric best correlates with LLM judge?
+- Does Sonnet-Opus gap shrink with semantic matching?
 
 ### Multi-Judge Experiment
 Design and implement cross-validation with multiple judge models.
@@ -148,4 +167,4 @@ def build_prompt_with_selective_rag(test_case, freq_threshold=1000):
 
 ---
 
-*Last updated: 2026-01-12*
+*Last updated: 2026-01-14*

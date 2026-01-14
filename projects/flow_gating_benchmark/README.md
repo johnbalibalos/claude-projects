@@ -6,22 +6,32 @@ Evaluate LLM capabilities in predicting flow cytometry gating strategies from pa
 
 ## Latest Results
 
+> **⚠️ Results pending:** Clean rerun in progress on verified dataset with multiple F1 metrics.
+
 See **[results/BENCHMARK_RESULTS_SUMMARY.md](results/BENCHMARK_RESULTS_SUMMARY.md)** for full analysis.
 
-| Model | Hierarchy F1 | Structure Acc | Critical Recall | Parse Rate |
-|-------|--------------|---------------|-----------------|------------|
-| **gemini-2.0-flash** | **0.393** | 0.268 | 0.891 | 100% |
-| claude-opus-4 | 0.349 | 0.229 | **0.856** | 100% |
-| claude-sonnet-4 | 0.325 | 0.204 | 0.791 | 99.2% |
-| gemini-2.5-pro | 0.240 | 0.092 | 0.631 | 99.5% |
-| gemini-2.5-flash | 0.119 | 0.078 | 0.489 | 31% |
+### F1 Comparison (placeholder - rerun pending)
 
-**Key Findings:**
-- Simpler models (gemini-2.0-flash) outperform reasoning models
-- Claude models have high critical gate recall (important QC gates)
-- Standard context improves F1 by 25%+
+| Model | hierarchy_f1 | synonym_f1 | semantic_f1 | weighted_semantic_f1 |
+|-------|--------------|------------|-------------|----------------------|
+| gemini-2.0-flash | TBD | TBD | TBD | TBD |
+| claude-sonnet-4 | TBD | TBD | TBD | TBD |
+| claude-opus-4 | TBD | TBD | TBD | TBD |
 
-**Methodology Note:** In earlier testing with n=10 bootstrap runs, Claude models produced ~10 unique responses per 10 runs even at temperature=0. This non-determinism finding doesn't depend on ground truth quality—it measures output consistency, not correctness. The F1 results above are from a subsequent n=1 run on manually-curated ground truth.
+### Other Metrics (placeholder)
+
+| Model | Structure Acc | Critical Recall | Parse Rate |
+|-------|---------------|-----------------|------------|
+| gemini-2.0-flash | TBD | TBD | TBD |
+| claude-sonnet-4 | TBD | TBD | TBD |
+| claude-opus-4 | TBD | TBD | TBD |
+
+**Key Questions Being Tested:**
+- Does semantic_f1 >> hierarchy_f1? (biological equivalence gap)
+- Which F1 metric best correlates with LLM judge scores?
+- Does the Sonnet-Opus gap shrink with semantic matching?
+
+**Methodology Note:** In earlier testing with n=10 bootstrap runs, Claude models produced ~10 unique responses per 10 runs even at temperature=0. This non-determinism finding doesn't depend on ground truth quality—it measures output consistency, not correctness.
 
 ---
 
@@ -198,9 +208,23 @@ flow_gating_benchmark/
 
 ## Metrics
 
+### F1 Variants (4 metrics)
+
+We compute multiple F1 scores to understand the gap between string matching and biological equivalence:
+
+| Metric | Method | What it catches |
+|--------|--------|-----------------|
+| `hierarchy_f1` | String normalization | "CD4+ T Cells" ↔ "CD4 positive T cells" |
+| `synonym_f1` | 200+ synonym dictionary | "T Lymphocytes" ↔ "T cells" ↔ "CD3+" |
+| `semantic_f1` | MiniLM embeddings | "Helper T cells" ↔ "CD4+ T cells" |
+| `weighted_semantic_f1` | Confidence-weighted | Partial credit for similarity 0.7-0.85 |
+
+**Why multiple F1s?** Early analysis showed weak correlation (r≈0.15) between string-based F1 and LLM judge scores. Models often produce biologically correct but linguistically different gate names.
+
+### Other Metrics
+
 | Metric | Description | Range |
 |--------|-------------|-------|
-| `hierarchy_f1` | Gate name precision/recall (normalized) | 0-1 |
 | `structure_accuracy` | Parent-child relationships correct | 0-1 |
 | `critical_gate_recall` | Essential QC gates present | 0-1 |
 | `hallucination_rate` | Gates using non-panel markers | 0-1 |
