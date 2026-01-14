@@ -2,6 +2,8 @@
 
 Evaluate LLM capabilities in predicting flow cytometry gating strategies from panel information.
 
+> **Status:** Active development. The evaluation framework is functional, but ground truth datasets require manual curation from OMIP papers. Results in any linked posts reflect work-in-progress and may be rerun as data quality improves.
+
 ## Latest Results
 
 See **[results/BENCHMARK_RESULTS_SUMMARY.md](results/BENCHMARK_RESULTS_SUMMARY.md)** for full analysis.
@@ -37,8 +39,7 @@ python scripts/run_modular_pipeline.py \
     --phase all \
     --models gemini-2.0-flash \
     --test-cases data/staging \
-    --n-bootstrap 10 \
-    --force
+    --n-bootstrap 10
 ```
 
 ---
@@ -249,8 +250,7 @@ pytest tests/ -v
 python scripts/run_modular_pipeline.py \
     --phase all \
     --models gemini-2.0-flash \
-    --max-cases 1 \
-    --force
+    --max-cases 1
 ```
 
 ---
