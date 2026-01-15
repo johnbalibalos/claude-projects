@@ -5,9 +5,11 @@ Fetch fresh PubMed citation counts for population names.
 Uses NCBI E-utilities API to get up-to-date counts.
 """
 
+import argparse
 import json
-import math
+import os
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from collections import defaultdict
@@ -20,8 +22,16 @@ except ImportError:
     HAS_YAML = False
 
 
-def fetch_pubmed_count(query: str, retries: int = 3) -> int:
-    """Fetch PubMed article count for a search query."""
+def fetch_pubmed_count(query: str, api_key: str = None, retries: int = 3) -> int:
+    """
+    Fetch PubMed article count for a search query.
+
+    Args:
+        query: Search term
+        api_key: Optional NCBI API key (get free at https://www.ncbi.nlm.nih.gov/account/settings/)
+                 With API key: 10 requests/sec, without: 3 requests/sec
+        retries: Number of retry attempts
+    """
     base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
 
     # Build query - search in title/abstract for the term
@@ -32,17 +42,39 @@ def fetch_pubmed_count(query: str, retries: int = 3) -> int:
         "retmode": "json",
     }
 
+    # Add API key if provided (increases rate limit to 10/sec)
+    if api_key:
+        params["api_key"] = api_key
+
     url = f"{base_url}?{urllib.parse.urlencode(params)}"
+
+    # Set proper headers to avoid blocks
+    headers = {
+        "User-Agent": "PubMedFrequencyAnalysis/1.0 (research; contact@example.com)",
+        "Accept": "application/json",
+    }
+
+    request = urllib.request.Request(url, headers=headers)
 
     for attempt in range(retries):
         try:
-            with urllib.request.urlopen(url, timeout=10) as response:
+            with urllib.request.urlopen(request, timeout=15) as response:
                 data = json.loads(response.read().decode())
                 count = int(data.get("esearchresult", {}).get("count", 0))
                 return count
+        except urllib.error.HTTPError as e:
+            if e.code == 429:  # Rate limited
+                wait_time = 2 ** (attempt + 1)
+                print(f"  Rate limited, waiting {wait_time}s...")
+                time.sleep(wait_time)
+            elif attempt < retries - 1:
+                time.sleep(1 * (attempt + 1))
+            else:
+                print(f"  HTTP Error fetching '{query}': {e.code} {e.reason}")
+                return -1
         except Exception as e:
             if attempt < retries - 1:
-                time.sleep(1 * (attempt + 1))  # Backoff
+                time.sleep(1 * (attempt + 1))
             else:
                 print(f"  Error fetching '{query}': {e}")
                 return -1
@@ -102,6 +134,36 @@ def extract_unique_populations(scoring_path: Path) -> set[str]:
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="Fetch fresh PubMed citation counts for cell populations",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Basic usage (rate limited to 3 req/sec)
+  python fetch_fresh_frequencies.py
+
+  # With NCBI API key (10 req/sec, recommended)
+  python fetch_fresh_frequencies.py --api-key YOUR_API_KEY
+
+  # Using environment variable
+  export NCBI_API_KEY=your_key_here
+  python fetch_fresh_frequencies.py
+
+  # Limit number of populations (for testing)
+  python fetch_fresh_frequencies.py --limit 50
+
+Get a free NCBI API key at:
+  https://www.ncbi.nlm.nih.gov/account/settings/
+        """
+    )
+    parser.add_argument("--api-key", type=str, default=os.environ.get("NCBI_API_KEY"),
+                       help="NCBI API key (or set NCBI_API_KEY env var)")
+    parser.add_argument("--limit", type=int, default=0,
+                       help="Limit number of populations to fetch (0=all)")
+    parser.add_argument("--output", type=Path, default=None,
+                       help="Output file path (default: data/cache/pubmed_frequencies_2026.json)")
+    args = parser.parse_args()
+
     project_dir = Path(__file__).parent
     results_dir = project_dir / "results" / "full_benchmark_20260114"
     scoring_path = results_dir / "scoring_results.json"
@@ -129,35 +191,61 @@ def main():
 
     # Filter to populations we need to look up
     # Skip technical gates that won't have PubMed results
-    skip_terms = ["singlet", "live", "dead", "all event", "time", "cleaned", "non-", "gate", "beads"]
+    skip_terms = ["singlet", "live", "dead", "all event", "time", "cleaned", "non-", "gate", "beads",
+                  "children", "markers", "name", "//", "{", "}", "[", "]"]
 
     to_fetch = []
     for pop in populations:
         pop_lower = pop.lower()
+        # Skip technical gates and JSON artifacts
         if any(term in pop_lower for term in skip_terms):
+            continue
+        # Skip very short or very long strings (likely artifacts)
+        if len(pop) < 3 or len(pop) > 100:
             continue
         to_fetch.append(pop)
 
-    print(f"Will fetch counts for {len(to_fetch)} populations")
+    # Apply limit if specified
+    if args.limit > 0:
+        to_fetch = sorted(to_fetch)[:args.limit]
+        print(f"Limited to {len(to_fetch)} populations (--limit {args.limit})")
+    else:
+        print(f"Will fetch counts for {len(to_fetch)} populations")
+
+    # Rate limit info
+    if args.api_key:
+        print(f"Using NCBI API key (10 requests/sec)")
+        rate_delay = 0.12  # 10/sec with margin
+    else:
+        print("No API key - rate limited to 3 requests/sec")
+        print("Tip: Get a free API key at https://www.ncbi.nlm.nih.gov/account/settings/")
+        rate_delay = 0.4  # 3/sec with margin
 
     # Fetch fresh counts from PubMed
-    print("\nFetching fresh PubMed counts (this may take a few minutes)...")
+    print(f"\nFetching fresh PubMed counts (estimated time: {len(to_fetch) * rate_delay / 60:.1f} min)...")
     fresh_counts = {}
+    failed = []
 
     for i, pop in enumerate(sorted(to_fetch)):
-        # Rate limit: NCBI requests max 3/second without API key
-        if i > 0 and i % 3 == 0:
-            time.sleep(0.4)
+        # Rate limit
+        if i > 0:
+            time.sleep(rate_delay)
 
-        count = fetch_pubmed_count(pop)
-        fresh_counts[pop] = count
+        count = fetch_pubmed_count(pop, api_key=args.api_key)
+        if count >= 0:
+            fresh_counts[pop] = count
+        else:
+            failed.append(pop)
 
         # Progress indicator
         if (i + 1) % 20 == 0 or i == len(to_fetch) - 1:
-            print(f"  Progress: {i + 1}/{len(to_fetch)}")
+            print(f"  Progress: {i + 1}/{len(to_fetch)} ({len(failed)} failed)")
 
     # Save fresh counts
-    fresh_cache_path = project_dir / "data" / "cache" / "pubmed_frequencies_fresh.json"
+    if args.output:
+        fresh_cache_path = args.output
+    else:
+        fresh_cache_path = project_dir / "data" / "cache" / "pubmed_frequencies_2026.json"
     fresh_cache_path.parent.mkdir(parents=True, exist_ok=True)
 
     with open(fresh_cache_path, "w") as f:
