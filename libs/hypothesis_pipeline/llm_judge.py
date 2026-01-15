@@ -924,6 +924,305 @@ def calibrate_judge(
 
 
 # =============================================================================
+# BIAS-AWARE JUDGE
+# =============================================================================
+
+
+@dataclass
+class BiasAwareJudgeConfig:
+    """Configuration for bias-aware evaluation.
+
+    Based on recommendations from "Justice or Prejudice? Quantifying Biases
+    in LLM-as-a-Judge" (https://arxiv.org/abs/2410.02736).
+    """
+
+    # Position bias
+    debias_position: bool = True
+
+    # Verbosity bias
+    debias_verbosity: bool = True
+    verbosity_penalty_factor: float = 0.1
+    verbosity_max_penalty: float = 0.2
+
+    # Self-enhancement bias
+    check_self_enhancement: bool = True
+
+    # Authority bias
+    strip_authority_markers: bool = True
+
+    # Bandwagon bias
+    strip_bandwagon_markers: bool = True
+
+    # Multi-judge ensemble (mitigates multiple biases)
+    use_multi_judge: bool = False
+
+    # Thresholds for warnings
+    verbosity_ratio_warning: float = 1.5
+    verbosity_ratio_severe: float = 2.5
+    judge_disagreement_threshold: float = 0.15
+
+
+@dataclass
+class BiasAwareJudgmentResult:
+    """Result from bias-aware evaluation."""
+
+    # Core results
+    score: float
+    normalized_score: float
+    individual_scores: list[float]
+
+    # Bias analysis
+    bias_report: Any  # BiasReport from bias_detection module
+    score_adjustments: dict[str, float]
+
+    # Raw data
+    individual_results: list[JudgmentResult]
+    prepared_response: str
+    original_response: str
+
+    # Metadata
+    config_used: BiasAwareJudgeConfig
+    warnings: list[str] = field(default_factory=list)
+
+    def summary(self) -> str:
+        """Return human-readable summary."""
+        lines = [
+            f"Score: {self.normalized_score:.2%}",
+            f"Individual scores: {[f'{s:.2%}' for s in self.individual_scores]}",
+        ]
+
+        if self.score_adjustments:
+            lines.append("Score adjustments:")
+            for name, adj in self.score_adjustments.items():
+                lines.append(f"  - {name}: {adj:+.2%}")
+
+        if self.warnings:
+            lines.append("Warnings:")
+            for w in self.warnings:
+                lines.append(f"  - {w}")
+
+        return "\n".join(lines)
+
+
+class BiasAwareJudge:
+    """
+    LLM Judge with comprehensive bias mitigation.
+
+    Implements bias detection and mitigation based on the CALM framework from:
+    "Justice or Prejudice? Quantifying Biases in LLM-as-a-Judge"
+    https://arxiv.org/abs/2410.02736
+
+    Mitigated biases:
+    - Position bias: via pairwise comparison in both orders
+    - Verbosity bias: via length penalty/normalization
+    - Self-enhancement bias: via multi-model ensemble and warnings
+    - Authority bias: via stripping authority markers
+    - Bandwagon bias: via stripping popularity claims
+    - Sentiment bias: via detection and reporting
+
+    Usage:
+        from hypothesis_pipeline.llm_judge import BiasAwareJudge, BiasAwareJudgeConfig
+
+        config = BiasAwareJudgeConfig(
+            debias_position=True,
+            debias_verbosity=True,
+            strip_authority_markers=True,
+        )
+
+        judge = BiasAwareJudge(
+            judges=[judge1, judge2],  # Multiple judges for ensemble
+            config=config,
+        )
+
+        result = judge.evaluate(
+            question="What is X?",
+            response="Response text...",
+            ground_truth="Reference answer...",
+            response_source_model="gpt-4",  # For self-enhancement detection
+        )
+
+        print(result.normalized_score)
+        print(result.bias_report.summary())
+    """
+
+    def __init__(
+        self,
+        judges: list[LLMJudge],
+        config: BiasAwareJudgeConfig | None = None,
+    ):
+        """
+        Initialize bias-aware judge.
+
+        Args:
+            judges: List of LLMJudge instances (multiple for ensemble)
+            config: Configuration for bias mitigation
+        """
+        if not judges:
+            raise ValueError("At least one judge is required")
+
+        self.judges = judges
+        self.config = config or BiasAwareJudgeConfig()
+
+        # Create pairwise judge from first model for position debiasing
+        self._pairwise_judge = PairwiseJudge(
+            judges[0].model,
+            debias=self.config.debias_position,
+        )
+
+    def evaluate(
+        self,
+        question: str,
+        response: str,
+        ground_truth: str | None = None,
+        response_source_model: str | None = None,
+    ) -> BiasAwareJudgmentResult:
+        """
+        Evaluate a response with comprehensive bias mitigation.
+
+        Args:
+            question: The original question
+            response: The response to evaluate
+            ground_truth: Optional reference answer
+            response_source_model: Model that generated the response (for
+                                   self-enhancement bias detection)
+
+        Returns:
+            BiasAwareJudgmentResult with scores, bias analysis, and adjustments
+        """
+        # Import here to avoid circular imports
+        from hypothesis_pipeline.bias_detection import (
+            analyze_response_for_biases,
+            apply_verbosity_penalty,
+            compute_verbosity_metrics,
+            prepare_response_for_evaluation,
+        )
+
+        warnings = []
+        score_adjustments = {}
+
+        # 1. Analyze response for biases
+        bias_report = analyze_response_for_biases(
+            response=response,
+            reference=ground_truth,
+            judge_model=self.judges[0].model_name,
+            response_source_model=response_source_model,
+        )
+
+        # Collect warnings from bias report
+        warnings.extend(bias_report.bias_warnings)
+
+        # 2. Prepare response (strip biasing elements)
+        prepared_response, modifications = prepare_response_for_evaluation(
+            response=response,
+            strip_authority=self.config.strip_authority_markers,
+            strip_bandwagon=self.config.strip_bandwagon_markers,
+            normalize_formatting=False,  # Don't normalize by default
+        )
+        bias_report.authority_markers_stripped = modifications["authority_markers_removed"] > 0
+
+        # 3. Run evaluation with all judges
+        individual_results = []
+        for judge in self.judges:
+            result = judge.evaluate(
+                question=question,
+                response=prepared_response,
+                ground_truth=ground_truth,
+            )
+            individual_results.append(result)
+
+        # 4. Aggregate scores
+        raw_scores = [r.normalized_score for r in individual_results]
+
+        if len(raw_scores) > 1:
+            ensemble_score = float(np.mean(raw_scores))
+            score_std = float(np.std(raw_scores))
+
+            # Check for judge disagreement
+            if score_std > self.config.judge_disagreement_threshold:
+                warnings.append(
+                    f"High judge disagreement (std={score_std:.2f})"
+                )
+        else:
+            ensemble_score = raw_scores[0]
+            score_std = 0.0
+
+        # 5. Apply verbosity penalty if configured
+        final_score = ensemble_score
+        if self.config.debias_verbosity and ground_truth:
+            verbosity_metrics = compute_verbosity_metrics(response, ground_truth)
+
+            if verbosity_metrics.get("word_ratio", 1.0) > self.config.verbosity_ratio_warning:
+                adjusted_score, penalty = apply_verbosity_penalty(
+                    score=final_score,
+                    verbosity_metrics=verbosity_metrics,
+                    penalty_factor=self.config.verbosity_penalty_factor,
+                    max_penalty=self.config.verbosity_max_penalty,
+                )
+
+                if penalty > 0:
+                    score_adjustments["verbosity_penalty"] = -penalty
+                    final_score = adjusted_score
+
+        return BiasAwareJudgmentResult(
+            score=final_score,
+            normalized_score=final_score,
+            individual_scores=raw_scores,
+            bias_report=bias_report,
+            score_adjustments=score_adjustments,
+            individual_results=individual_results,
+            prepared_response=prepared_response,
+            original_response=response,
+            config_used=self.config,
+            warnings=warnings,
+        )
+
+    def compare_pairwise(
+        self,
+        question: str,
+        response_a: str,
+        response_b: str,
+        ground_truth: str | None = None,
+        source_model_a: str | None = None,
+        source_model_b: str | None = None,
+    ) -> PairwiseComparisonResult:
+        """
+        Compare two responses with position bias mitigation.
+
+        Args:
+            question: The original question
+            response_a: First response
+            response_b: Second response
+            ground_truth: Optional reference answer
+            source_model_a: Model that generated response A
+            source_model_b: Model that generated response B
+
+        Returns:
+            PairwiseComparisonResult with debiased scores
+        """
+        from hypothesis_pipeline.bias_detection import prepare_response_for_evaluation
+
+        # Prepare both responses
+        prep_a, _ = prepare_response_for_evaluation(
+            response_a,
+            strip_authority=self.config.strip_authority_markers,
+            strip_bandwagon=self.config.strip_bandwagon_markers,
+        )
+        prep_b, _ = prepare_response_for_evaluation(
+            response_b,
+            strip_authority=self.config.strip_authority_markers,
+            strip_bandwagon=self.config.strip_bandwagon_markers,
+        )
+
+        # Run position-debiased comparison
+        return self._pairwise_judge.compare(
+            question=question,
+            response_a=prep_a,
+            response_b=prep_b,
+            ground_truth=ground_truth,
+        )
+
+
+# =============================================================================
 # CONVENIENCE FUNCTIONS
 # =============================================================================
 
