@@ -113,10 +113,12 @@ python scripts/run_modular_pipeline.py \
 
 ### Recent Additions
 
+- **Enhanced Normalization**: ~200 cell type synonyms, marker aliases (CCR7=CD197), hierarchical matching
+- **Structure Error Analysis**: Categorizes errors as WRONG_PARENT, MISSING_GATE, SWAPPED_RELATIONSHIP, WRONG_DEPTH
+- **Biological Context Awareness**: Hard constraints (lineage exclusivity), soft constraints (CD45 optional for PBMCs)
 - **Multi-Judge Cross-Validation**: Multiple prompt styles for LLM judge reliability
 - **Token Breakdown Analysis**: Track thinking vs response tokens for reasoning models
 - **Blocked Prediction Recovery**: `scripts/rerun_blocked.py` for MAX_TOKENS failures
-- **Per-Provider Rate Limits**: Parallel workers configurable per API provider
 
 ---
 
@@ -284,6 +286,7 @@ flow_gating_benchmark/
 │   ├── evaluation/            # Scoring
 │   │   ├── metrics.py         # F1, structure, hallucination
 │   │   ├── normalization.py   # 200+ gate synonyms
+│   │   ├── enhanced_normalization.py  # Marker aliases, hierarchical matching
 │   │   ├── hierarchy.py       # Tree operations
 │   │   ├── task_failure.py    # Refusal detection
 │   │   ├── response_parser.py
@@ -303,7 +306,10 @@ flow_gating_benchmark/
 │   └── verified/              # Verified test cases
 ├── scripts/
 │   ├── run_modular_pipeline.py
-│   └── rerun_blocked.py       # Recover MAX_TOKENS failures
+│   ├── rerun_blocked.py       # Recover MAX_TOKENS failures
+│   ├── analyze_structure_errors.py     # Error categorization
+│   ├── analyze_with_biological_context.py  # Context-aware analysis
+│   └── analyze_judge_vs_rules.py       # Judge vs F1 comparison
 ├── results/
 │   ├── BENCHMARK_RESULTS_SUMMARY.md  # Latest results
 │   └── gemini_benchmark_predictions.json

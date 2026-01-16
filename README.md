@@ -40,11 +40,25 @@ See [STUDY_SUMMARY.md](projects/flow_gating_benchmark/STUDY_SUMMARY.md) for meth
 
 MCP tool access improves panel complexity accuracy by 88.6% vs baseline. Models without tools hallucinate spectral overlap values.
 
+## Evaluation Improvements (Jan 2026)
+
+String-matching F1 misses semantic equivalence. We've added:
+
+| Improvement | What it does |
+|-------------|--------------|
+| **Enhanced normalization** | ~200 cell type synonyms, marker aliases (CCR7=CD197) |
+| **Structure error categories** | WRONG_PARENT, MISSING_GATE, SWAPPED_RELATIONSHIP, WRONG_DEPTH |
+| **Bias-aware LLM judge** | CALM framework: calibration, multiple judge styles, devil's advocate |
+| **Hierarchical matching** | Valid gating order alternatives (singlets→live or live→singlets) |
+
+See `libs/hypothesis_pipeline/` for implementation.
+
 ## Shared Libraries
 
 | Library | Purpose |
 |---------|---------|
 | `libs/checkpoint` | Resumable workflows with checkpointing |
+| `libs/hypothesis_pipeline` | Bias-aware LLM judge, uncertainty estimation |
 | `libs/mcp_tester` | MCP/tool ablation framework |
 | `libs/paper_download` | PMC paper downloader |
 | `libs/results_processor` | Export results to CSV |
