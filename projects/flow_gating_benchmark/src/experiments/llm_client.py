@@ -435,53 +435,157 @@ class OllamaClient:
         return LLMResponse(content=content, model=self.model)
 
 
+class MockMode:
+    """Mock response modes for different testing scenarios."""
+    VALID = "valid"          # Return valid parseable response
+    EMPTY = "empty"          # Return empty string (test parse error handling)
+    ECHO = "echo"            # Echo back the prompt (test prompt construction)
+    MALFORMED = "malformed"  # Return invalid JSON (test parse error handling)
+    ERROR = "error"          # Simulate API error
+
+
 class MockClient:
     """
     Mock client for dry runs and testing.
 
-    Returns a static response template without making any API calls.
-    Useful for testing pipeline logic without incurring API costs.
+    Returns configurable responses without making any API calls.
+    Useful for testing different scenarios:
+
+    - VALID: Returns valid gating hierarchy (tests happy path)
+    - EMPTY: Returns empty string (tests parse failure handling)
+    - ECHO: Returns the prompt (tests prompt construction - inspect what was sent)
+    - MALFORMED: Returns invalid JSON (tests parse error recovery)
+    - ERROR: Raises exception (tests error handling)
+
+    Features:
+    - Zero latency by default (no sleeps, no rate limiting)
+    - Multiple response modes for testing different scenarios
+    - Optional simulated latency for timing tests
 
     Attributes:
         model: Model identifier (always "mock" or custom string).
+        mode: Response mode (see MockMode).
+        simulate_latency: If > 0, sleep this many seconds per call.
     """
 
-    def __init__(self, model: str = "mock"):
+    # Class-level flag to disable ALL delays globally for dry runs
+    FAST_MODE: bool = True
+
+    def __init__(
+        self,
+        model: str = "mock",
+        mode: str = MockMode.VALID,
+        simulate_latency: float = 0.0,
+    ):
         self.model = model
-        self._response_template = {
+        self.mode = mode
+        self.simulate_latency = simulate_latency if not MockClient.FAST_MODE else 0.0
+        self._call_count = 0
+        self._last_prompt: str | None = None
+
+        # Valid response template
+        self._valid_response = {
             "name": "All Events",
             "children": [
-                {"name": "Singlets", "children": [{"name": "Live", "children": []}]}
+                {
+                    "name": "Singlets",
+                    "markers": ["FSC-A", "FSC-H"],
+                    "children": [
+                        {
+                            "name": "Live",
+                            "markers": ["Live/Dead"],
+                            "children": [
+                                {
+                                    "name": "CD3+ T cells",
+                                    "markers": ["CD3"],
+                                    "children": []
+                                }
+                            ]
+                        }
+                    ]
+                }
             ],
         }
 
     @property
     def model_id(self) -> str:
-        return self.model
+        return f"{self.model}-{self.mode}"
+
+    @property
+    def call_count(self) -> int:
+        """Number of calls made (useful for testing)."""
+        return self._call_count
+
+    @property
+    def last_prompt(self) -> str | None:
+        """Last prompt received (useful for testing prompt construction)."""
+        return self._last_prompt
 
     def call(self, prompt: str, max_tokens: int = 4096, temperature: float = 0.0) -> LLMResponse:
+        """
+        Return mock response based on configured mode.
+
+        In ECHO mode, returns the prompt itself - useful for verifying
+        prompt construction without API calls.
+        """
         import json
+
+        self._call_count += 1
+        self._last_prompt = prompt
+
+        # Optional simulated latency for timing tests
+        if self.simulate_latency > 0:
+            time.sleep(self.simulate_latency)
+
+        # Generate response based on mode
+        if self.mode == MockMode.ERROR:
+            raise RuntimeError("Simulated API error (MockClient in ERROR mode)")
+
+        if self.mode == MockMode.EMPTY:
+            content = ""
+        elif self.mode == MockMode.ECHO:
+            # Return prompt wrapped in a way that shows what was sent
+            content = f"=== PROMPT RECEIVED ({len(prompt)} chars) ===\n{prompt[:2000]}"
+            if len(prompt) > 2000:
+                content += f"\n... (truncated, {len(prompt) - 2000} more chars)"
+        elif self.mode == MockMode.MALFORMED:
+            content = '{"name": "All Events", "children": [INVALID JSON HERE'
+        else:  # VALID
+            content = json.dumps(self._valid_response, indent=2)
+
         return LLMResponse(
-            content=json.dumps(self._response_template),
+            content=content,
             model=self.model,
+            tokens_used=0,
         )
 
 
-def create_client(model: str, dry_run: bool = False, use_cli: bool = False) -> LLMClient:
+def create_client(
+    model: str,
+    dry_run: bool = False,
+    use_cli: bool = False,
+    mock_mode: str = MockMode.VALID,
+) -> LLMClient:
     """
     Create an LLM client based on model name.
 
     Args:
         model: Model identifier (e.g., "claude-sonnet-4-20250514", "gpt-4o", "llama3.1:8b")
                Use "-cli" suffix (e.g., "claude-sonnet-cli") to use Claude Max OAuth
-        dry_run: If True, return a mock client
+        dry_run: If True, return a mock client (no API calls, instant responses)
         use_cli: If True and model is Claude, use CLI client (Claude Max OAuth)
+        mock_mode: When dry_run=True, controls mock behavior:
+            - MockMode.VALID: Return valid parseable response (default)
+            - MockMode.EMPTY: Return empty string (test parse errors)
+            - MockMode.ECHO: Return the prompt (inspect what would be sent)
+            - MockMode.MALFORMED: Return invalid JSON (test error handling)
+            - MockMode.ERROR: Raise exception (test error handling)
 
     Returns:
         Appropriate LLM client instance
     """
     if dry_run:
-        return MockClient(model)
+        return MockClient(model, mode=mock_mode)
 
     model_lower = model.lower()
 

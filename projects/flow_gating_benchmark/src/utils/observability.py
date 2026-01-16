@@ -79,6 +79,7 @@ def setup_logging(
     verbose: bool = False,
     log_file: Path | None = None,
     use_rich: bool = True,
+    dry_run: bool = False,
 ) -> None:
     """
     Configure logging with sensible defaults for experiment pipelines.
@@ -87,18 +88,24 @@ def setup_logging(
     - Rich console output with colors (if available)
     - Separate file logging for full debug output
     - Timestamps and module names for traceability
+    - Dry-run mode: minimal logging, no file output
 
     Args:
         verbose: If True, show DEBUG level; otherwise INFO
         log_file: Optional path to write full logs (always DEBUG level)
         use_rich: Use rich library for prettier output if available
+        dry_run: If True, skip file logging and reduce output (fast mode)
     """
     level = logging.DEBUG if verbose else logging.INFO
+
+    # In dry run mode, only show warnings and above (minimal output)
+    if dry_run:
+        level = logging.WARNING
 
     handlers: list[logging.Handler] = []
 
     # Console handler
-    if use_rich and RICH_AVAILABLE:
+    if use_rich and RICH_AVAILABLE and not dry_run:
         console_handler = RichHandler(
             level=level,
             show_time=True,
@@ -115,8 +122,8 @@ def setup_logging(
         ))
     handlers.append(console_handler)
 
-    # File handler (always debug level for post-mortem analysis)
-    if log_file:
+    # File handler (skip in dry run mode - no disk I/O)
+    if log_file and not dry_run:
         log_file.parent.mkdir(parents=True, exist_ok=True)
         file_handler = logging.FileHandler(log_file, mode="a")
         file_handler.setLevel(logging.DEBUG)
@@ -227,6 +234,7 @@ class PipelineMonitor:
         alert_on_errors: list[str] | None = None,
         alert_callback: Callable[[ErrorRecord], None] | None = None,
         show_progress: bool = True,
+        dry_run: bool = False,
     ):
         """
         Initialize pipeline monitor.
@@ -238,23 +246,25 @@ class PipelineMonitor:
             alert_on_errors: Error categories that trigger immediate alerts
             alert_callback: Optional callback for alerts (e.g., Slack webhook)
             show_progress: Show progress bar
+            dry_run: If True, minimal overhead mode (no progress bar, no alerts)
         """
         self.total_tasks = total_tasks
         self.fail_threshold = fail_threshold
         self.min_samples = min_samples_for_threshold
         self.alert_categories = set(alert_on_errors or [])
-        self.alert_callback = alert_callback
-        self.show_progress = show_progress
+        self.alert_callback = alert_callback if not dry_run else None
+        self.show_progress = show_progress and not dry_run
+        self.dry_run = dry_run
 
         self.stats = PipelineStats()
         self._current_task: str | None = None
         self._task_start: float | None = None
 
-        # Rich progress bar
+        # Rich progress bar (disabled in dry run mode for speed)
         self._progress: Progress | None = None
         self._progress_task: Any = None
 
-        if show_progress and RICH_AVAILABLE:
+        if self.show_progress and RICH_AVAILABLE:
             self._progress = Progress(
                 SpinnerColumn(),
                 TextColumn("[bold blue]{task.description}"),
@@ -270,8 +280,9 @@ class PipelineMonitor:
                 "Processing", total=total_tasks
             )
 
-        # Print summary on exit (even on crash)
-        atexit.register(self._atexit_summary)
+        # Print summary on exit (skip in dry run - no persistent state)
+        if not dry_run:
+            atexit.register(self._atexit_summary)
 
     def _atexit_summary(self) -> None:
         """Print summary if pipeline exits unexpectedly."""
@@ -332,6 +343,12 @@ class PipelineMonitor:
             category: Error category (e.g., "rate_limit", "parse", "api")
             traceback_str: Optional traceback string
         """
+        # In dry run mode, just count errors (no logging overhead)
+        self.stats.errors_by_category[category] += 1
+
+        if self.dry_run:
+            return
+
         error = ErrorRecord(
             timestamp=datetime.now(),
             task_id=self._current_task or "unknown",
@@ -340,7 +357,6 @@ class PipelineMonitor:
             traceback=traceback_str,
         )
 
-        self.stats.errors_by_category[category] += 1
         self.stats.recent_errors.append(error)
 
         # Keep only last 100 errors in memory
