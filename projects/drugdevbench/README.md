@@ -1,13 +1,14 @@
 # DrugDevBench
 
-**Benchmark for evaluating LLM interpretation of drug development figures**
+Benchmark for testing whether LLMs can interpret drug development figures—Western blots, dose-response curves, PK plots—the way a domain expert would.
 
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+**Status:** Framework complete, evaluation not yet run. No results to report.
 
-## Overview
+### Why This Matters
 
-DrugDevBench evaluates how well large language models interpret scientific figures from drug development research. Unlike general benchmarks, it tests domain-specific conventions that practitioners rely on daily.
+General vision benchmarks test "what's in this image?" We test domain conventions: Is a loading control shown? Is the IC50 calculated correctly? Does the axis scaling hide a plateau?
+
+These are the questions practitioners actually ask.
 
 ### Key Features
 
