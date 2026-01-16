@@ -474,6 +474,49 @@ CELL_TYPE_SYNONYMS: dict[str, str] = {
     "il-17+": "il17_positive",
     "il-17a+": "il17_positive",
     "il17+": "il17_positive",
+
+    # ==========================================================================
+    # ADDITIONAL SYNONYMS FOR COMMONLY MISSING GATES
+    # ==========================================================================
+    # Central memory (specific variants)
+    "central memory cd4 t cells": "cd4_cm",
+    "central memory cd4+ t cells": "cd4_cm",
+    "central memory cd8 t cells": "cd8_cm",
+    "central memory cd8+ t cells": "cd8_cm",
+    "cd4 central memory t cells": "cd4_cm",
+    "cd8 central memory t cells": "cd8_cm",
+
+    # Effector memory (specific variants)
+    "effector memory cd4 t cells": "cd4_em",
+    "effector memory cd4+ t cells": "cd4_em",
+    "effector memory cd8 t cells": "cd8_em",
+    "effector memory cd8+ t cells": "cd8_em",
+    "cd4 effector memory t cells": "cd4_em",
+    "cd8 effector memory t cells": "cd8_em",
+
+    # B cell isotype subsets
+    "iga+ b cells": "iga_b_cells",
+    "iga+ b": "iga_b_cells",
+    "ige+ b cells": "ige_b_cells",
+    "ige+ b": "ige_b_cells",
+    "igm+ b cells": "igm_b_cells",
+    "igm+ b": "igm_b_cells",
+    "igg+ b cells": "igg_b_cells",
+    "igg+ b": "igg_b_cells",
+    "igm-only memory b cells": "igm_memory_b",
+    "igm only memory b cells": "igm_memory_b",
+
+    # Transitional B variants
+    "transitional 1": "transitional_1",
+    "transitional 2": "transitional_2",
+    "t1 b cells": "transitional_1",
+    "t2 b cells": "transitional_2",
+
+    # Monocyte SLAN variants
+    "slan- nonclassical monocytes": "slan_neg_nonclassical",
+    "slan+ nonclassical monocytes": "slan_pos_nonclassical",
+    "slan- non-classical monocytes": "slan_neg_nonclassical",
+    "slan+ non-classical monocytes": "slan_pos_nonclassical",
 }
 
 
