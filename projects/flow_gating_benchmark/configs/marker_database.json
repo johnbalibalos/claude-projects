@@ -1,0 +1,104 @@
+{
+  "_meta": {
+    "description": "Flow cytometry marker information database",
+    "version": "1.0.0",
+    "note": "Add new markers as needed. This file separates domain knowledge from code logic."
+  },
+  "markers": {
+    "CD3": {
+      "lineage": "T cells",
+      "typical_gates": ["T cells", "CD3+ cells"],
+      "typical_children": ["CD4+ T cells", "CD8+ T cells"]
+    },
+    "CD4": {
+      "lineage": "T helper cells",
+      "typical_gates": ["CD4+ T cells", "Helper T cells"],
+      "typical_children": ["Th1", "Th2", "Th17", "Treg"]
+    },
+    "CD8": {
+      "lineage": "Cytotoxic T cells",
+      "typical_gates": ["CD8+ T cells", "CTL"],
+      "typical_children": ["Naive", "Memory", "Effector"]
+    },
+    "CD19": {
+      "lineage": "B cells",
+      "typical_gates": ["B cells", "CD19+ cells"],
+      "typical_children": ["Naive B", "Memory B", "Plasma cells"]
+    },
+    "CD56": {
+      "lineage": "NK cells",
+      "typical_gates": ["NK cells", "CD56+ cells"],
+      "typical_children": ["CD56bright", "CD56dim"]
+    },
+    "CD14": {
+      "lineage": "Monocytes",
+      "typical_gates": ["Monocytes", "CD14+ cells"],
+      "typical_children": ["Classical", "Non-classical", "Intermediate"]
+    },
+    "CD16": {
+      "lineage": "NK/Monocytes",
+      "typical_gates": ["CD16+ cells"],
+      "typical_children": ["CD16+ NK", "Non-classical monocytes"]
+    },
+    "CD45": {
+      "lineage": "Leukocytes",
+      "typical_gates": ["Leukocytes", "CD45+ cells"],
+      "typical_children": ["Lymphocytes", "Monocytes", "Granulocytes"]
+    },
+    "CD20": {
+      "lineage": "B cells",
+      "typical_gates": ["B cells", "CD20+ cells"],
+      "typical_children": ["Naive B", "Memory B"]
+    },
+    "CD25": {
+      "lineage": "Activated/Regulatory T cells",
+      "typical_gates": ["Activated T cells", "Tregs"],
+      "typical_children": ["CD25high Tregs", "CD25low activated"]
+    },
+    "CD127": {
+      "lineage": "T cells (IL-7R)",
+      "typical_gates": ["CD127+ T cells"],
+      "typical_children": ["Memory T cells", "Non-Treg"]
+    },
+    "FOXP3": {
+      "lineage": "Regulatory T cells",
+      "typical_gates": ["Tregs", "FOXP3+ cells"],
+      "typical_children": []
+    },
+    "CD45RA": {
+      "lineage": "Naive T cells",
+      "typical_gates": ["Naive T cells", "CD45RA+ cells"],
+      "typical_children": []
+    },
+    "CD45RO": {
+      "lineage": "Memory T cells",
+      "typical_gates": ["Memory T cells", "CD45RO+ cells"],
+      "typical_children": []
+    },
+    "CCR7": {
+      "lineage": "Central memory/Naive",
+      "typical_gates": ["Central memory", "Naive"],
+      "typical_children": []
+    },
+    "HLA-DR": {
+      "lineage": "Activated/APC",
+      "typical_gates": ["Activated cells", "APCs"],
+      "typical_children": ["Dendritic cells", "Activated T cells"]
+    },
+    "CD11c": {
+      "lineage": "Dendritic cells/Monocytes",
+      "typical_gates": ["Dendritic cells", "cDCs"],
+      "typical_children": ["cDC1", "cDC2"]
+    },
+    "CD123": {
+      "lineage": "pDCs/Basophils",
+      "typical_gates": ["pDCs", "Basophils"],
+      "typical_children": []
+    },
+    "CD34": {
+      "lineage": "Stem cells",
+      "typical_gates": ["HSCs", "CD34+ cells"],
+      "typical_children": ["HSCs", "Progenitors"]
+    }
+  }
+}

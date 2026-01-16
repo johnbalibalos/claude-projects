@@ -10,36 +10,49 @@ with different combinations of:
 
 Usage:
     python -m experiments.modular_runner --help
+
+Installation:
+    # From repository root, install both libs and this project in editable mode:
+    pip install -e libs/
+    pip install -e projects/flow_gating_benchmark/
 """
 
 from __future__ import annotations
 
 import argparse
-import sys
+import json
+import logging
 from pathlib import Path
 from typing import Any
-
-# Add libs to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent / "libs"))
 
 from curation.omip_extractor import load_all_test_cases
 from curation.schemas import TestCase
 from evaluation.metrics import evaluate_prediction
 from evaluation.response_parser import parse_llm_response
-from hypothesis_pipeline import (
-    ChainOfThoughtStrategy,
-    ContextLevel,
-    Evaluator,
-    HypothesisPipeline,
-    OracleRAGProvider,
-    PipelineConfig,
-    RAGMode,
-    ReasoningType,
-    RichContextBuilder,
-    ToolConfig,
-    ToolRegistry,
-    TrialInput,
-)
+
+# hypothesis_pipeline is in libs/ - install with: pip install -e libs/
+try:
+    from hypothesis_pipeline import (
+        ChainOfThoughtStrategy,
+        ContextLevel,
+        Evaluator,
+        HypothesisPipeline,
+        OracleRAGProvider,
+        PipelineConfig,
+        RAGMode,
+        ReasoningType,
+        RichContextBuilder,
+        ToolConfig,
+        ToolRegistry,
+        TrialInput,
+    )
+except ImportError as err:
+    raise ImportError(
+        "hypothesis_pipeline not found. Install from repository root with: "
+        "pip install -e libs/"
+    ) from err
+
+logger = logging.getLogger(__name__)
 
 # =============================================================================
 # CUSTOM EVALUATOR FOR GATING BENCHMARK
@@ -225,36 +238,49 @@ def create_flowkit_tools() -> ToolRegistry:
     return registry
 
 
-def _get_marker_info(marker: str) -> dict:
-    """Get information about a marker."""
-    marker_db = {
-        "CD3": {
-            "lineage": "T cells",
-            "typical_gates": ["T cells", "CD3+ cells"],
-            "typical_children": ["CD4+ T cells", "CD8+ T cells"],
-        },
-        "CD4": {
-            "lineage": "T helper cells",
-            "typical_gates": ["CD4+ T cells", "Helper T cells"],
-            "typical_children": ["Th1", "Th2", "Th17", "Treg"],
-        },
-        "CD8": {
-            "lineage": "Cytotoxic T cells",
-            "typical_gates": ["CD8+ T cells", "CTL"],
-            "typical_children": ["Naive", "Memory", "Effector"],
-        },
-        "CD19": {
-            "lineage": "B cells",
-            "typical_gates": ["B cells", "CD19+ cells"],
-            "typical_children": ["Naive B", "Memory B", "Plasma cells"],
-        },
-        "CD56": {
-            "lineage": "NK cells",
-            "typical_gates": ["NK cells", "CD56+ cells"],
-            "typical_children": ["CD56bright", "CD56dim"],
-        },
-    }
+# Module-level cache for marker database
+_marker_db_cache: dict | None = None
 
+
+def _load_marker_database() -> dict:
+    """
+    Load marker database from external config file.
+
+    The marker database is loaded once and cached. This separates domain
+    knowledge (biological marker information) from code logic.
+    """
+    global _marker_db_cache
+    if _marker_db_cache is not None:
+        return _marker_db_cache
+
+    config_path = Path(__file__).parent.parent.parent / "configs" / "marker_database.json"
+    if not config_path.exists():
+        logger.warning(f"Marker database not found at {config_path}, using empty database")
+        _marker_db_cache = {}
+        return _marker_db_cache
+
+    with open(config_path) as f:
+        data = json.load(f)
+        _marker_db_cache = data.get("markers", {})
+
+    logger.debug(f"Loaded {len(_marker_db_cache)} markers from {config_path}")
+    return _marker_db_cache
+
+
+def _get_marker_info(marker: str) -> dict:
+    """
+    Get information about a flow cytometry marker.
+
+    Loads marker data from configs/marker_database.json to separate
+    domain knowledge from code logic.
+
+    Args:
+        marker: Marker name (e.g., "CD3", "CD19")
+
+    Returns:
+        Dict with lineage, typical_gates, typical_children, or error message
+    """
+    marker_db = _load_marker_database()
     return marker_db.get(marker.upper(), {"error": f"Unknown marker: {marker}"})
 
 
@@ -492,6 +518,13 @@ def main():
 
     args = parser.parse_args()
 
+    # Configure logging
+    log_level = logging.DEBUG if args.verbose else logging.INFO
+    logging.basicConfig(
+        level=log_level,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    )
+
     # Create and run pipeline
     pipeline = create_pipeline(
         test_cases_dir=args.test_cases,
@@ -503,21 +536,21 @@ def main():
         with_tools=args.with_tools,
     )
 
-    print(f"\nCreated pipeline with {len(pipeline.conditions)} conditions:")
+    logger.info(f"Created pipeline with {len(pipeline.conditions)} conditions")
     for cond in pipeline.conditions:
-        print(f"  - {cond.name}")
+        logger.info(f"  - {cond.name}")
 
     results = pipeline.run(verbose=args.verbose)
 
-    # Generate and print report
+    # Generate and save report
     report = pipeline.generate_report(results)
-    print("\n" + report)
+    logger.info("Pipeline completed. Report summary:")
+    logger.info(report)
 
-    # Save report
     report_path = Path(args.output) / "report.md"
     with open(report_path, "w") as f:
         f.write(report)
-    print(f"\nReport saved to: {report_path}")
+    logger.info(f"Report saved to: {report_path}")
 
 
 if __name__ == "__main__":

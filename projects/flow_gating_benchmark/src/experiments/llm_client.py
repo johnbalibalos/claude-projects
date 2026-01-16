@@ -2,9 +2,11 @@
 LLM client abstraction for experiment runner.
 
 Provides a unified interface for calling different LLM providers:
-- Anthropic (Claude)
-- OpenAI (GPT)
+- Anthropic (Claude) via API
+- OpenAI (GPT) via API
+- Google Gemini via API
 - Ollama (local models)
+- Claude CLI (experimental, local dev only)
 """
 
 from __future__ import annotations
@@ -13,24 +15,44 @@ import logging
 import os
 import subprocess
 import time
+import warnings
 from dataclasses import dataclass
 from typing import Protocol
 
 from tenacity import retry, stop_after_attempt, wait_exponential
+
+from experiments.exceptions import ConfigurationError
 
 logger = logging.getLogger(__name__)
 
 
 @dataclass
 class LLMResponse:
-    """Response from an LLM call."""
+    """
+    Response from an LLM call.
+
+    Attributes:
+        content: The text response from the model.
+        model: Model identifier that generated this response.
+        tokens_used: Total tokens consumed (input + output). May be estimated for some providers.
+    """
+
     content: str
     model: str
     tokens_used: int = 0
 
 
 class LLMClient(Protocol):
-    """Protocol for LLM clients."""
+    """
+    Protocol defining the interface for LLM clients.
+
+    All LLM client implementations must provide:
+    - call(): Make a synchronous call to the LLM
+    - model_id: Return a unique identifier for the model
+
+    This protocol enables dependency injection and makes testing easier
+    by allowing mock implementations.
+    """
 
     def call(self, prompt: str, max_tokens: int = 4096, temperature: float = 0.0) -> LLMResponse:
         """Call the LLM with a prompt."""
@@ -43,7 +65,14 @@ class LLMClient(Protocol):
 
 
 class AnthropicClient:
-    """Client for Anthropic Claude models."""
+    """
+    Client for Anthropic Claude models via the official API.
+
+    Requires ANTHROPIC_API_KEY environment variable to be set.
+
+    Attributes:
+        model: Model identifier (e.g., "claude-sonnet-4-20250514").
+    """
 
     def __init__(self, model: str = "claude-sonnet-4-20250514"):
         self.model = model
@@ -53,11 +82,17 @@ class AnthropicClient:
         if self._client is None:
             try:
                 from anthropic import Anthropic
+
                 if not os.environ.get("ANTHROPIC_API_KEY"):
-                    raise RuntimeError("ANTHROPIC_API_KEY not set")
+                    raise ConfigurationError(
+                        "ANTHROPIC_API_KEY not set. "
+                        "Set this environment variable with your Anthropic API key."
+                    )
                 self._client = Anthropic()
             except ImportError as err:
-                raise RuntimeError("anthropic package not installed") from err
+                raise ConfigurationError(
+                    "anthropic package not installed. Install with: pip install anthropic"
+                ) from err
         return self._client
 
     @property
@@ -81,7 +116,14 @@ class AnthropicClient:
 
 
 class OpenAIClient:
-    """Client for OpenAI GPT models."""
+    """
+    Client for OpenAI GPT models via the official API.
+
+    Requires OPENAI_API_KEY environment variable to be set.
+
+    Attributes:
+        model: Model identifier (e.g., "gpt-4o", "gpt-4o-mini").
+    """
 
     def __init__(self, model: str = "gpt-4o"):
         self.model = model
@@ -91,11 +133,17 @@ class OpenAIClient:
         if self._client is None:
             try:
                 from openai import OpenAI
+
                 if not os.environ.get("OPENAI_API_KEY"):
-                    raise RuntimeError("OPENAI_API_KEY not set")
+                    raise ConfigurationError(
+                        "OPENAI_API_KEY not set. "
+                        "Set this environment variable with your OpenAI API key."
+                    )
                 self._client = OpenAI()
             except ImportError as err:
-                raise RuntimeError("openai package not installed") from err
+                raise ConfigurationError(
+                    "openai package not installed. Install with: pip install openai"
+                ) from err
         return self._client
 
     @property
@@ -117,7 +165,14 @@ class OpenAIClient:
 
 
 class GeminiClient:
-    """Client for Google Gemini models."""
+    """
+    Client for Google Gemini models via the official API.
+
+    Requires GOOGLE_API_KEY environment variable to be set.
+
+    Attributes:
+        model: Model identifier (e.g., "gemini-2.0-flash", "gemini-2.5-pro").
+    """
 
     def __init__(self, model: str = "gemini-2.0-flash"):
         self.model = model
@@ -127,12 +182,18 @@ class GeminiClient:
         if self._client is None:
             try:
                 from google import genai
+
                 api_key = os.environ.get("GOOGLE_API_KEY")
                 if not api_key:
-                    raise RuntimeError("GOOGLE_API_KEY not set")
+                    raise ConfigurationError(
+                        "GOOGLE_API_KEY not set. "
+                        "Set this environment variable with your Google API key."
+                    )
                 self._client = genai.Client(api_key=api_key)
             except ImportError as err:
-                raise RuntimeError("google-genai package not installed") from err
+                raise ConfigurationError(
+                    "google-genai package not installed. Install with: pip install google-genai"
+                ) from err
         return self._client
 
     @property
@@ -221,13 +282,37 @@ CLI_MODEL_MAP = {
 
 
 class ClaudeCLIClient:
-    """Client for Claude via CLI (uses Claude Max OAuth subscription)."""
+    """
+    EXPERIMENTAL: Client for Claude via CLI (uses Claude Max OAuth subscription).
+
+    ⚠️  WARNING: This client is for LOCAL DEVELOPMENT ONLY. ⚠️
+
+    Known limitations:
+    - Wraps the Claude CLI tool meant for interactive terminal use
+    - No control over max_tokens or temperature parameters
+    - Token counts are estimated, not actual
+    - Dependent on CLI output format (may break if Anthropic updates CLI)
+    - Requires Node.js and global npm package installation
+    - Not suitable for production or CI environments
+
+    For production use, prefer AnthropicClient with proper API authentication.
+
+    Attributes:
+        model: Model identifier (e.g., "claude-sonnet-4-20250514").
+        delay_seconds: Minimum delay between calls for rate limiting.
+    """
 
     def __init__(
         self,
         model: str = "claude-sonnet-4-20250514",
         delay_seconds: float = 0.5,
     ):
+        warnings.warn(
+            "ClaudeCLIClient is experimental and intended for local development only. "
+            "For production use, prefer AnthropicClient with API authentication.",
+            category=UserWarning,
+            stacklevel=2,
+        )
         self.model = model
         self.delay_seconds = delay_seconds
         self._cli_model = CLI_MODEL_MAP.get(model, model)
@@ -244,9 +329,9 @@ class ClaudeCLIClient:
                 timeout=10,
             )
             if result.returncode != 0:
-                raise RuntimeError("claude CLI not found or not working")
+                raise ConfigurationError("claude CLI not found or not working")
         except FileNotFoundError as err:
-            raise RuntimeError(
+            raise ConfigurationError(
                 "claude CLI not installed. Install with: npm install -g @anthropic-ai/claude-code"
             ) from err
 
@@ -301,7 +386,15 @@ class ClaudeCLIClient:
 
 
 class OllamaClient:
-    """Client for local Ollama models."""
+    """
+    Client for local Ollama models.
+
+    Connects to a local Ollama server for inference. No API key required.
+
+    Attributes:
+        model: Ollama model identifier (e.g., "llama3.1:8b", "mistral:7b").
+        base_url: Ollama server URL. Defaults to OLLAMA_BASE_URL env var or localhost.
+    """
 
     def __init__(self, model: str = "llama3.1:8b", base_url: str | None = None):
         self.model = model
@@ -312,9 +405,12 @@ class OllamaClient:
         if self._client is None:
             try:
                 import httpx
+
                 self._client = httpx.Client(timeout=300.0)
             except ImportError as err:
-                raise RuntimeError("httpx package not installed") from err
+                raise ConfigurationError(
+                    "httpx package not installed. Install with: pip install httpx"
+                ) from err
         return self._client
 
     @property
@@ -340,7 +436,15 @@ class OllamaClient:
 
 
 class MockClient:
-    """Mock client for dry runs and testing."""
+    """
+    Mock client for dry runs and testing.
+
+    Returns a static response template without making any API calls.
+    Useful for testing pipeline logic without incurring API costs.
+
+    Attributes:
+        model: Model identifier (always "mock" or custom string).
+    """
 
     def __init__(self, model: str = "mock"):
         self.model = model
