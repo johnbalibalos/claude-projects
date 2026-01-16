@@ -646,6 +646,218 @@ def get_terminal_populations(hierarchy: dict) -> list[dict]:
     return [g for g in all_gates if g["normalized"] not in parents]
 
 
+def is_valid_ancestor(ancestor_norm: str, descendant_norm: str) -> bool:
+    """
+    Check if ancestor could be a valid parent for descendant based on biological lineage.
+
+    Valid simplifications (skipping intermediate gates):
+    - Lymphocytes → CD4+ T cells (skipping CD3+ T cells)
+    - T cells → Tregs (skipping CD4+ T cells)
+    - B cells → Memory B cells (skipping intermediate markers)
+    """
+    # Define valid direct parent relationships (can skip intermediate)
+    VALID_LINEAGE_SHORTCUTS = {
+        # T cell lineage
+        "lymphocytes": {"t_cells", "cd3_t_cells", "cd4_t_cells", "cd8_t_cells", "tregs",
+                        "tfh", "naive_t", "cm", "em", "temra", "gd_t_cells", "dn_t_cells",
+                        "th1", "th2", "th17", "tconv"},
+        "t_cells": {"cd4_t_cells", "cd8_t_cells", "tregs", "tfh", "naive_t", "cm", "em",
+                    "temra", "gd_t_cells", "dn_t_cells", "th1", "th2", "th17", "tconv"},
+        "cd3_t_cells": {"cd4_t_cells", "cd8_t_cells", "tregs", "tfh", "naive_t", "cm",
+                        "em", "temra", "gd_t_cells", "dn_t_cells"},
+        "cd4_t_cells": {"tregs", "tfh", "naive_t", "cm", "em", "temra", "th1", "th2",
+                        "th17", "tconv"},
+        "cd8_t_cells": {"naive_t", "cm", "em", "temra"},
+
+        # B cell lineage
+        "lymphocytes": {"b_cells", "cd19_b_cells", "cd20_b_cells", "naive_b", "memory_b",
+                        "switched_memory_b", "unswitched_memory_b", "plasma_cells",
+                        "transitional_b", "b2_cells"},
+        "b_cells": {"naive_b", "memory_b", "switched_memory_b", "unswitched_memory_b",
+                    "plasma_cells", "transitional_b", "b2_cells"},
+        "cd19_b_cells": {"naive_b", "memory_b", "switched_memory_b", "plasma_cells"},
+        "memory_b": {"switched_memory_b", "unswitched_memory_b"},
+
+        # NK cell lineage
+        "lymphocytes": {"nk_cells", "cd56bright_nk", "cd56dim_nk", "nkt_cells"},
+        "nk_cells": {"cd56bright_nk", "cd56dim_nk"},
+
+        # Monocyte lineage
+        "monocytes": {"classical_monocytes", "intermediate_monocytes", "nonclassical_monocytes"},
+        "cd14_monocytes": {"classical_monocytes", "intermediate_monocytes", "nonclassical_monocytes"},
+
+        # DC lineage
+        "dcs": {"mdcs", "cdcs", "cdc1", "cdc2", "pdcs"},
+        "cdcs": {"cdc1", "cdc2"},
+        "mdcs": {"cdc1", "cdc2"},
+
+        # Granulocyte lineage
+        "granulocytes": {"neutrophils", "eosinophils", "basophils"},
+
+        # General leukocyte → anything
+        "leukocytes": {"lymphocytes", "monocytes", "granulocytes", "dcs", "nk_cells",
+                       "t_cells", "b_cells", "neutrophils", "eosinophils", "basophils"},
+
+        # QC gates can parent anything
+        "singlets": {"live", "lymphocytes", "leukocytes", "scatter_gate"},
+        "live": {"lymphocytes", "leukocytes", "singlets", "scatter_gate"},
+        "scatter_gate": {"live", "singlets", "lymphocytes", "leukocytes"},
+    }
+
+    # Check if this is a valid shortcut
+    if ancestor_norm in VALID_LINEAGE_SHORTCUTS:
+        return descendant_norm in VALID_LINEAGE_SHORTCUTS[ancestor_norm]
+
+    return False
+
+
+def get_ancestor_chain(gate: dict) -> list[str]:
+    """Get the normalized names of all ancestors from path."""
+    if not gate.get("path"):
+        return []
+    return [normalize_gate_name(p) for p in gate["path"][:-1]]  # Exclude self
+
+
+# =============================================================================
+# GATE ORDER VALIDATION
+# =============================================================================
+
+# Standard gating order rules
+# Format: (earlier_gate, later_gate) - earlier should come before later in hierarchy
+REQUIRED_GATE_ORDER = [
+    # QC gates should come first
+    ("singlets", "live"),  # Can be either order, but both before lymphocytes
+    ("live", "singlets"),  # Acceptable alternative
+    ("singlets", "lymphocytes"),
+    ("live", "lymphocytes"),
+    ("scatter_gate", "lymphocytes"),
+
+    # Leukocyte gating before lineage
+    ("leukocytes", "t_cells"),
+    ("leukocytes", "b_cells"),
+    ("leukocytes", "nk_cells"),
+    ("leukocytes", "monocytes"),
+
+    # Lymphocyte gating before specific lineages
+    ("lymphocytes", "t_cells"),
+    ("lymphocytes", "b_cells"),
+    ("lymphocytes", "nk_cells"),
+
+    # T cell hierarchy
+    ("t_cells", "cd4_t_cells"),
+    ("t_cells", "cd8_t_cells"),
+    ("cd3_t_cells", "cd4_t_cells"),
+    ("cd3_t_cells", "cd8_t_cells"),
+    ("cd4_t_cells", "tregs"),
+    ("cd4_t_cells", "tfh"),
+    ("cd4_t_cells", "th1"),
+    ("cd4_t_cells", "th2"),
+    ("cd4_t_cells", "th17"),
+
+    # Memory subsets after lineage
+    ("cd4_t_cells", "naive_t"),
+    ("cd4_t_cells", "cm"),
+    ("cd4_t_cells", "em"),
+    ("cd4_t_cells", "temra"),
+    ("cd8_t_cells", "naive_t"),
+    ("cd8_t_cells", "cm"),
+    ("cd8_t_cells", "em"),
+    ("cd8_t_cells", "temra"),
+
+    # B cell hierarchy
+    ("b_cells", "naive_b"),
+    ("b_cells", "memory_b"),
+    ("b_cells", "plasma_cells"),
+
+    # Monocyte subsets after monocyte gate
+    ("monocytes", "classical_monocytes"),
+    ("monocytes", "intermediate_monocytes"),
+    ("monocytes", "nonclassical_monocytes"),
+
+    # NK subsets after NK gate
+    ("nk_cells", "cd56bright_nk"),
+    ("nk_cells", "cd56dim_nk"),
+]
+
+# Gates that should NOT come before certain gates (order violations)
+# Format: (gate_that_should_not_be_earlier, gate_that_should_not_be_later)
+INVALID_GATE_ORDERS = [
+    # Lineage should not come before QC
+    ("t_cells", "singlets"),
+    ("b_cells", "singlets"),
+    ("nk_cells", "singlets"),
+    ("t_cells", "live"),
+    ("b_cells", "live"),
+    ("nk_cells", "live"),
+
+    # Specific subsets should not come before their parent lineage
+    ("cd4_t_cells", "t_cells"),
+    ("cd8_t_cells", "t_cells"),
+    ("tregs", "cd4_t_cells"),
+    ("tfh", "cd4_t_cells"),
+
+    # Memory should not come before lineage
+    ("cm", "t_cells"),
+    ("em", "t_cells"),
+    ("naive_t", "t_cells"),
+    ("temra", "t_cells"),
+]
+
+
+def validate_gate_order(pred_gates: list[dict]) -> list[str]:
+    """
+    Validate that gates are in a biologically sensible order.
+
+    INVALID_GATE_ORDERS contains (X, Y) pairs meaning "X should NOT come before Y".
+    A violation occurs when X is at lower depth (closer to root) than Y.
+
+    Returns list of order violations.
+    """
+    violations = []
+
+    # Build order map: gate_name -> depth (lower depth = closer to root)
+    gate_depths = {}
+    for gate in pred_gates:
+        norm = gate["normalized"]
+        depth = gate["depth"]
+        # Keep the minimum depth if gate appears multiple times
+        if norm not in gate_depths or depth < gate_depths[norm]:
+            gate_depths[norm] = depth
+
+    # Check for invalid orders
+    for should_not_be_earlier, should_not_be_later in INVALID_GATE_ORDERS:
+        if should_not_be_earlier in gate_depths and should_not_be_later in gate_depths:
+            # Violation occurs when:
+            # - should_not_be_earlier has lower depth (comes first) than should_not_be_later
+            # Lower depth = closer to root = comes earlier in hierarchy
+            if gate_depths[should_not_be_earlier] < gate_depths[should_not_be_later]:
+                violations.append(
+                    f"ORDER: '{should_not_be_earlier}' (depth {gate_depths[should_not_be_earlier]}) "
+                    f"incorrectly appears before '{should_not_be_later}' (depth {gate_depths[should_not_be_later]})"
+                )
+
+    # Check ancestry relationships - more precise check
+    for gate in pred_gates:
+        norm = gate["normalized"]
+        ancestors = get_ancestor_chain(gate)
+
+        # Check if any ancestor should actually be a descendant
+        for ancestor_norm in ancestors:
+            for should_not_be_earlier, should_not_be_later in INVALID_GATE_ORDERS:
+                # If gate is should_not_be_earlier and ancestor is should_not_be_later,
+                # that means should_not_be_later is parent of should_not_be_earlier,
+                # which means should_not_be_earlier comes AFTER should_not_be_later (correct, not violation)
+                #
+                # The violation is the opposite: if should_not_be_earlier is an ANCESTOR
+                # of should_not_be_later
+                if ancestor_norm == should_not_be_earlier and norm == should_not_be_later:
+                    violations.append(
+                        f"ORDER: '{should_not_be_earlier}' is ancestor of '{should_not_be_later}' (invalid)"
+                    )
+
+    return violations
+
+
 # =============================================================================
 # BIOLOGICAL VALIDATION
 # =============================================================================
@@ -699,6 +911,12 @@ class MatchResult:
     """Result of comparing predicted vs ground truth."""
     # Exact/semantic matches
     matched_gates: list[tuple[str, str]] = field(default_factory=list)  # (pred, gt)
+
+    # Hierarchically matched (terminal population correct, intermediate skipped)
+    hierarchically_matched: list[tuple[str, str, str]] = field(default_factory=list)  # (pred, gt, reason)
+
+    # Skipped intermediate gates (valid simplification, not an error)
+    skipped_intermediates: list[tuple[str, str]] = field(default_factory=list)  # (gate, reason)
 
     # True missing (not in prediction, no equivalent found)
     truly_missing: list[str] = field(default_factory=list)
@@ -786,6 +1004,137 @@ def compare_hierarchies(
                 matched_pred.add(pred_gate["name"])
                 break
 
+    # Pass 3: Hierarchical matching for terminal populations
+    # If a terminal population in GT is found in prediction with valid (shorter) ancestry,
+    # credit it as hierarchically matched
+    gt_terminals = get_terminal_populations(ground_truth)
+    pred_terminals = get_terminal_populations(predicted)
+
+    # Build lookup for prediction terminals
+    pred_terminal_lookup = {g["normalized"]: g for g in pred_terminals}
+
+    for gt_terminal in gt_terminals:
+        if gt_terminal["name"] in matched_gt:
+            continue
+
+        gt_norm = gt_terminal["normalized"]
+
+        # Check if this terminal exists in prediction (possibly with different ancestry)
+        if gt_norm in pred_terminal_lookup:
+            pred_terminal = pred_terminal_lookup[gt_norm]
+            if pred_terminal["name"] not in matched_pred:
+                # Terminal population matches - check if ancestry is valid
+                gt_ancestors = get_ancestor_chain(gt_terminal)
+                pred_ancestors = get_ancestor_chain(pred_terminal)
+
+                # Prediction may have shorter ancestry (skipped intermediates)
+                # Check if prediction's parent is a valid ancestor of GT terminal
+                if pred_ancestors:
+                    pred_parent_norm = pred_ancestors[-1] if pred_ancestors else None
+
+                    # Valid if pred parent appears in GT ancestors OR is a valid shortcut
+                    is_valid = False
+                    reason = ""
+
+                    if pred_parent_norm in gt_ancestors:
+                        is_valid = True
+                        reason = f"Valid: pred parent '{pred_parent_norm}' is GT ancestor"
+                    elif any(is_valid_ancestor(pred_parent_norm, gt_norm) for _ in [1]):
+                        is_valid = True
+                        skipped = [a for a in gt_ancestors if a not in pred_ancestors]
+                        reason = f"Valid shortcut: skipped {skipped}"
+
+                    if is_valid:
+                        result.hierarchically_matched.append(
+                            (pred_terminal["name"], gt_terminal["name"], reason)
+                        )
+                        matched_gt.add(gt_terminal["name"])
+                        matched_pred.add(pred_terminal["name"])
+                        continue
+
+        # Also check if terminal exists with fuzzy match in pred terminals
+        for pred_terminal in pred_terminals:
+            if pred_terminal["name"] in matched_pred:
+                continue
+
+            pred_norm = pred_terminal["normalized"]
+
+            # Fuzzy terminal match
+            if gt_norm in pred_norm or pred_norm in gt_norm:
+                result.hierarchically_matched.append(
+                    (pred_terminal["name"], gt_terminal["name"],
+                     "Fuzzy terminal match")
+                )
+                matched_gt.add(gt_terminal["name"])
+                matched_pred.add(pred_terminal["name"])
+                break
+
+    # Pass 4: Identify skipped intermediate gates
+    # For each matched gate, check if its GT ancestors are missing
+    # If both the gate and a higher ancestor are matched but intermediates are missing,
+    # those intermediates are "skipped" (valid simplification) not "truly missing"
+    skipped_gates = set()  # Track unique skipped gates to avoid duplicates
+
+    for pred_name, gt_name in result.matched_gates:
+        # Find this GT gate
+        gt_gate = None
+        for g in gt_gates:
+            if g["name"] == gt_name:
+                gt_gate = g
+                break
+
+        if not gt_gate or not gt_gate.get("path"):
+            continue
+
+        # Get GT ancestor names (from path)
+        gt_path = gt_gate["path"]
+
+        # Find corresponding prediction gate
+        pred_gate = None
+        for g in pred_gates:
+            if g["name"] == pred_name:
+                pred_gate = g
+                break
+
+        if not pred_gate or not pred_gate.get("path"):
+            continue
+
+        pred_path = pred_gate["path"]
+        pred_path_normalized = [normalize_gate_name(p) for p in pred_path]
+
+        # Check each GT ancestor - if it's not matched but a higher ancestor is,
+        # and the terminal is matched, then this intermediate was skipped
+        for i, gt_ancestor in enumerate(gt_path[:-1]):  # Exclude the gate itself
+            gt_ancestor_norm = normalize_gate_name(gt_ancestor)
+
+            # Skip if already processed
+            if gt_ancestor in skipped_gates or gt_ancestor in matched_gt:
+                continue
+
+            # Check if any earlier ancestor IS matched (in prediction)
+            earlier_matched = False
+            for j in range(i):
+                earlier_norm = normalize_gate_name(gt_path[j])
+                if earlier_norm in pred_path_normalized or gt_path[j] in matched_gt:
+                    earlier_matched = True
+                    break
+
+            # Also consider if root/QC gates are implicitly matched
+            if gt_ancestor_norm in ["singlets", "live", "scatter_gate", "all_events"]:
+                earlier_matched = True
+
+            # If an earlier ancestor is matched and the terminal is matched,
+            # this intermediate was validly skipped
+            if earlier_matched:
+                skipped_gates.add(gt_ancestor)
+
+    # Add unique skipped gates to result
+    for gate in skipped_gates:
+        result.skipped_intermediates.append((gate, "Skipped intermediate in hierarchy"))
+
+    # Mark skipped gates as matched (they're accounted for)
+    matched_gt.update(skipped_gates)
+
     # Categorize unmatched GT gates
     for gt_gate in gt_gates:
         if gt_gate["name"] in matched_gt:
@@ -821,6 +1170,10 @@ def compare_hierarchies(
 
         warnings = check_cd4_cd8_double_positive(pred_gate, context)
         result.soft_deviations.extend(warnings)
+
+    # Check gate order
+    order_violations = validate_gate_order(pred_gates)
+    result.soft_deviations.extend(order_violations)
 
     return result
 
@@ -953,6 +1306,9 @@ def main():
 
     # Aggregate statistics
     total_matched = sum(len(r.matched_gates) for r in all_results)
+    total_hierarchically_matched = sum(len(r.hierarchically_matched) for r in all_results)
+    total_skipped = sum(len(r.skipped_intermediates) for r in all_results)
+    total_all_matched = total_matched + total_hierarchically_matched + total_skipped
     total_truly_missing = sum(len(r.truly_missing) for r in all_results)
     total_acceptable_missing = sum(len(r.acceptable_missing) for r in all_results)
     total_extra = sum(len(r.extra_predictions) for r in all_results)
@@ -962,7 +1318,10 @@ def main():
     print(f"\n--- Gate Matching Summary ---")
     print(f"Total GT gates across all predictions: {total_gt}")
     print(f"Total predicted gates: {total_pred}")
-    print(f"Matched gates: {total_matched} ({100*total_matched/total_gt:.1f}% of GT)")
+    print(f"Exact/semantic matches: {total_matched} ({100*total_matched/total_gt:.1f}% of GT)")
+    print(f"Hierarchically matched: {total_hierarchically_matched} ({100*total_hierarchically_matched/total_gt:.1f}% of GT)")
+    print(f"Skipped intermediates: {total_skipped} ({100*total_skipped/total_gt:.1f}% of GT)")
+    print(f"TOTAL ACCOUNTED FOR: {total_all_matched} ({100*total_all_matched/total_gt:.1f}% of GT)")
     print(f"Truly missing gates: {total_truly_missing} ({100*total_truly_missing/total_gt:.1f}% of GT)")
     print(f"Acceptable missing (context-dependent): {total_acceptable_missing}")
     print(f"Extra predictions: {total_extra}")
@@ -995,16 +1354,18 @@ def main():
 
     # By model
     print(f"\n--- Results by Model ---")
-    print(f"{'Model':<20} {'Matched':>10} {'Truly Missing':>15} {'Acceptable Missing':>20} {'Match Rate':>12}")
+    print(f"{'Model':<20} {'Exact':>8} {'Hier':>6} {'Skip':>6} {'Total':>8} {'Missing':>10} {'Rate':>8}")
     print("-" * 80)
     for model in sorted(results_by_model.keys()):
         results = results_by_model[model]
         matched = sum(len(r.matched_gates) for r in results)
+        hier_matched = sum(len(r.hierarchically_matched) for r in results)
+        skipped = sum(len(r.skipped_intermediates) for r in results)
+        total_match = matched + hier_matched + skipped
         missing = sum(len(r.truly_missing) for r in results)
-        acceptable = sum(len(r.acceptable_missing) for r in results)
         gt_total = sum(r.total_gt_gates for r in results)
-        rate = 100 * matched / gt_total if gt_total > 0 else 0
-        print(f"{model:<20} {matched:>10} {missing:>15} {acceptable:>20} {rate:>11.1f}%")
+        rate = 100 * total_match / gt_total if gt_total > 0 else 0
+        print(f"{model:<20} {matched:>8} {hier_matched:>6} {skipped:>6} {total_match:>8} {missing:>10} {rate:>7.1f}%")
 
     # By test case
     print(f"\n--- Results by Test Case ---")
@@ -1017,6 +1378,35 @@ def main():
         matched = sum(len(r.matched_gates) for r in results)
         missing = sum(len(r.truly_missing) for r in results)
         print(f"{tc_id:<20} {sample:<30} {matched:>10} {missing:>15}")
+
+    # Sample hierarchically matched gates
+    print(f"\n--- Sample of Hierarchically Matched Gates ---")
+    hier_sample = []
+    for r in all_results[:100]:
+        hier_sample.extend(r.hierarchically_matched[:3])
+
+    if hier_sample:
+        print("Examples of valid simplifications:")
+        for pred, gt, reason in hier_sample[:10]:
+            print(f"  • Pred: '{pred}' ↔ GT: '{gt}'")
+            print(f"    Reason: {reason}")
+    else:
+        print("  None found in sample")
+
+    # Sample skipped intermediate gates
+    print(f"\n--- Sample of Skipped Intermediate Gates ---")
+    skipped_sample = []
+    for r in all_results[:100]:
+        skipped_sample.extend(r.skipped_intermediates[:5])
+
+    if skipped_sample:
+        # Count unique gates
+        skipped_counts = Counter(gate for gate, reason in skipped_sample)
+        print("Most commonly skipped intermediates (valid simplifications):")
+        for gate, count in skipped_counts.most_common(15):
+            print(f"  {count:3d}x {gate}")
+    else:
+        print("  None found in sample")
 
     # Sample truly missing gates
     print(f"\n--- Sample of Truly Missing Gates ---")
@@ -1045,13 +1435,17 @@ def main():
             "predictions_analyzed": parsed_count,
             "total_gt_gates": total_gt,
             "total_pred_gates": total_pred,
-            "matched_gates": total_matched,
+            "exact_matched_gates": total_matched,
+            "hierarchically_matched_gates": total_hierarchically_matched,
+            "skipped_intermediate_gates": total_skipped,
+            "total_accounted_gates": total_all_matched,
             "truly_missing": total_truly_missing,
             "acceptable_missing": total_acceptable_missing,
             "extra_predictions": total_extra,
             "hard_violations": len(hard_violations_all),
             "soft_deviations": len(soft_deviations_all),
-            "match_rate": total_matched / total_gt if total_gt > 0 else 0,
+            "exact_match_rate": total_matched / total_gt if total_gt > 0 else 0,
+            "total_accounted_rate": total_all_matched / total_gt if total_gt > 0 else 0,
         },
         "comparison_to_previous": {
             "old_missing_count": old_missing,
@@ -1061,7 +1455,10 @@ def main():
         "hard_violations": list(set(hard_violations_all)),
         "by_model": {
             model: {
-                "matched": sum(len(r.matched_gates) for r in results),
+                "exact_matched": sum(len(r.matched_gates) for r in results),
+                "hierarchically_matched": sum(len(r.hierarchically_matched) for r in results),
+                "skipped_intermediates": sum(len(r.skipped_intermediates) for r in results),
+                "total_accounted": sum(len(r.matched_gates) + len(r.hierarchically_matched) + len(r.skipped_intermediates) for r in results),
                 "truly_missing": sum(len(r.truly_missing) for r in results),
                 "acceptable_missing": sum(len(r.acceptable_missing) for r in results),
             }
