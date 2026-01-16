@@ -82,81 +82,398 @@ for group in MARKER_ALIAS_GROUPS:
 # =============================================================================
 
 CELL_TYPE_SYNONYMS: dict[str, str] = {
-    # T cells
-    "t cells": "t_cells",
-    "t-cells": "t_cells",
-    "t lymphocytes": "t_cells",
-    "cd3+ t cells": "t_cells",
-    "cd3+": "cd3_t_cells",
-    # CD4 T cells
-    "cd4+ t cells": "cd4_t_cells",
-    "cd4 t cells": "cd4_t_cells",
-    "helper t cells": "cd4_t_cells",
-    "th cells": "cd4_t_cells",
-    # CD8 T cells
-    "cd8+ t cells": "cd8_t_cells",
-    "cd8 t cells": "cd8_t_cells",
-    "cytotoxic t cells": "cd8_t_cells",
-    "ctl": "cd8_t_cells",
-    # Memory subsets
-    "naive": "naive",
-    "central memory": "cm",
-    "cm": "cm",
-    "tcm": "cm",
-    "effector memory": "em",
-    "em": "em",
-    "tem": "em",
-    "temra": "temra",
-    "emra": "temra",
-    # B cells
-    "b cells": "b_cells",
-    "b-cells": "b_cells",
-    "b lymphocytes": "b_cells",
-    "cd19+ b cells": "b_cells",
-    "cd19+": "cd19_b_cells",
-    "cd20+": "cd20_b_cells",
-    # NK cells
-    "nk cells": "nk_cells",
-    "nk": "nk_cells",
-    "natural killer cells": "nk_cells",
-    "cd56+ nk cells": "nk_cells",
-    "cd56+cd3-": "nk_cells",
-    "cd3-cd56+": "nk_cells",
-    # Monocytes
-    "monocytes": "monocytes",
-    "monos": "monocytes",
-    "cd14+ monocytes": "monocytes",
-    "cd14+": "cd14_monocytes",
-    "classical monocytes": "classical_monocytes",
-    "non-classical monocytes": "nonclassical_monocytes",
-    "nonclassical monocytes": "nonclassical_monocytes",
-    "intermediate monocytes": "intermediate_monocytes",
-    # QC gates
+    # ==========================================================================
+    # QC / CLEANUP GATES
+    # ==========================================================================
+    # Singlets / Doublet exclusion
     "singlets": "singlets",
     "single cells": "singlets",
+    "singlet": "singlets",
+    "fsc singlets": "singlets",
+    "ssc singlets": "singlets",
+    "fsc-a vs fsc-h": "singlets",
+    "fsc-h vs fsc-a": "singlets",
+    "ssc-a vs ssc-h": "singlets",
+    "non-aggregates": "singlets",
+    "non aggregates": "singlets",
+    "nonaggregates": "singlets",
+    "doublet exclusion": "singlets",
+
+    # Scatter gate / Debris exclusion
+    "scatter gate": "scatter_gate",
+    "fsc/ssc": "scatter_gate",
+    "fsc vs ssc": "scatter_gate",
+    "fsc-a vs ssc-a": "scatter_gate",
+    "debris exclusion": "scatter_gate",
+    "cells": "scatter_gate",
+
+    # Live/Dead
     "live cells": "live",
     "live": "live",
     "viable cells": "live",
     "viable": "live",
+    "live/dead": "live",
+    "viability": "live",
+
+    # Time gate
+    "time gate": "time",
+    "time": "time",
+
+    # Nucleated cells
+    "dna+": "nucleated",
+    "nucleated cells": "nucleated",
+    "nucleated": "nucleated",
+
+    # All events / Root
+    "all events": "all_events",
+    "all": "all_events",
+    "root": "all_events",
+    "ungated": "all_events",
+    "total events": "all_events",
+
+    # ==========================================================================
+    # LYMPHOCYTES / LEUKOCYTES
+    # ==========================================================================
     "lymphocytes": "lymphocytes",
     "lymphs": "lymphocytes",
+    "lymphocyte": "lymphocytes",
+
     "leukocytes": "leukocytes",
     "cd45+ leukocytes": "leukocytes",
     "cd45+": "leukocytes",
-    "all events": "all_events",
-    "root": "all_events",
-    "ungated": "all_events",
+    "cd45+ cells": "leukocytes",
+    "white blood cells": "leukocytes",
+    "wbc": "leukocytes",
+
+    "non-granulocytes": "non_granulocytes",
+    "nongranulocytes": "non_granulocytes",
+
+    # ==========================================================================
+    # T CELLS
+    # ==========================================================================
+    # General T cells
+    "t cells": "t_cells",
+    "t-cells": "t_cells",
+    "t lymphocytes": "t_cells",
+    "cd3+ t cells": "t_cells",
+    "cd3+ t": "t_cells",
+    "cd3+": "cd3_t_cells",
+
+    # CD4+ T cells
+    "cd4+ t cells": "cd4_t_cells",
+    "cd4 t cells": "cd4_t_cells",
+    "cd4+ t": "cd4_t_cells",
+    "helper t cells": "cd4_t_cells",
+    "th cells": "cd4_t_cells",
+    "t helper cells": "cd4_t_cells",
+
+    # Conventional CD4+ T cells
+    "conventional cd4+ t cells": "tconv",
+    "conventional cd4 t cells": "tconv",
+    "cd4+ tconv": "tconv",
+    "tconv": "tconv",
+    "conventional t cells": "tconv",
+
+    # CD8+ T cells
+    "cd8+ t cells": "cd8_t_cells",
+    "cd8 t cells": "cd8_t_cells",
+    "cd8+ t": "cd8_t_cells",
+    "cytotoxic t cells": "cd8_t_cells",
+    "cytotoxic t": "cd8_t_cells",
+    "ctl": "cd8_t_cells",
+    "ctls": "cd8_t_cells",
+
+    # Memory subsets
+    "naive": "naive",
+    "naive t cells": "naive_t",
+    "naive t": "naive_t",
+    "tn": "naive_t",
+
+    "central memory": "cm",
+    "cm": "cm",
+    "tcm": "cm",
+    "central memory t cells": "cm",
+
+    "effector memory": "em",
+    "em": "em",
+    "tem": "em",
+    "effector memory t cells": "em",
+
+    "temra": "temra",
+    "emra": "temra",
+    "effector memory ra": "temra",
+    "cd45ra+ effector memory": "temra",
+
+    # CCR7/CD45RA subsets
+    "ccr7/cd45ra subsets": "memory_subsets",
+    "cd45ra/ccr7 subsets": "memory_subsets",
+    "memory subsets": "memory_subsets",
+
     # Tregs
     "tregs": "tregs",
     "treg": "tregs",
     "regulatory t cells": "tregs",
-    # DCs
+    "regulatory t": "tregs",
+    "cd4+cd25+foxp3+": "tregs",
+    "foxp3+ tregs": "tregs",
+
+    # Tfh
+    "tfh": "tfh",
+    "tfh cells": "tfh",
+    "t follicular helper cells": "tfh",
+    "t follicular helper": "tfh",
+    "follicular helper t cells": "tfh",
+    "cxcr5+ cd4+ t cells": "tfh",
+
+    # Gamma-delta T cells
+    "gamma delta t cells": "gd_t_cells",
+    "gd t cells": "gd_t_cells",
+    "γδ t cells": "gd_t_cells",
+    "gammadelta t cells": "gd_t_cells",
+    "gd t": "gd_t_cells",
+
+    # Double negative T cells
+    "double negative t cells": "dn_t_cells",
+    "dn t cells": "dn_t_cells",
+    "cd4- cd8- t cells": "dn_t_cells",
+    "cd4-cd8- t cells": "dn_t_cells",
+
+    # ==========================================================================
+    # B CELLS
+    # ==========================================================================
+    "b cells": "b_cells",
+    "b-cells": "b_cells",
+    "b lymphocytes": "b_cells",
+    "cd19+ b cells": "b_cells",
+    "cd19+ b": "b_cells",
+    "cd19+": "cd19_b_cells",
+    "cd20+ b cells": "b_cells",
+    "cd20+": "cd20_b_cells",
+
+    # Naive B cells
+    "naive b cells": "naive_b",
+    "naive b": "naive_b",
+    "cd27- b cells": "naive_b",
+
+    # Memory B cells
+    "memory b cells": "memory_b",
+    "memory b": "memory_b",
+    "cd27+ b cells": "memory_b",
+    "switched memory b cells": "switched_memory_b",
+    "unswitched memory b cells": "unswitched_memory_b",
+
+    # Plasma cells / Plasmablasts
+    "plasma cells": "plasma_cells",
+    "plasmablasts": "plasma_cells",
+    "asc": "plasma_cells",
+    "antibody secreting cells": "plasma_cells",
+    "cd138+ b cells": "plasma_cells",
+
+    # Transitional B cells
+    "transitional b cells": "transitional_b",
+    "transitional b": "transitional_b",
+
+    # B-2 cells (conventional B cells)
+    "b-2 cells": "b2_cells",
+    "b2 cells": "b2_cells",
+    "conventional b cells": "b2_cells",
+
+    # ==========================================================================
+    # NK CELLS
+    # ==========================================================================
+    "nk cells": "nk_cells",
+    "nk": "nk_cells",
+    "natural killer cells": "nk_cells",
+    "natural killer": "nk_cells",
+    "cd56+ nk cells": "nk_cells",
+    "cd56+ nk": "nk_cells",
+    "cd56+cd3-": "nk_cells",
+    "cd3-cd56+": "nk_cells",
+    "cd3- cd56+": "nk_cells",
+
+    # NK subsets
+    "cd56bright nk cells": "cd56bright_nk",
+    "cd56bright nk": "cd56bright_nk",
+    "cd56bright": "cd56bright_nk",
+    "cd56hi nk cells": "cd56bright_nk",
+    "cd56hi": "cd56bright_nk",
+
+    "cd56dim nk cells": "cd56dim_nk",
+    "cd56dim nk": "cd56dim_nk",
+    "cd56dim": "cd56dim_nk",
+    "cd56lo nk cells": "cd56dim_nk",
+    "cd56lo": "cd56dim_nk",
+
+    # NKT cells
+    "nkt cells": "nkt_cells",
+    "nkt": "nkt_cells",
+    "nk-t cells": "nkt_cells",
+    "cd3+cd56+": "nkt_cells",
+
+    # ==========================================================================
+    # MONOCYTES
+    # ==========================================================================
+    "monocytes": "monocytes",
+    "monos": "monocytes",
+    "monocyte": "monocytes",
+    "cd14+ monocytes": "monocytes",
+    "cd14+ monos": "monocytes",
+    "cd14+": "cd14_monocytes",
+
+    # Classical monocytes (handle case variations)
+    "classical monocytes": "classical_monocytes",
+    "classical monos": "classical_monocytes",
+    "cd14++cd16-": "classical_monocytes",
+    "cd14++cd16- monocytes": "classical_monocytes",
+    "cd14+cd16-": "classical_monocytes",
+
+    # Intermediate monocytes
+    "intermediate monocytes": "intermediate_monocytes",
+    "intermediate monos": "intermediate_monocytes",
+    "cd14++cd16+": "intermediate_monocytes",
+    "cd14+cd16+": "intermediate_monocytes",
+
+    # Non-classical monocytes
+    "non-classical monocytes": "nonclassical_monocytes",
+    "nonclassical monocytes": "nonclassical_monocytes",
+    "non classical monocytes": "nonclassical_monocytes",
+    "cd14+cd16++": "nonclassical_monocytes",
+    "cd14dimcd16+": "nonclassical_monocytes",
+    "cd16+ monocytes": "nonclassical_monocytes",
+
+    # ==========================================================================
+    # GRANULOCYTES
+    # ==========================================================================
+    "granulocytes": "granulocytes",
+    "grans": "granulocytes",
+    "pmn": "granulocytes",
+    "polymorphonuclear cells": "granulocytes",
+
+    "neutrophils": "neutrophils",
+    "neuts": "neutrophils",
+    "pmns": "neutrophils",
+    "cd66b+ neutrophils": "neutrophils",
+
+    "eosinophils": "eosinophils",
+    "eos": "eosinophils",
+    "siglec-8+ eosinophils": "eosinophils",
+
+    "basophils": "basophils",
+    "basos": "basophils",
+    "cd123+ basophils": "basophils",
+
+    # ==========================================================================
+    # DENDRITIC CELLS
+    # ==========================================================================
     "dendritic cells": "dcs",
     "dcs": "dcs",
+    "dc": "dcs",
+
+    # Myeloid / Conventional DCs
     "myeloid dcs": "mdcs",
     "mdcs": "mdcs",
+    "mdc": "mdcs",
+    "conventional dcs": "cdcs",
+    "cdcs": "cdcs",
+    "cdc": "cdcs",
+
+    # cDC1
+    "cdc1": "cdc1",
+    "cdc1s": "cdc1",
+    "cd141+ dc": "cdc1",
+    "cd141+ dcs": "cdc1",
+    "clec9a+ dc": "cdc1",
+
+    # cDC2
+    "cdc2": "cdc2",
+    "cdc2s": "cdc2",
+    "cd1c+ dc": "cdc2",
+    "cd1c+ dcs": "cdc2",
+
+    # Plasmacytoid DCs
     "plasmacytoid dcs": "pdcs",
+    "plasmacytoid dendritic cells": "pdcs",
     "pdcs": "pdcs",
+    "pdc": "pdcs",
+    "cd123+ dcs": "pdcs",
+    "cd303+ dcs": "pdcs",
+
+    # ==========================================================================
+    # OTHER POPULATIONS
+    # ==========================================================================
+    "other": "other",
+    "other cells": "other",
+
+    # ILCs
+    "ilcs": "ilcs",
+    "innate lymphoid cells": "ilcs",
+    "ilc1": "ilc1",
+    "ilc2": "ilc2",
+    "ilc3": "ilc3",
+
+    # ==========================================================================
+    # ADDITIONAL QC GATES
+    # ==========================================================================
+    # Aggregate gates (part of singlet gating)
+    "aggregate 1": "singlets",
+    "aggregate 2": "singlets",
+    "aggregates": "singlets",
+
+    # Bead exclusion
+    "non-beads": "non_beads",
+    "nonbeads": "non_beads",
+    "beads excluded": "non_beads",
+
+    # ==========================================================================
+    # ADDITIONAL B CELL SUBSETS
+    # ==========================================================================
+    "class-switched memory b cells": "switched_memory_b",
+    "class switched memory b cells": "switched_memory_b",
+    "switched memory b": "switched_memory_b",
+    "igd- memory b cells": "switched_memory_b",
+    "igd+ memory b cells": "unswitched_memory_b",
+
+    "ige+ b cells": "ige_b_cells",
+    "ige+ b": "ige_b_cells",
+
+    "igg+ b cells": "igg_b_cells",
+    "iga+ b cells": "iga_b_cells",
+    "igm+ b cells": "igm_b_cells",
+
+    "marginal zone b cells": "mz_b_cells",
+    "mz b cells": "mz_b_cells",
+
+    # ==========================================================================
+    # ADDITIONAL T CELL SUBSETS
+    # ==========================================================================
+    "cd4+ cd8- t cells": "cd4_t_cells",
+    "cd4+cd8- t cells": "cd4_t_cells",
+    "cd8+ cd4- t cells": "cd8_t_cells",
+    "cd8+cd4- t cells": "cd8_t_cells",
+
+    # Th subsets
+    "th1": "th1",
+    "th1 cells": "th1",
+    "th2": "th2",
+    "th2 cells": "th2",
+    "th17": "th17",
+    "th17 cells": "th17",
+    "th22": "th22",
+    "th22 cells": "th22",
+
+    # ==========================================================================
+    # CYTOKINE GATES (functional analysis)
+    # ==========================================================================
+    "ifn-γ+": "ifng_positive",
+    "ifng+": "ifng_positive",
+    "ifn-gamma+": "ifng_positive",
+    "tnf+": "tnf_positive",
+    "tnf-α+": "tnf_positive",
+    "il-2+": "il2_positive",
+    "il2+": "il2_positive",
+    "il-17+": "il17_positive",
+    "il-17a+": "il17_positive",
+    "il17+": "il17_positive",
 }
 
 
