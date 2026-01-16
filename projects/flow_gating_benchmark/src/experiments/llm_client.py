@@ -2,9 +2,11 @@
 LLM client abstraction for experiment runner.
 
 Provides a unified interface for calling different LLM providers:
-- Anthropic (Claude)
-- OpenAI (GPT)
+- Anthropic (Claude) via API
+- OpenAI (GPT) via API
+- Google Gemini via API
 - Ollama (local models)
+- Claude CLI (experimental, local dev only)
 """
 
 from __future__ import annotations
@@ -13,24 +15,44 @@ import logging
 import os
 import subprocess
 import time
+import warnings
 from dataclasses import dataclass
 from typing import Protocol
 
 from tenacity import retry, stop_after_attempt, wait_exponential
+
+from experiments.exceptions import ConfigurationError
 
 logger = logging.getLogger(__name__)
 
 
 @dataclass
 class LLMResponse:
-    """Response from an LLM call."""
+    """
+    Response from an LLM call.
+
+    Attributes:
+        content: The text response from the model.
+        model: Model identifier that generated this response.
+        tokens_used: Total tokens consumed (input + output). May be estimated for some providers.
+    """
+
     content: str
     model: str
     tokens_used: int = 0
 
 
 class LLMClient(Protocol):
-    """Protocol for LLM clients."""
+    """
+    Protocol defining the interface for LLM clients.
+
+    All LLM client implementations must provide:
+    - call(): Make a synchronous call to the LLM
+    - model_id: Return a unique identifier for the model
+
+    This protocol enables dependency injection and makes testing easier
+    by allowing mock implementations.
+    """
 
     def call(self, prompt: str, max_tokens: int = 4096, temperature: float = 0.0) -> LLMResponse:
         """Call the LLM with a prompt."""
@@ -43,7 +65,14 @@ class LLMClient(Protocol):
 
 
 class AnthropicClient:
-    """Client for Anthropic Claude models."""
+    """
+    Client for Anthropic Claude models via the official API.
+
+    Requires ANTHROPIC_API_KEY environment variable to be set.
+
+    Attributes:
+        model: Model identifier (e.g., "claude-sonnet-4-20250514").
+    """
 
     def __init__(self, model: str = "claude-sonnet-4-20250514"):
         self.model = model
@@ -53,11 +82,17 @@ class AnthropicClient:
         if self._client is None:
             try:
                 from anthropic import Anthropic
+
                 if not os.environ.get("ANTHROPIC_API_KEY"):
-                    raise RuntimeError("ANTHROPIC_API_KEY not set")
+                    raise ConfigurationError(
+                        "ANTHROPIC_API_KEY not set. "
+                        "Set this environment variable with your Anthropic API key."
+                    )
                 self._client = Anthropic()
             except ImportError as err:
-                raise RuntimeError("anthropic package not installed") from err
+                raise ConfigurationError(
+                    "anthropic package not installed. Install with: pip install anthropic"
+                ) from err
         return self._client
 
     @property
@@ -81,7 +116,14 @@ class AnthropicClient:
 
 
 class OpenAIClient:
-    """Client for OpenAI GPT models."""
+    """
+    Client for OpenAI GPT models via the official API.
+
+    Requires OPENAI_API_KEY environment variable to be set.
+
+    Attributes:
+        model: Model identifier (e.g., "gpt-4o", "gpt-4o-mini").
+    """
 
     def __init__(self, model: str = "gpt-4o"):
         self.model = model
@@ -91,11 +133,17 @@ class OpenAIClient:
         if self._client is None:
             try:
                 from openai import OpenAI
+
                 if not os.environ.get("OPENAI_API_KEY"):
-                    raise RuntimeError("OPENAI_API_KEY not set")
+                    raise ConfigurationError(
+                        "OPENAI_API_KEY not set. "
+                        "Set this environment variable with your OpenAI API key."
+                    )
                 self._client = OpenAI()
             except ImportError as err:
-                raise RuntimeError("openai package not installed") from err
+                raise ConfigurationError(
+                    "openai package not installed. Install with: pip install openai"
+                ) from err
         return self._client
 
     @property
@@ -117,7 +165,14 @@ class OpenAIClient:
 
 
 class GeminiClient:
-    """Client for Google Gemini models."""
+    """
+    Client for Google Gemini models via the official API.
+
+    Requires GOOGLE_API_KEY environment variable to be set.
+
+    Attributes:
+        model: Model identifier (e.g., "gemini-2.0-flash", "gemini-2.5-pro").
+    """
 
     def __init__(self, model: str = "gemini-2.0-flash"):
         self.model = model
@@ -127,12 +182,18 @@ class GeminiClient:
         if self._client is None:
             try:
                 from google import genai
+
                 api_key = os.environ.get("GOOGLE_API_KEY")
                 if not api_key:
-                    raise RuntimeError("GOOGLE_API_KEY not set")
+                    raise ConfigurationError(
+                        "GOOGLE_API_KEY not set. "
+                        "Set this environment variable with your Google API key."
+                    )
                 self._client = genai.Client(api_key=api_key)
             except ImportError as err:
-                raise RuntimeError("google-genai package not installed") from err
+                raise ConfigurationError(
+                    "google-genai package not installed. Install with: pip install google-genai"
+                ) from err
         return self._client
 
     @property
@@ -221,13 +282,37 @@ CLI_MODEL_MAP = {
 
 
 class ClaudeCLIClient:
-    """Client for Claude via CLI (uses Claude Max OAuth subscription)."""
+    """
+    EXPERIMENTAL: Client for Claude via CLI (uses Claude Max OAuth subscription).
+
+    ⚠️  WARNING: This client is for LOCAL DEVELOPMENT ONLY. ⚠️
+
+    Known limitations:
+    - Wraps the Claude CLI tool meant for interactive terminal use
+    - No control over max_tokens or temperature parameters
+    - Token counts are estimated, not actual
+    - Dependent on CLI output format (may break if Anthropic updates CLI)
+    - Requires Node.js and global npm package installation
+    - Not suitable for production or CI environments
+
+    For production use, prefer AnthropicClient with proper API authentication.
+
+    Attributes:
+        model: Model identifier (e.g., "claude-sonnet-4-20250514").
+        delay_seconds: Minimum delay between calls for rate limiting.
+    """
 
     def __init__(
         self,
         model: str = "claude-sonnet-4-20250514",
         delay_seconds: float = 0.5,
     ):
+        warnings.warn(
+            "ClaudeCLIClient is experimental and intended for local development only. "
+            "For production use, prefer AnthropicClient with API authentication.",
+            category=UserWarning,
+            stacklevel=2,
+        )
         self.model = model
         self.delay_seconds = delay_seconds
         self._cli_model = CLI_MODEL_MAP.get(model, model)
@@ -244,9 +329,9 @@ class ClaudeCLIClient:
                 timeout=10,
             )
             if result.returncode != 0:
-                raise RuntimeError("claude CLI not found or not working")
+                raise ConfigurationError("claude CLI not found or not working")
         except FileNotFoundError as err:
-            raise RuntimeError(
+            raise ConfigurationError(
                 "claude CLI not installed. Install with: npm install -g @anthropic-ai/claude-code"
             ) from err
 
@@ -301,7 +386,15 @@ class ClaudeCLIClient:
 
 
 class OllamaClient:
-    """Client for local Ollama models."""
+    """
+    Client for local Ollama models.
+
+    Connects to a local Ollama server for inference. No API key required.
+
+    Attributes:
+        model: Ollama model identifier (e.g., "llama3.1:8b", "mistral:7b").
+        base_url: Ollama server URL. Defaults to OLLAMA_BASE_URL env var or localhost.
+    """
 
     def __init__(self, model: str = "llama3.1:8b", base_url: str | None = None):
         self.model = model
@@ -312,9 +405,12 @@ class OllamaClient:
         if self._client is None:
             try:
                 import httpx
+
                 self._client = httpx.Client(timeout=300.0)
             except ImportError as err:
-                raise RuntimeError("httpx package not installed") from err
+                raise ConfigurationError(
+                    "httpx package not installed. Install with: pip install httpx"
+                ) from err
         return self._client
 
     @property
@@ -339,45 +435,157 @@ class OllamaClient:
         return LLMResponse(content=content, model=self.model)
 
 
-class MockClient:
-    """Mock client for dry runs and testing."""
+class MockMode:
+    """Mock response modes for different testing scenarios."""
+    VALID = "valid"          # Return valid parseable response
+    EMPTY = "empty"          # Return empty string (test parse error handling)
+    ECHO = "echo"            # Echo back the prompt (test prompt construction)
+    MALFORMED = "malformed"  # Return invalid JSON (test parse error handling)
+    ERROR = "error"          # Simulate API error
 
-    def __init__(self, model: str = "mock"):
+
+class MockClient:
+    """
+    Mock client for dry runs and testing.
+
+    Returns configurable responses without making any API calls.
+    Useful for testing different scenarios:
+
+    - VALID: Returns valid gating hierarchy (tests happy path)
+    - EMPTY: Returns empty string (tests parse failure handling)
+    - ECHO: Returns the prompt (tests prompt construction - inspect what was sent)
+    - MALFORMED: Returns invalid JSON (tests parse error recovery)
+    - ERROR: Raises exception (tests error handling)
+
+    Features:
+    - Zero latency by default (no sleeps, no rate limiting)
+    - Multiple response modes for testing different scenarios
+    - Optional simulated latency for timing tests
+
+    Attributes:
+        model: Model identifier (always "mock" or custom string).
+        mode: Response mode (see MockMode).
+        simulate_latency: If > 0, sleep this many seconds per call.
+    """
+
+    # Class-level flag to disable ALL delays globally for dry runs
+    FAST_MODE: bool = True
+
+    def __init__(
+        self,
+        model: str = "mock",
+        mode: str = MockMode.VALID,
+        simulate_latency: float = 0.0,
+    ):
         self.model = model
-        self._response_template = {
+        self.mode = mode
+        self.simulate_latency = simulate_latency if not MockClient.FAST_MODE else 0.0
+        self._call_count = 0
+        self._last_prompt: str | None = None
+
+        # Valid response template
+        self._valid_response = {
             "name": "All Events",
             "children": [
-                {"name": "Singlets", "children": [{"name": "Live", "children": []}]}
+                {
+                    "name": "Singlets",
+                    "markers": ["FSC-A", "FSC-H"],
+                    "children": [
+                        {
+                            "name": "Live",
+                            "markers": ["Live/Dead"],
+                            "children": [
+                                {
+                                    "name": "CD3+ T cells",
+                                    "markers": ["CD3"],
+                                    "children": []
+                                }
+                            ]
+                        }
+                    ]
+                }
             ],
         }
 
     @property
     def model_id(self) -> str:
-        return self.model
+        return f"{self.model}-{self.mode}"
+
+    @property
+    def call_count(self) -> int:
+        """Number of calls made (useful for testing)."""
+        return self._call_count
+
+    @property
+    def last_prompt(self) -> str | None:
+        """Last prompt received (useful for testing prompt construction)."""
+        return self._last_prompt
 
     def call(self, prompt: str, max_tokens: int = 4096, temperature: float = 0.0) -> LLMResponse:
+        """
+        Return mock response based on configured mode.
+
+        In ECHO mode, returns the prompt itself - useful for verifying
+        prompt construction without API calls.
+        """
         import json
+
+        self._call_count += 1
+        self._last_prompt = prompt
+
+        # Optional simulated latency for timing tests
+        if self.simulate_latency > 0:
+            time.sleep(self.simulate_latency)
+
+        # Generate response based on mode
+        if self.mode == MockMode.ERROR:
+            raise RuntimeError("Simulated API error (MockClient in ERROR mode)")
+
+        if self.mode == MockMode.EMPTY:
+            content = ""
+        elif self.mode == MockMode.ECHO:
+            # Return prompt wrapped in a way that shows what was sent
+            content = f"=== PROMPT RECEIVED ({len(prompt)} chars) ===\n{prompt[:2000]}"
+            if len(prompt) > 2000:
+                content += f"\n... (truncated, {len(prompt) - 2000} more chars)"
+        elif self.mode == MockMode.MALFORMED:
+            content = '{"name": "All Events", "children": [INVALID JSON HERE'
+        else:  # VALID
+            content = json.dumps(self._valid_response, indent=2)
+
         return LLMResponse(
-            content=json.dumps(self._response_template),
+            content=content,
             model=self.model,
+            tokens_used=0,
         )
 
 
-def create_client(model: str, dry_run: bool = False, use_cli: bool = False) -> LLMClient:
+def create_client(
+    model: str,
+    dry_run: bool = False,
+    use_cli: bool = False,
+    mock_mode: str = MockMode.VALID,
+) -> LLMClient:
     """
     Create an LLM client based on model name.
 
     Args:
         model: Model identifier (e.g., "claude-sonnet-4-20250514", "gpt-4o", "llama3.1:8b")
                Use "-cli" suffix (e.g., "claude-sonnet-cli") to use Claude Max OAuth
-        dry_run: If True, return a mock client
+        dry_run: If True, return a mock client (no API calls, instant responses)
         use_cli: If True and model is Claude, use CLI client (Claude Max OAuth)
+        mock_mode: When dry_run=True, controls mock behavior:
+            - MockMode.VALID: Return valid parseable response (default)
+            - MockMode.EMPTY: Return empty string (test parse errors)
+            - MockMode.ECHO: Return the prompt (inspect what would be sent)
+            - MockMode.MALFORMED: Return invalid JSON (test error handling)
+            - MockMode.ERROR: Raise exception (test error handling)
 
     Returns:
         Appropriate LLM client instance
     """
     if dry_run:
-        return MockClient(model)
+        return MockClient(model, mode=mock_mode)
 
     model_lower = model.lower()
 

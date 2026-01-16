@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flow-gating-benchmark"
+version = "0.1.0"
+description = "LLM benchmark for flow cytometry gating hierarchy prediction"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    # LLM APIs
+    "anthropic>=0.18.0",
+    "openai>=1.12.0",
+    "google-genai>=1.0.0",
+    # Data processing
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    # Visualization
+    "matplotlib>=3.7.0",
+    "seaborn>=0.12.0",
+    # Utilities
+    "python-dotenv>=1.0.0",
+    "pydantic>=2.0.0",
+    "httpx>=0.25.0",
+    "tenacity>=8.2.0",
+    # Evaluation
+    "sentence-transformers>=2.2.0",
+    "scipy>=1.10.0",
+]
+
+[project.optional-dependencies]
+flow = [
+    "flowkit>=1.2.0",
+    "flowio>=1.3.0",
+]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.yaml"]
