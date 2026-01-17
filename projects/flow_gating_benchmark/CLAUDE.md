@@ -477,6 +477,108 @@ for model, stats in data['stats']['by_model'].items():
 
 ---
 
+## Code Quality Guidelines (Anti-patterns to Avoid)
+
+### 1. "Stringly Typed" Schema Pattern
+
+**Bad:** Defining output schemas as raw JSON strings in prompts.
+
+```python
+# BAD - schema can drift from validation logic
+OUTPUT_SCHEMA = """{ "name": "...", "children": [...] }"""
+```
+
+**Good:** Use Pydantic as single source of truth.
+
+```python
+# GOOD - schema always matches validation
+from experiments.prompts import LLMGateNode, get_output_schema_json
+schema_str = get_output_schema_json()  # Generated from Pydantic model
+```
+
+### 2. "Blind Token Budget" Pattern
+
+**Bad:** Discovering prompt is too long only when API crashes or truncates.
+
+**Good:** Pre-flight token validation before API calls.
+
+```python
+from experiments.llm_client import validate_prompt_preflight, PromptTooLongError
+
+try:
+    is_valid, tokens, msg = validate_prompt_preflight(prompt, "claude-sonnet-4-20250514")
+    if not is_valid:
+        # Handle: truncate, split, or select different model
+        pass
+except PromptTooLongError as e:
+    logger.error(f"Prompt too long: {e.token_count} tokens, only {e.available} available")
+```
+
+### 3. "Magic Context" Pattern
+
+**Bad:** Large reference text hardcoded in Python variables.
+
+```python
+# BAD - can't version or A/B test
+HIPC_REFERENCE = """## Reference: HIPC 2016..."""
+```
+
+**Good:** Load context from external data files.
+
+```python
+# GOOD - context is data, not code
+context = Path("data/context/hipc_v1.md").read_text()
+```
+
+This enables:
+- Version control for context variations
+- A/B testing different reference materials
+- Easy updates without code changes
+
+### 4. "Leakage by Design" Pattern
+
+**Bad:** Calling something "RAG" when it's actually injecting the answer.
+
+```python
+# BAD - misleading terminology
+RAGMode.ORACLE  # Injects ground truth hierarchy
+```
+
+**Good:** Use precise terminology.
+
+```python
+# GOOD - clear about what it does
+ReferenceMode.GROUND_TRUTH_INJECTION  # Upper-bound test for instruction following
+```
+
+**Why it matters:** "Oracle RAG" implies perfect retrieval of relevant papers. "Ground Truth Injection" clearly indicates testing instruction following, not retrieval.
+
+### 5. When to Use Pre-flight Checks
+
+Always validate prompts before expensive API calls:
+
+```python
+from experiments.llm_client import TokenCounter, MODEL_CONTEXT_WINDOWS
+
+counter = TokenCounter()
+
+# Check token count
+n_tokens = counter.count(prompt, model="gpt-4o")
+
+# Check against model limits
+context_window = MODEL_CONTEXT_WINDOWS.get("gpt-4o", 8000)
+available = context_window - max_output_tokens - safety_margin
+
+if n_tokens > available:
+    # Options:
+    # 1. Truncate prompt intelligently
+    # 2. Switch to larger context model
+    # 3. Split into multiple calls
+    pass
+```
+
+---
+
 ## Known Technical Debt
 
 See `docs/UTILITIES.md` for detailed analysis. Key issues:

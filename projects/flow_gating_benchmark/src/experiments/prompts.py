@@ -9,64 +9,152 @@ Defines different prompting strategies:
 
 from __future__ import annotations
 
+import json
+import logging
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Literal
+
+from pydantic import BaseModel, Field
 
 from curation.schemas import TestCase
 
+logger = logging.getLogger(__name__)
+
+
 # =============================================================================
-# HIPC REFERENCE CONTEXT (Static injection, not retrieval-based RAG)
+# LLM OUTPUT SCHEMA (Single Source of Truth)
 # =============================================================================
 
-HIPC_REFERENCE = """## Reference: HIPC 2016 Standardized Cell Definitions
-Source: https://www.nature.com/articles/srep20686
 
-### Quality Control Gates (Required)
-- **Time Gate**: Exclude acquisition artifacts (if applicable)
-- **Singlets**: Doublet exclusion (FSC-A vs FSC-H for flow cytometry; event length for mass cytometry)
-- **Live cells**: Viability dye negative (e.g., Zombie, Live/Dead, cisplatin for CyTOF)
+class LLMGateNode(BaseModel):
+    """
+    Simplified gate schema for LLM output.
 
-### Major Lineage Definitions
-| Population | Markers | Parent |
-|------------|---------|--------|
-| T cells | CD3+ CD19- | Lymphocytes |
-| CD4+ T cells | CD3+ CD4+ CD8- | T cells |
-| CD8+ T cells | CD3+ CD4- CD8+ | T cells |
-| B cells | CD3- CD19+ (or CD20+) | Lymphocytes |
-| NK cells | CD3- CD56+ | Lymphocytes |
-| Monocytes | CD14+ | Leukocytes |
+    This is the single source of truth for what the LLM should return.
+    The full GateNode in schemas.py has additional fields (gate_type, is_critical,
+    marker_logic, notes) that are for internal use, not LLM prediction.
+    """
 
-### T Cell Memory Subsets (if CD45RA/CCR7 in panel)
-| Subset | Phenotype |
-|--------|-----------|
-| Naive | CD45RA+ CCR7+ |
-| Central Memory (CM) | CD45RA- CCR7+ |
-| Effector Memory (EM) | CD45RA- CCR7- |
-| TEMRA | CD45RA+ CCR7- |
+    name: str = Field(
+        ...,
+        description="Gate name (e.g., 'All Events', 'Singlets', 'CD3+ T cells')"
+    )
+    markers: list[str] = Field(
+        default_factory=list,
+        description="Markers/dimensions used for this gate (e.g., ['CD3', 'CD19'] or ['FSC-A', 'FSC-H'])"
+    )
+    children: list["LLMGateNode"] = Field(
+        default_factory=list,
+        description="Child gates in the hierarchy"
+    )
 
-### B Cell Subsets (if CD27/IgD in panel)
-| Subset | Phenotype |
-|--------|-----------|
-| Naive B | CD19+ IgD+ CD27- |
-| Memory B | CD19+ CD27+ |
-| Transitional B | CD19+ CD24hi CD38hi |
-| Plasmablasts | CD19+ CD27++ CD38++ |
 
-### NK Cell Subsets (if CD16 in panel)
-| Subset | Phenotype |
-|--------|-----------|
-| CD56bright NK | CD3- CD56bright CD16dim/- |
-| CD56dim NK | CD3- CD56dim CD16+ |
+def get_output_schema_json() -> str:
+    """
+    Generate JSON schema string from Pydantic model.
 
-### Monocyte Subsets (if CD16 in panel)
-| Subset | Phenotype |
-|--------|-----------|
-| Classical | CD14++ CD16- |
-| Intermediate | CD14++ CD16+ |
-| Non-classical | CD14dim CD16++ |
+    This ensures the prompt schema always matches the validation schema.
+    """
+    schema = LLMGateNode.model_json_schema()
+    # Return a simplified example that's easier for LLMs to follow
+    example = {
+        "name": "Gate Name",
+        "markers": ["marker1", "marker2"],
+        "children": [
+            {
+                "name": "Child Gate",
+                "markers": ["marker3"],
+                "children": []
+            }
+        ]
+    }
+    return json.dumps(example, indent=4)
 
-**Note**: HIPC recommends gating directly on lineage markers rather than scatter-based lymphocyte gates to reduce variability. For mass cytometry (CyTOF), scatter parameters are not available - use CD45 or other lineage markers instead.
-"""
+# =============================================================================
+# REFERENCE CONTEXT LOADING (Context is Data, not Code)
+# =============================================================================
+
+# Cache for loaded reference contexts
+_context_cache: dict[str, str] = {}
+
+# Path to context data directory (relative to project root)
+_CONTEXT_DIR = Path(__file__).parent.parent.parent / "data" / "context"
+
+
+def load_reference_context(name: str = "hipc_v1") -> str:
+    """
+    Load reference context from external data file.
+
+    This treats context as data, enabling:
+    - Version control for different context versions
+    - A/B testing (hipc_v1 vs hipc_v2)
+    - Easy updates without code changes
+
+    Args:
+        name: Context file name (without .md extension)
+
+    Returns:
+        Context string content
+
+    Raises:
+        FileNotFoundError: If context file doesn't exist
+    """
+    if name in _context_cache:
+        return _context_cache[name]
+
+    context_path = _CONTEXT_DIR / f"{name}.md"
+
+    if not context_path.exists():
+        logger.warning(f"Context file not found: {context_path}")
+        raise FileNotFoundError(f"Reference context '{name}' not found at {context_path}")
+
+    content = context_path.read_text()
+    _context_cache[name] = content
+    logger.debug(f"Loaded reference context '{name}' ({len(content)} chars)")
+    return content
+
+
+def get_available_contexts() -> list[str]:
+    """List available reference context files."""
+    if not _CONTEXT_DIR.exists():
+        return []
+    return [f.stem for f in _CONTEXT_DIR.glob("*.md")]
+
+
+# Backward compatibility: HIPC_REFERENCE as a lazy-loaded property
+# This maintains backward compatibility while loading from file
+def _get_hipc_reference() -> str:
+    """Get HIPC reference (backward compatibility wrapper)."""
+    try:
+        return load_reference_context("hipc_v1")
+    except FileNotFoundError:
+        logger.error("HIPC reference file not found. Returning empty string.")
+        return ""
+
+
+# For backward compatibility, provide HIPC_REFERENCE as a module-level constant
+# that's loaded on first access
+class _LazyHIPCReference:
+    """Lazy loader for HIPC_REFERENCE to maintain backward compatibility."""
+    _content: str | None = None
+
+    def __str__(self) -> str:
+        if self._content is None:
+            self._content = _get_hipc_reference()
+        return self._content
+
+    def __repr__(self) -> str:
+        return str(self)
+
+    def __add__(self, other: str) -> str:
+        return str(self) + other
+
+    def __radd__(self, other: str) -> str:
+        return other + str(self)
+
+
+HIPC_REFERENCE = _LazyHIPCReference()
 
 
 @dataclass
@@ -78,18 +166,8 @@ class PromptTemplate:
     strategy: Literal["direct", "cot"]
 
 
-# JSON schema for output
-OUTPUT_SCHEMA = """{
-    "name": "Gate Name",
-    "markers": ["marker1", "marker2"],
-    "children": [
-        {
-            "name": "Child Gate",
-            "markers": ["marker3"],
-            "children": [...]
-        }
-    ]
-}"""
+# Dynamic schema generation - no more hardcoded strings!
+# Use get_output_schema_json() to get the schema for prompts
 
 
 DIRECT_TEMPLATE = """You are an expert cytometrist. Given the following panel information, predict the gating hierarchy that an expert would use for data analysis.
@@ -267,5 +345,5 @@ def build_prompt(
 
     return template.template.format(
         context=context,
-        schema=OUTPUT_SCHEMA,
+        schema=get_output_schema_json(),
     )
