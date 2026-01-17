@@ -72,6 +72,59 @@ Bootstrap 3: All Events → Singlets → Live → Leukocytes → T Cells → Reg
 ```
 All biologically valid, but different structure and naming.
 
+### Key Insights
+
+**1. F1 requires better semantic matching to be useful.**
+
+String-based F1 penalizes valid biological alternatives:
+
+| Ground Truth | Prediction | F1 Match | Biologically Correct? |
+|--------------|------------|----------|----------------------|
+| `T cells` | `T Cells (CD3+)` | ❌ No | ✓ Yes |
+| `CD4+ T cells` | `Helper T cells (CD4+)` | ❌ No | ✓ Yes |
+| `B cell lineage → Mature B` | `Mature B → subsets` | ❌ Wrong order | ✓ Both valid |
+
+The weak correlation between F1 and LLM judge scores (r≈0.15) reflects *matching quality*, not a fundamental flaw in F1. The metric could work well with:
+- **Better synonym dictionaries** (current: 200+ terms, likely incomplete)
+- **Embedding-based matching** (semantic_f1 partially addresses this)
+- **Hierarchical normalization** (standardizing gate naming conventions)
+
+The challenge: building comprehensive synonym coverage for immunology requires domain expertise and is labor-intensive.
+
+**2. 96% non-determinism via CLI undermines reproducibility.**
+
+Claude Opus produces different hierarchies on 96% of test cases across 3 runs with identical prompts. This is partly an artifact of using the Claude CLI (Max subscription) which doesn't expose temperature controls—the API with temperature=0 would likely show higher consistency like Gemini models (0% all-different rate). However, the variance reveals something important: all outputs are biologically plausible. The model explores the valid solution space rather than converging on a single answer.
+
+Implications:
+- Single-run evaluations are unreliable
+- Bootstrap sampling (n≥3) is essential for CLI-based evaluation
+- "Best of N" may be more appropriate than "average"
+
+**3. No automated baseline exists for comparison.**
+
+Unlike text generation (BLEU vs human) or classification (F1 vs random), there's no established non-LLM baseline for gating prediction. FlowSOM and other clustering tools produce different outputs (clusters, not named hierarchies), making direct comparison impossible. The 0.35 F1 scores lack context—we don't know if this is impressive or terrible without a reference point.
+
+### Multi-Judge Methodology
+
+Given F1's limitations, we use an LLM judge (Gemini 2.5 Pro) with **5 different prompt styles** to assess predictions from multiple angles:
+
+| Style | Focus | Output Format |
+|-------|-------|---------------|
+| **default** | Overall quality (0-10 scores) | Completeness, Accuracy, Scientific, Overall |
+| **validation** | Estimate what auto metrics *should* be | Estimated F1, Structure, Critical Recall |
+| **qualitative** | Structured feedback, no scores | Errors, Missing gates, Extra gates, Accept Y/N |
+| **orthogonal** | Dimensions F1 can't capture | Clinical utility, Biological plausibility, Hallucination severity |
+| **binary** | Accept/reject threshold | Acceptable Y/N, Critical errors, Recommendation |
+
+**Why 5 styles?** Each reveals different failure modes:
+- *Default* catches overall quality but conflates dimensions
+- *Validation* tests if the judge agrees with automated metrics (calibration check)
+- *Qualitative* forces specific error enumeration instead of vague scores
+- *Orthogonal* measures what F1 fundamentally cannot: "Would this work in practice?"
+- *Binary* simulates real-world deployment decisions
+
+The disagreement between styles is informative—if default says 7/10 but binary says "reject", the prediction likely has specific blocking issues masked by overall reasonableness.
+
 ---
 
 ## Quick Start
@@ -379,6 +432,76 @@ python scripts/run_modular_pipeline.py \
     --models gemini-2.0-flash \
     --max-cases 1
 ```
+
+---
+
+## Hypothesis Testing Framework
+
+Beyond benchmarking, this project includes tools to distinguish between different LLM failure modes. The key question: **Is poor performance due to reasoning failures or training data frequency?**
+
+### Alien Cell Test (`src/analysis/alien_cell.py`)
+
+The "kill shot" test for the frequency vs reasoning debate. Replaces real population names with nonsense tokens while preserving marker logic:
+
+```
+Original: CD3+ CD4+ CD25+ → "Regulatory T Cells"
+Alien:    CD3+ CD4+ CD25+ → "Glorp Cells"
+```
+
+**Interpretation:**
+- If model gates "Glorp Cells" correctly from markers → **reasoning from first principles**
+- If model fails on "Glorp Cells" → **memorization/retrieval dependency**
+
+| Delta F1 (original - alien) | Interpretation |
+|-----------------------------|----------------|
+| < 0.05 | Strong reasoning evidence |
+| 0.05-0.20 | Mixed (both reasoning and memorization) |
+| > 0.20 | Memorization indicated |
+
+### Other Hypothesis Tests
+
+| Test | Question | Location |
+|------|----------|----------|
+| **Frequency Confound** | Does token frequency in training data predict performance? | `tests/test_hypothesis_tests.py` |
+| **Cognitive Refusal** | Is the model blind to context or over-cautious? | `src/analysis/cognitive_refusal.py` |
+| **Format Ablation** | Is failure due to JSON parsing or reasoning? | Prompt strategy comparison |
+
+Run hypothesis tests:
+```bash
+pytest tests/test_hypothesis_tests.py -v
+python src/analysis/alien_cell.py  # Example usage
+```
+
+---
+
+## Limitations
+
+This project has known limitations that affect interpretation of results:
+
+### Statistical Power
+- **10 verified test cases** limits statistical significance
+- Confidence intervals are wide; differences of <0.05 F1 are likely noise
+- Adding more OMIPs requires manual curation (~2-4 hours per panel)
+
+### Ground Truth Quality
+- OMIP gating hierarchies are manually curated from PDFs
+- Some papers show multiple valid strategies; we pick one
+- Inter-annotator agreement not measured (single curator)
+
+### Evaluation Gaps
+- No human expert baseline for comparison
+- LLM judge may have systematic biases toward certain output styles
+- Token-level attribution (which markers drove which gates) not captured
+
+### Reproducibility
+- CLI-based Claude models lack temperature control
+- API costs limit replication ($50-100 per full benchmark run)
+- Some model versions deprecated between runs
+
+### Generalizability
+- OMIPs skew toward complex immunophenotyping panels
+- Simple 4-6 color panels underrepresented
+- Mass cytometry (CyTOF) has only 1 test case
 
 ---
 
