@@ -7,6 +7,8 @@ Provides a unified interface for calling different LLM providers:
 - Google Gemini via API
 - Ollama (local models)
 - Claude CLI (experimental, local dev only)
+
+Includes pre-flight token counting to catch truncation issues before API calls.
 """
 
 from __future__ import annotations
@@ -24,6 +26,183 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 from experiments.exceptions import ConfigurationError
 
 logger = logging.getLogger(__name__)
+
+
+# =============================================================================
+# TOKEN COUNTING (Pre-flight checks)
+# =============================================================================
+
+# Model context windows (input tokens)
+# Source: Provider documentation as of 2024
+MODEL_CONTEXT_WINDOWS = {
+    # Anthropic Claude
+    "claude-opus-4-20250514": 200_000,
+    "claude-sonnet-4-20250514": 200_000,
+    "claude-3-5-haiku-20241022": 200_000,
+    # OpenAI GPT
+    "gpt-4o": 128_000,
+    "gpt-4o-mini": 128_000,
+    "gpt-4-turbo": 128_000,
+    # Google Gemini
+    "gemini-2.0-flash": 1_000_000,
+    "gemini-2.5-flash": 1_000_000,
+    "gemini-2.5-pro": 1_000_000,
+    # Local/Ollama (conservative defaults)
+    "llama3.1:8b": 8_000,
+    "llama3.1:70b": 8_000,
+    "qwen2.5:7b": 32_000,
+    "qwen2.5:72b": 32_000,
+    "mistral:7b": 32_000,
+}
+
+# Default context window for unknown models
+DEFAULT_CONTEXT_WINDOW = 8_000
+
+
+class TokenCounter:
+    """
+    Count tokens for pre-flight checks before API calls.
+
+    This prevents the "blind token budget" problem where you only discover
+    a prompt is too long when the API crashes or truncates.
+
+    Usage:
+        counter = TokenCounter()
+        n_tokens = counter.count("Hello world", model="gpt-4o")
+        counter.validate_prompt(prompt, model="claude-sonnet-4-20250514", max_output=4096)
+    """
+
+    def __init__(self):
+        self._encoders: dict = {}
+
+    def _get_encoder(self, model: str):
+        """Get or create tiktoken encoder for a model."""
+        if model in self._encoders:
+            return self._encoders[model]
+
+        try:
+            import tiktoken
+
+            # Map model to tiktoken encoding
+            if "gpt" in model.lower():
+                # GPT models use cl100k_base
+                enc = tiktoken.get_encoding("cl100k_base")
+            elif "claude" in model.lower():
+                # Claude uses similar tokenization to cl100k_base
+                # This is an approximation - Anthropic doesn't publish exact tokenizer
+                enc = tiktoken.get_encoding("cl100k_base")
+            else:
+                # Default to cl100k_base for other models
+                enc = tiktoken.get_encoding("cl100k_base")
+
+            self._encoders[model] = enc
+            return enc
+
+        except ImportError:
+            logger.warning(
+                "tiktoken not installed. Token counting will use character-based estimation. "
+                "Install with: pip install tiktoken"
+            )
+            return None
+
+    def count(self, text: str, model: str = "gpt-4o") -> int:
+        """
+        Count tokens in text for a given model.
+
+        Args:
+            text: Input text to count tokens for
+            model: Model identifier for tokenizer selection
+
+        Returns:
+            Estimated token count
+        """
+        encoder = self._get_encoder(model)
+        if encoder is None:
+            # Fallback: ~4 chars per token (rough estimate)
+            return len(text) // 4
+
+        return len(encoder.encode(text))
+
+    def get_context_window(self, model: str) -> int:
+        """Get the context window size for a model."""
+        # Check exact match
+        if model in MODEL_CONTEXT_WINDOWS:
+            return MODEL_CONTEXT_WINDOWS[model]
+
+        # Check partial match (e.g., "claude-sonnet" matches "claude-sonnet-4-20250514")
+        model_lower = model.lower()
+        for key, value in MODEL_CONTEXT_WINDOWS.items():
+            if key.lower() in model_lower or model_lower in key.lower():
+                return value
+
+        logger.warning(
+            f"Unknown model '{model}', using default context window of {DEFAULT_CONTEXT_WINDOW}"
+        )
+        return DEFAULT_CONTEXT_WINDOW
+
+    def validate_prompt(
+        self,
+        prompt: str,
+        model: str,
+        max_output_tokens: int = 4096,
+        safety_margin: float = 0.1,
+    ) -> tuple[bool, int, str]:
+        """
+        Validate that a prompt fits within the model's context window.
+
+        Args:
+            prompt: The prompt to validate
+            model: Model identifier
+            max_output_tokens: Reserved tokens for output
+            safety_margin: Additional margin (0.1 = 10% buffer)
+
+        Returns:
+            Tuple of (is_valid, token_count, message)
+        """
+        token_count = self.count(prompt, model)
+        context_window = self.get_context_window(model)
+
+        # Calculate available tokens
+        reserved = max_output_tokens + int(context_window * safety_margin)
+        available = context_window - reserved
+
+        if token_count > available:
+            return (
+                False,
+                token_count,
+                f"Prompt too long: {token_count:,} tokens exceeds {available:,} available "
+                f"(context={context_window:,}, reserved={reserved:,})"
+            )
+
+        if token_count > available * 0.9:
+            return (
+                True,
+                token_count,
+                f"Warning: Prompt is {token_count:,} tokens ({token_count/available*100:.1f}% of available)"
+            )
+
+        return (True, token_count, f"OK: {token_count:,} tokens ({token_count/available*100:.1f}% of available)")
+
+
+# Global token counter instance
+_token_counter: TokenCounter | None = None
+
+
+def get_token_counter() -> TokenCounter:
+    """Get the global token counter instance."""
+    global _token_counter
+    if _token_counter is None:
+        _token_counter = TokenCounter()
+    return _token_counter
+
+
+class PromptTooLongError(Exception):
+    """Raised when a prompt exceeds the model's context window."""
+
+    def __init__(self, message: str, token_count: int, available: int):
+        super().__init__(message)
+        self.token_count = token_count
+        self.available = available
 
 
 @dataclass
@@ -62,6 +241,50 @@ class LLMClient(Protocol):
     def model_id(self) -> str:
         """Return the model identifier."""
         ...
+
+
+def validate_prompt_preflight(
+    prompt: str,
+    model: str,
+    max_output_tokens: int = 4096,
+    raise_on_error: bool = True,
+) -> tuple[bool, int, str]:
+    """
+    Pre-flight check: validate prompt fits within model's context window.
+
+    Call this BEFORE making API calls to catch truncation issues early.
+    This prevents the "blind token budget" problem.
+
+    Args:
+        prompt: The prompt to validate
+        model: Model identifier
+        max_output_tokens: Tokens reserved for output
+        raise_on_error: If True, raise PromptTooLongError on failure
+
+    Returns:
+        Tuple of (is_valid, token_count, message)
+
+    Raises:
+        PromptTooLongError: If raise_on_error=True and prompt exceeds limit
+
+    Example:
+        >>> is_valid, tokens, msg = validate_prompt_preflight(long_prompt, "gpt-4o")
+        >>> if not is_valid:
+        ...     logger.error(msg)
+        ...     # Handle truncation or split prompt
+    """
+    counter = get_token_counter()
+    is_valid, token_count, message = counter.validate_prompt(
+        prompt, model, max_output_tokens
+    )
+
+    if not is_valid:
+        logger.warning(message)
+        if raise_on_error:
+            available = counter.get_context_window(model) - max_output_tokens
+            raise PromptTooLongError(message, token_count, available)
+
+    return is_valid, token_count, message
 
 
 class AnthropicClient:

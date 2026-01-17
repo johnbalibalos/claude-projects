@@ -10,12 +10,16 @@ Defines different prompting strategies:
 from __future__ import annotations
 
 import json
+import logging
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Literal
 
 from pydantic import BaseModel, Field
 
 from curation.schemas import TestCase
+
+logger = logging.getLogger(__name__)
 
 
 # =============================================================================
@@ -68,58 +72,89 @@ def get_output_schema_json() -> str:
     return json.dumps(example, indent=4)
 
 # =============================================================================
-# HIPC REFERENCE CONTEXT (Static injection, not retrieval-based RAG)
+# REFERENCE CONTEXT LOADING (Context is Data, not Code)
 # =============================================================================
 
-HIPC_REFERENCE = """## Reference: HIPC 2016 Standardized Cell Definitions
-Source: https://www.nature.com/articles/srep20686
+# Cache for loaded reference contexts
+_context_cache: dict[str, str] = {}
 
-### Quality Control Gates (Required)
-- **Time Gate**: Exclude acquisition artifacts (if applicable)
-- **Singlets**: Doublet exclusion (FSC-A vs FSC-H for flow cytometry; event length for mass cytometry)
-- **Live cells**: Viability dye negative (e.g., Zombie, Live/Dead, cisplatin for CyTOF)
+# Path to context data directory (relative to project root)
+_CONTEXT_DIR = Path(__file__).parent.parent.parent / "data" / "context"
 
-### Major Lineage Definitions
-| Population | Markers | Parent |
-|------------|---------|--------|
-| T cells | CD3+ CD19- | Lymphocytes |
-| CD4+ T cells | CD3+ CD4+ CD8- | T cells |
-| CD8+ T cells | CD3+ CD4- CD8+ | T cells |
-| B cells | CD3- CD19+ (or CD20+) | Lymphocytes |
-| NK cells | CD3- CD56+ | Lymphocytes |
-| Monocytes | CD14+ | Leukocytes |
 
-### T Cell Memory Subsets (if CD45RA/CCR7 in panel)
-| Subset | Phenotype |
-|--------|-----------|
-| Naive | CD45RA+ CCR7+ |
-| Central Memory (CM) | CD45RA- CCR7+ |
-| Effector Memory (EM) | CD45RA- CCR7- |
-| TEMRA | CD45RA+ CCR7- |
+def load_reference_context(name: str = "hipc_v1") -> str:
+    """
+    Load reference context from external data file.
 
-### B Cell Subsets (if CD27/IgD in panel)
-| Subset | Phenotype |
-|--------|-----------|
-| Naive B | CD19+ IgD+ CD27- |
-| Memory B | CD19+ CD27+ |
-| Transitional B | CD19+ CD24hi CD38hi |
-| Plasmablasts | CD19+ CD27++ CD38++ |
+    This treats context as data, enabling:
+    - Version control for different context versions
+    - A/B testing (hipc_v1 vs hipc_v2)
+    - Easy updates without code changes
 
-### NK Cell Subsets (if CD16 in panel)
-| Subset | Phenotype |
-|--------|-----------|
-| CD56bright NK | CD3- CD56bright CD16dim/- |
-| CD56dim NK | CD3- CD56dim CD16+ |
+    Args:
+        name: Context file name (without .md extension)
 
-### Monocyte Subsets (if CD16 in panel)
-| Subset | Phenotype |
-|--------|-----------|
-| Classical | CD14++ CD16- |
-| Intermediate | CD14++ CD16+ |
-| Non-classical | CD14dim CD16++ |
+    Returns:
+        Context string content
 
-**Note**: HIPC recommends gating directly on lineage markers rather than scatter-based lymphocyte gates to reduce variability. For mass cytometry (CyTOF), scatter parameters are not available - use CD45 or other lineage markers instead.
-"""
+    Raises:
+        FileNotFoundError: If context file doesn't exist
+    """
+    if name in _context_cache:
+        return _context_cache[name]
+
+    context_path = _CONTEXT_DIR / f"{name}.md"
+
+    if not context_path.exists():
+        logger.warning(f"Context file not found: {context_path}")
+        raise FileNotFoundError(f"Reference context '{name}' not found at {context_path}")
+
+    content = context_path.read_text()
+    _context_cache[name] = content
+    logger.debug(f"Loaded reference context '{name}' ({len(content)} chars)")
+    return content
+
+
+def get_available_contexts() -> list[str]:
+    """List available reference context files."""
+    if not _CONTEXT_DIR.exists():
+        return []
+    return [f.stem for f in _CONTEXT_DIR.glob("*.md")]
+
+
+# Backward compatibility: HIPC_REFERENCE as a lazy-loaded property
+# This maintains backward compatibility while loading from file
+def _get_hipc_reference() -> str:
+    """Get HIPC reference (backward compatibility wrapper)."""
+    try:
+        return load_reference_context("hipc_v1")
+    except FileNotFoundError:
+        logger.error("HIPC reference file not found. Returning empty string.")
+        return ""
+
+
+# For backward compatibility, provide HIPC_REFERENCE as a module-level constant
+# that's loaded on first access
+class _LazyHIPCReference:
+    """Lazy loader for HIPC_REFERENCE to maintain backward compatibility."""
+    _content: str | None = None
+
+    def __str__(self) -> str:
+        if self._content is None:
+            self._content = _get_hipc_reference()
+        return self._content
+
+    def __repr__(self) -> str:
+        return str(self)
+
+    def __add__(self, other: str) -> str:
+        return str(self) + other
+
+    def __radd__(self, other: str) -> str:
+        return other + str(self)
+
+
+HIPC_REFERENCE = _LazyHIPCReference()
 
 
 @dataclass
