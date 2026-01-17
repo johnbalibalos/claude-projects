@@ -1,25 +1,42 @@
 # LLM Biology Research
 
-Exploratory research projects testing LLM capabilities in biological/biomedical domains.
+Exploratory research testing LLM capabilities in biological/biomedical domains.
 
-## Quick Reference
+## Tech Stack
+
+- Python 3.11+
+- APIs: Anthropic, OpenAI, Google (keys in `.env`)
+- Testing: pytest
+- CI: GitHub Actions
+
+## CRITICAL Rules
+
+IMPORTANT: You MUST follow these rules:
+
+1. **NEVER use `--force` on experiment scripts** - always confirm costs with user first
+2. **NEVER run experiments without cost confirmation** - can cost $10-100+
+3. **ALWAYS read project-specific CLAUDE.md** when working in a subdirectory
+
+## Commands
 
 ```bash
-# Environment
-source .env  # API keys: ANTHROPIC_API_KEY, OPENAI_API_KEY, GOOGLE_API_KEY
+# Environment setup
+source .env
 
-# Tests
+# Run tests (ALWAYS run before committing)
 pytest projects/flow_gating_benchmark/tests/
 pytest projects/flow_panel_optimizer/
 pytest projects/drugdevbench/tests/
 
-# Common tools
-gh issue list                    # GitHub issues
-gh pr create                     # Create PR
-python -m paper_download         # Download PMC papers
+# GitHub
+gh issue list
+gh pr create
+
+# Paper downloads
+python -m paper_download
 ```
 
-## Repository Structure
+## Project Structure
 
 ```
 libs/                            # Shared libraries
@@ -34,44 +51,35 @@ projects/
 └── flow_gating_benchmark/       # Gating strategy prediction
 ```
 
-## IMPORTANT Rules
-
-1. **NEVER use `--force` flag** on experiment scripts. Always let user confirm costs.
-2. **Read project CLAUDE.md first** when working in a specific project directory.
-3. **Confirm before expensive API calls** - experiments can cost $10-100+.
-
 ## Code Style
 
-- Python 3.11+
 - Type hints encouraged
 - Each project is self-contained
 - Shared utilities go in `libs/`
+- Use descriptive commit messages with `Co-Authored-By: Claude` when applicable
 
 ## Workflow
 
-### Before coding
-- Read relevant project's `CLAUDE.md`
-- Check existing patterns in codebase
-- For experiments: estimate costs first
+1. Read the relevant project's CLAUDE.md first
+2. Check existing patterns in codebase
+3. For experiments: estimate and confirm costs
+4. Run tests before committing
 
-### When running experiments
+### Cost Confirmation Pattern
+
 ```python
 from hypothesis_pipeline.cost import confirm_experiment_cost
 if confirm_experiment_cost(config, n_test_cases=10):
     pipeline.run()
 ```
 
-### Committing
-- Use descriptive commit messages
-- Include `Co-Authored-By: Claude` when applicable
-- Run tests before committing
-
 ## Project-Specific Instructions
 
-Each project has its own CLAUDE.md with detailed guidance:
-- `projects/flow_panel_optimizer/CLAUDE.md`
-- `projects/drugdevbench/CLAUDE.md`
-- `projects/flow_gating_benchmark/CLAUDE.md`
+When working in these directories, read their CLAUDE.md:
+
+@projects/flow_panel_optimizer/CLAUDE.md
+@projects/drugdevbench/CLAUDE.md
+@projects/flow_gating_benchmark/CLAUDE.md
 
 ## Adding New Projects
 
