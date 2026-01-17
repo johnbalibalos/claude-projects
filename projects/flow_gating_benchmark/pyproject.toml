@@ -24,6 +24,7 @@ dependencies = [
     "pydantic>=2.0.0",
     "httpx>=0.25.0",
     "tenacity>=8.2.0",
+    "json-repair>=0.30.0",  # Robust JSON parsing for malformed LLM outputs
     # Evaluation
     "sentence-transformers>=2.2.0",
     "scipy>=1.10.0",
