@@ -9,10 +9,63 @@ Defines different prompting strategies:
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 from typing import Literal
 
+from pydantic import BaseModel, Field
+
 from curation.schemas import TestCase
+
+
+# =============================================================================
+# LLM OUTPUT SCHEMA (Single Source of Truth)
+# =============================================================================
+
+
+class LLMGateNode(BaseModel):
+    """
+    Simplified gate schema for LLM output.
+
+    This is the single source of truth for what the LLM should return.
+    The full GateNode in schemas.py has additional fields (gate_type, is_critical,
+    marker_logic, notes) that are for internal use, not LLM prediction.
+    """
+
+    name: str = Field(
+        ...,
+        description="Gate name (e.g., 'All Events', 'Singlets', 'CD3+ T cells')"
+    )
+    markers: list[str] = Field(
+        default_factory=list,
+        description="Markers/dimensions used for this gate (e.g., ['CD3', 'CD19'] or ['FSC-A', 'FSC-H'])"
+    )
+    children: list["LLMGateNode"] = Field(
+        default_factory=list,
+        description="Child gates in the hierarchy"
+    )
+
+
+def get_output_schema_json() -> str:
+    """
+    Generate JSON schema string from Pydantic model.
+
+    This ensures the prompt schema always matches the validation schema.
+    """
+    schema = LLMGateNode.model_json_schema()
+    # Return a simplified example that's easier for LLMs to follow
+    example = {
+        "name": "Gate Name",
+        "markers": ["marker1", "marker2"],
+        "children": [
+            {
+                "name": "Child Gate",
+                "markers": ["marker3"],
+                "children": []
+            }
+        ]
+    }
+    return json.dumps(example, indent=4)
 
 # =============================================================================
 # HIPC REFERENCE CONTEXT (Static injection, not retrieval-based RAG)
@@ -78,18 +131,8 @@ class PromptTemplate:
     strategy: Literal["direct", "cot"]
 
 
-# JSON schema for output
-OUTPUT_SCHEMA = """{
-    "name": "Gate Name",
-    "markers": ["marker1", "marker2"],
-    "children": [
-        {
-            "name": "Child Gate",
-            "markers": ["marker3"],
-            "children": [...]
-        }
-    ]
-}"""
+# Dynamic schema generation - no more hardcoded strings!
+# Use get_output_schema_json() to get the schema for prompts
 
 
 DIRECT_TEMPLATE = """You are an expert cytometrist. Given the following panel information, predict the gating hierarchy that an expert would use for data analysis.
@@ -267,5 +310,5 @@ def build_prompt(
 
     return template.template.format(
         context=context,
-        schema=OUTPUT_SCHEMA,
+        schema=get_output_schema_json(),
     )
