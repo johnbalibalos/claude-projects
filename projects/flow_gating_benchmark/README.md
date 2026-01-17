@@ -74,7 +74,7 @@ All biologically valid, but different structure and naming.
 
 ### Key Insights
 
-**1. F1 is the wrong primary metric for biological correctness.**
+**1. F1 requires better semantic matching to be useful.**
 
 String-based F1 penalizes valid biological alternatives:
 
@@ -84,7 +84,12 @@ String-based F1 penalizes valid biological alternatives:
 | `CD4+ T cells` | `Helper T cells (CD4+)` | ❌ No | ✓ Yes |
 | `B cell lineage → Mature B` | `Mature B → subsets` | ❌ Wrong order | ✓ Both valid |
 
-The weak correlation between F1 and LLM judge scores (r≈0.15) confirms that string matching measures *presentation style*, not *prediction quality*.
+The weak correlation between F1 and LLM judge scores (r≈0.15) reflects *matching quality*, not a fundamental flaw in F1. The metric could work well with:
+- **Better synonym dictionaries** (current: 200+ terms, likely incomplete)
+- **Embedding-based matching** (semantic_f1 partially addresses this)
+- **Hierarchical normalization** (standardizing gate naming conventions)
+
+The challenge: building comprehensive synonym coverage for immunology requires domain expertise and is labor-intensive.
 
 **2. 96% non-determinism via CLI undermines reproducibility.**
 
