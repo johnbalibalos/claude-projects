@@ -595,6 +595,66 @@ See `docs/UTILITIES.md` for detailed analysis. Key issues:
 
 ---
 
+## Future Improvements (Deferred with Rationale)
+
+These improvements were proposed but deferred based on codebase analysis. Each has clear criteria for when implementation becomes necessary.
+
+### 1. Structured Logging (structlog) - DEFERRED
+
+**Proposal:** Replace print() statements with structlog for JSON-queryable logs.
+
+**Status:** Not necessary.
+
+**Rationale:**
+- `modular_runner.py` already uses Python's `logging` module correctly (line 55: `logger = logging.getLogger(__name__)`)
+- `observability.py` provides `PipelineMonitor`, `@log_errors`, `@retry_with_logging` decorators
+- No print() statements found in modular_runner.py - it uses `logger.info()`, `logger.debug()`
+- Rich console output already supported
+
+**Implement when:** Log volume exceeds ability to search with grep, or need structured log aggregation (e.g., deploying to production monitoring).
+
+### 2. Config Externalization (YAML-driven) - DEFERRED
+
+**Proposal:** Move all experimental config from main() into YAML files.
+
+**Status:** Partially implemented.
+
+**Rationale:**
+- `configs/gating_ablation.yaml` already exists with strategy configs
+- `configs/marker_database.json` provides domain knowledge (loaded and cached)
+- CLI args provide flexibility for most parameters
+- Current approach supports reproducibility via CLI argument logging
+
+**Implement when:** Need to version-control exact experimental configs, or run identical experiments across environments.
+
+### 3. Sibling Order Independence - NOT A BUG
+
+**Proposal:** Ensure tree comparison uses set comparison, not list comparison.
+
+**Status:** Already implemented correctly.
+
+**Verification:**
+- `metrics.py:161-162`: `extract_gate_names()` returns a **set**
+- `metrics.py:286`: `compute_structure_accuracy()` uses `{normalize_rel(r) for r in pred_rels}` - set comparison
+- Parent-child relationships are compared as `(gate, parent, depth)` tuples, not by list index
+
+**No action needed.** Gate siblings can appear in any order without affecting scores.
+
+### 4. Chaos Testing (MockClient failures) - DEFERRED
+
+**Proposal:** Add random failures to MockClient to validate retry logic.
+
+**Status:** Nice to have, not critical.
+
+**Rationale:**
+- Retry logic exists (`@retry_with_logging` in observability.py, tenacity in llm_client.py)
+- Real API failures provide sufficient testing in practice
+- Unit tests should validate retry behavior, not production code
+
+**Implement when:** Investigating intermittent failures that suggest retry logic issues.
+
+---
+
 ## Known Model Limitations
 
 ### Token Usage in Reasoning Models

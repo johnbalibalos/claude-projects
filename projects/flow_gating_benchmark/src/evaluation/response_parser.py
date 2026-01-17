@@ -10,8 +10,13 @@ Handles various output formats:
 from __future__ import annotations
 
 import json
+import logging
 import re
 from dataclasses import dataclass
+
+import json_repair
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -116,11 +121,19 @@ def _parse_json_code_block(response: str) -> dict | None:
     for pattern in patterns:
         match = re.search(pattern, response, re.IGNORECASE)
         if match:
+            json_str = match.group(1).strip()
             try:
-                hierarchy = json.loads(match.group(1).strip())
+                hierarchy = json.loads(json_str)
                 return _normalize_hierarchy(hierarchy)
             except json.JSONDecodeError:
-                continue
+                # Fallback to json_repair for malformed JSON (trailing commas, comments, etc.)
+                try:
+                    hierarchy = json_repair.loads(json_str)
+                    if isinstance(hierarchy, dict):
+                        logger.debug("Repaired malformed JSON in code block")
+                        return _normalize_hierarchy(hierarchy)
+                except Exception:
+                    continue
     return None
 
 
@@ -153,13 +166,20 @@ def _parse_json_raw(response: str) -> dict | None:
         elif char == "}":
             depth -= 1
             if depth == 0:
+                json_str = response[brace_start : i + 1]
                 try:
-                    json_str = response[brace_start : i + 1]
                     hierarchy = json.loads(json_str)
                     if _looks_like_hierarchy(hierarchy):
                         return _normalize_hierarchy(hierarchy)
                 except json.JSONDecodeError:
-                    pass
+                    # Fallback to json_repair for malformed JSON
+                    try:
+                        hierarchy = json_repair.loads(json_str)
+                        if isinstance(hierarchy, dict) and _looks_like_hierarchy(hierarchy):
+                            logger.debug("Repaired malformed raw JSON")
+                            return _normalize_hierarchy(hierarchy)
+                    except Exception:
+                        pass
                 break
     return None
 

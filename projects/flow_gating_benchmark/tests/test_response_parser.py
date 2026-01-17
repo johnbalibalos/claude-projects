@@ -5,7 +5,7 @@ import pytest
 from src.evaluation.response_parser import (
     parse_llm_response,
     extract_markers_from_response,
-    validate_hierarchy_structure,
+    validate_hierarchy,
 )
 
 
@@ -183,7 +183,7 @@ class TestValidateHierarchyStructure:
 
     def test_valid_hierarchy(self, sample_hierarchy):
         """Test with valid hierarchy."""
-        is_valid, issues = validate_hierarchy_structure(sample_hierarchy)
+        is_valid, issues = validate_hierarchy(sample_hierarchy)
 
         assert is_valid
         assert len(issues) == 0
@@ -191,7 +191,7 @@ class TestValidateHierarchyStructure:
     def test_missing_name(self):
         """Test with missing name field."""
         invalid = {"children": []}
-        is_valid, issues = validate_hierarchy_structure(invalid)
+        is_valid, issues = validate_hierarchy(invalid)
 
         assert not is_valid
         assert any("name" in issue.lower() for issue in issues)
@@ -199,12 +199,12 @@ class TestValidateHierarchyStructure:
     def test_invalid_children_type(self):
         """Test with invalid children type."""
         invalid = {"name": "root", "children": "not a list"}
-        is_valid, issues = validate_hierarchy_structure(invalid)
+        is_valid, issues = validate_hierarchy(invalid)
 
         assert not is_valid
 
     def test_not_a_dict(self):
         """Test with non-dict input."""
-        is_valid, issues = validate_hierarchy_structure("not a dict")
+        is_valid, issues = validate_hierarchy("not a dict")
 
         assert not is_valid
