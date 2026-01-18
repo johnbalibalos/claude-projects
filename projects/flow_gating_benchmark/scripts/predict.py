@@ -2,23 +2,25 @@
 """
 Collect LLM predictions for flow cytometry gating strategies.
 
-Takes test cases and generates predictions across specified models and conditions.
-Outputs a JSON file that can be passed to score.py.
+Supports three execution modes:
+- Sequential: CLI models (rate-limited)
+- Parallel: API models via ThreadPoolExecutor (default)
+- Batch: Anthropic batch API (50% cheaper, use --batch)
 
 Usage:
-    python scripts/predict.py --test-cases data/verified --output results/predictions.json
-    python scripts/predict.py --models gemini-2.0-flash --max-cases 1 --force
+    python scripts/predict.py --output results/predictions.json --models gemini-2.0-flash --force
+    python scripts/predict.py --models claude-sonnet --batch --force  # 50% cheaper
     python scripts/predict.py --resume --output results/predictions.json
 
 Examples:
     # Quick test with 1 case
     python scripts/predict.py --models gemini-2.0-flash --max-cases 1 --force
 
-    # Full run with multiple models
-    python scripts/predict.py --models gemini-2.0-flash claude-sonnet-cli --force
+    # Full run with batch API (cheaper)
+    python scripts/predict.py --models claude-sonnet --batch --force
 
-    # Resume interrupted run
-    python scripts/predict.py --resume --output results/predictions.json
+    # Multiple models in parallel
+    python scripts/predict.py --models gemini-2.0-flash gpt-4o --workers 50 --force
 """
 
 import argparse
@@ -36,7 +38,7 @@ from curation.omip_extractor import load_all_test_cases
 from experiments.conditions import get_all_conditions
 from experiments.prediction_collector import (
     CollectorConfig,
-    PredictionCollector,
+    collect_predictions,
 )
 
 
@@ -107,10 +109,21 @@ def main():
         help="Max output tokens for predictions (default: 6000)",
     )
     parser.add_argument(
+        "--workers",
+        type=int,
+        default=50,
+        help="Parallel workers for API models (default: 50)",
+    )
+    parser.add_argument(
         "--cli-delay",
         type=float,
         default=0.5,
         help="Delay between CLI model calls in seconds (default: 0.5)",
+    )
+    parser.add_argument(
+        "--batch",
+        action="store_true",
+        help="Use Anthropic batch API for Claude models (50%% cheaper)",
     )
     parser.add_argument(
         "--dry-run",
@@ -163,17 +176,30 @@ def main():
     # Configure collector
     config = CollectorConfig(
         n_bootstrap=args.n_bootstrap,
-        cli_delay_seconds=args.cli_delay,
+        max_tokens=args.max_tokens,
+        workers=args.workers,
+        cli_delay=args.cli_delay,
         checkpoint_dir=checkpoint_dir,
         dry_run=args.dry_run,
         run_id=args.run_id,
-        max_tokens=args.max_tokens,
+        use_batch=args.batch,
     )
 
-    collector = PredictionCollector(test_cases, conditions, config)
-
-    total_calls = collector.total_calls
+    total_calls = len(test_cases) * len(conditions) * args.n_bootstrap
     print(f"\nTotal API calls: {total_calls}")
+
+    # Execution mode summary
+    cli_count = sum(1 for c in conditions if c.model.endswith("-cli"))
+    batch_count = sum(1 for c in conditions if args.batch and c.model.startswith("claude") and not c.model.endswith("-cli"))
+    parallel_count = len(conditions) - cli_count - batch_count
+
+    print(f"\nExecution modes:")
+    if cli_count:
+        print(f"  CLI (sequential): {cli_count} conditions")
+    if batch_count:
+        print(f"  Batch API (50% off): {batch_count} conditions")
+    if parallel_count:
+        print(f"  Parallel ({args.workers} workers): {parallel_count} conditions")
 
     # Cost estimate
     cost_per_call = {
@@ -181,14 +207,18 @@ def main():
         "gemini-2.5-flash": 0.005,
         "gemini-2.5-pro": 0.025,
         "claude-sonnet-cli": 0.015,
+        "claude-sonnet": 0.015 * (0.5 if args.batch else 1),  # 50% off with batch
         "claude-opus-cli": 0.125,
+        "claude-opus": 0.125 * (0.5 if args.batch else 1),
         "gpt-4o": 0.02,
     }
     estimated_cost = sum(
         cost_per_call.get(m, 0.01) * len(test_cases) * len(args.context_levels) * len(args.prompt_strategies) * args.n_bootstrap
         for m in args.models
     )
-    print(f"Estimated cost: ${estimated_cost:.2f}")
+    print(f"\nEstimated cost: ${estimated_cost:.2f}")
+    if args.batch:
+        print("  (includes 50% batch discount for Claude models)")
 
     if not args.force and not args.dry_run:
         confirm = input("\nProceed? [y/N] ")
@@ -197,7 +227,13 @@ def main():
             return
 
     # Collect predictions
-    predictions = collector.collect(resume=args.resume, progress_callback=progress_callback)
+    predictions = collect_predictions(
+        test_cases=test_cases,
+        conditions=conditions,
+        config=config,
+        resume=args.resume,
+        progress_callback=progress_callback,
+    )
 
     print(f"\nCollected {len(predictions)} predictions")
     errors = [p for p in predictions if p.error]
@@ -213,7 +249,7 @@ def main():
     # Print summary by model
     by_model = {}
     for p in predictions:
-        model = p.condition_name.split("_")[0] if p.condition_name else "unknown"
+        model = p.model
         by_model.setdefault(model, {"total": 0, "errors": 0})
         by_model[model]["total"] += 1
         if p.error:
@@ -221,7 +257,7 @@ def main():
 
     print("\nBy model:")
     for model, stats in sorted(by_model.items()):
-        success_rate = (stats["total"] - stats["errors"]) / stats["total"] * 100
+        success_rate = (stats["total"] - stats["errors"]) / stats["total"] * 100 if stats["total"] > 0 else 0
         print(f"  {model}: {stats['total']} predictions ({success_rate:.0f}% success)")
 
 
