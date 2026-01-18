@@ -1,307 +1,117 @@
 #!/usr/bin/env python3
 """
-Modular Gating Benchmark Pipeline
+Convenience wrapper to run the full gating benchmark pipeline.
 
-Demonstrates the decoupled architecture:
-    PredictionCollector → BatchScorer → LLMJudge → Report
+This is a thin wrapper around the standalone scripts:
+    predict.py → score.py → judge.py
 
-This enables:
-- Running predictions and scoring separately
-- Rerunning scoring on cached predictions
-- Running LLM judge independently on scored results
+For most use cases, prefer running the individual scripts directly:
+    python scripts/predict.py --output results/predictions.json --force
+    python scripts/score.py --input results/predictions.json
+    python scripts/judge.py --input results/scores.json --force
+
+This wrapper is useful when you want to:
+    - Run all phases with a single command
+    - Use shared output directory naming conventions
+    - Track provenance across all phases
 
 Usage:
-    python scripts/run_modular_pipeline.py --phase predict --dry-run
+    python scripts/run_modular_pipeline.py --phase all --models gemini-2.0-flash --force
+    python scripts/run_modular_pipeline.py --phase predict --max-cases 1 --force
     python scripts/run_modular_pipeline.py --phase score
     python scripts/run_modular_pipeline.py --phase judge
-    python scripts/run_modular_pipeline.py --phase all --dry-run
 """
 
 import argparse
-import json
+import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
 
-# Bootstrap libs path for shared utilities
-_script_dir = Path(__file__).resolve().parent
-_repo_root = _script_dir.parent.parent.parent
-sys.path.insert(0, str(_repo_root / "libs"))
+from pipeline_utils import PROJECT_ROOT
 
-# Setup project paths consistently
-from paths import setup_project_paths  # noqa: E402
-paths = setup_project_paths(__file__)
-PROJECT_ROOT = paths["project_root"]
-
-from curation.omip_extractor import load_all_test_cases  # noqa: E402
-from experiments.batch_scorer import (  # noqa: E402
-    BatchScorer,
-    ScoringResult,
-    compute_aggregate_stats,
-)
-from experiments.conditions import get_all_conditions  # noqa: E402
-from experiments.llm_judge import (  # noqa: E402
-    JUDGE_STYLES,
-    JudgeConfig,
-    JudgeResult,
-    LLMJudge,
-    compute_judge_stats,
-)
-from experiments.prediction_collector import (  # noqa: E402
-    CollectorConfig,
-    Prediction,
-    PredictionCollector,
-)
-from utils.provenance import ExperimentContext  # noqa: E402
+# Import for provenance tracking only
+from utils.provenance import ExperimentContext
+from experiments.llm_judge import JUDGE_STYLES
 
 
-def print_phase(name: str):
-    """Print a phase header."""
-    print()
-    print("=" * 60)
-    print(f"PHASE: {name}")
-    print("=" * 60)
-
-
-def progress_callback(current: int, total: int, item):
-    """Generic progress callback."""
-    pct = (current / total) * 100 if total > 0 else 0
-    if hasattr(item, 'error') and item.error:
-        print(f"  [{current}/{total}] ({pct:.0f}%) ERROR: {item.error[:50]}")
-    else:
-        print(f"  [{current}/{total}] ({pct:.0f}%) {getattr(item, 'test_case_id', 'unknown')}")
-
-
-def run_predict(
-    test_cases_dir: Path,
-    output_dir: Path,
-    models: list[str],
-    n_bootstrap: int,
-    dry_run: bool,
-    resume: bool,
-    max_cases: int | None = None,
-    run_id: str = "",
-    references: list[str] | None = None,
-    max_tokens: int = 6000,
-    context_levels: list[str] | None = None,
-) -> list[Prediction]:
-    """Phase 1: Collect predictions from LLMs."""
-    print_phase("PREDICTION COLLECTION")
-
-    # Load test cases
-    test_cases = load_all_test_cases(test_cases_dir)
-    if max_cases is not None:
-        test_cases = test_cases[:max_cases]
-    print(f"Loaded {len(test_cases)} test cases")
-
-    # Generate conditions
-    conditions = get_all_conditions(
-        models=models,
-        context_levels=context_levels or ["minimal", "standard", "rich"],
-        prompt_strategies=["direct", "cot"],
-        references=references or ["none"],
-    )
-    print(f"Generated {len(conditions)} conditions")
-
-    # Configure collector
-    config = CollectorConfig(
-        n_bootstrap=n_bootstrap,
-        cli_delay_seconds=0.5,
-        checkpoint_dir=output_dir / "checkpoints",
-        dry_run=dry_run,
-        run_id=run_id,  # Link predictions to experiment context
-        max_tokens=max_tokens,
-        # Per-provider parallelism (defaults: gemini=50, anthropic=50, openai=50)
-    )
-
-    collector = PredictionCollector(test_cases, conditions, config)
-    print(f"Total calls to make: {collector.total_calls}")
-
-    # Collect predictions
-    predictions = collector.collect(resume=resume, progress_callback=progress_callback)
-
-    print(f"\nCollected {len(predictions)} predictions")
-    errors = [p for p in predictions if p.error]
-    print(f"  Errors: {len(errors)}")
-
-    # Save predictions
-    output_file = output_dir / "predictions.json"
-    with open(output_file, "w") as f:
-        json.dump([p.to_dict() for p in predictions], f, indent=2)
-    print(f"  Saved to: {output_file}")
-
-    return predictions
-
-
-def run_score(
-    test_cases_dir: Path,
-    output_dir: Path,
-    predictions: list[Prediction] | None = None,
-) -> list[ScoringResult]:
-    """Phase 2: Score predictions against ground truth."""
-    print_phase("BATCH SCORING")
-
-    # Load test cases
-    test_cases = load_all_test_cases(test_cases_dir)
-    print(f"Loaded {len(test_cases)} test cases")
-
-    # Load predictions if not provided
-    if predictions is None:
-        predictions_file = output_dir / "predictions.json"
-        if not predictions_file.exists():
-            print(f"ERROR: No predictions file found: {predictions_file}")
-            return []
-
-        with open(predictions_file) as f:
-            data = json.load(f)
-            predictions = [Prediction.from_dict(p) for p in data]
-        print(f"Loaded {len(predictions)} predictions from file")
-
-    # Score predictions
-    scorer = BatchScorer(test_cases, checkpoint_dir=output_dir / "checkpoints")
-    results = scorer.score_all(predictions)
-
-    print(f"\nScored {len(results)} predictions")
-
-    # Compute stats
-    stats = compute_aggregate_stats(results)
-
-    print("\nOverall Statistics:")
-    overall = stats.get("overall", {})
-    f1_stats = overall.get("hierarchy_f1", {})
-    print(f"  Hierarchy F1: {f1_stats.get('mean', 0):.3f} ± {f1_stats.get('std', 0):.3f}")
-    print(f"  Parse success rate: {overall.get('parse_success_rate', 0):.1%}")
-    print(f"  Errors: {overall.get('error_count', 0)}")
-
-    print("\nBy Model:")
-    for model, model_stats in stats.get("by_model", {}).items():
-        f1 = model_stats.get("hierarchy_f1", {})
-        print(f"  {model}: F1={f1.get('mean', 0):.3f} (n={model_stats.get('n', 0)})")
-
-    # Save results
-    output_file = output_dir / "scoring_results.json"
-    with open(output_file, "w") as f:
-        json.dump({
-            "results": [r.to_dict() for r in results],
-            "stats": stats,
-            "timestamp": datetime.now().isoformat(),
-        }, f, indent=2)
-    print(f"\nSaved to: {output_file}")
-
-    return results
-
-
-def run_judge(
-    test_cases_dir: Path,
-    output_dir: Path,
-    scoring_results: list[ScoringResult] | None = None,
-    dry_run: bool = False,
-    judge_model: str = "gemini-2.5-pro",
-    judge_style: str = "default",
-) -> list[JudgeResult]:
-    """Phase 3: LLM judge evaluation."""
-    print_phase("LLM JUDGE EVALUATION")
-
-    # Load scoring results if not provided
-    if scoring_results is None:
-        results_file = output_dir / "scoring_results.json"
-        if not results_file.exists():
-            print(f"ERROR: No scoring results found: {results_file}")
-            return []
-
-        with open(results_file) as f:
-            data = json.load(f)
-            scoring_results = [ScoringResult.from_dict(r) for r in data["results"]]
-        print(f"Loaded {len(scoring_results)} scoring results from file")
-
-    # Configure judge
-    # Use high parallelism for Gemini (50) - flash model can handle it
-    config = JudgeConfig(
-        model=judge_model,
-        parallel_workers=50,
-        checkpoint_dir=output_dir / "checkpoints",
-        dry_run=dry_run,
-        prompt_style=judge_style,
-    )
-
-    judge = LLMJudge(test_cases_dir, config)
-
-    print(f"Judging {len(scoring_results)} results...")
-    print(f"  Model: {config.model}")
-    print(f"  Style: {config.prompt_style}")
-    print(f"  Dry run: {dry_run}")
-
-    results = judge.judge_all(scoring_results, progress_callback=progress_callback)
-
-    print(f"\nJudged {len(results)} results")
-
-    # Compute stats
-    stats = compute_judge_stats(results)
-
-    print("\nJudge Statistics:")
-    overall = stats.get("overall", {})
-    for key in ["completeness", "accuracy", "scientific", "overall"]:
-        s = overall.get(key, {})
-        print(f"  {key}: {s.get('mean', 0):.3f} ± {s.get('std', 0):.3f}")
-
-    print("\nBy Model:")
-    for model, model_stats in stats.get("by_model", {}).items():
-        s = model_stats.get("overall", {})
-        print(f"  {model}: {s.get('mean', 0):.3f} (n={model_stats.get('n', 0)})")
-
-    if stats.get("common_issues"):
-        print("\nCommon Issues:")
-        for issue in stats["common_issues"][:5]:
-            print(f"  - {issue[:60]}...")
-
-    # Save results - include style in filename for multi-judge comparison
-    if judge_style == "default":
-        output_file = output_dir / "judge_results.json"
-    else:
-        output_file = output_dir / f"judge_results_{judge_style}.json"
-    with open(output_file, "w") as f:
-        json.dump({
-            "results": [r.to_dict() for r in results],
-            "stats": stats,
-            "judge_style": judge_style,
-            "timestamp": datetime.now().isoformat(),
-        }, f, indent=2)
-    print(f"\nSaved to: {output_file}")
-
-    return results
+def run_script(script_name: str, args: list[str]) -> int:
+    """Run a pipeline script as subprocess."""
+    script_path = Path(__file__).parent / script_name
+    cmd = [sys.executable, str(script_path)] + args
+    print(f"\n{'='*60}")
+    print(f"Running: {script_name}")
+    print(f"{'='*60}")
+    print(f"Command: {' '.join(cmd)}\n")
+    return subprocess.call(cmd)
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Run modular gating benchmark pipeline")
+    parser = argparse.ArgumentParser(
+        description="Run gating benchmark pipeline (wrapper for predict.py → score.py → judge.py)",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=__doc__,
+    )
     parser.add_argument(
         "--phase",
         choices=["predict", "score", "judge", "all"],
         default="all",
-        help="Which phase to run",
+        help="Which phase to run (default: all)",
     )
     parser.add_argument(
         "--test-cases",
         type=Path,
         default=PROJECT_ROOT / "data" / "verified",
-        help="Directory with test cases",
+        help="Directory with test cases (default: data/verified)",
     )
     parser.add_argument(
         "--output",
         type=Path,
         default=PROJECT_ROOT / "results" / "modular_pipeline",
-        help="Output directory",
+        help="Output directory (default: results/modular_pipeline)",
     )
     parser.add_argument(
         "--models",
         nargs="+",
         default=["claude-sonnet-cli"],
-        help="Models to test",
+        help="Models to test (default: claude-sonnet-cli)",
+    )
+    parser.add_argument(
+        "--context-levels",
+        nargs="+",
+        default=["minimal", "standard"],
+        help="Context levels (default: minimal standard)",
     )
     parser.add_argument(
         "--n-bootstrap",
         type=int,
         default=1,
-        help="Number of bootstrap runs",
+        help="Bootstrap runs per condition (default: 1)",
+    )
+    parser.add_argument(
+        "--max-cases",
+        type=int,
+        default=None,
+        help="Limit test cases (for testing)",
+    )
+    parser.add_argument(
+        "--max-tokens",
+        type=int,
+        default=6000,
+        help="Max output tokens (default: 6000)",
+    )
+    parser.add_argument(
+        "--judge-model",
+        type=str,
+        default="gemini-2.5-pro",
+        help="Judge model (default: gemini-2.5-pro)",
+    )
+    parser.add_argument(
+        "--judge-style",
+        type=str,
+        choices=JUDGE_STYLES,
+        default="default",
+        help=f"Judge style (default: default)",
     )
     parser.add_argument(
         "--dry-run",
@@ -314,47 +124,9 @@ def main():
         help="Resume from checkpoint",
     )
     parser.add_argument(
-        "--max-cases",
-        type=int,
-        default=None,
-        help="Limit number of test cases (for quick testing)",
-    )
-    parser.add_argument(
         "--force",
         action="store_true",
-        help="Skip cost confirmation hook",
-    )
-    parser.add_argument(
-        "--judge-model",
-        type=str,
-        default="gemini-2.5-pro",
-        help="Model to use for LLM judge (default: gemini-2.5-pro)",
-    )
-    parser.add_argument(
-        "--judge-style",
-        type=str,
-        choices=JUDGE_STYLES,
-        default="default",
-        help=f"Judge prompt style: {', '.join(JUDGE_STYLES)} (default: default)",
-    )
-    parser.add_argument(
-        "--reference",
-        nargs="+",
-        default=["none"],
-        dest="references",
-        help="Reference modes: none, hipc (static HIPC injection). Default: none",
-    )
-    parser.add_argument(
-        "--max-tokens",
-        type=int,
-        default=6000,
-        help="Max output tokens for predictions (default: 6000)",
-    )
-    parser.add_argument(
-        "--context-levels",
-        nargs="+",
-        default=["minimal", "standard", "rich"],
-        help="Context levels to test (default: minimal standard rich)",
+        help="Skip cost confirmation",
     )
 
     args = parser.parse_args()
@@ -362,7 +134,12 @@ def main():
     # Create output directory
     args.output.mkdir(parents=True, exist_ok=True)
 
-    # Create and save experiment context for provenance tracking
+    # Define file paths
+    predictions_file = args.output / "predictions.json"
+    scores_file = args.output / "scores.json"
+    judge_file = args.output / "judge.json"
+
+    # Create provenance context
     experiment_config = {
         "phase": args.phase,
         "dry_run": args.dry_run,
@@ -379,60 +156,83 @@ def main():
     ctx.save(args.output)
     ctx.print_summary()
 
-    predictions = None
-    scoring_results = None
+    start_time = datetime.now()
 
     try:
+        # Phase: predict
         if args.phase in ["predict", "all"]:
-            predictions = run_predict(
-                test_cases_dir=args.test_cases,
-                output_dir=args.output,
-                models=args.models,
-                n_bootstrap=args.n_bootstrap,
-                dry_run=args.dry_run,
-                resume=args.resume,
-                max_cases=args.max_cases,
-                run_id=ctx.run_id,  # Pass run_id for provenance
-                references=args.references,
-                max_tokens=args.max_tokens,
-                context_levels=args.context_levels,
-            )
+            predict_args = [
+                "--test-cases", str(args.test_cases),
+                "--output", str(predictions_file),
+                "--checkpoint-dir", str(args.output / "checkpoints"),
+                "--models", *args.models,
+                "--context-levels", *args.context_levels,
+                "--n-bootstrap", str(args.n_bootstrap),
+                "--max-tokens", str(args.max_tokens),
+                "--run-id", ctx.run_id,
+            ]
+            if args.max_cases:
+                predict_args += ["--max-cases", str(args.max_cases)]
+            if args.dry_run:
+                predict_args.append("--dry-run")
+            if args.resume:
+                predict_args.append("--resume")
+            if args.force:
+                predict_args.append("--force")
 
+            ret = run_script("predict.py", predict_args)
+            if ret != 0:
+                raise RuntimeError(f"predict.py failed with code {ret}")
+
+        # Phase: score
         if args.phase in ["score", "all"]:
-            scoring_results = run_score(
-                test_cases_dir=args.test_cases,
-                output_dir=args.output,
-                predictions=predictions,
-            )
+            score_args = [
+                "--input", str(predictions_file),
+                "--output", str(scores_file),
+                "--test-cases", str(args.test_cases),
+                "--checkpoint-dir", str(args.output / "checkpoints"),
+            ]
 
+            ret = run_script("score.py", score_args)
+            if ret != 0:
+                raise RuntimeError(f"score.py failed with code {ret}")
+
+        # Phase: judge
         if args.phase in ["judge", "all"]:
-            run_judge(
-                test_cases_dir=args.test_cases,
-                output_dir=args.output,
-                scoring_results=scoring_results,
-                dry_run=args.dry_run,
-                judge_model=args.judge_model,
-                judge_style=args.judge_style,
-            )
+            judge_args = [
+                "--input", str(scores_file),
+                "--output", str(judge_file),
+                "--test-cases", str(args.test_cases),
+                "--checkpoint-dir", str(args.output / "checkpoints"),
+                "--judge-model", args.judge_model,
+                "--judge-style", args.judge_style,
+            ]
+            if args.dry_run:
+                judge_args.append("--dry-run")
+            if args.force:
+                judge_args.append("--force")
 
-        # Mark experiment as completed with prediction stats
-        if predictions is not None:
-            errors = len([p for p in predictions if p.error])
-            ctx.mark_completed(
-                total=len(predictions),
-                successful=len(predictions) - errors,
-                failed=errors,
-                output_dir=args.output,
-            )
-        else:
-            # For score/judge-only runs, just mark completed
-            ctx.mark_completed(0, 0, 0, args.output)
+            ret = run_script("judge.py", judge_args)
+            if ret != 0:
+                raise RuntimeError(f"judge.py failed with code {ret}")
 
-        print("\n✓ Pipeline complete!")
+        # Mark complete
+        elapsed = datetime.now() - start_time
+        ctx.mark_completed(0, 0, 0, args.output)
+        print(f"\n{'='*60}")
+        print(f"Pipeline complete in {elapsed.total_seconds():.1f}s")
+        print(f"{'='*60}")
+        print(f"\nOutputs:")
+        if predictions_file.exists():
+            print(f"  Predictions: {predictions_file}")
+        if scores_file.exists():
+            print(f"  Scores:      {scores_file}")
+        if judge_file.exists():
+            print(f"  Judge:       {judge_file}")
 
     except Exception as e:
         ctx.mark_failed(args.output, str(e))
-        print(f"\n✗ Pipeline failed: {e}")
+        print(f"\nPipeline failed: {e}")
         raise
 
 
