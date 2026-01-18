@@ -22,6 +22,7 @@ from .hierarchy import (
     get_hierarchy_depth,
 )
 from .normalization import (
+    is_valid_parent,
     normalize_gate_name,
     normalize_gate_semantic,
 )
@@ -103,14 +104,30 @@ DEFAULT_CRITICAL_GATES_CYTOF = ["live", "live/dead", "lymphocytes", "lymphs", "c
 CYTOF_ISOTOPE_PATTERN = r"^\d{2,3}[A-Za-z]{1,2}$"  # e.g., "89Y", "145Nd", "176Yb"
 
 # Panel-specific critical gates based on markers present
+# Maps marker (lowercase) to list of acceptable gate names for that population
+# First name in list is the canonical form used for reporting
 MARKER_CRITICAL_GATES: dict[str, list[str]] = {
+    # Major lineage markers
     "cd45": ["leukocytes", "cd45+", "cd45+ cells"],
     "cd3": ["t cells", "cd3+", "t lymphocytes"],
     "cd19": ["b cells", "cd19+", "b lymphocytes"],
     "cd20": ["b cells", "cd20+", "b lymphocytes"],
     "cd56": ["nk cells", "cd56+", "natural killer"],
     "cd14": ["monocytes", "cd14+"],
-    "cd11c": ["dendritic cells", "myeloid dc"],
+    "cd11c": ["dendritic cells", "myeloid dc", "dc"],
+    # T cell subsets - if marker is in panel, that subset should be gated
+    "cd4": ["cd4+ t cells", "cd4+", "helper t", "cd4 t cells"],
+    "cd8": ["cd8+ t cells", "cd8+", "cytotoxic t", "cd8 t cells"],
+    # Memory/naive markers (when combined with lineage markers)
+    "cd45ra": ["naive", "cd45ra+"],
+    "cd45ro": ["memory", "cd45ro+"],
+    # Regulatory T cell markers
+    "foxp3": ["tregs", "regulatory t", "foxp3+"],
+    # Myeloid subsets
+    "cd123": ["plasmacytoid dc", "pdc", "cd123+"],
+    "cd11b": ["myeloid cells", "cd11b+"],
+    # Other lymphocyte subsets
+    "cd27": ["memory b", "cd27+"],  # Often used for B cell memory
 }
 
 # Populations that imply specific markers
@@ -253,6 +270,7 @@ def compute_structure_accuracy(
     predicted: GatingHierarchy | dict,
     ground_truth: GatingHierarchy | dict,
     use_semantic_matching: bool = True,
+    use_hierarchy: bool = True,
 ) -> tuple[float, int, int, list[str]]:
     """
     Compute accuracy of parent-child relationships.
@@ -264,6 +282,9 @@ def compute_structure_accuracy(
         predicted: Predicted hierarchy
         ground_truth: Ground truth hierarchy
         use_semantic_matching: If True, use semantic normalization
+        use_hierarchy: If True, accept alternative valid parents from CELL_TYPE_HIERARCHY
+                      (e.g., "CD4 T cells" under "Lymphocytes" is valid even if
+                       ground truth has it under "T cells")
 
     Returns:
         Tuple of (accuracy, correct_count, total_count, errors)
@@ -286,30 +307,42 @@ def compute_structure_accuracy(
     pred_normalized = {normalize_rel(r) for r in pred_rels}
     gt_normalized = [normalize_rel(r) for r in gt_rels]
 
+    # Build lookup for predicted parents by (gate, depth)
+    pred_parent_lookup: dict[tuple[str, int], str | None] = {}
+    for g, p, d in pred_normalized:
+        pred_parent_lookup[(g, d)] = p
+
     correct = 0
     errors = []
 
     for gt_rel in gt_normalized:
         gt_gate, gt_parent, gt_depth = gt_rel
+
+        # Check for exact match first
         if gt_rel in pred_normalized:
             correct += 1
+            continue
+
+        # Check if prediction has this gate at this depth
+        pred_parent = pred_parent_lookup.get((gt_gate, gt_depth))
+
+        if pred_parent is not None:
+            # Gate exists - check if predicted parent is valid via hierarchy
+            if use_hierarchy and gt_gate and pred_parent:
+                # Accept if predicted parent is a valid parent according to hierarchy
+                if is_valid_parent(gt_gate, pred_parent, use_hierarchy=True):
+                    correct += 1
+                    continue
+
+            errors.append(
+                f"Gate '{gt_gate}' (depth {gt_depth}): "
+                f"predicted parent='{pred_parent}', expected='{gt_parent}'"
+            )
         else:
-            # Find what the prediction has for this gate (if anything)
-            pred_for_gate = [
-                (g, p, d) for g, p, d in pred_normalized
-                if g == gt_gate and d == gt_depth
-            ]
-            if pred_for_gate:
-                _, pred_parent, _ = pred_for_gate[0]
-                errors.append(
-                    f"Gate '{gt_gate}' (depth {gt_depth}): "
-                    f"predicted parent='{pred_parent}', expected='{gt_parent}'"
-                )
-            else:
-                errors.append(
-                    f"Gate '{gt_gate}' (depth {gt_depth}): "
-                    f"not found in prediction"
-                )
+            errors.append(
+                f"Gate '{gt_gate}' (depth {gt_depth}): "
+                f"not found in prediction"
+            )
 
     total = len(gt_normalized)
     accuracy = correct / total if total > 0 else 0.0
@@ -565,9 +598,9 @@ def evaluate_prediction(
     result.total_relationships = total
     result.structure_errors = errors
 
-    # Critical gate recall
+    # Critical gate recall - pass panel for marker-based critical gate derivation
     critical_recall, missing_critical = compute_critical_gate_recall(
-        predicted, ground_truth, critical_gates
+        predicted, ground_truth, critical_gates, panel=panel
     )
     result.critical_gate_recall = critical_recall
     result.missing_critical = missing_critical

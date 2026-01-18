@@ -287,6 +287,76 @@ CELL_TYPE_SYNONYMS: dict[str, str] = {
     "ungated": "all_events",
 }
 
+# Hierarchical relationships between cell types (hyponymy)
+# Maps child canonical form -> list of valid parent canonical forms
+# Used for structure matching: "CD4 T cells" under "T cells" is valid
+# Includes transitive closure (e.g., CD4 T cells valid under T cells, Lymphocytes, or Leukocytes)
+CELL_TYPE_HIERARCHY: dict[str, list[str]] = {
+    # T cell subsets -> T cells -> Lymphocytes -> Leukocytes
+    "cd4_t_cells": ["t_cells", "lymphocytes", "leukocytes"],
+    "cd8_t_cells": ["t_cells", "lymphocytes", "leukocytes"],
+    "regulatory_t": ["cd4_t_cells", "t_cells", "lymphocytes", "leukocytes"],
+    "conventional_t": ["cd4_t_cells", "t_cells", "lymphocytes", "leukocytes"],
+    "tfh": ["cd4_t_cells", "t_cells", "lymphocytes", "leukocytes"],
+    "th1": ["cd4_t_cells", "t_cells", "lymphocytes", "leukocytes"],
+    "th2": ["cd4_t_cells", "t_cells", "lymphocytes", "leukocytes"],
+    "th17": ["cd4_t_cells", "t_cells", "lymphocytes", "leukocytes"],
+    "th22": ["cd4_t_cells", "t_cells", "lymphocytes", "leukocytes"],
+    "gamma_delta_t": ["t_cells", "lymphocytes", "leukocytes"],
+    "nkt_cells": ["t_cells", "lymphocytes", "leukocytes"],
+    "inkt_cells": ["nkt_cells", "t_cells", "lymphocytes", "leukocytes"],
+    # CD4 memory subsets
+    "naive_cd4": ["cd4_t_cells", "t_cells", "lymphocytes", "leukocytes"],
+    "memory_cd4": ["cd4_t_cells", "t_cells", "lymphocytes", "leukocytes"],
+    "cd4_cm": ["memory_cd4", "cd4_t_cells", "t_cells", "lymphocytes"],
+    "cd4_em": ["memory_cd4", "cd4_t_cells", "t_cells", "lymphocytes"],
+    "cd4_temra": ["memory_cd4", "cd4_t_cells", "t_cells", "lymphocytes"],
+    # CD8 memory subsets
+    "naive_cd8": ["cd8_t_cells", "t_cells", "lymphocytes", "leukocytes"],
+    "memory_cd8": ["cd8_t_cells", "t_cells", "lymphocytes", "leukocytes"],
+    "cd8_cm": ["memory_cd8", "cd8_t_cells", "t_cells", "lymphocytes"],
+    "cd8_em": ["memory_cd8", "cd8_t_cells", "t_cells", "lymphocytes"],
+    "cd8_temra": ["memory_cd8", "cd8_t_cells", "t_cells", "lymphocytes"],
+    # Treg subsets
+    "naive_tregs": ["regulatory_t", "cd4_t_cells", "t_cells", "lymphocytes"],
+    "memory_tregs": ["regulatory_t", "cd4_t_cells", "t_cells", "lymphocytes"],
+    # B cell subsets -> B cells -> Lymphocytes -> Leukocytes
+    "naive_b": ["b_cells", "lymphocytes", "leukocytes"],
+    "memory_b": ["b_cells", "lymphocytes", "leukocytes"],
+    "switched_memory_b": ["memory_b", "b_cells", "lymphocytes", "leukocytes"],
+    "unswitched_memory_b": ["memory_b", "b_cells", "lymphocytes", "leukocytes"],
+    "marginal_zone_b": ["b_cells", "lymphocytes", "leukocytes"],
+    "transitional_b": ["b_cells", "lymphocytes", "leukocytes"],
+    "plasma_cells": ["b_cells", "lymphocytes", "leukocytes"],
+    "plasmablasts": ["b_cells", "lymphocytes", "leukocytes"],
+    # NK subsets -> NK cells -> Lymphocytes -> Leukocytes
+    "cd56bright_nk": ["nk_cells", "lymphocytes", "leukocytes"],
+    "cd56dim_nk": ["nk_cells", "lymphocytes", "leukocytes"],
+    # Monocyte subsets -> Monocytes -> Myeloid -> Leukocytes
+    "classical_monocytes": ["monocytes", "myeloid", "leukocytes"],
+    "nonclassical_monocytes": ["monocytes", "myeloid", "leukocytes"],
+    "intermediate_monocytes": ["monocytes", "myeloid", "leukocytes"],
+    # DC subsets -> Dendritic cells -> Myeloid -> Leukocytes
+    "mdc": ["dendritic_cells", "myeloid", "leukocytes"],
+    "pdc": ["dendritic_cells", "myeloid", "leukocytes"],
+    "cdc1": ["mdc", "dendritic_cells", "myeloid", "leukocytes"],
+    "cdc2": ["mdc", "dendritic_cells", "myeloid", "leukocytes"],
+    # Major lineages -> Lymphocytes/Leukocytes
+    "t_cells": ["lymphocytes", "leukocytes"],
+    "b_cells": ["lymphocytes", "leukocytes"],
+    "nk_cells": ["lymphocytes", "leukocytes"],
+    "lymphocytes": ["leukocytes", "live", "singlets"],
+    "monocytes": ["myeloid", "leukocytes"],
+    "dendritic_cells": ["myeloid", "leukocytes"],
+    "neutrophils": ["granulocytes", "myeloid", "leukocytes"],
+    "granulocytes": ["leukocytes"],
+    "myeloid": ["leukocytes"],
+    # QC gates
+    "leukocytes": ["live", "singlets"],
+    "live": ["singlets", "all_events"],
+    "singlets": ["all_events"],
+}
+
 
 def normalize_gate_name(name: str, preserve_parentheticals: bool = False) -> str:
     """
@@ -425,3 +495,81 @@ def are_gates_equivalent(name1: str, name2: str, semantic: bool = True) -> bool:
     if semantic:
         return normalize_gate_semantic(name1) == normalize_gate_semantic(name2)
     return normalize_gate_name(name1) == normalize_gate_name(name2)
+
+
+def is_valid_parent(
+    child: str,
+    parent: str,
+    use_hierarchy: bool = True,
+    use_embeddings: bool = False,
+    embedding_threshold: float = 0.85,
+) -> bool:
+    """
+    Check if a parent gate is valid for a child gate using hybrid matching.
+
+    Uses a three-tier approach:
+    1. Exact match after semantic normalization
+    2. Explicit hierarchy lookup (fast, precise)
+    3. Optional embedding fallback for novel names (slower, approximate)
+
+    Args:
+        child: Child gate name (e.g., "CD4+ T cells")
+        parent: Parent gate name (e.g., "T cells")
+        use_hierarchy: Whether to check CELL_TYPE_HIERARCHY
+        use_embeddings: Whether to fall back to embedding similarity
+        embedding_threshold: Minimum similarity for embedding match
+
+    Returns:
+        True if parent is a valid parent for child
+
+    Examples:
+        >>> is_valid_parent("CD4+ T cells", "T cells")
+        True
+        >>> is_valid_parent("CD4+ T cells", "B cells")
+        False
+        >>> is_valid_parent("Tregs", "CD4 T cells")
+        True
+        >>> is_valid_parent("T cells", "CD4+ T cells")  # Wrong direction
+        False
+    """
+    # Normalize both to canonical forms
+    child_canonical = normalize_gate_semantic(child)
+    parent_canonical = normalize_gate_semantic(parent)
+
+    # 1. Exact match - same gate type
+    if child_canonical == parent_canonical:
+        return True
+
+    # 2. Explicit hierarchy lookup
+    if use_hierarchy and child_canonical in CELL_TYPE_HIERARCHY:
+        valid_parents = CELL_TYPE_HIERARCHY[child_canonical]
+        if parent_canonical in valid_parents:
+            return True
+
+    # 3. Optional embedding fallback for novel names
+    if use_embeddings:
+        try:
+            from .semantic_similarity import compute_embedding_similarity, is_hypernym
+
+            sim = compute_embedding_similarity(child, parent)
+            if sim > embedding_threshold and is_hypernym(parent, child):
+                return True
+        except ImportError:
+            # sentence-transformers not available, skip embedding check
+            pass
+
+    return False
+
+
+def get_valid_parents(gate: str) -> list[str]:
+    """
+    Get all valid parent types for a gate.
+
+    Args:
+        gate: Gate name
+
+    Returns:
+        List of valid parent canonical forms, or empty list if not in hierarchy
+    """
+    canonical = normalize_gate_semantic(gate)
+    return CELL_TYPE_HIERARCHY.get(canonical, [])
