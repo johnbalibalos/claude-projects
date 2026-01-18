@@ -2,7 +2,7 @@
 
 Evaluate LLM capabilities in predicting flow cytometry gating strategies from panel information.
 
-> **Status:** Active development. 10 verified test cases, 13 pending curation. Results may be rerun as data quality improves.
+> **Status:** Active development. 10 verified test cases, 18 pending curation. Results may be rerun as data quality improves.
 
 ## Key Finding
 
@@ -208,7 +208,7 @@ flow_gating_benchmark/
 │   └── analysis/           # Hypothesis testing
 ├── data/
 │   ├── verified/           # 10 curated test cases
-│   └── staging/            # 13 pending verification
+│   └── staging/            # 18 pending verification
 ├── scripts/
 │   └── run_modular_pipeline.py
 ├── docs/
