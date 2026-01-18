@@ -22,6 +22,7 @@ from .hierarchy import (
     get_hierarchy_depth,
 )
 from .normalization import (
+    is_valid_parent,
     normalize_gate_name,
     normalize_gate_semantic,
 )
@@ -269,6 +270,7 @@ def compute_structure_accuracy(
     predicted: GatingHierarchy | dict,
     ground_truth: GatingHierarchy | dict,
     use_semantic_matching: bool = True,
+    use_hierarchy: bool = True,
 ) -> tuple[float, int, int, list[str]]:
     """
     Compute accuracy of parent-child relationships.
@@ -280,6 +282,9 @@ def compute_structure_accuracy(
         predicted: Predicted hierarchy
         ground_truth: Ground truth hierarchy
         use_semantic_matching: If True, use semantic normalization
+        use_hierarchy: If True, accept alternative valid parents from CELL_TYPE_HIERARCHY
+                      (e.g., "CD4 T cells" under "Lymphocytes" is valid even if
+                       ground truth has it under "T cells")
 
     Returns:
         Tuple of (accuracy, correct_count, total_count, errors)
@@ -302,30 +307,42 @@ def compute_structure_accuracy(
     pred_normalized = {normalize_rel(r) for r in pred_rels}
     gt_normalized = [normalize_rel(r) for r in gt_rels]
 
+    # Build lookup for predicted parents by (gate, depth)
+    pred_parent_lookup: dict[tuple[str, int], str | None] = {}
+    for g, p, d in pred_normalized:
+        pred_parent_lookup[(g, d)] = p
+
     correct = 0
     errors = []
 
     for gt_rel in gt_normalized:
         gt_gate, gt_parent, gt_depth = gt_rel
+
+        # Check for exact match first
         if gt_rel in pred_normalized:
             correct += 1
+            continue
+
+        # Check if prediction has this gate at this depth
+        pred_parent = pred_parent_lookup.get((gt_gate, gt_depth))
+
+        if pred_parent is not None:
+            # Gate exists - check if predicted parent is valid via hierarchy
+            if use_hierarchy and gt_gate and pred_parent:
+                # Accept if predicted parent is a valid parent according to hierarchy
+                if is_valid_parent(gt_gate, pred_parent, use_hierarchy=True):
+                    correct += 1
+                    continue
+
+            errors.append(
+                f"Gate '{gt_gate}' (depth {gt_depth}): "
+                f"predicted parent='{pred_parent}', expected='{gt_parent}'"
+            )
         else:
-            # Find what the prediction has for this gate (if anything)
-            pred_for_gate = [
-                (g, p, d) for g, p, d in pred_normalized
-                if g == gt_gate and d == gt_depth
-            ]
-            if pred_for_gate:
-                _, pred_parent, _ = pred_for_gate[0]
-                errors.append(
-                    f"Gate '{gt_gate}' (depth {gt_depth}): "
-                    f"predicted parent='{pred_parent}', expected='{gt_parent}'"
-                )
-            else:
-                errors.append(
-                    f"Gate '{gt_gate}' (depth {gt_depth}): "
-                    f"not found in prediction"
-                )
+            errors.append(
+                f"Gate '{gt_gate}' (depth {gt_depth}): "
+                f"not found in prediction"
+            )
 
     total = len(gt_normalized)
     accuracy = correct / total if total > 0 else 0.0

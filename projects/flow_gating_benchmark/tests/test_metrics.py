@@ -411,3 +411,163 @@ class TestSemanticParentMatching:
 
         # Semantic matching should produce fewer or equal errors
         assert len(errors_semantic) <= len(errors_strict)
+
+
+class TestHierarchicalParentMatching:
+    """Tests for hierarchical parent validation using CELL_TYPE_HIERARCHY."""
+
+    def test_cd4_t_cells_under_lymphocytes_is_valid(self):
+        """CD4 T cells under Lymphocytes should be valid (skip level)."""
+        from evaluation.normalization import is_valid_parent
+
+        # CD4 T cells can be under T cells OR lymphocytes
+        assert is_valid_parent("CD4+ T cells", "T cells")
+        assert is_valid_parent("CD4+ T cells", "Lymphocytes")
+        assert is_valid_parent("CD4+ T cells", "Leukocytes")  # Even further up
+
+    def test_cd4_t_cells_under_b_cells_is_invalid(self):
+        """CD4 T cells under B cells should be invalid (wrong lineage)."""
+        from evaluation.normalization import is_valid_parent
+
+        assert not is_valid_parent("CD4+ T cells", "B cells")
+        assert not is_valid_parent("CD4+ T cells", "NK cells")
+        assert not is_valid_parent("CD4+ T cells", "Monocytes")
+
+    def test_tregs_under_cd4_t_cells_is_valid(self):
+        """Tregs under CD4 T cells should be valid."""
+        from evaluation.normalization import is_valid_parent
+
+        assert is_valid_parent("Tregs", "CD4+ T cells")
+        assert is_valid_parent("Regulatory T cells", "CD4 T cells")
+        assert is_valid_parent("Tregs", "T cells")  # Skip level
+
+    def test_memory_b_under_b_cells_is_valid(self):
+        """Memory B cells under B cells should be valid."""
+        from evaluation.normalization import is_valid_parent
+
+        assert is_valid_parent("Memory B cells", "B cells")
+        assert is_valid_parent("Switched memory B", "B cells")
+        assert is_valid_parent("Naive B cells", "B cells")
+
+    def test_monocyte_subsets_under_monocytes(self):
+        """Monocyte subsets should be valid under monocytes."""
+        from evaluation.normalization import is_valid_parent
+
+        assert is_valid_parent("Classical monocytes", "Monocytes")
+        assert is_valid_parent("Non-classical monocytes", "Monocytes")
+        assert is_valid_parent("Intermediate monocytes", "Monocytes")
+
+    def test_wrong_direction_is_invalid(self):
+        """Parent-child in wrong direction should be invalid."""
+        from evaluation.normalization import is_valid_parent
+
+        # T cells is NOT a valid child of CD4 T cells
+        assert not is_valid_parent("T cells", "CD4+ T cells")
+        assert not is_valid_parent("Lymphocytes", "T cells")
+        assert not is_valid_parent("B cells", "Memory B")
+
+    def test_structure_accuracy_with_hierarchy(self):
+        """Structure accuracy should accept hierarchically valid parents."""
+        # Ground truth: CD4 T cells under T cells
+        ground_truth = {
+            "name": "All Events",
+            "children": [
+                {"name": "Singlets", "children": [
+                    {"name": "Live", "children": [
+                        {"name": "T cells", "children": [
+                            {"name": "CD4+ T cells", "children": []}
+                        ]}
+                    ]}
+                ]}
+            ]
+        }
+
+        # Prediction: CD4 T cells under Lymphocytes (skipped T cells level)
+        predicted = {
+            "name": "All Events",
+            "children": [
+                {"name": "Singlets", "children": [
+                    {"name": "Live", "children": [
+                        {"name": "Lymphocytes", "children": [
+                            {"name": "CD4+ T cells", "children": []}
+                        ]}
+                    ]}
+                ]}
+            ]
+        }
+
+        # With hierarchy matching, CD4+ under Lymphocytes should be valid
+        accuracy, correct, total, errors = compute_structure_accuracy(
+            predicted, ground_truth,
+            use_semantic_matching=True,
+            use_hierarchy=True
+        )
+
+        # Should accept CD4+ T cells under Lymphocytes as valid
+        # (even though ground truth has it under T cells)
+        cd4_errors = [e for e in errors if "cd4" in e.lower()]
+        assert len(cd4_errors) == 0, f"CD4 should not have errors: {cd4_errors}"
+
+    def test_structure_accuracy_without_hierarchy_is_strict(self):
+        """Without hierarchy flag, only exact parent matches accepted."""
+        ground_truth = {
+            "name": "All Events",
+            "children": [
+                {"name": "T cells", "children": [
+                    {"name": "CD4+ T cells", "children": []}
+                ]}
+            ]
+        }
+
+        predicted = {
+            "name": "All Events",
+            "children": [
+                {"name": "Lymphocytes", "children": [
+                    {"name": "CD4+ T cells", "children": []}
+                ]}
+            ]
+        }
+
+        # Without hierarchy matching
+        accuracy_strict, _, _, errors_strict = compute_structure_accuracy(
+            predicted, ground_truth,
+            use_semantic_matching=True,
+            use_hierarchy=False
+        )
+
+        # With hierarchy matching
+        accuracy_hier, _, _, errors_hier = compute_structure_accuracy(
+            predicted, ground_truth,
+            use_semantic_matching=True,
+            use_hierarchy=True
+        )
+
+        # Hierarchy matching should have fewer errors
+        assert len(errors_hier) <= len(errors_strict)
+
+
+class TestGetValidParents:
+    """Tests for get_valid_parents helper function."""
+
+    def test_get_valid_parents_for_cd4(self):
+        """Get valid parents for CD4 T cells."""
+        from evaluation.normalization import get_valid_parents
+
+        parents = get_valid_parents("CD4+ T cells")
+        assert "t_cells" in parents
+        assert "lymphocytes" in parents
+
+    def test_get_valid_parents_for_unknown(self):
+        """Unknown gate returns empty list."""
+        from evaluation.normalization import get_valid_parents
+
+        parents = get_valid_parents("Some Random Gate XYZ")
+        assert parents == []
+
+    def test_get_valid_parents_for_qc_gates(self):
+        """QC gates have expected parents."""
+        from evaluation.normalization import get_valid_parents
+
+        assert "all_events" in get_valid_parents("Singlets")
+        assert "singlets" in get_valid_parents("Live")
+        assert "live" in get_valid_parents("Leukocytes")
