@@ -103,14 +103,30 @@ DEFAULT_CRITICAL_GATES_CYTOF = ["live", "live/dead", "lymphocytes", "lymphs", "c
 CYTOF_ISOTOPE_PATTERN = r"^\d{2,3}[A-Za-z]{1,2}$"  # e.g., "89Y", "145Nd", "176Yb"
 
 # Panel-specific critical gates based on markers present
+# Maps marker (lowercase) to list of acceptable gate names for that population
+# First name in list is the canonical form used for reporting
 MARKER_CRITICAL_GATES: dict[str, list[str]] = {
+    # Major lineage markers
     "cd45": ["leukocytes", "cd45+", "cd45+ cells"],
     "cd3": ["t cells", "cd3+", "t lymphocytes"],
     "cd19": ["b cells", "cd19+", "b lymphocytes"],
     "cd20": ["b cells", "cd20+", "b lymphocytes"],
     "cd56": ["nk cells", "cd56+", "natural killer"],
     "cd14": ["monocytes", "cd14+"],
-    "cd11c": ["dendritic cells", "myeloid dc"],
+    "cd11c": ["dendritic cells", "myeloid dc", "dc"],
+    # T cell subsets - if marker is in panel, that subset should be gated
+    "cd4": ["cd4+ t cells", "cd4+", "helper t", "cd4 t cells"],
+    "cd8": ["cd8+ t cells", "cd8+", "cytotoxic t", "cd8 t cells"],
+    # Memory/naive markers (when combined with lineage markers)
+    "cd45ra": ["naive", "cd45ra+"],
+    "cd45ro": ["memory", "cd45ro+"],
+    # Regulatory T cell markers
+    "foxp3": ["tregs", "regulatory t", "foxp3+"],
+    # Myeloid subsets
+    "cd123": ["plasmacytoid dc", "pdc", "cd123+"],
+    "cd11b": ["myeloid cells", "cd11b+"],
+    # Other lymphocyte subsets
+    "cd27": ["memory b", "cd27+"],  # Often used for B cell memory
 }
 
 # Populations that imply specific markers
@@ -565,9 +581,9 @@ def evaluate_prediction(
     result.total_relationships = total
     result.structure_errors = errors
 
-    # Critical gate recall
+    # Critical gate recall - pass panel for marker-based critical gate derivation
     critical_recall, missing_critical = compute_critical_gate_recall(
-        predicted, ground_truth, critical_gates
+        predicted, ground_truth, critical_gates, panel=panel
     )
     result.critical_gate_recall = critical_recall
     result.missing_critical = missing_critical
