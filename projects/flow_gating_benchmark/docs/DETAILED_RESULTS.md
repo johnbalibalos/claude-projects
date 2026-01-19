@@ -149,7 +149,7 @@ All models perform significantly better (+14-25%) on the synthetic CUSTOM-PBMC-0
 | claude-sonnet-4-20250514 | 35% | 43% | default (CLI) |
 | gemini-2.5-pro | 4% | 52% | 0.0 (API) |
 | claude-3-5-haiku-20241022 | 1% | 92% | default (CLI) |
-| claude-opus-4-20250514 | 1% | 99% | default (CLI) |
+| claude-opus-4-20250514 | 1% | 96% | default (CLI) |
 
 **Example:** opus produces 3 different hierarchies for CUSTOM-PBMC-001 (same prompt):
 ```
@@ -161,7 +161,7 @@ All biologically valid, but different structure and naming.
 
 ### 2.6 Consistency vs Quality: Multiple Valid Approaches
 
-**Key Finding:** High inconsistency does not imply low quality. Claude Opus produced structurally different outputs in 99% of cases (119/120 test conditions), yet maintained moderate-to-high quality scores.
+**Key Finding:** High inconsistency does not imply low quality. Claude Opus produced structurally different outputs in 96% of cases (115/120 test conditions), yet maintained moderate-to-high quality scores.
 
 | Model | Consistency | Quality | Interpretation |
 |-------|-------------|---------|----------------|
@@ -396,7 +396,7 @@ After correcting alias extraction, **true hallucinations dropped to 17-76 per mo
    - Technical understanding > terminology familiarity
 
 5. **High variability can indicate multiple valid solutions**
-   - Claude Opus: 99% different outputs, yet 39% scored ≥0.7 quality
+   - Claude Opus: 96% different outputs, yet 39% scored ≥0.7 quality
    - Suggests expert disagreement on "correct" gating strategies
    - Inconsistency may be a feature (exploring solution space) not a bug
 
