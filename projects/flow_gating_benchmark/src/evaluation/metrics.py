@@ -28,8 +28,62 @@ from .normalization import (
 )
 
 if TYPE_CHECKING:
-    from curation.schemas import GatingHierarchy, Panel
+    from curation.schemas import GatingHierarchy, Panel, PanelEntry
     from evaluation.equivalences import AnnotationCapture, EquivalenceRegistry
+
+
+# =============================================================================
+# TYPE ADAPTERS - Handle Panel | list[dict] union cleanly
+# =============================================================================
+
+
+def _get_panel_entries(panel: "Panel | list[dict[str, Any]]") -> list[dict[str, Any]]:
+    """
+    Extract panel entries as a list of dicts, regardless of input type.
+
+    Args:
+        panel: Either a Panel object or a list of entry dicts
+
+    Returns:
+        List of entry dictionaries with at least 'marker' and optionally 'fluorophore'
+    """
+    # Panel object with entries attribute
+    if hasattr(panel, 'entries'):
+        return [
+            {"marker": e.marker, "fluorophore": e.fluorophore}
+            for e in panel.entries  # type: ignore[union-attr]
+        ]
+    # Already a list of dicts
+    return list(panel)  # type: ignore[arg-type]
+
+
+def _get_panel_markers(panel: "Panel | list[dict[str, Any]]") -> set[str]:
+    """
+    Extract marker names from panel as a lowercase set.
+
+    Args:
+        panel: Either a Panel object or a list of entry dicts
+
+    Returns:
+        Set of lowercase marker names
+    """
+    # Panel object with markers property
+    if hasattr(panel, 'markers'):
+        return {m.lower() for m in panel.markers}  # type: ignore[union-attr]
+    # List of dicts
+    return {entry["marker"].lower() for entry in panel}  # type: ignore[index]
+
+
+@dataclass
+class HierarchyF1Result:
+    """Result of hierarchy F1 computation."""
+
+    f1: float
+    precision: float
+    recall: float
+    matching: list[str]
+    missing: list[str]
+    extra: list[str]
 
 
 @dataclass
@@ -160,7 +214,7 @@ def compute_hierarchy_f1(
     equivalence_registry: EquivalenceRegistry | None = None,
     annotation_capture: AnnotationCapture | None = None,
     test_case_id: str | None = None,
-) -> tuple[float, float, float, list[str], list[str], list[str]]:
+) -> HierarchyF1Result:
     """
     Compute precision, recall, and F1 for gate names.
 
@@ -173,7 +227,7 @@ def compute_hierarchy_f1(
         test_case_id: Test case ID for annotation context
 
     Returns:
-        Tuple of (f1, precision, recall, matching, missing, extra)
+        HierarchyF1Result with f1, precision, recall, and gate lists
     """
     pred_gates = extract_gate_names(predicted)
     gt_gates = extract_gate_names(ground_truth)
@@ -223,7 +277,14 @@ def compute_hierarchy_f1(
     recall = len(matching) / len(gt_gates) if gt_gates else 0.0
     f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
 
-    return f1, precision, recall, matching, missing, extra
+    return HierarchyF1Result(
+        f1=f1,
+        precision=precision,
+        recall=recall,
+        matching=matching,
+        missing=missing,
+        extra=extra,
+    )
 
 
 def _match_with_registry(
@@ -358,16 +419,12 @@ def is_mass_cytometry_panel(panel: Panel | list[dict[str, Any]]) -> bool:
     """
     import re
 
-    if hasattr(panel, 'entries'):
-        entries = panel.entries  # type: ignore[union-attr]
-    else:
-        entries = panel  # type: ignore[assignment]
-
+    entries = _get_panel_entries(panel)
     isotope_count = 0
     total_with_fluor = 0
 
     for entry in entries:
-        fluor = entry.get("fluorophore") if isinstance(entry, dict) else getattr(entry, "fluorophore", None)
+        fluor = entry.get("fluorophore")
         if fluor:
             total_with_fluor += 1
             # Check if it matches isotope pattern (e.g., "89Y", "145Nd")
@@ -397,10 +454,7 @@ def derive_panel_critical_gates(
         - Flow cytometry: includes singlets (scatter-based doublet exclusion)
         - Mass cytometry (CyTOF): no scatter gates (singlets not required)
     """
-    if hasattr(panel, 'markers'):
-        panel_markers = {m.lower() for m in panel.markers}  # type: ignore[union-attr]
-    else:
-        panel_markers = {entry["marker"].lower() for entry in panel}  # type: ignore[index]
+    panel_markers = _get_panel_markers(panel)
 
     # Auto-detect technology if not provided
     if technology is None:
@@ -496,10 +550,7 @@ def compute_hallucination_rate(
     Returns:
         Tuple of (hallucination_rate, list of hallucinated gates)
     """
-    if hasattr(panel, 'markers'):
-        panel_markers = {m.lower() for m in panel.markers}  # type: ignore[union-attr]
-    else:
-        panel_markers = {entry["marker"].lower() for entry in panel}  # type: ignore[index]
+    panel_markers = _get_panel_markers(panel)
 
     # Add common non-marker dimensions
     panel_markers.update(["fsc-a", "fsc-h", "ssc-a", "ssc-h", "time", "fsc", "ssc"])
@@ -578,18 +629,18 @@ def evaluate_prediction(
     result = EvaluationResult()
 
     # Hierarchy F1
-    f1, precision, recall, matching, missing, extra = compute_hierarchy_f1(
+    f1_result = compute_hierarchy_f1(
         predicted, ground_truth,
         equivalence_registry=equivalence_registry,
         annotation_capture=annotation_capture,
         test_case_id=test_case_id,
     )
-    result.hierarchy_f1 = f1
-    result.hierarchy_precision = precision
-    result.hierarchy_recall = recall
-    result.matching_gates = matching
-    result.missing_gates = missing
-    result.extra_gates = extra
+    result.hierarchy_f1 = f1_result.f1
+    result.hierarchy_precision = f1_result.precision
+    result.hierarchy_recall = f1_result.recall
+    result.matching_gates = f1_result.matching
+    result.missing_gates = f1_result.missing
+    result.extra_gates = f1_result.extra
 
     # Structure accuracy
     accuracy, correct, total, errors = compute_structure_accuracy(predicted, ground_truth)

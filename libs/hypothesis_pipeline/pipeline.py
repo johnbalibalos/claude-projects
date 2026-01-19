@@ -13,26 +13,32 @@ Generates a condition matrix and runs all combinations with checkpointing.
 from __future__ import annotations
 
 import json
-import sys
+import logging
 from datetime import datetime
 from itertools import product
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-# Import from sibling package
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from checkpoint import CheckpointedRunner
+# Sibling package imports - these packages should be installed via pip install -e libs/
+# If not installed, provide a helpful error message
+try:
+    from checkpoint import CheckpointedRunner
+except ImportError as e:
+    raise ImportError(
+        "checkpoint package not found. Install libs with: pip install -e libs/"
+    ) from e
+
+try:
+    from model_client import AnthropicClient, ClientConfig, ModelResponse, OpenAIClient
+except ImportError as e:
+    raise ImportError(
+        "model_client package not found. Install libs with: pip install -e libs/"
+    ) from e
 
 from .base import ContextBuilder, Evaluator, PromptStrategy, ToolRegistry
 from .context import get_context_builder
 
-# Use shared model_client library
-sys.path.insert(0, str(Path(__file__).parent.parent / "model_client"))
-# Import PipelineConfig from config module (avoid circular import at runtime)
-# Use TYPE_CHECKING for type hints only
-from typing import TYPE_CHECKING
-
-from model_client import AnthropicClient, ClientConfig, ModelResponse, OpenAIClient
+logger = logging.getLogger(__name__)
 
 from .models import (
     ContextLevel,

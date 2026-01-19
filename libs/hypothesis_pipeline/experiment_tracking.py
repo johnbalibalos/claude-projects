@@ -116,8 +116,9 @@ class MLflowTracker(ExperimentTracker):
         for key, value in flat_params.items():
             try:
                 self.mlflow.log_param(key, str(value)[:500])  # MLflow has length limits
-            except Exception:
-                pass  # Skip params that can't be logged
+            except (ValueError, TypeError) as e:
+                # Skip params that can't be logged (invalid key names, non-serializable values)
+                logging.debug(f"Could not log param {key}: {e}")
 
     def log_metrics(self, metrics: dict[str, float], step: int | None = None) -> None:
         """Log metrics to MLflow."""
@@ -398,7 +399,8 @@ class LocalTracker(ExperimentTracker):
                 capture_output=True, text=True, timeout=5
             )
             return result.stdout.strip() if result.returncode == 0 else None
-        except Exception:
+        except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+            # git not installed, timed out, or subprocess error
             return None
 
     def _get_git_branch(self) -> str | None:
@@ -409,7 +411,8 @@ class LocalTracker(ExperimentTracker):
                 capture_output=True, text=True, timeout=5
             )
             return result.stdout.strip() if result.returncode == 0 else None
-        except Exception:
+        except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+            # git not installed, timed out, or subprocess error
             return None
 
     # Additional methods for querying runs

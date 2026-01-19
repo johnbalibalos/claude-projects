@@ -716,7 +716,8 @@ def _get_git_commit() -> str | None:
         )
         if result.returncode == 0:
             return result.stdout.strip()[:8]
-    except Exception:
+    except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+        # git not installed, timed out, or subprocess error
         pass
     return None
 
@@ -732,7 +733,8 @@ def _get_git_branch() -> str | None:
         )
         if result.returncode == 0:
             return result.stdout.strip()
-    except Exception:
+    except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+        # git not installed, timed out, or subprocess error
         pass
     return None
 
@@ -747,6 +749,7 @@ def _is_git_dirty() -> bool:
             timeout=5,
         )
         return bool(result.stdout.strip())
-    except Exception:
+    except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+        # git not installed, timed out, or subprocess error
         pass
     return False
