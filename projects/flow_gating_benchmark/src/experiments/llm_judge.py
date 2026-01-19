@@ -492,6 +492,10 @@ SPECIES: {context.get('species', 'unknown')}
 APPLICATION: {context.get('application', 'immunophenotyping')}
 
 PANEL MARKERS: {markers_str}
+
+IMPORTANT: The hierarchy should ONLY use markers from the PANEL MARKERS list above
+(plus standard flow cytometry parameters like FSC, SSC, and generic viability dyes).
+Any other markers are hallucinations.
 """
 
     if reasoning:
@@ -525,12 +529,19 @@ Evaluate on these dimensions (0-10 each):
    - Could a researcher use this for meaningful analysis?
    - Are the gates practical and well-defined?
 
+5. MARKER_FIDELITY: Does the hierarchy ONLY use markers from the panel?
+   - Check each marker in the hierarchy against the PANEL MARKERS list
+   - FSC, SSC, and viability/live-dead markers are always allowed
+   - Score 10 if all markers are from panel, 0 if many are hallucinated
+
 Reply in this EXACT format:
 BIOLOGICAL_VALIDITY: [0-10]
 COMPLETENESS: [0-10]
 REASONING_QUALITY: [0-10]
 CLINICAL_UTILITY: [0-10]
+MARKER_FIDELITY: [0-10]
 OVERALL: [0-10]
+HALLUCINATED_MARKERS: [comma-separated list of markers NOT in panel, or "none"]
 STRENGTHS: [comma-separated list, or "none"]
 CONCERNS: [comma-separated list, or "none"]
 SUMMARY: [one sentence assessment of this hierarchy's quality]
@@ -547,7 +558,9 @@ def parse_blind_response(content: str) -> dict | None:
         "completeness_blind": r"COMPLETENESS:\s*(\d+)",
         "reasoning_quality": r"REASONING_QUALITY:\s*(\d+)",
         "clinical_utility": r"CLINICAL_UTILITY:\s*(\d+)",
+        "marker_fidelity": r"MARKER_FIDELITY:\s*(\d+)",
         "overall": r"OVERALL:\s*(\d+)",
+        "hallucinated_markers": r"HALLUCINATED_MARKERS:\s*(.+)",
         "strengths": r"STRENGTHS:\s*(.+)",
         "concerns": r"CONCERNS:\s*(.+)",
         "summary": r"SUMMARY:\s*(.+)",
@@ -558,7 +571,7 @@ def parse_blind_response(content: str) -> dict | None:
         if match:
             value = match.group(1).strip()
             if key in ["biological_validity", "completeness_blind", "reasoning_quality",
-                       "clinical_utility", "overall"]:
+                       "clinical_utility", "marker_fidelity", "overall"]:
                 try:
                     result[key] = int(value) / 10.0  # Normalize to 0-1
                 except ValueError:
@@ -572,6 +585,10 @@ def parse_blind_response(content: str) -> dict | None:
         result["accuracy"] = result.get("biological_validity", 0)
         result["scientific"] = result.get("reasoning_quality", 0)
         result["issues"] = result.get("concerns", "none")
+        # Include hallucination info in issues if present
+        halluc = result.get("hallucinated_markers", "none")
+        if halluc.lower() != "none":
+            result["issues"] = f"hallucinated: {halluc}; {result.get('concerns', '')}"
         return result
     return None
 

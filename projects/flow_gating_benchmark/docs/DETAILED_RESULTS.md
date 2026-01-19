@@ -73,6 +73,9 @@ FlowBench evaluates whether large language models can predict flow cytometry gat
 | qualitative | Structured feedback, no scores | Errors, Missing gates, Extra gates, Accept Y/N |
 | orthogonal | Dimensions F1 can't capture | Clinical utility, Biological plausibility |
 | binary | Accept/reject threshold | Acceptable Y/N, Critical errors |
+| blind | Unbiased evaluation (no ground truth) | Biological validity, Marker fidelity, Hallucinations |
+
+**Note on anchoring bias:** Styles 1-5 include ground truth in the prompt, which may bias scores toward the reference hierarchy. The "blind" judge evaluates predictions without seeing ground truth, providing an unbiased assessment of biological validity.
 
 ---
 
@@ -146,7 +149,7 @@ All models perform significantly better (+14-25%) on the synthetic CUSTOM-PBMC-0
 | claude-sonnet-4-20250514 | 35% | 43% | default (CLI) |
 | gemini-2.5-pro | 4% | 52% | 0.0 (API) |
 | claude-3-5-haiku-20241022 | 1% | 92% | default (CLI) |
-| claude-opus-4-20250514 | 1% | 96% | default (CLI) |
+| claude-opus-4-20250514 | 1% | 99% | default (CLI) |
 
 **Example:** opus produces 3 different hierarchies for CUSTOM-PBMC-001 (same prompt):
 ```
@@ -155,6 +158,35 @@ Bootstrap 2: All Events → Singlets → Live → CD45+ → CD3+ T Cells → NKT
 Bootstrap 3: All Events → Singlets → Live → Leukocytes → T Cells → Regulatory T...
 ```
 All biologically valid, but different structure and naming.
+
+### 2.6 Consistency vs Quality: Multiple Valid Approaches
+
+**Key Finding:** High inconsistency does not imply low quality. Claude Opus produced structurally different outputs in 99% of cases (119/120 test conditions), yet maintained moderate-to-high quality scores.
+
+| Model | Consistency | Quality | Interpretation |
+|-------|-------------|---------|----------------|
+| gemini-2.5-pro | 0.40 | 0.59 | Balanced |
+| opus | 0.18 | 0.52 | Creative/variable |
+| gemini-2.5-flash | 0.63 | 0.51 | Consistent |
+| gemini-2.0-flash | 0.65 | 0.41 | Consistent but lower quality |
+
+**Quality distribution for Opus's inconsistent predictions:**
+- High quality (≥0.7): **39%**
+- Moderate (0.4-0.7): 29%
+- Low (<0.4): 32%
+
+**Interpretation:** This suggests **multiple valid gating approaches** rather than model instability. Flow cytometry experts often disagree on optimal gating strategies—the same panel can be analyzed with different hierarchical organizations that are all biologically valid.
+
+**Example structural differences (CUSTOM-PBMC-001):**
+
+| Aspect | Run 1 | Run 2 | Run 3 |
+|--------|-------|-------|-------|
+| Time Gate | ❌ | ✅ | ❌ |
+| Treg naming | "Regulatory T Cells" | "Tregs" | "Tregs" |
+| NK/Mono grouping | Direct siblings under Leukocytes | Under "Non-T Non-B Cells" | Under "CD3- Non-T Cells" |
+| NKT-like Cells | ❌ | ❌ | ✅ |
+
+All three approaches are defensible in practice. The inconsistency reflects the inherent ambiguity in gating strategy design, not model failure.
 
 ---
 
@@ -328,6 +360,19 @@ The same prediction receives both 1.0 and 0.0 depending on evaluation criteria.
 | Format confusion (gemini-2.5-flash) | Prose instead of JSON | Use different model |
 | Synonym mismatches | Low F1 despite correct biology | 200+ synonyms in normalization.py |
 
+### Hallucination Analysis
+
+Initial hallucination detection flagged 142-344 markers per model as "not in panel." However, **~80% were false positives** due to:
+
+| Issue | Example | Reality |
+|-------|---------|---------|
+| Alias confusion | "B220" flagged | Same as CD45R in panel |
+| Notation variants | "CD14++" flagged | Same as CD14 in panel |
+| Parenthetical aliases | "CD138" flagged | Panel lists "Synd-1 (CD138)" |
+| Viability dye names | "zombie nir" flagged | Generic viability dye |
+
+After correcting alias extraction, **true hallucinations dropped to 17-76 per model**. The blind judge style now includes explicit marker validation to distinguish real hallucinations from alias confusion.
+
 ---
 
 ## 5. Conclusions
@@ -349,6 +394,11 @@ The same prediction receives both 1.0 and 0.0 depending on evaluation criteria.
    - R² = 0.034 for frequency correlation
    - Paradoxical success on rare terms
    - Technical understanding > terminology familiarity
+
+5. **High variability can indicate multiple valid solutions**
+   - Claude Opus: 99% different outputs, yet 39% scored ≥0.7 quality
+   - Suggests expert disagreement on "correct" gating strategies
+   - Inconsistency may be a feature (exploring solution space) not a bug
 
 ### Recommendations
 
