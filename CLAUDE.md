@@ -75,11 +75,11 @@ if confirm_experiment_cost(config, n_test_cases=10):
 
 ## Project-Specific Instructions
 
-When working in these directories, read their CLAUDE.md:
+Each project is standalone. When working in a project directory, read its CLAUDE.md:
 
-@projects/flow_panel_optimizer/CLAUDE.md
-@projects/drugdevbench/CLAUDE.md
-@projects/flow_gating_benchmark/CLAUDE.md
+- `projects/flow_panel_optimizer/CLAUDE.md` - Spectral similarity metrics for flow cytometry
+- `projects/drugdevbench/CLAUDE.md` - LLM figure interpretation benchmark
+- `projects/flow_gating_benchmark/CLAUDE.md` - Gating strategy prediction (~750 lines, comprehensive)
 
 ## Adding New Projects
 

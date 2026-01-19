@@ -177,6 +177,15 @@ flowchart TB
     style Judge fill:#fce4ec
 ```
 
+### Recent Additions
+
+- **Enhanced Normalization**: ~200 cell type synonyms, marker aliases (CCR7=CD197), hierarchical matching
+- **Structure Error Analysis**: Categorizes errors as WRONG_PARENT, MISSING_GATE, SWAPPED_RELATIONSHIP, WRONG_DEPTH
+- **Biological Context Awareness**: Hard constraints (lineage exclusivity), soft constraints (CD45 optional for PBMCs)
+- **Multi-Judge Cross-Validation**: Multiple prompt styles for LLM judge reliability
+- **Token Breakdown Analysis**: Track thinking vs response tokens for reasoning models
+- **Blocked Prediction Recovery**: `scripts/rerun_blocked.py` for MAX_TOKENS failures
+
 ---
 
 ## CLI Reference
@@ -202,15 +211,39 @@ python scripts/run_modular_pipeline.py [OPTIONS]
 ```
 flow_gating_benchmark/
 ├── src/
-│   ├── curation/           # Test case schemas
-│   ├── evaluation/         # Scoring (F1, structure, normalization)
-│   ├── experiments/        # Pipeline (collector, scorer, judge)
-│   └── analysis/           # Hypothesis testing
+│   ├── curation/              # Test case schemas
+│   │   ├── schemas.py         # TestCase, Panel, GatingHierarchy
+│   │   └── omip_extractor.py
+│   ├── evaluation/            # Scoring
+│   │   ├── metrics.py         # F1, structure, hallucination
+│   │   ├── normalization.py   # 200+ gate synonyms
+│   │   ├── enhanced_normalization.py  # Marker aliases, hierarchical matching
+│   │   ├── hierarchy.py       # Tree operations
+│   │   ├── task_failure.py    # Refusal detection
+│   │   ├── response_parser.py
+│   │   └── scorer.py
+│   ├── experiments/           # Pipeline
+│   │   ├── prediction_collector.py
+│   │   ├── batch_scorer.py
+│   │   ├── llm_judge.py       # Multi-judge support
+│   │   ├── llm_client.py      # Gemini, Claude, OpenAI
+│   │   ├── conditions.py
+│   │   └── prompts.py
+│   └── analysis/              # Hypothesis testing
+│       ├── alien_cell.py      # Frequency confound tests
+│       └── cognitive_refusal.py
 ├── data/
 │   ├── verified/           # 10 curated test cases
 │   └── staging/            # 18 pending verification
 ├── scripts/
-│   └── run_modular_pipeline.py
+│   ├── run_modular_pipeline.py
+│   ├── rerun_blocked.py       # Recover MAX_TOKENS failures
+│   ├── analyze_structure_errors.py     # Error categorization
+│   ├── analyze_with_biological_context.py  # Context-aware analysis
+│   └── analyze_judge_vs_rules.py       # Judge vs F1 comparison
+├── results/
+│   ├── BENCHMARK_RESULTS_SUMMARY.md  # Latest results
+│   └── gemini_benchmark_predictions.json
 ├── docs/
 │   └── DETAILED_RESULTS.md # Full analysis
 └── tests/

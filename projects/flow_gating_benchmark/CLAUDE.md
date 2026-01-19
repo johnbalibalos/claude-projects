@@ -177,6 +177,56 @@ flow_gating_benchmark/
 
 ---
 
+## Finding Past Results
+
+Results are stored in timestamped directories under `results/`:
+
+```
+results/
+├── BENCHMARK_RESULTS_SUMMARY.md           # Human-readable overview
+└── full_benchmark_YYYYMMDD/               # Timestamped run directory
+    ├── experiment.json                    # Provenance (git commit, config, dataset hash)
+    ├── predictions.json                   # Raw LLM responses
+    ├── scoring_results.json               # All metrics (F1, structure, etc.)
+    └── multijudge/                        # LLM judge evaluations
+        ├── aggregated_judge_default.json
+        ├── aggregated_judge_validation.json
+        ├── aggregated_judge_qualitative.json
+        ├── aggregated_judge_orthogonal.json
+        ├── aggregated_judge_binary.json
+        └── aggregated_judge_all_styles.json
+```
+
+### Inspecting Past Runs
+
+```bash
+# List all experiment runs
+ls -la results/
+
+# View provenance for a specific run
+cat results/full_benchmark_20260114/experiment.json | jq '.git, .dataset'
+
+# Reproduce a past experiment
+git checkout $(cat results/full_benchmark_20260114/experiment.json | jq -r '.git.commit')
+
+# Verify dataset hasn't changed
+python -c "from src.utils.provenance import hash_directory; print(hash_directory('data/verified'))"
+# Compare with: jq '.dataset.hash' results/full_benchmark_20260114/experiment.json
+```
+
+### Quick Results Summary
+
+```python
+import json
+with open("results/full_benchmark_20260114/scoring_results.json") as f:
+    data = json.load(f)
+print(f"Overall F1: {data['stats']['overall']['hierarchy_f1']['mean']:.3f}")
+for model, stats in data['stats']['by_model'].items():
+    print(f"  {model}: {stats['hierarchy_f1']['mean']:.3f}")
+```
+
+---
+
 ## Ground Truth OMIPs
 
 ### Valid OMIPs for Benchmarking (9 test cases)
