@@ -78,13 +78,11 @@ class TestComputeHierarchyF1:
 
     def test_identical_hierarchies(self, sample_hierarchy):
         """Test F1 with identical hierarchies."""
-        f1, precision, recall, _, _, _ = compute_hierarchy_f1(
-            sample_hierarchy, sample_hierarchy
-        )
+        result = compute_hierarchy_f1(sample_hierarchy, sample_hierarchy)
 
-        assert f1 == 1.0
-        assert precision == 1.0
-        assert recall == 1.0
+        assert result.f1 == 1.0
+        assert result.precision == 1.0
+        assert result.recall == 1.0
 
     def test_partial_match(self, sample_hierarchy):
         """Test F1 with partial match."""
@@ -95,24 +93,22 @@ class TestComputeHierarchyF1:
             ]
         }
 
-        f1, precision, recall, matching, missing, extra = compute_hierarchy_f1(
-            partial, sample_hierarchy
-        )
+        result = compute_hierarchy_f1(partial, sample_hierarchy)
 
         # Partial has 2 gates, full has 6
-        assert precision == 1.0  # All predicted are correct
-        assert recall < 1.0  # Missing some gates
-        assert len(matching) == 2
-        assert len(missing) == 4
+        assert result.precision == 1.0  # All predicted are correct
+        assert result.recall < 1.0  # Missing some gates
+        assert len(result.matching) == 2
+        assert len(result.missing) == 4
 
     def test_no_match(self):
         """Test F1 with no matching gates."""
         pred = {"name": "A", "children": [{"name": "B", "children": []}]}
         gt = {"name": "X", "children": [{"name": "Y", "children": []}]}
 
-        f1, precision, recall, _, _, _ = compute_hierarchy_f1(pred, gt, fuzzy_match=False)
+        result = compute_hierarchy_f1(pred, gt, fuzzy_match=False)
 
-        assert f1 == 0.0
+        assert result.f1 == 0.0
 
 
 class TestComputeStructureAccuracy:

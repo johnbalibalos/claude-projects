@@ -12,12 +12,78 @@ Provides best practices for using LLMs to evaluate other LLM outputs:
 from __future__ import annotations
 
 import json
+import logging
 import re
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
 from typing import Any, Literal, Protocol
 
 import numpy as np
+
+logger = logging.getLogger(__name__)
+
+
+# =============================================================================
+# JSON EXTRACTION UTILITIES
+# =============================================================================
+
+
+@dataclass
+class JSONExtractionResult:
+    """Result of extracting JSON from LLM response."""
+
+    data: dict[str, Any]
+    success: bool
+    raw_json: str
+    error: str | None = None
+
+
+def extract_json_from_response(raw_response: str) -> JSONExtractionResult:
+    """
+    Extract JSON data from an LLM response.
+
+    Tries multiple strategies:
+    1. JSON in markdown code block (```json ... ```)
+    2. Raw JSON object ({ ... })
+
+    Args:
+        raw_response: The raw LLM response text
+
+    Returns:
+        JSONExtractionResult with parsed data or error information
+    """
+    # Strategy 1: JSON in markdown code block
+    json_match = re.search(r'```json\s*([\s\S]*?)```', raw_response)
+    if json_match:
+        json_str = json_match.group(1).strip()
+    else:
+        # Strategy 2: Raw JSON object
+        json_match = re.search(r'\{[\s\S]*\}', raw_response)
+        if json_match:
+            json_str = json_match.group(0)
+        else:
+            return JSONExtractionResult(
+                data={},
+                success=False,
+                raw_json="",
+                error="No JSON found in response",
+            )
+
+    try:
+        data = json.loads(json_str)
+        return JSONExtractionResult(
+            data=data,
+            success=True,
+            raw_json=json_str,
+        )
+    except json.JSONDecodeError as e:
+        logger.warning(f"JSON parse error: {e}. Raw JSON: {json_str[:200]}...")
+        return JSONExtractionResult(
+            data={},
+            success=False,
+            raw_json=json_str,
+            error=f"JSON parse error: {e}",
+        )
 
 # =============================================================================
 # PROTOCOLS
@@ -364,19 +430,14 @@ Evaluate now:"""
         ground_truth: str | None,
     ) -> JudgmentResult:
         """Parse the judge's raw output into structured result."""
-        # Extract JSON
-        json_match = re.search(r'```json\s*([\s\S]*?)```', raw_judgment)
-        if json_match:
-            json_str = json_match.group(1)
-        else:
-            # Try to find raw JSON
-            json_match = re.search(r'\{[\s\S]*\}', raw_judgment)
-            json_str = json_match.group(0) if json_match else "{}"
+        # Extract JSON using the shared utility
+        extraction = extract_json_from_response(raw_judgment)
+        data = extraction.data
 
-        try:
-            data = json.loads(json_str)
-        except json.JSONDecodeError:
-            data = {}
+        # Track parsing failures for diagnostics
+        parse_error = extraction.error if not extraction.success else None
+        if parse_error:
+            logger.warning(f"Judge response parsing failed: {parse_error}")
 
         # Build criterion scores
         criterion_scores = []
@@ -589,20 +650,19 @@ Your judgment:"""
 
     def _parse_comparison(self, judgment: str) -> dict[str, float]:
         """Parse comparison judgment."""
-        json_match = re.search(r'```json\s*([\s\S]*?)```', judgment)
-        if json_match:
-            json_str = json_match.group(1)
-        else:
-            json_match = re.search(r'\{[\s\S]*\}', judgment)
-            json_str = json_match.group(0) if json_match else "{}"
+        extraction = extract_json_from_response(judgment)
+
+        if not extraction.success:
+            logger.warning(f"Comparison parse failed: {extraction.error}, using defaults")
+            return {"score_a": 5.0, "score_b": 5.0}
 
         try:
-            data = json.loads(json_str)
             return {
-                "score_a": float(data.get("score_a", 5)),
-                "score_b": float(data.get("score_b", 5)),
+                "score_a": float(extraction.data.get("score_a", 5)),
+                "score_b": float(extraction.data.get("score_b", 5)),
             }
-        except (json.JSONDecodeError, ValueError):
+        except (TypeError, ValueError) as e:
+            logger.warning(f"Invalid score values in comparison: {e}")
             return {"score_a": 5.0, "score_b": 5.0}
 
     def _determine_winner(self, score_a: float, score_b: float) -> Literal["A", "B", "tie"]:
@@ -1384,14 +1444,27 @@ class PluggableJudge:
                     error="Failed to parse response",
                 )
 
-        except Exception as e:
+        except (ValueError, TypeError) as e:
+            # Prompt builder or response parser errors
+            logger.warning(f"Evaluation failed for {item_id}: {type(e).__name__}: {e}")
             return PluggableJudgeResult(
                 item_id=item_id,
                 parsed_data={},
                 raw_prompt=prompt if 'prompt' in locals() else "",
                 raw_response="",
                 success=False,
-                error=str(e),
+                error=f"{type(e).__name__}: {e}",
+            )
+        except (ConnectionError, TimeoutError, OSError) as e:
+            # Network/API errors
+            logger.error(f"API error for {item_id}: {type(e).__name__}: {e}")
+            return PluggableJudgeResult(
+                item_id=item_id,
+                parsed_data={},
+                raw_prompt=prompt if 'prompt' in locals() else "",
+                raw_response="",
+                success=False,
+                error=f"API error: {type(e).__name__}: {e}",
             )
 
     def evaluate_batch(
@@ -1434,13 +1507,16 @@ class PluggableJudge:
                 try:
                     result = future.result()
                 except Exception as e:
+                    # Log and continue - we want to collect all results even if some fail
+                    # This is a legitimate use of broad exception handling for thread results
+                    logger.error(f"Worker failed for {item_id}: {type(e).__name__}: {e}")
                     result = PluggableJudgeResult(
                         item_id=item_id,
                         parsed_data={},
                         raw_prompt="",
                         raw_response="",
                         success=False,
-                        error=str(e),
+                        error=f"{type(e).__name__}: {e}",
                     )
 
                 results.append(result)
