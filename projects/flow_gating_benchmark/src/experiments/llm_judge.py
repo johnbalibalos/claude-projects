@@ -109,7 +109,7 @@ class JudgeResult:
 
 
 # Available judge prompt styles
-JUDGE_STYLES = ["default", "validation", "qualitative", "orthogonal", "binary"]
+JUDGE_STYLES = ["default", "validation", "qualitative", "orthogonal", "binary", "blind"]
 
 
 @dataclass
@@ -415,6 +415,167 @@ RECOMMENDATION: [one sentence: what would make this acceptable?]
 """
 
 
+def extract_reasoning_from_response(raw_response: str) -> str:
+    """Extract reasoning/analysis text from a raw LLM response.
+
+    CoT responses typically have analysis before the JSON hierarchy.
+    Returns the reasoning portion, or empty string if none found.
+    """
+    if not raw_response:
+        return ""
+
+    # Try to find where JSON starts
+    json_start_markers = ['```json', '{"name":', '{\n    "name":', '{\n  "name":']
+
+    reasoning = raw_response
+    for marker in json_start_markers:
+        idx = raw_response.find(marker)
+        if idx > 50:  # Only if there's substantial text before JSON
+            reasoning = raw_response[:idx].strip()
+            break
+
+    # If we didn't find JSON markers, check for markdown code block
+    if reasoning == raw_response:
+        idx = raw_response.find('```')
+        if idx > 50:
+            reasoning = raw_response[:idx].strip()
+
+    # Clean up and truncate if too long
+    if reasoning and reasoning != raw_response:
+        # Remove trailing incomplete sentences
+        if len(reasoning) > 1500:
+            reasoning = reasoning[:1500] + "... [truncated]"
+        return reasoning
+
+    return ""
+
+
+def build_blind_prompt(
+    test_case_id: str,
+    predicted_response: str,
+    ground_truth: dict,
+    metrics: dict,
+) -> str:
+    """Blind judge: Evaluate without seeing ground truth.
+
+    This judge assesses biological plausibility and reasoning quality
+    without being biased by the expected answer. Useful for:
+    - Detecting valid alternative gating strategies
+    - Evaluating if model reasoning is sound
+    - Finding cases where GT might be too narrow
+    """
+    context = ground_truth.get("context", {})
+    panel = ground_truth.get("panel", {})
+
+    # Get marker list from panel
+    markers = []
+    for entry in panel.get("entries", []):
+        marker = entry.get("marker", "")
+        if marker:
+            markers.append(marker)
+    markers_str = ", ".join(markers) if markers else "unknown"
+
+    # Extract reasoning from response (for CoT conditions)
+    reasoning = extract_reasoning_from_response(predicted_response)
+
+    # Parse and format the hierarchy
+    pred_formatted = format_prediction_for_judge(predicted_response)
+
+    # Build prompt WITHOUT ground truth
+    prompt = f"""You are an expert flow cytometrist. Evaluate this gating hierarchy prediction
+based ONLY on biological validity and scientific soundness. You do NOT have access to
+a reference answer - judge this on its own merits.
+
+TEST CASE: {test_case_id}
+SAMPLE TYPE: {context.get('sample_type', 'unknown')}
+SPECIES: {context.get('species', 'unknown')}
+APPLICATION: {context.get('application', 'immunophenotyping')}
+
+PANEL MARKERS: {markers_str}
+"""
+
+    if reasoning:
+        prompt += f"""
+MODEL'S REASONING:
+{reasoning}
+"""
+
+    prompt += f"""
+PREDICTED HIERARCHY:
+{pred_formatted}
+
+Evaluate on these dimensions (0-10 each):
+
+1. BIOLOGICAL_VALIDITY: Is this a scientifically sound gating strategy?
+   - Are QC gates (singlets, viability) appropriate?
+   - Do parent-child relationships make biological sense?
+   - Are marker combinations used correctly?
+
+2. COMPLETENESS: Does this capture the major populations the panel can identify?
+   - Given the markers available, are key populations included?
+   - Is the hierarchy appropriately detailed (not over/under-specified)?
+
+3. REASONING_QUALITY: If reasoning was provided, is it sound?
+   - Does the model correctly identify the technology (flow vs mass cytometry)?
+   - Is the biological logic correct?
+   - Are the population definitions accurate?
+   (Score 5 if no reasoning provided)
+
+4. CLINICAL_UTILITY: Would this hierarchy work for the stated application?
+   - Could a researcher use this for meaningful analysis?
+   - Are the gates practical and well-defined?
+
+Reply in this EXACT format:
+BIOLOGICAL_VALIDITY: [0-10]
+COMPLETENESS: [0-10]
+REASONING_QUALITY: [0-10]
+CLINICAL_UTILITY: [0-10]
+OVERALL: [0-10]
+STRENGTHS: [comma-separated list, or "none"]
+CONCERNS: [comma-separated list, or "none"]
+SUMMARY: [one sentence assessment of this hierarchy's quality]
+"""
+    return prompt
+
+
+def parse_blind_response(content: str) -> dict | None:
+    """Parse blind judge response."""
+    result = {}
+
+    patterns = {
+        "biological_validity": r"BIOLOGICAL_VALIDITY:\s*(\d+)",
+        "completeness_blind": r"COMPLETENESS:\s*(\d+)",
+        "reasoning_quality": r"REASONING_QUALITY:\s*(\d+)",
+        "clinical_utility": r"CLINICAL_UTILITY:\s*(\d+)",
+        "overall": r"OVERALL:\s*(\d+)",
+        "strengths": r"STRENGTHS:\s*(.+)",
+        "concerns": r"CONCERNS:\s*(.+)",
+        "summary": r"SUMMARY:\s*(.+)",
+    }
+
+    for key, pattern in patterns.items():
+        match = re.search(pattern, content, re.IGNORECASE)
+        if match:
+            value = match.group(1).strip()
+            if key in ["biological_validity", "completeness_blind", "reasoning_quality",
+                       "clinical_utility", "overall"]:
+                try:
+                    result[key] = int(value) / 10.0  # Normalize to 0-1
+                except ValueError:
+                    pass
+            else:
+                result[key] = value
+
+    # Map to standard JudgeResult fields
+    if "overall" in result:
+        result["completeness"] = result.get("completeness_blind", 0)
+        result["accuracy"] = result.get("biological_validity", 0)
+        result["scientific"] = result.get("reasoning_quality", 0)
+        result["issues"] = result.get("concerns", "none")
+        return result
+    return None
+
+
 def get_prompt_builder(style: str):
     """Get the prompt builder function for a given style."""
     builders = {
@@ -423,6 +584,7 @@ def get_prompt_builder(style: str):
         "qualitative": build_qualitative_prompt,
         "orthogonal": build_orthogonal_prompt,
         "binary": build_binary_prompt,
+        "blind": build_blind_prompt,
     }
     return builders.get(style, build_judge_prompt)
 
@@ -604,6 +766,7 @@ def get_response_parser(style: str):
         "qualitative": parse_qualitative_response,
         "orthogonal": parse_orthogonal_response,
         "binary": parse_binary_response,
+        "blind": parse_blind_response,
     }
     return parsers.get(style, parse_judge_response)
 
