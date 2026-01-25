@@ -172,12 +172,27 @@ def evaluate_with_matcher(
     return matched, missing, extra
 
 
+def extract_gate_names_from_hierarchy(node: dict) -> list[str]:
+    """Extract all gate names from a parsed hierarchy dict."""
+    names = []
+    if isinstance(node, dict):
+        if "name" in node:
+            names.append(node["name"])
+        for child in node.get("children", []):
+            names.extend(extract_gate_names_from_hierarchy(child))
+    return names
+
+
 def analyze_results_file(
     results_path: Path,
     ground_truth_dir: Path | None = None,
 ) -> dict:
     """
     Analyze a benchmark results file for string matching confound.
+
+    Supports two result formats:
+    1. Old format: evaluation.matching_gates, evaluation.missing_gates, evaluation.extra_gates
+    2. New format: ground_truth_gates (list), parsed_hierarchy (dict)
 
     Returns detailed analysis including:
     - Per-population synonym coverage vs detection rate
@@ -198,11 +213,18 @@ def analyze_results_file(
     match_comparisons: list[MatchingComparison] = []
 
     for result in results.get("results", []):
-        eval_data = result.get("evaluation", {})
+        # Try new format first (ground_truth_gates + parsed_hierarchy)
+        gt_gates = result.get("ground_truth_gates", [])
+        parsed_hierarchy = result.get("parsed_hierarchy", {})
 
-        # Get ground truth and predicted gates
-        gt_gates = eval_data.get("matching_gates", []) + eval_data.get("missing_gates", [])
-        pred_gates = eval_data.get("matching_gates", []) + eval_data.get("extra_gates", [])
+        if gt_gates and parsed_hierarchy:
+            # New format: extract predicted gates from hierarchy
+            pred_gates = extract_gate_names_from_hierarchy(parsed_hierarchy)
+        else:
+            # Old format: use evaluation dict
+            eval_data = result.get("evaluation", {})
+            gt_gates = eval_data.get("matching_gates", []) + eval_data.get("missing_gates", [])
+            pred_gates = eval_data.get("matching_gates", []) + eval_data.get("extra_gates", [])
 
         if not gt_gates:
             continue
