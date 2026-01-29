@@ -36,8 +36,8 @@ logger = logging.getLogger(__name__)
 MODEL_CONTEXT_WINDOWS = {
     # Anthropic Claude
     "claude-opus-4-5-20251101": 200_000,
-    "claude-sonnet-4-20250514": 200_000,
-    "claude-3-5-haiku-20241022": 200_000,
+    "claude-sonnet-4-5-20250929": 200_000,
+    "claude-haiku-4-5-20251001": 200_000,
     # OpenAI GPT
     "gpt-4o": 128_000,
     "gpt-4o-mini": 128_000,
@@ -494,11 +494,11 @@ class GeminiClient:
 
 # Map model names to CLI aliases
 CLI_MODEL_MAP = {
-    "claude-sonnet-4-20250514": "sonnet",
+    "claude-sonnet-4-5-20250929": "sonnet",
     "claude-sonnet": "sonnet",
     "claude-opus-4-5-20251101": "opus",
     "claude-opus": "opus",
-    "claude-3-5-haiku-20241022": "haiku",
+    "claude-haiku-4-5-20251001": "haiku",
     "claude-haiku": "haiku",
 }
 
@@ -845,13 +845,13 @@ def create_client(
 MODEL_REGISTRY = {
     # Anthropic API
     "claude-opus": "claude-opus-4-5-20251101",
-    "claude-sonnet": "claude-sonnet-4-20250514",
-    "claude-haiku": "claude-3-5-haiku-20241022",
+    "claude-sonnet": "claude-sonnet-4-5-20250929",
+    "claude-haiku": "claude-haiku-4-5-20251001",
     # Anthropic CLI (these keys exist for test coverage but are never looked up -
     # create_client() strips -cli suffix before resolution)
     "claude-opus-cli": "claude-opus-4-5-20251101",
-    "claude-sonnet-cli": "claude-sonnet-4-20250514",
-    "claude-haiku-cli": "claude-3-5-haiku-20241022",
+    "claude-sonnet-cli": "claude-sonnet-4-5-20250929",
+    "claude-haiku-cli": "claude-haiku-4-5-20251001",
     # OpenAI
     "gpt-4o": "gpt-4o",
     "gpt-4o-mini": "gpt-4o-mini",

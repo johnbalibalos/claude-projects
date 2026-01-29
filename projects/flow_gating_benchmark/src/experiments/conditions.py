@@ -42,12 +42,12 @@ class ExperimentCondition:
 MODELS = {
     # Anthropic API (billed per token, requires ANTHROPIC_API_KEY)
     "claude-opus": "claude-opus-4-5-20251101",
-    "claude-sonnet": "claude-sonnet-4-20250514",
-    "claude-haiku": "claude-3-5-haiku-20241022",
+    "claude-sonnet": "claude-sonnet-4-5-20250929",
+    "claude-haiku": "claude-haiku-4-5-20251001",
     # Anthropic CLI via OAuth (uses Max subscription, no API cost, rate-limited)
     "claude-opus-cli": "claude-opus-4-5-20251101-cli",
-    "claude-sonnet-cli": "claude-sonnet-4-20250514-cli",
-    "claude-haiku-cli": "claude-3-5-haiku-20241022-cli",
+    "claude-sonnet-cli": "claude-sonnet-4-5-20250929-cli",
+    "claude-haiku-cli": "claude-haiku-4-5-20251001-cli",
     # Cloud models - OpenAI
     "gpt-4o": "gpt-4o",
     "gpt-4o-mini": "gpt-4o-mini",

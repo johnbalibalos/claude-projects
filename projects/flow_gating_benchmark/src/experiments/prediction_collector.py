@@ -233,7 +233,7 @@ def collect_batch(
         if model.startswith("claude-") and not model.startswith("claude-3"):
             # Map short names to full model IDs
             model_map = {
-                "claude-sonnet": "claude-sonnet-4-20250514",
+                "claude-sonnet": "claude-sonnet-4-5-20250929",
                 "claude-opus": "claude-opus-4-5-20251101",
             }
             model = model_map.get(model, model)
