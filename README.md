@@ -8,7 +8,7 @@ We're testing this with flow cytometry gating prediction. Early finding: **gemin
 
 | Project | Question | Status |
 |---------|----------|--------|
-| [flow_gating_benchmark](projects/flow_gating_benchmark/) | Can LLMs predict gating strategies from panel info? | [Results](projects/flow_gating_benchmark/results/BENCHMARK_RESULTS_SUMMARY.md) |
+| [flow_gating_benchmark](projects/flow_gating_benchmark/) | Can LLMs predict gating strategies from panel info? | [Results](projects/flow_gating_benchmark/docs/DETAILED_RESULTS.md) |
 | [flow_panel_optimizer](projects/flow_panel_optimizer/) | Does tool access improve spectral calculations? | 88.6% improvement with MCP tools |
 | [drugdevbench](projects/drugdevbench/) | How well do LLMs interpret drug dev figures? | Framework built, eval pending |
 
