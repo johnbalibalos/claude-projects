@@ -16,10 +16,9 @@ import json
 import time
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any
 
 from curation.schemas import TestCase
 from utils.serializable import SerializableMixin
@@ -235,7 +234,7 @@ def collect_batch(
             # Map short names to full model IDs
             model_map = {
                 "claude-sonnet": "claude-sonnet-4-20250514",
-                "claude-opus": "claude-opus-4-20250514",
+                "claude-opus": "claude-opus-4-5-20251101",
             }
             model = model_map.get(model, model)
 
@@ -403,7 +402,6 @@ def collect_predictions(
     # Save final JSON (in addition to JSONL checkpoint)
     if config.checkpoint_dir:
         output_path = config.checkpoint_dir.parent / "predictions.json"
-        all_predictions = list(completed) if resume else []
         # Reload all from checkpoint for complete output
         all_preds = []
         if checkpoint_path.exists():

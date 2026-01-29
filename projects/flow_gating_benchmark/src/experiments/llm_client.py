@@ -21,9 +21,8 @@ import warnings
 from dataclasses import dataclass
 from typing import Protocol
 
-from tenacity import retry, stop_after_attempt, wait_exponential
-
 from experiments.exceptions import ConfigurationError
+from tenacity import retry, stop_after_attempt, wait_exponential
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +35,7 @@ logger = logging.getLogger(__name__)
 # Source: Provider documentation as of 2024
 MODEL_CONTEXT_WINDOWS = {
     # Anthropic Claude
-    "claude-opus-4-20250514": 200_000,
+    "claude-opus-4-5-20251101": 200_000,
     "claude-sonnet-4-20250514": 200_000,
     "claude-3-5-haiku-20241022": 200_000,
     # OpenAI GPT
@@ -497,7 +496,7 @@ class GeminiClient:
 CLI_MODEL_MAP = {
     "claude-sonnet-4-20250514": "sonnet",
     "claude-sonnet": "sonnet",
-    "claude-opus-4-20250514": "opus",
+    "claude-opus-4-5-20251101": "opus",
     "claude-opus": "opus",
     "claude-3-5-haiku-20241022": "haiku",
     "claude-haiku": "haiku",
@@ -845,12 +844,12 @@ def create_client(
 #
 MODEL_REGISTRY = {
     # Anthropic API
-    "claude-opus": "claude-opus-4-20250514",
+    "claude-opus": "claude-opus-4-5-20251101",
     "claude-sonnet": "claude-sonnet-4-20250514",
     "claude-haiku": "claude-3-5-haiku-20241022",
     # Anthropic CLI (these keys exist for test coverage but are never looked up -
     # create_client() strips -cli suffix before resolution)
-    "claude-opus-cli": "claude-opus-4-20250514",
+    "claude-opus-cli": "claude-opus-4-5-20251101",
     "claude-sonnet-cli": "claude-sonnet-4-20250514",
     "claude-haiku-cli": "claude-3-5-haiku-20241022",
     # OpenAI
