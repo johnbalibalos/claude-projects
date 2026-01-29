@@ -15,13 +15,13 @@ FlowBench evaluates whether large language models can predict flow cytometry gat
 | **Best Model (Judge)** | gemini-2.5-pro (0.59) |
 | **HIPC Reference Impact** | +5.6% F1 |
 | **Rich Context Impact** | +8% F1 (pending re-evaluation) |
-| **Frequency Confound** | R² = 0.034 (memorization NOT supported) |
+| **Frequency Confound** | r = 0.34 raw, r ≈ 0 after synonym normalization |
 
 **Key Insights:**
 1. **Models perform moderately well** - gemini-2.5-pro leads at 0.36 F1, but all models achieve >0.30
 2. **F1 is a flawed metric** - it measures string similarity, not biological correctness
 3. **The "CoT hurts" finding is a metric artifact** - LLM judges show no quality difference
-4. **Performance is not explained by memorization** - R² = 0.034 for frequency correlation
+4. **Moderate frequency effect exists (r = 0.34)** but evaluation's synonym system corrects for it
 
 ---
 
@@ -202,39 +202,70 @@ Both predictions are **biologically correct**. CoT uses more verbose, marker-pre
 
 **Question:** Is model performance explained by term frequency in training data?
 
-**Method:** Correlated detection rate for 107 cell populations with their PubMed citation frequency.
+**Method:** Correlated detection rate for 210 cell populations with their PubMed citation frequency.
 
-**Results:**
+#### 3.2.1 Initial Analysis (Semantic Matching)
 
 | Metric | Value | Interpretation |
 |--------|-------|----------------|
-| Pearson r | 0.184 | Weak positive (near noise) |
-| **R²** | **0.034** | Only 3.4% of variance explained |
-| Regression Slope | 0.045 | Nearly flat |
+| Spearman r | -0.038 | No correlation |
+| **R²** | **~0** | Frequency does not explain performance |
 
-**Interpretation thresholds:**
+#### 3.2.2 String Matching Confound Investigation
 
-| R² Range | Interpretation | This Study |
-|----------|----------------|------------|
-| > 0.8 | Frequency explains performance | No |
-| 0.5-0.8 | Mixed evidence | No |
-| < 0.25 | Frequency does NOT explain | **Yes (R² = 0.034)** |
+We investigated whether the evaluation's synonym matching system could confound the frequency correlation. The evaluator uses 226 synonyms mapping variations to 59 canonical forms (e.g., "T lymphocytes" → "t_cells").
 
-**Paradoxical cases:**
+**Concern:** Canonical populations might have both:
+1. More synonyms defined → artificially higher detection rates
+2. More PubMed citations → higher frequency scores
 
-| "Should Succeed" (Common) | Detection Rate |
-|---------------------------|----------------|
-| CD4+ T cells | 16.7% |
-| CD8+ T cells | 16.7% |
-| IgG+ B cells | 20.0% |
+**Analysis method:** Compared frequency correlation at different matching levels:
 
-| "Should Fail" (Rare) | Detection Rate |
-|----------------------|----------------|
-| T Follicular Helper Cells | 100% |
-| Live Cells (as term) | 100% |
-| Non-classical Monocytes | 100% |
+| Matching Level | Description | Detection Rate |
+|----------------|-------------|----------------|
+| Exact | Raw string match (case-insensitive) | 26.5% |
+| Normalized | Basic cleaning (CD4 positive → CD4+) | 30.9% |
+| Semantic | Full synonym resolution | 43.3% |
 
-**Conclusion:** Performance is NOT explained by memorization. If frequency drove performance, these patterns would be reversed.
+**Key finding:** Semantic matching adds **+17 percentage points** to detection rate. Half (50%) of all matches require synonym resolution.
+
+#### 3.2.3 Frequency Correlation by Matching Level
+
+| Matching Level | Spearman r | Interpretation |
+|----------------|------------|----------------|
+| **Exact** | **+0.341** | Moderate positive correlation |
+| Semantic | -0.038 | No correlation |
+
+**This is the opposite of the expected confound direction.**
+
+#### 3.2.4 Interpretation
+
+The synonym system **masks** the frequency effect rather than inflating it:
+
+```
+Without synonyms (exact matching):
+  Common terms → detected more often (r = 0.34)
+  Rare terms → detected less often
+
+With synonyms (semantic matching):
+  Rare terms get synonym help → detection boosted
+  Correlation disappears (r ≈ 0)
+```
+
+**Examples:**
+
+| Population | PubMed Freq | Exact Det. | Semantic Det. |
+|------------|-------------|------------|---------------|
+| T cells | 319,204 | 79% | 98% |
+| SLAN+ Nonclassical Monocytes | 2 | 0% | 77% |
+| CD45+ (additional cleaning) | 1 | 0% | 100% |
+
+**Conclusions:**
+
+1. **There IS a moderate frequency effect** (r = 0.34 with exact matching) - LLMs do predict common populations better
+2. **The semantic evaluation corrects for this bias** - synonym normalization gives rare/specialized terms a fair chance
+3. **The reported low correlation (r ≈ 0) reflects the evaluation methodology**, not absence of frequency effects in the model
+4. **This is a feature, not a bug** - the evaluation measures biological correctness regardless of naming convention
 
 **Detection by category:**
 
@@ -345,10 +376,10 @@ The same prediction receives both 1.0 and 0.0 depending on evaluation criteria.
    - F1 penalizes verbose naming
    - Judges show no quality difference
 
-4. **Performance reflects reasoning, not memorization**
-   - R² = 0.034 for frequency correlation
-   - Paradoxical success on rare terms
-   - Technical understanding > terminology familiarity
+4. **Frequency effect exists but is corrected by evaluation**
+   - Raw correlation r = 0.34 (LLMs do favor common terms)
+   - Synonym normalization reduces this to r ≈ 0
+   - Evaluation methodology measures biological correctness, not naming familiarity
 
 ### Recommendations
 
