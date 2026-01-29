@@ -25,7 +25,7 @@
         "confidence": 0.75,
         "timestamp": "2026-01-09T19:15:04.543982",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC3418807.xml",
+        "source_file": "papers/PMC3418807.xml",
         "notes": null
       }
     },
@@ -79,7 +79,7 @@
         "confidence": 0.3,
         "timestamp": "2026-01-09T19:15:09.822670",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC3418807.xml",
+        "source_file": "papers/PMC3418807.xml",
         "notes": null
       }
     },
@@ -90,7 +90,7 @@
       "cross_references": ["OMIP-001"],
       "notes": "Panel for measuring Th1 and Th2 cytokine polyfunctionality in T cells.",
       "pdf_verified": true,
-      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms363148.pdf"
+      "pdf_source": "papers/OMIP/nihms363148.pdf"
     }
   },
   "concordance": {

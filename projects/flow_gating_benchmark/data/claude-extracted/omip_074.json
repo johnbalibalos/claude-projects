@@ -148,7 +148,7 @@
         "confidence": 0.9,
         "timestamp": "2026-01-09T19:16:06.999370",
         "model": null,
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC8453800.xml",
+        "source_file": "papers/PMC8453800.xml",
         "notes": "Extracted from TABLE 2"
       },
       "llm": {
@@ -256,7 +256,7 @@
         "confidence": 0.75,
         "timestamp": "2026-01-09T19:16:15.093249",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC8453800.xml",
+        "source_file": "papers/PMC8453800.xml",
         "notes": null
       }
     },
@@ -389,7 +389,7 @@
         "confidence": 0.9,
         "timestamp": "2026-01-09T19:16:29.715175",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC8453800.xml",
+        "source_file": "papers/PMC8453800.xml",
         "notes": null
       }
     },
@@ -399,7 +399,7 @@
       "application": "Phenotyping IgA and IgG subclasses on B cells",
       "cross_references": ["OMIP-003", "OMIP-033", "OMIP-043", "OMIP-047", "OMIP-051"],
       "pdf_verified": true,
-      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/CYTO-99-880.pdf"
+      "pdf_source": "papers/OMIP/CYTO-99-880.pdf"
     }
   },
   "concordance": {

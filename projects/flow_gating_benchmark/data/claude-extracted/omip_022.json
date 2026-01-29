@@ -120,7 +120,7 @@
         "confidence": 0.9,
         "timestamp": "2026-01-09T19:15:09.837067",
         "model": null,
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC4231567.xml",
+        "source_file": "papers/PMC4231567.xml",
         "notes": "Extracted from Table 2"
       },
       "llm": {
@@ -208,7 +208,7 @@
         "confidence": 0.75,
         "timestamp": "2026-01-09T19:15:15.984021",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC4231567.xml",
+        "source_file": "papers/PMC4231567.xml",
         "notes": null
       }
     },
@@ -290,7 +290,7 @@
         "confidence": 0.9,
         "timestamp": "2026-01-09T19:15:24.558205",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC4231567.xml",
+        "source_file": "papers/PMC4231567.xml",
         "notes": null
       }
     },
@@ -301,7 +301,7 @@
       "cross_references": ["OMIP-001", "OMIP-008", "OMIP-009", "OMIP-014"],
       "notes": "Panel for comprehensive assessment of antigen-specific human T-cell functionality and memory. Developed for TB vaccine research. Includes memory markers (CCR7, CD45RO), Th1/Th17/Th22 cytokines, degranulation (CD107a), and activation (CD154).",
       "pdf_verified": true,
-      "pdf_source": "/home/jb/claude-projects/docs/papers/omip022.pdf"
+      "pdf_source": "papers/omip022.pdf"
     }
   },
   "concordance": {

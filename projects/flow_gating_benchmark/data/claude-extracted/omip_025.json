@@ -105,7 +105,7 @@
         "confidence": 0.75,
         "timestamp": "2026-01-09T19:15:31.504202",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC4454451.xml",
+        "source_file": "papers/PMC4454451.xml",
         "notes": null
       }
     },
@@ -197,7 +197,7 @@
         "confidence": 0.6,
         "timestamp": "2026-01-09T19:15:43.017202",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC4454451.xml",
+        "source_file": "papers/PMC4454451.xml",
         "notes": null
       }
     },
@@ -208,7 +208,7 @@
       "cross_references": ["OMIP-014"],
       "notes": "Evaluation of human T- and NK-cell responses including memory and follicular helper phenotype by intracellular cytokine staining.",
       "pdf_verified": true,
-      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms694613.pdf"
+      "pdf_source": "papers/OMIP/nihms694613.pdf"
     }
   },
   "concordance": {

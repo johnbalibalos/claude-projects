@@ -1,0 +1,33 @@
+{
+  "analysis_date": "2026-01-15",
+  "frequencies_file": "data/cache/pubmed_frequencies.json",
+  "results_file": "./results/full_benchmark_20260114/scoring_results.json",
+  "n_bootstrap": 1000,
+  "min_observations": 3,
+  "metrics": {
+    "pearson_r": 0.14835854117032582,
+    "pearson_r2": 0.02201025673818726,
+    "pearson_p": 0.02889318748913594,
+    "spearman_r": 0.20283765025744085,
+    "spearman_p": 0.0026821537372720833,
+    "r2_bootstrap_mean": 0.025413476996198482,
+    "r2_bootstrap_std": 0.01844286973322884,
+    "r2_ci_95_lower": 0.000285661393790836,
+    "r2_ci_95_upper": 0.06760492843680009,
+    "n_outliers": 40,
+    "r2_without_outliers": 0.022336671465088394,
+    "max_influence_population": "DNA+",
+    "max_influence_r2_change": 0.011188816599256586,
+    "permutation_p": 0.035,
+    "r2_trimmed_5pct": 0.03261309198719971,
+    "r2_trimmed_10pct": 0.02770676127116589,
+    "n_populations": 217,
+    "cook_d_max": 0.15063461673384165,
+    "leverage_max": 0.04550893096174283
+  },
+  "summary": {
+    "verdict": "FREQUENCY EFFECT RULED OUT",
+    "max_r2": 0.03261309198719971,
+    "ci_upper": 0.06760492843680009
+  }
+}

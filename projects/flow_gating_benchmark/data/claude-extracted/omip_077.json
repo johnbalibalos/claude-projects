@@ -113,7 +113,7 @@
         "confidence": 0.9,
         "timestamp": "2026-01-09T19:16:40.761712",
         "model": null,
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC9292053.xml",
+        "source_file": "papers/PMC9292053.xml",
         "notes": "Extracted from TABLE 2"
       },
       "llm": {
@@ -196,7 +196,7 @@
         "confidence": 0.75,
         "timestamp": "2026-01-09T19:16:46.536122",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC9292053.xml",
+        "source_file": "papers/PMC9292053.xml",
         "notes": null
       }
     },
@@ -230,7 +230,7 @@
         "confidence": 0.3,
         "timestamp": "2026-01-09T19:16:40.761729",
         "model": null,
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC9292053.xml",
+        "source_file": "papers/PMC9292053.xml",
         "notes": "Phenotype table only, no tree structure"
       },
       "llm": {
@@ -348,7 +348,7 @@
         "confidence": 0.7,
         "timestamp": "2026-01-09T19:16:58.358831",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC9292053.xml",
+        "source_file": "papers/PMC9292053.xml",
         "notes": null
       }
     },
@@ -359,7 +359,7 @@
       "cross_references": ["OMIP-023", "OMIP-024", "OMIP-042", "OMIP-051", "OMIP-063"],
       "notes": "Optimized for whole blood analysis including polymorphonuclear cells. No viability dye used - dead cells excluded by FSC/SSC. Supports absolute cell counting. Detects CD34+ progenitors and mDC subsets (CD1c+ vs CD141+).",
       "pdf_verified": true,
-      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/CYTO-101-15.pdf"
+      "pdf_source": "papers/OMIP/CYTO-101-15.pdf"
     }
   },
   "concordance": {

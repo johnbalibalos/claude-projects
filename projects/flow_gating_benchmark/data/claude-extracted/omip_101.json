@@ -204,7 +204,7 @@
         "confidence": 0.9,
         "timestamp": "2026-01-09T19:14:06.560494",
         "model": null,
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC10958279.xml",
+        "source_file": "papers/PMC10958279.xml",
         "notes": "Extracted from Table 2."
       },
       "llm": {
@@ -352,7 +352,7 @@
         "confidence": 0.75,
         "timestamp": "2026-01-09T19:14:14.774939",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC10958279.xml",
+        "source_file": "papers/PMC10958279.xml",
         "notes": null
       }
     },
@@ -541,7 +541,7 @@
         "confidence": 0.85,
         "timestamp": "2026-01-09T19:14:35.397442",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC10958279.xml",
+        "source_file": "papers/PMC10958279.xml",
         "notes": null
       }
     },
@@ -552,7 +552,7 @@
       "cross_references": ["OMIP-062", "OMIP-063", "OMIP-069", "OMIP-077", "OMIP-078"],
       "notes": "27-color flow cytometry panel for immunophenotyping of major leukocyte populations in fixed whole blood.",
       "pdf_verified": true,
-      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms-1964512.pdf"
+      "pdf_source": "papers/OMIP/nihms-1964512.pdf"
     }
   },
   "concordance": {

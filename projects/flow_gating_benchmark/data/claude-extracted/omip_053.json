@@ -25,7 +25,7 @@
         "confidence": 0.75,
         "timestamp": "2026-01-09T19:16:00.038606",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC6497402.xml",
+        "source_file": "papers/PMC6497402.xml",
         "notes": null
       }
     },
@@ -79,7 +79,7 @@
         "confidence": 0.3,
         "timestamp": "2026-01-09T19:16:06.984257",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC6497402.xml",
+        "source_file": "papers/PMC6497402.xml",
         "notes": null
       }
     },
@@ -90,7 +90,7 @@
       "cross_references": ["OMIP-004", "OMIP-006", "OMIP-015"],
       "notes": "Inter-convertible panel with ATREG (intra-nuclear markers including FoxP3, HELIOS, Ki67) and BTREG (surface markers only for sorting including TIGIT, CD226, CD38, CD39). Identifies 3 Treg-defining populations: TDP-1 (CD127lo/CD25hi/FoxP3+), TDP-2 (resting vs activated Treg by CD45RA/FoxP3), TDP-3 (thymic Treg by FoxP3/HELIOS). NOTE: Current panel extraction incomplete - full panel has 17 markers across both sub-panels.",
       "pdf_verified": true,
-      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms-1017368.pdf"
+      "pdf_source": "papers/OMIP/nihms-1017368.pdf"
     }
   },
   "concordance": {

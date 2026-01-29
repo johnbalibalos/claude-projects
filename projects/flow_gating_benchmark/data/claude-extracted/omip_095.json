@@ -14,7 +14,7 @@
         "confidence": 0.75,
         "timestamp": "2026-01-09T19:13:56.093466",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC10843696.xml",
+        "source_file": "papers/PMC10843696.xml",
         "notes": null
       }
     },
@@ -118,7 +118,7 @@
         "confidence": 0.4,
         "timestamp": "2026-01-09T19:14:06.551537",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC10843696.xml",
+        "source_file": "papers/PMC10843696.xml",
         "notes": null
       }
     },
@@ -129,7 +129,7 @@
       "cross_references": ["OMIP-031", "OMIP-032", "OMIP-054", "OMIP-057", "OMIP-059", "OMIP-061", "OMIP-076", "OMIP-079", "OMIP-093"],
       "notes": "40-color spectral flow cytometry panel for comprehensive characterization of murine leukocyte populations across multiple lymphoid tissues.",
       "pdf_verified": true,
-      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms-1926997.pdf"
+      "pdf_source": "papers/OMIP/nihms-1926997.pdf"
     }
   },
   "concordance": {

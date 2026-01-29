@@ -35,7 +35,7 @@
         "confidence": 0.75,
         "timestamp": "2026-01-09T19:15:45.970073",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC5494841.xml",
+        "source_file": "papers/PMC5494841.xml",
         "notes": null
       }
     },
@@ -126,7 +126,7 @@
         "confidence": 0.7,
         "timestamp": "2026-01-09T19:15:55.353475",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC5494841.xml",
+        "source_file": "papers/PMC5494841.xml",
         "notes": null
       }
     },
@@ -137,7 +137,7 @@
       "cross_references": ["OMIP-007", "OMIP-027", "OMIP-028"],
       "notes": "Functional analysis of Natural Killer cell subsets in rhesus macaques using 721.221 target cell stimulation.",
       "pdf_verified": true,
-      "pdf_source": "/home/jb/claude-projects/docs/papers/OMIP/nihms866639.pdf"
+      "pdf_source": "papers/OMIP/nihms866639.pdf"
     }
   },
   "concordance": {

@@ -246,7 +246,7 @@
         "confidence": 0.9,
         "timestamp": "2026-01-09T19:14:35.408831",
         "model": null,
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC12244433.xml",
+        "source_file": "papers/PMC12244433.xml",
         "notes": "Extracted from TABLE 1"
       },
       "llm": {
@@ -424,7 +424,7 @@
         "confidence": 0.75,
         "timestamp": "2026-01-09T19:14:45.587541",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC12244433.xml",
+        "source_file": "papers/PMC12244433.xml",
         "notes": null
       }
     },
@@ -563,7 +563,7 @@
         "confidence": 0.9,
         "timestamp": "2026-01-09T19:15:00.191670",
         "model": "claude-sonnet-4-20250514",
-        "source_file": "/home/jb/claude-projects/docs/papers/PMC12244433.xml",
+        "source_file": "papers/PMC12244433.xml",
         "notes": null
       }
     },
