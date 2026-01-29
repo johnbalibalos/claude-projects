@@ -6,9 +6,9 @@ Evaluate LLM capabilities in predicting flow cytometry gating strategies from pa
 
 ## Key Finding
 
-**gemini-2.5-pro leads at 0.36 F1, but F1 is a flawed metric** - it penalizes biologically correct predictions that use different naming conventions. LLM judge evaluation shows models reason about gating structure rather than memorizing terminology (R² = 0.034 for frequency correlation).
+**gemini-2.5-pro leads at 0.36 F1, but F1 is a flawed metric** - it penalizes biologically correct predictions that use different naming conventions. LLM judge evaluation shows models reason about gating structure rather than memorizing terminology.
 
-See [docs/DETAILED_RESULTS.md](docs/DETAILED_RESULTS.md) for full analysis.
+**Frequency Confound Update:** Initial R² = 0.06 (exact match PubMed) suggested weak correlation. After synonym aggregation, **R² = 0.36** — frequency explains ~36% of variance. The exact-match method severely underestimates the true frequency effect. See [docs/DETAILED_RESULTS.md](docs/DETAILED_RESULTS.md) for full analysis.
 
 ---
 

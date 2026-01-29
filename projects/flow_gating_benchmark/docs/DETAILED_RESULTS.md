@@ -15,13 +15,13 @@ FlowBench evaluates whether large language models can predict flow cytometry gat
 | **Best Model (Judge)** | gemini-2.5-pro (0.59) |
 | **HIPC Reference Impact** | +5.6% F1 |
 | **Rich Context Impact** | +8% F1 (pending re-evaluation) |
-| **Frequency Confound** | R² = 0.034 (memorization NOT supported) |
+| **Frequency Confound** | R² = 0.06 (exact) → **0.36 (aggregated)** |
 
 **Key Insights:**
 1. **Models perform moderately well** - gemini-2.5-pro leads at 0.36 F1, but all models achieve >0.30
 2. **F1 is a flawed metric** - it measures string similarity, not biological correctness
 3. **The "CoT hurts" finding is a metric artifact** - LLM judges show no quality difference
-4. **Performance is not explained by memorization** - R² = 0.034 for frequency correlation
+4. **Frequency confound is moderate** - R² = 0.36 after synonym aggregation (exact match underestimates)
 
 ---
 
@@ -234,41 +234,91 @@ Both predictions are **biologically correct**. CoT uses more verbose, marker-pre
 
 **Question:** Is model performance explained by term frequency in training data?
 
-**Method:** Correlated detection rate for 107 cell populations with their PubMed citation frequency.
+#### The Measurement Problem
 
-**Results:**
+**Initial approach:** Query PubMed for exact phrase matches of each population name.
 
-| Metric | Value | Interpretation |
-|--------|-------|----------------|
-| Pearson r | 0.184 | Weak positive (near noise) |
-| **R²** | **0.034** | Only 3.4% of variance explained |
-| Regression Slope | 0.045 | Nearly flat |
+**Problem identified:** PubMed exact match (`term=f'"{query}"'`) severely underestimates true training frequency because:
+1. Same population has many synonyms ("CD4+ T cells" ≠ "Helper T cells" ≠ "Th cells")
+2. Marker-based gate names return zero hits ("CD11b+ pre-mNKs" → 0 results)
+3. Training data includes non-PubMed sources (textbooks, Wikipedia, protocols)
 
-**Interpretation thresholds:**
+#### Results: Exact Match vs Synonym-Aggregated
 
-| R² Range | Interpretation | This Study |
-|----------|----------------|------------|
-| > 0.8 | Frequency explains performance | No |
-| 0.5-0.8 | Mixed evidence | No |
-| < 0.25 | Frequency does NOT explain | **Yes (R² = 0.034)** |
+| Metric | Exact Match | Synonym-Aggregated | Change |
+|--------|-------------|-------------------|--------|
+| Pearson r | +0.245 | +0.601 | +145% |
+| **R²** | **0.060** | **0.362** | **+503%** |
+| Sample size | 217 populations | 217 populations | — |
 
-**Paradoxical cases:**
+**Interpretation:** The exact-match R² of 0.06 dramatically underestimates the true frequency effect. With synonym aggregation, R² jumps to 0.36 — **frequency explains ~36% of performance variance**.
 
-| "Should Succeed" (Common) | Detection Rate |
-|---------------------------|----------------|
-| CD4+ T cells | 16.7% |
-| CD8+ T cells | 16.7% |
-| IgG+ B cells | 20.0% |
+#### Aggregation Methodology
 
-| "Should Fail" (Rare) | Detection Rate |
-|----------------------|----------------|
-| T Follicular Helper Cells | 100% |
-| Live Cells (as term) | 100% |
-| Non-classical Monocytes | 100% |
+Used the project's existing synonym dictionary (~138 synonyms → 46 canonical forms) to group related terms:
 
-**Conclusion:** Performance is NOT explained by memorization. If frequency drove performance, these patterns would be reversed.
+| Canonical Form | Example Synonyms | Aggregated Frequency |
+|----------------|------------------|---------------------|
+| `t_cells` | "T cells", "T lymphocytes", "CD3+ T cells" | 341,071 |
+| `cd4_t_cells` | "CD4+ T cells", "Helper T cells", "Th cells" | 56,704 |
+| `nk_cells` | "NK cells", "Natural killer cells", "CD56+CD3-" | 45,550 |
+| `tregs` | "Tregs", "Regulatory T cells", "T regulatory cells" | 54,970 |
 
-**Detection by category:**
+#### Evidence of Measurement Noise
+
+**Populations with zero exact match but high aggregated frequency:**
+
+| Population Name | Exact Hits | Aggregated | Canonical |
+|-----------------|------------|------------|-----------|
+| CD11b+ pre-mNKs | 0 | 45,550 | nk_cells |
+| Non-MAIT αβ T cells | 0 | 341,071 | t_cells |
+| FSC Singlets | 0 | 20,502 | singlets |
+
+These aren't rare populations — the exact names just don't appear in literature.
+
+**Populations with massive aggregation gains:**
+
+| Population | Exact | Aggregated | Ratio |
+|------------|-------|------------|-------|
+| CD45+ (additional cleaning) | 1 | 201,501 | 201,501× |
+| Stem cell memory CD8 T cells | 3 | 341,071 | 113,690× |
+| Terminal effector CD4 T cells | 5 | 341,071 | 68,214× |
+| SLAN+ Nonclassical Monocytes | 2 | 118,896 | 59,448× |
+
+#### Updated Interpretation
+
+| R² Range | Interpretation | Exact Match | Aggregated |
+|----------|----------------|-------------|------------|
+| > 0.5 | Frequency strongly explains performance | No | No |
+| 0.25-0.5 | **Moderate frequency effect** | No | **Yes (0.36)** |
+| < 0.25 | Frequency does NOT explain | Yes (0.06) | No |
+
+**Revised conclusion:** The frequency confound is **moderate, not negligible**. Term frequency in training data explains ~36% of model performance variance. The remaining ~64% reflects reasoning capability, panel complexity, and other factors.
+
+#### Implications
+
+1. **Alien Cell test becomes critical** — it's independent of this naming/frequency confound
+2. **R² = 0.36 is still a lower bound** — true training frequency (including textbooks, Wikipedia) is unmeasured
+3. **Models partially rely on familiarity** — common cell types are easier to predict
+4. **But reasoning matters too** — 64% of variance is unexplained by frequency
+
+#### Legacy Analysis (for reference)
+
+The original exact-match analysis found paradoxical cases that now make more sense:
+
+| "Should Succeed" (Common term) | Detection Rate | Explanation |
+|--------------------------------|----------------|-------------|
+| CD4+ T cells | 16.7% | Exact name match, but many panels use different naming |
+| CD8+ T cells | 16.7% | Same issue |
+
+| "Should Fail" (Rare term) | Detection Rate | Explanation |
+|---------------------------|----------------|-------------|
+| T Follicular Helper Cells | 100% | Well-defined, unambiguous population |
+| Non-classical Monocytes | 100% | Standard terminology |
+
+These paradoxes reflect **naming ambiguity** more than reasoning vs memorization.
+
+#### Technical Gates Still Highest Detection
 
 | Category | Avg Detection | n | Notes |
 |----------|---------------|---|-------|
@@ -279,7 +329,7 @@ Both predictions are **biologically correct**. CoT uses more verbose, marker-pre
 | T cells | 38.8% | 16 | |
 | Other | 9.2% | 24 | Specialized terminology |
 
-**Key insight:** Technical gates have highest detection despite "Singlets" being rare in general literature. The model understands **gating structure** better than **biological terminology**.
+**Key insight:** Technical gates have highest detection despite "Singlets" being rare in general literature. The model understands **gating structure conventions** better than specialized **biological terminology**.
 
 ### 3.3 F1 vs Judge Disagreement
 
@@ -390,10 +440,11 @@ After correcting alias extraction, **true hallucinations dropped to 17-76 per mo
    - F1 penalizes verbose naming
    - Judges show no quality difference
 
-4. **Performance reflects reasoning, not memorization**
-   - R² = 0.034 for frequency correlation
-   - Paradoxical success on rare terms
-   - Technical understanding > terminology familiarity
+4. **Performance reflects both frequency and reasoning**
+   - R² = 0.36 for frequency correlation (after synonym aggregation)
+   - ~36% variance explained by term familiarity
+   - ~64% reflects reasoning, panel complexity, other factors
+   - Technical gates highest detection despite being rare terms
 
 5. **High variability can indicate multiple valid solutions**
    - Claude Opus: 96% different outputs, yet 39% scored ≥0.7 quality
@@ -411,7 +462,8 @@ After correcting alias extraction, **true hallucinations dropped to 17-76 per mo
 - Don't rely on F1 alone
 - Use multi-judge evaluation
 - Include synthetic controls
-- Test for frequency confounds
+- Test for frequency confounds with **synonym aggregation** (exact match underestimates)
+- Use Alien Cell test to isolate reasoning from frequency effects
 
 ---
 
@@ -441,6 +493,9 @@ python scripts/run_aggregated_multijudge.py \
     --predictions results/full_benchmark_20260114/predictions.json \
     --test-cases data/verified \
     --output results/full_benchmark_20260114/multijudge
+
+# Run frequency aggregation analysis (exact vs synonym-aggregated R²)
+python analyze_frequency_aggregation.py
 ```
 
 ---
