@@ -1,0 +1,376 @@
+{
+  "test_case_id": "OMIP-022-ALIEN-V2",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-022",
+  "doi": "10.1002/cyto.a.22478",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Cryopreserved PBMC (adult and infant)",
+    "species": "human",
+    "application": "T-cell phenotyping, memory categorization, cytokine production, and function following in vitro stimulation",
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "ALIEN CELL V2: Model is given naming convention in prompt. Tests instruction following vs memorization. Original: OMIP-022",
+    "cross_references": [
+      "OMIP-001",
+      "OMIP-008",
+      "OMIP-009",
+      "OMIP-014"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "papers/omip022.pdf"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "Viability Dye",
+        "fluorophore": "AViD",
+        "clone": "-",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "V500",
+        "clone": "M5E2",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "V500",
+        "clone": "HIB19",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "ECD",
+        "clone": "UCHT1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "APC-eFluor 780",
+        "clone": "RPA-T4",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "Ax700",
+        "clone": "HIT8a",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CCR7",
+        "fluorophore": "BV605",
+        "clone": "G043H7",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD45RO",
+        "fluorophore": "BV785",
+        "clone": "UCHL1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IFN-\u03b3",
+        "fluorophore": "V450",
+        "clone": "B27",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IL-2",
+        "fluorophore": "PE",
+        "clone": "MQ1-17H12",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "TNF",
+        "fluorophore": "PE-Cy7",
+        "clone": "MAb11",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IL-17A",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": "BL168",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IL-22",
+        "fluorophore": "APC",
+        "clone": "IL22JOP",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD107a",
+        "fluorophore": "Ax488",
+        "clone": "H4A3",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD154",
+        "fluorophore": "PE-Cy5",
+        "clone": "TRAP1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": [],
+      "gate_type": "Unknown",
+      "children": [
+        {
+          "name": "Plixnor Cells",
+          "markers": [],
+          "marker_logic": "TNF vs Time",
+          "gate_type": "Rectangle",
+          "children": [
+            {
+              "name": "Singlets",
+              "markers": [],
+              "marker_logic": "FSC-H vs FSC-A",
+              "gate_type": "Polygon",
+              "children": [
+                {
+                  "name": "Wumbus Cells",
+                  "markers": [],
+                  "marker_logic": "Dump- CD3+",
+                  "gate_type": "Rectangle",
+                  "children": [
+                    {
+                      "name": "Lymphocytes",
+                      "markers": [],
+                      "marker_logic": "SSC-A vs FSC-A",
+                      "gate_type": "Polygon",
+                      "children": [
+                        {
+                          "name": "Flurbigan Cells",
+                          "markers": [],
+                          "marker_logic": "CCR7 vs CD4 (remove high outliers)",
+                          "gate_type": "Rectangle",
+                          "children": [
+                            {
+                              "name": "Threxix Population",
+                              "markers": [],
+                              "marker_logic": "CD45RO vs CD8 (remove high outliers)",
+                              "gate_type": "Rectangle",
+                              "children": [
+                                {
+                                  "name": "Snorfalax Population",
+                                  "markers": [],
+                                  "marker_logic": "CD4+ CD8-",
+                                  "gate_type": "Rectangle",
+                                  "children": [
+                                    {
+                                      "name": "Zymbrix Subset",
+                                      "markers": [],
+                                      "marker_logic": "IL-2 vs IFN-\u03b3",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Prexilox Subset",
+                                      "markers": [],
+                                      "marker_logic": "IL-2 vs TNF",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Flonkian Subset",
+                                      "markers": [],
+                                      "marker_logic": "CD107a vs IFN-\u03b3",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Quixar Subset",
+                                      "markers": [],
+                                      "marker_logic": "CD154 vs IL-17A",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Glorp Cells",
+                                      "markers": [],
+                                      "marker_logic": "IL-22 vs IL-17A",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    }
+                                  ],
+                                  "is_critical": true
+                                },
+                                {
+                                  "name": "Vexilon Population",
+                                  "markers": [],
+                                  "marker_logic": "CD4- CD8+",
+                                  "gate_type": "Rectangle",
+                                  "children": [
+                                    {
+                                      "name": "Zymbrix Subset",
+                                      "markers": [],
+                                      "marker_logic": "IL-2 vs IFN-\u03b3",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Prexilox Subset",
+                                      "markers": [],
+                                      "marker_logic": "IL-2 vs TNF",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Flonkian Subset",
+                                      "markers": [],
+                                      "marker_logic": "CD107a vs IFN-\u03b3",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Quixar Subset",
+                                      "markers": [],
+                                      "marker_logic": "CD154 vs IL-17A",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Glorp Cells",
+                                      "markers": [],
+                                      "marker_logic": "IL-22 vs IL-17A",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    }
+                                  ],
+                                  "is_critical": true
+                                }
+                              ],
+                              "is_critical": true
+                            }
+                          ],
+                          "is_critical": true
+                        }
+                      ],
+                      "is_critical": true
+                    }
+                  ],
+                  "is_critical": true
+                }
+              ],
+              "is_critical": true
+            }
+          ],
+          "is_critical": false
+        }
+      ],
+      "is_critical": true
+    }
+  },
+  "validation": {
+    "curator_notes": "Alien Cell V2 generated from OMIP-022. Naming convention provided in prompt. Valid reasoning test."
+  },
+  "metadata": {
+    "curation_date": "2026-01-09",
+    "curator": "claude-extraction",
+    "flowkit_version": null,
+    "last_updated": "2026-01-13"
+  },
+  "difficulty": "medium",
+  "alien_cell_v2_metadata": {
+    "version": "2.0",
+    "name_mapping": {
+      "Time Gate": {
+        "alien_name": "Plixnor Cells",
+        "marker_logic": "TNF vs Time"
+      },
+      "Viable CD3+": {
+        "alien_name": "Wumbus Cells",
+        "marker_logic": "Dump- CD3+"
+      },
+      "Aggregate 1": {
+        "alien_name": "Flurbigan Cells",
+        "marker_logic": "CCR7 vs CD4 (remove high outliers)"
+      },
+      "Aggregate 2": {
+        "alien_name": "Threxix Population",
+        "marker_logic": "CD45RO vs CD8 (remove high outliers)"
+      },
+      "CD4+ T cells": {
+        "alien_name": "Snorfalax Population",
+        "marker_logic": "CD4+ CD8-"
+      },
+      "IL-2 vs IFN-\u03b3": {
+        "alien_name": "Zymbrix Subset",
+        "marker_logic": "IL-2 vs IFN-\u03b3"
+      },
+      "IL-2 vs TNF": {
+        "alien_name": "Prexilox Subset",
+        "marker_logic": "IL-2 vs TNF"
+      },
+      "CD107a vs IFN-\u03b3": {
+        "alien_name": "Flonkian Subset",
+        "marker_logic": "CD107a vs IFN-\u03b3"
+      },
+      "CD154 vs IL-17A": {
+        "alien_name": "Quixar Subset",
+        "marker_logic": "CD154 vs IL-17A"
+      },
+      "IL-22 vs IL-17A": {
+        "alien_name": "Glorp Cells",
+        "marker_logic": "IL-22 vs IL-17A"
+      },
+      "CD8+ T cells": {
+        "alien_name": "Vexilon Population",
+        "marker_logic": "CD4- CD8+"
+      }
+    },
+    "naming_convention_prompt": "## Lab Naming Convention\n\nThis laboratory uses non-standard population names. You MUST use these exact names in your hierarchy:\n\n- **Plixnor Cells**: defined by `TNF vs Time`\n- **Wumbus Cells**: defined by `Dump- CD3+`\n- **Flurbigan Cells**: defined by `CCR7 vs CD4 (remove high outliers)`\n- **Threxix Population**: defined by `CD45RO vs CD8 (remove high outliers)`\n- **Snorfalax Population**: defined by `CD4+ CD8-`\n- **Zymbrix Subset**: defined by `IL-2 vs IFN-\u03b3`\n- **Prexilox Subset**: defined by `IL-2 vs TNF`\n- **Flonkian Subset**: defined by `CD107a vs IFN-\u03b3`\n- **Quixar Subset**: defined by `CD154 vs IL-17A`\n- **Glorp Cells**: defined by `IL-22 vs IL-17A`\n- **Vexilon Population**: defined by `CD4- CD8+`\n\nUse standard names (Singlets, Lymphocytes, Live) for QC gates only.\n",
+    "original_test_case": "OMIP-022",
+    "transformation_type": "instruction_following_test",
+    "hypothesis": "Model is TOLD the naming convention. If it still outputs standard immunology names, it's ignoring instructions (memorization dominates). If it uses the provided alien names, it can follow instructions.",
+    "validity_note": "Unlike v1, this test is valid because the model has the information needed to produce the expected output."
+  }
+}

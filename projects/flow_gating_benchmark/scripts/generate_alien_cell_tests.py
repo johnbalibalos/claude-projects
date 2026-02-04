@@ -14,8 +14,8 @@ Example transformation:
 import json
 import random
 import string
-from pathlib import Path
 from copy import deepcopy
+from pathlib import Path
 
 # Nonsense cell names that cannot exist in training data
 ALIEN_NAMES = [

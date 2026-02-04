@@ -1,0 +1,64 @@
+{
+  "generated_at": "2026-02-04",
+  "version": "2.0",
+  "source": "verified",
+  "test_cases": [
+    {
+      "original": "OMIP-008",
+      "alien_v2": "OMIP-008-ALIEN-V2",
+      "transformations": 8,
+      "naming_convention_preview": "## Lab Naming Convention\n\nThis laboratory uses non-standard population names. You MUST use these exact names in your hierarchy:\n\n- **Zanthrex Population**: defined by `ViViD- CD3+ CD14- CD19-`\n- **Pli..."
+    },
+    {
+      "original": "OMIP-022",
+      "alien_v2": "OMIP-022-ALIEN-V2",
+      "transformations": 11,
+      "naming_convention_preview": "## Lab Naming Convention\n\nThis laboratory uses non-standard population names. You MUST use these exact names in your hierarchy:\n\n- **Plixnor Cells**: defined by `TNF vs Time`\n- **Wumbus Cells**: defin..."
+    },
+    {
+      "original": "OMIP-074",
+      "alien_v2": "OMIP-074-ALIEN-V2",
+      "transformations": 19,
+      "naming_convention_preview": "## Lab Naming Convention\n\nThis laboratory uses non-standard population names. You MUST use these exact names in your hierarchy:\n\n- **Blixtar Subset**: defined by `Time-gated events`\n- **Glorp Cells**:..."
+    },
+    {
+      "original": "OMIP-076",
+      "alien_v2": "OMIP-076-ALIEN-V2",
+      "transformations": 24,
+      "naming_convention_preview": "## Lab Naming Convention\n\nThis laboratory uses non-standard population names. You MUST use these exact names in your hierarchy:\n\n- **Prexilox Subset**: defined by `SSC-A vs FSC-A`\n- **Wumbus Cells**: ..."
+    },
+    {
+      "original": "OMIP-077",
+      "alien_v2": "OMIP-077-ALIEN-V2",
+      "transformations": 24,
+      "naming_convention_preview": "## Lab Naming Convention\n\nThis laboratory uses non-standard population names. You MUST use these exact names in your hierarchy:\n\n- **Zanthrex Population**: defined by `CD45+ (SSC-A vs CD45)`\n- **Grind..."
+    },
+    {
+      "original": "OMIP-083",
+      "alien_v2": "OMIP-083-ALIEN-V2",
+      "transformations": 15,
+      "naming_convention_preview": "## Lab Naming Convention\n\nThis laboratory uses non-standard population names. You MUST use these exact names in your hierarchy:\n\n- **Krondule Cells**: defined by `Exclude variable flow rate`\n- **Quixa..."
+    },
+    {
+      "original": "OMIP-087",
+      "alien_v2": "OMIP-087-ALIEN-V2",
+      "transformations": 24,
+      "naming_convention_preview": "## Lab Naming Convention\n\nThis laboratory uses non-standard population names. You MUST use these exact names in your hierarchy:\n\n- **Prexilox Subset**: defined by `DNA+ (live cells)`\n- **Grindlax Cell..."
+    },
+    {
+      "original": "OMIP-095",
+      "alien_v2": "OMIP-095-ALIEN-V2",
+      "transformations": 24,
+      "naming_convention_preview": "## Lab Naming Convention\n\nThis laboratory uses non-standard population names. You MUST use these exact names in your hierarchy:\n\n- **Prexilox Subset**: defined by `Fluorescence vs Time`\n- **Vondrak Ce..."
+    },
+    {
+      "original": "OMIP-101",
+      "alien_v2": "OMIP-101-ALIEN-V2",
+      "transformations": 24,
+      "naming_convention_preview": "## Lab Naming Convention\n\nThis laboratory uses non-standard population names. You MUST use these exact names in your hierarchy:\n\n- **Frimblax Population**: defined by `Consistent fluorescence over tim..."
+    }
+  ],
+  "total_cases": 9,
+  "purpose": "Valid test of instruction following vs memorization",
+  "methodology": "Naming convention is provided in the prompt. Model must use the given alien names. Failure to do so indicates memorization overriding explicit instructions."
+}

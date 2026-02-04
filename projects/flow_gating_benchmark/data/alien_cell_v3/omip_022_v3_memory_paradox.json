@@ -1,0 +1,345 @@
+{
+  "test_case_id": "OMIP-022-V3-memory_paradox",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-022",
+  "doi": "10.1002/cyto.a.22478",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Cryopreserved PBMC (adult and infant)",
+    "species": "human",
+    "application": "T-cell phenotyping, memory categorization, cytokine production, and function following in vitro stimulation",
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "ALIEN CELL V3: Tests biological reasoning. Novel population 'Memory Paradox' (CD45RO+ CCR7+ CD8+ IL-17A+) is rare_valid. Original: OMIP-022",
+    "cross_references": [
+      "OMIP-001",
+      "OMIP-008",
+      "OMIP-009",
+      "OMIP-014"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "papers/omip022.pdf"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "Viability Dye",
+        "fluorophore": "AViD",
+        "clone": "-",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "V500",
+        "clone": "M5E2",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "V500",
+        "clone": "HIB19",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "ECD",
+        "clone": "UCHT1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "APC-eFluor 780",
+        "clone": "RPA-T4",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "Ax700",
+        "clone": "HIT8a",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CCR7",
+        "fluorophore": "BV605",
+        "clone": "G043H7",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD45RO",
+        "fluorophore": "BV785",
+        "clone": "UCHL1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IFN-\u03b3",
+        "fluorophore": "V450",
+        "clone": "B27",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IL-2",
+        "fluorophore": "PE",
+        "clone": "MQ1-17H12",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "TNF",
+        "fluorophore": "PE-Cy7",
+        "clone": "MAb11",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IL-17A",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": "BL168",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IL-22",
+        "fluorophore": "APC",
+        "clone": "IL22JOP",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD107a",
+        "fluorophore": "Ax488",
+        "clone": "H4A3",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD154",
+        "fluorophore": "PE-Cy5",
+        "clone": "TRAP1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": [],
+      "gate_type": "Unknown",
+      "children": [
+        {
+          "name": "Time Gate",
+          "markers": [],
+          "marker_logic": "TNF vs Time",
+          "gate_type": "Rectangle",
+          "children": [
+            {
+              "name": "Singlets",
+              "markers": [],
+              "marker_logic": "FSC-H vs FSC-A",
+              "gate_type": "Polygon",
+              "children": [
+                {
+                  "name": "Viable CD3+",
+                  "markers": [],
+                  "marker_logic": "Dump- CD3+",
+                  "gate_type": "Rectangle",
+                  "children": [
+                    {
+                      "name": "Lymphocytes",
+                      "markers": [],
+                      "marker_logic": "SSC-A vs FSC-A",
+                      "gate_type": "Polygon",
+                      "children": [
+                        {
+                          "name": "Aggregate 1",
+                          "markers": [],
+                          "marker_logic": "CCR7 vs CD4 (remove high outliers)",
+                          "gate_type": "Rectangle",
+                          "children": [
+                            {
+                              "name": "Aggregate 2",
+                              "markers": [],
+                              "marker_logic": "CD45RO vs CD8 (remove high outliers)",
+                              "gate_type": "Rectangle",
+                              "children": [
+                                {
+                                  "name": "CD4+ T cells",
+                                  "markers": [],
+                                  "marker_logic": "CD4+ CD8-",
+                                  "gate_type": "Rectangle",
+                                  "children": [
+                                    {
+                                      "name": "IL-2 vs IFN-\u03b3",
+                                      "markers": [],
+                                      "marker_logic": "IL-2 vs IFN-\u03b3",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "IL-2 vs TNF",
+                                      "markers": [],
+                                      "marker_logic": "IL-2 vs TNF",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "CD107a vs IFN-\u03b3",
+                                      "markers": [],
+                                      "marker_logic": "CD107a vs IFN-\u03b3",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "CD154 vs IL-17A",
+                                      "markers": [],
+                                      "marker_logic": "CD154 vs IL-17A",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "IL-22 vs IL-17A",
+                                      "markers": [],
+                                      "marker_logic": "IL-22 vs IL-17A",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    }
+                                  ],
+                                  "is_critical": true
+                                },
+                                {
+                                  "name": "CD8+ T cells",
+                                  "markers": [],
+                                  "marker_logic": "CD4- CD8+",
+                                  "gate_type": "Rectangle",
+                                  "children": [
+                                    {
+                                      "name": "IL-2 vs IFN-\u03b3",
+                                      "markers": [],
+                                      "marker_logic": "IL-2 vs IFN-\u03b3",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "IL-2 vs TNF",
+                                      "markers": [],
+                                      "marker_logic": "IL-2 vs TNF",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "CD107a vs IFN-\u03b3",
+                                      "markers": [],
+                                      "marker_logic": "CD107a vs IFN-\u03b3",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "CD154 vs IL-17A",
+                                      "markers": [],
+                                      "marker_logic": "CD154 vs IL-17A",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "IL-22 vs IL-17A",
+                                      "markers": [],
+                                      "marker_logic": "IL-22 vs IL-17A",
+                                      "gate_type": "Quadrant",
+                                      "children": [],
+                                      "is_critical": false
+                                    }
+                                  ],
+                                  "is_critical": true
+                                }
+                              ],
+                              "is_critical": true
+                            }
+                          ],
+                          "is_critical": true
+                        }
+                      ],
+                      "is_critical": true
+                    }
+                  ],
+                  "is_critical": true
+                }
+              ],
+              "is_critical": true
+            }
+          ],
+          "is_critical": false
+        }
+      ],
+      "is_critical": true
+    }
+  },
+  "validation": {
+    "paper_source": null,
+    "wsp_extraction_match": null,
+    "discrepancies": [],
+    "curator_notes": null,
+    "validation_date": null
+  },
+  "metadata": {
+    "curation_date": "2026-01-09",
+    "curator": "claude-extraction",
+    "flowkit_version": null,
+    "last_updated": "2026-01-13"
+  },
+  "difficulty": "medium",
+  "alien_cell_v3_metadata": {
+    "version": "3.0",
+    "test_type": "biological_reasoning",
+    "novel_population": {
+      "name": "Memory Paradox",
+      "marker_logic": "CD45RO+ CCR7+ CD8+ IL-17A+",
+      "biological_status": "rare_valid",
+      "reasoning": "Central memory CD8 T cell making IL-17. Tc17 cells exist but are rare.",
+      "expected_behavior": "Accept, note Tc17 is an unusual but documented subset"
+    },
+    "original_test_case": "OMIP-022",
+    "prompt": "You are an expert cytometrist. Given the following panel information, predict the gating hierarchy that an expert would use for data analysis.\n\n## Panel\n\nMarkers: Viability Dye, CD14, CD19, CD3, CD4, CD8, CCR7, CD45RO, IFN-\u03b3, IL-2, TNF, IL-17A, IL-22, CD107a, CD154\n\n## Special Instruction\n\nA collaborating lab has identified a novel population they call \"Memory Paradox\" defined by the marker logic: `CD45RO+ CCR7+ CD8+ IL-17A+`.\n\nPlease incorporate this population into your gating hierarchy at the appropriate location.\n\n## Task\n\nPredict the complete gating hierarchy, starting from \"All Events\" through appropriate quality control gates to final cell population identification. Include the novel \"Memory Paradox\" population.\n\nIf you have concerns about the biological plausibility of the novel population, please note them before providing your hierarchy.\n\nReturn your answer as a JSON object with this structure:\n{\n    \"name\": \"Gate Name\",\n    \"markers\": [\"marker1\", \"marker2\"],\n    \"children\": [...]\n}\n\nProvide only the JSON hierarchy in your final answer, but you may include brief notes about biological considerations before the JSON.\n",
+    "evaluation_criteria": {
+      "blind_acceptance": "Model inserts population without comment \u2192 poor reasoning",
+      "flags_issue": "Model notes biological concerns \u2192 good reasoning",
+      "explains_context": "Model explains when/why this might occur \u2192 excellent reasoning",
+      "refuses": "Model refuses to include impossible combination \u2192 strong reasoning"
+    }
+  }
+}

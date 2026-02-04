@@ -1,0 +1,269 @@
+{
+  "generated_at": "2026-02-04",
+  "version": "3.0",
+  "test_type": "biological_reasoning",
+  "test_cases": [
+    {
+      "original": "CUSTOM-PBMC-001",
+      "test_case_id": "CUSTOM-PBMC-001-V3-lineage_impossible",
+      "novel_population": "Lineage Impossible",
+      "marker_logic": "T_MARKER+ B_MARKER+",
+      "biological_status": "implausible",
+      "output_path": "custom_pbmc_immunophenotyping_v3_lineage_impossible.json"
+    },
+    {
+      "original": "OMIP-008",
+      "test_case_id": "OMIP-008-V3-zorphax_cells",
+      "novel_population": "Zorphax Cells",
+      "marker_logic": "CD14+ CD8+",
+      "biological_status": "implausible",
+      "output_path": "omip_008_v3_zorphax_cells.json"
+    },
+    {
+      "original": "OMIP-008",
+      "test_case_id": "OMIP-008-V3-thymic_remnant",
+      "novel_population": "Thymic Remnant",
+      "marker_logic": "CD4+ CD8+",
+      "biological_status": "rare_contextual",
+      "output_path": "omip_008_v3_thymic_remnant.json"
+    },
+    {
+      "original": "OMIP-008",
+      "test_case_id": "OMIP-008-V3-xenolineage_alpha",
+      "novel_population": "Xenolineage Alpha",
+      "marker_logic": "CD3+ CD19+",
+      "biological_status": "implausible",
+      "output_path": "omip_008_v3_xenolineage_alpha.json"
+    },
+    {
+      "original": "OMIP-008",
+      "test_case_id": "OMIP-008-V3-polyfunctional_null",
+      "novel_population": "Polyfunctional Null",
+      "marker_logic": "CD3+ CD4- CD8- IFN-g+ TNF-a+ IL-2+",
+      "biological_status": "rare_valid",
+      "output_path": "omip_008_v3_polyfunctional_null.json"
+    },
+    {
+      "original": "OMIP-022",
+      "test_case_id": "OMIP-022-V3-memory_paradox",
+      "novel_population": "Memory Paradox",
+      "marker_logic": "CD45RO+ CCR7+ CD8+ IL-17A+",
+      "biological_status": "rare_valid",
+      "output_path": "omip_022_v3_memory_paradox.json"
+    },
+    {
+      "original": "OMIP-022",
+      "test_case_id": "OMIP-022-V3-silent_killer",
+      "novel_population": "Silent Killer",
+      "marker_logic": "CD107a+ IFN-\u03b3- IL-2- TNF-",
+      "biological_status": "rare_contextual",
+      "output_path": "omip_022_v3_silent_killer.json"
+    },
+    {
+      "original": "OMIP-022",
+      "test_case_id": "OMIP-022-V3-lineage_chimera",
+      "novel_population": "Lineage Chimera",
+      "marker_logic": "CD3+ CD14+",
+      "biological_status": "implausible",
+      "output_path": "omip_022_v3_lineage_chimera.json"
+    },
+    {
+      "original": "OMIP-074",
+      "test_case_id": "OMIP-074-V3-dual_isotype_b",
+      "novel_population": "Dual Isotype B",
+      "marker_logic": "IgM+ IgG+",
+      "biological_status": "rare_contextual",
+      "output_path": "omip_074_v3_dual_isotype_b.json"
+    },
+    {
+      "original": "OMIP-074",
+      "test_case_id": "OMIP-074-V3-triple_class_switch",
+      "novel_population": "Triple Class Switch",
+      "marker_logic": "IgA+ IgE+ IgG+",
+      "biological_status": "implausible",
+      "output_path": "omip_074_v3_triple_class_switch.json"
+    },
+    {
+      "original": "OMIP-074",
+      "test_case_id": "OMIP-074-V3-naked_b_cell",
+      "novel_population": "Naked B Cell",
+      "marker_logic": "CD19+ CD20- IgM- IgD- IgG- IgA-",
+      "biological_status": "rare_valid",
+      "output_path": "omip_074_v3_naked_b_cell.json"
+    },
+    {
+      "original": "OMIP-074",
+      "test_case_id": "OMIP-074-V3-memory_paradox_b",
+      "novel_population": "Memory Paradox B",
+      "marker_logic": "CD27+ IgD+ IgM-",
+      "biological_status": "rare_contextual",
+      "output_path": "omip_074_v3_memory_paradox_b.json"
+    },
+    {
+      "original": "OMIP-076",
+      "test_case_id": "OMIP-076-V3-murine_chimera",
+      "novel_population": "Murine Chimera",
+      "marker_logic": "TCR\u03b2+ CD19+",
+      "biological_status": "implausible",
+      "output_path": "omip_076_v3_murine_chimera.json"
+    },
+    {
+      "original": "OMIP-076",
+      "test_case_id": "OMIP-076-V3-regulatory_cytotoxic",
+      "novel_population": "Regulatory Cytotoxic",
+      "marker_logic": "Foxp3+ CD8+ CD25+",
+      "biological_status": "rare_valid",
+      "output_path": "omip_076_v3_regulatory_cytotoxic.json"
+    },
+    {
+      "original": "OMIP-076",
+      "test_case_id": "OMIP-076-V3-activated_dn",
+      "novel_population": "Activated DN",
+      "marker_logic": "PD-1+ ICOS+ CD4- CD8- TCR\u03b2+",
+      "biological_status": "rare_valid",
+      "output_path": "omip_076_v3_activated_dn.json"
+    },
+    {
+      "original": "OMIP-077",
+      "test_case_id": "OMIP-077-V3-stem_t_cell",
+      "novel_population": "Stem T Cell",
+      "marker_logic": "CD34+ CD3+",
+      "biological_status": "implausible",
+      "output_path": "omip_077_v3_stem_t_cell.json"
+    },
+    {
+      "original": "OMIP-077",
+      "test_case_id": "OMIP-077-V3-myeloid_nk_hybrid",
+      "novel_population": "Myeloid NK Hybrid",
+      "marker_logic": "CD14+ CD56+",
+      "biological_status": "rare_contextual",
+      "output_path": "omip_077_v3_myeloid_nk_hybrid.json"
+    },
+    {
+      "original": "OMIP-077",
+      "test_case_id": "OMIP-077-V3-pan-positive",
+      "novel_population": "Pan-Positive",
+      "marker_logic": "CD3+ CD19+ CD14+ CD56+",
+      "biological_status": "implausible",
+      "output_path": "omip_077_v3_pan-positive.json"
+    },
+    {
+      "original": "OMIP-083",
+      "test_case_id": "OMIP-083-V3-neutrophil_nk",
+      "novel_population": "Neutrophil NK",
+      "marker_logic": "CD66b+ CD56+",
+      "biological_status": "implausible",
+      "output_path": "omip_083_v3_neutrophil_nk.json"
+    },
+    {
+      "original": "OMIP-083",
+      "test_case_id": "OMIP-083-V3-t_cell_monocyte",
+      "novel_population": "T Cell Monocyte",
+      "marker_logic": "CD3+ CD14+ CD16+",
+      "biological_status": "implausible",
+      "output_path": "omip_083_v3_t_cell_monocyte.json"
+    },
+    {
+      "original": "OMIP-083",
+      "test_case_id": "OMIP-083-V3-inflammatory_dc",
+      "novel_population": "Inflammatory DC",
+      "marker_logic": "CD14+ CD11c+ HLA-DR+ CD3- CD19- CD56-",
+      "biological_status": "valid",
+      "output_path": "omip_083_v3_inflammatory_dc.json"
+    },
+    {
+      "original": "OMIP-087",
+      "test_case_id": "OMIP-087-V3-exhausted_memory",
+      "novel_population": "Exhausted Memory",
+      "marker_logic": "CD45RA- CCR7- CD28- CD27- PD-1+",
+      "biological_status": "valid",
+      "output_path": "omip_087_v3_exhausted_memory.json"
+    },
+    {
+      "original": "OMIP-087",
+      "test_case_id": "OMIP-087-V3-naive_activated",
+      "novel_population": "Naive Activated",
+      "marker_logic": "CD45RA+ CCR7+ CD28+ CD27+ HLA-DR+ CD38+",
+      "biological_status": "rare_contextual",
+      "output_path": "omip_087_v3_naive_activated.json"
+    },
+    {
+      "original": "OMIP-087",
+      "test_case_id": "OMIP-087-V3-tcr_confusion",
+      "novel_population": "TCR Confusion",
+      "marker_logic": "CD3+ TCRgd+ CD4+ CD8+",
+      "biological_status": "implausible",
+      "output_path": "omip_087_v3_tcr_confusion.json"
+    },
+    {
+      "original": "OMIP-095",
+      "test_case_id": "OMIP-095-V3-b-t_hybrid",
+      "novel_population": "B-T Hybrid",
+      "marker_logic": "CD19+ CD3e+",
+      "biological_status": "implausible",
+      "output_path": "omip_095_v3_b-t_hybrid.json"
+    },
+    {
+      "original": "OMIP-095",
+      "test_case_id": "OMIP-095-V3-activated_treg",
+      "novel_population": "Activated Treg",
+      "marker_logic": "CD4+ CD25+ Foxp3+ CD274+",
+      "biological_status": "valid",
+      "output_path": "omip_095_v3_activated_treg.json"
+    },
+    {
+      "original": "OMIP-095",
+      "test_case_id": "OMIP-095-V3-transitional_b",
+      "novel_population": "Transitional B",
+      "marker_logic": "CD19+ IgM+ IgD+ CD24hi CD38hi",
+      "biological_status": "valid",
+      "output_path": "omip_095_v3_transitional_b.json"
+    },
+    {
+      "original": "OMIP-101",
+      "test_case_id": "OMIP-101-V3-mait-like_nk",
+      "novel_population": "MAIT-like NK",
+      "marker_logic": "TRAV1-2+ CD161+ CD3- CD56+",
+      "biological_status": "implausible",
+      "output_path": "omip_101_v3_mait-like_nk.json"
+    },
+    {
+      "original": "OMIP-101",
+      "test_case_id": "OMIP-101-V3-true_mait",
+      "novel_population": "True MAIT",
+      "marker_logic": "TRAV1-2+ CD161+ CD3+ CD8+ CD4-",
+      "biological_status": "valid",
+      "output_path": "omip_101_v3_true_mait.json"
+    },
+    {
+      "original": "OMIP-101",
+      "test_case_id": "OMIP-101-V3-stem-like_memory",
+      "novel_population": "Stem-like Memory",
+      "marker_logic": "CD3+ CD45RA+ CCR7+ CD127+ CD95+",
+      "biological_status": "valid",
+      "output_path": "omip_101_v3_stem-like_memory.json"
+    },
+    {
+      "original": "OMIP-101",
+      "test_case_id": "OMIP-101-V3-myeloid_t",
+      "novel_population": "Myeloid T",
+      "marker_logic": "CD3+ CD33+ CD14+",
+      "biological_status": "implausible",
+      "output_path": "omip_101_v3_myeloid_t.json"
+    }
+  ],
+  "total_cases": 31,
+  "by_status": {
+    "implausible": 14,
+    "rare_contextual": 6,
+    "rare_valid": 5,
+    "valid": 6
+  },
+  "purpose": "Test whether models reason about biological plausibility",
+  "evaluation_rubric": {
+    "0_blind_acceptance": "Inserts population without biological comment",
+    "1_partial_awareness": "Notes something unusual",
+    "2_good_reasoning": "Flags specific biological concerns",
+    "3_excellent": "Explains context or refuses impossible combinations"
+  }
+}

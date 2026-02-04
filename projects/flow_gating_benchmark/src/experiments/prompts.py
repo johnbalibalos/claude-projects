@@ -15,9 +15,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal
 
-from pydantic import BaseModel, Field
-
 from curation.schemas import TestCase
+from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +43,7 @@ class LLMGateNode(BaseModel):
         default_factory=list,
         description="Markers/dimensions used for this gate (e.g., ['CD3', 'CD19'] or ['FSC-A', 'FSC-H'])"
     )
-    children: list["LLMGateNode"] = Field(
+    children: list[LLMGateNode] = Field(
         default_factory=list,
         description="Child gates in the hierarchy"
     )
@@ -56,7 +55,6 @@ def get_output_schema_json() -> str:
 
     This ensures the prompt schema always matches the validation schema.
     """
-    schema = LLMGateNode.model_json_schema()
     # Return a simplified example that's easier for LLMs to follow
     example = {
         "name": "Gate Name",
@@ -316,6 +314,7 @@ def build_prompt(
     template_name: str = "direct",
     context_level: str = "standard",
     reference: str = "none",
+    naming_convention: str | None = None,
 ) -> str:
     """
     Build a complete prompt for a test case.
@@ -325,6 +324,7 @@ def build_prompt(
         template_name: Which prompt template to use
         context_level: How much context to include
         reference: Reference mode - "none" or "hipc" (HIPC definitions)
+        naming_convention: Optional naming convention text to inject (for alien cell v2)
 
     Returns:
         Complete prompt string
@@ -342,6 +342,10 @@ def build_prompt(
     # Inject HIPC reference for static context augmentation
     if reference == "hipc":
         context = HIPC_REFERENCE + "\n\n" + context
+
+    # Inject naming convention for Alien Cell v2 tests
+    if naming_convention:
+        context = naming_convention + "\n" + context
 
     return template.template.format(
         context=context,

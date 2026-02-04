@@ -1,0 +1,333 @@
+{
+  "test_case_id": "OMIP-008-ALIEN-V2",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-008",
+  "doi": "10.1002/cyto.a.22035",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "PBMC, T cell clones/lines, tumor-resident T cell lines",
+    "species": "human",
+    "application": "T cell cytokine production following in vitro stimulation",
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "ALIEN CELL V2: Model is given naming convention in prompt. Tests instruction following vs memorization. Original: OMIP-008",
+    "cross_references": [
+      "OMIP-001"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "papers/OMIP/nihms363148.pdf"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "IL-2",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IL-4",
+        "fluorophore": "Ax488",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IL-10",
+        "fluorophore": "PE",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IFN-g",
+        "fluorophore": "APC",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "TNF-a",
+        "fluorophore": "PE-Cy7",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "Ax700",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "APC-Cy7",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "QD605",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "PacBlu",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "eFluor450",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "ViViD",
+        "fluorophore": "ViViD",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": [],
+      "gate_type": "Unknown",
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [],
+          "marker_logic": "FSC-A vs FSC-H",
+          "gate_type": "Unknown",
+          "is_critical": true,
+          "children": [
+            {
+              "name": "Zanthrex Population",
+              "markers": [
+                "ViViD",
+                "CD3",
+                "CD14",
+                "CD19"
+              ],
+              "marker_logic": "ViViD- CD3+ CD14- CD19-",
+              "gate_type": "Unknown",
+              "is_critical": true,
+              "children": [
+                {
+                  "name": "Lymphocytes",
+                  "markers": [],
+                  "marker_logic": "FSC vs SSC",
+                  "gate_type": "Unknown",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "Plixnor Cells",
+                      "markers": [
+                        "CD4",
+                        "CD8"
+                      ],
+                      "marker_logic": "CD4+ CD8-",
+                      "gate_type": "Unknown",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "Grindlax Cells",
+                          "markers": [
+                            "IFN-g"
+                          ],
+                          "marker_logic": "IFN-g+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Flonkian Subset",
+                          "markers": [
+                            "TNF-a"
+                          ],
+                          "marker_logic": "TNF-a+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Qwelnar Cells",
+                          "markers": [
+                            "IL-2"
+                          ],
+                          "marker_logic": "IL-2+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Quixar Subset",
+                          "markers": [
+                            "IL-4"
+                          ],
+                          "marker_logic": "IL-4+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Splonix Subset",
+                          "markers": [
+                            "IL-10"
+                          ],
+                          "marker_logic": "IL-10+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Grimblex Cells",
+                      "markers": [
+                        "CD4",
+                        "CD8"
+                      ],
+                      "marker_logic": "CD4- CD8+",
+                      "gate_type": "Unknown",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "Grindlax Cells",
+                          "markers": [
+                            "IFN-g"
+                          ],
+                          "marker_logic": "IFN-g+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Flonkian Subset",
+                          "markers": [
+                            "TNF-a"
+                          ],
+                          "marker_logic": "TNF-a+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Qwelnar Cells",
+                          "markers": [
+                            "IL-2"
+                          ],
+                          "marker_logic": "IL-2+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Quixar Subset",
+                          "markers": [
+                            "IL-4"
+                          ],
+                          "marker_logic": "IL-4+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Splonix Subset",
+                          "markers": [
+                            "IL-10"
+                          ],
+                          "marker_logic": "IL-10+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "is_critical": true
+    }
+  },
+  "validation": {
+    "curator_notes": "Alien Cell V2 generated from OMIP-008. Naming convention provided in prompt. Valid reasoning test."
+  },
+  "metadata": {
+    "curation_date": "2026-01-09",
+    "curator": "manual-verification",
+    "flowkit_version": null,
+    "last_updated": "2026-01-13"
+  },
+  "difficulty": "easy",
+  "alien_cell_v2_metadata": {
+    "version": "2.0",
+    "name_mapping": {
+      "Live CD3+ T cells": {
+        "alien_name": "Zanthrex Population",
+        "marker_logic": "ViViD- CD3+ CD14- CD19-"
+      },
+      "CD4+ T cells": {
+        "alien_name": "Plixnor Cells",
+        "marker_logic": "CD4+ CD8-"
+      },
+      "IFN-g+": {
+        "alien_name": "Grindlax Cells",
+        "marker_logic": "IFN-g+"
+      },
+      "TNF-a+": {
+        "alien_name": "Flonkian Subset",
+        "marker_logic": "TNF-a+"
+      },
+      "IL-2+": {
+        "alien_name": "Qwelnar Cells",
+        "marker_logic": "IL-2+"
+      },
+      "IL-4+": {
+        "alien_name": "Quixar Subset",
+        "marker_logic": "IL-4+"
+      },
+      "IL-10+": {
+        "alien_name": "Splonix Subset",
+        "marker_logic": "IL-10+"
+      },
+      "CD8+ T cells": {
+        "alien_name": "Grimblex Cells",
+        "marker_logic": "CD4- CD8+"
+      }
+    },
+    "naming_convention_prompt": "## Lab Naming Convention\n\nThis laboratory uses non-standard population names. You MUST use these exact names in your hierarchy:\n\n- **Zanthrex Population**: defined by `ViViD- CD3+ CD14- CD19-`\n- **Plixnor Cells**: defined by `CD4+ CD8-`\n- **Grindlax Cells**: defined by `IFN-g+`\n- **Flonkian Subset**: defined by `TNF-a+`\n- **Qwelnar Cells**: defined by `IL-2+`\n- **Quixar Subset**: defined by `IL-4+`\n- **Splonix Subset**: defined by `IL-10+`\n- **Grimblex Cells**: defined by `CD4- CD8+`\n\nUse standard names (Singlets, Lymphocytes, Live) for QC gates only.\n",
+    "original_test_case": "OMIP-008",
+    "transformation_type": "instruction_following_test",
+    "hypothesis": "Model is TOLD the naming convention. If it still outputs standard immunology names, it's ignoring instructions (memorization dominates). If it uses the provided alien names, it can follow instructions.",
+    "validity_note": "Unlike v1, this test is valid because the model has the information needed to produce the expected output."
+  }
+}

@@ -1,0 +1,531 @@
+{
+  "test_case_id": "OMIP-076-ALIEN-V2",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-076",
+  "doi": "10.1002/cyto.a.24474",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Freshly isolated splenocytes (murine tissues containing lymphocyte populations)",
+    "species": "mouse",
+    "application": "Comprehensive immunophenotyping of T-cell, B-cell, and ASC subsets",
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "ALIEN CELL V2: Model is given naming convention in prompt. Tests instruction following vs memorization. Original: OMIP-076",
+    "cross_references": [
+      "OMIP-031",
+      "OMIP-032",
+      "OMIP-054",
+      "OMIP-061"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "papers/OMIP/CYTO-99-888.pdf"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "PD-L2 (CD273)",
+        "fluorophore": "BUV395",
+        "clone": "TY25",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgD",
+        "fluorophore": "BUV496",
+        "clone": "AMS 9.1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD44",
+        "fluorophore": "BUV737",
+        "clone": "IM7",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "ICOS (CD278)",
+        "fluorophore": "BV421",
+        "clone": "7E.17G9",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "PD-1 (CD279)",
+        "fluorophore": "BV480",
+        "clone": "J43",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "FVS575",
+        "clone": "N/A",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD80",
+        "fluorophore": "BV650",
+        "clone": "16-10A1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgM",
+        "fluorophore": "BV711",
+        "clone": "R6.60.2",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BV786",
+        "clone": "RM4-5",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "BV786",
+        "clone": "1D3",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "Synd-1 (CD138)",
+        "fluorophore": "BB515",
+        "clone": "281-2",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "TCR\u03b2",
+        "fluorophore": "BB700",
+        "clone": "H57-597",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "Foxp3",
+        "fluorophore": "PE",
+        "clone": "FJK-16s",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "B220 (CD45R)",
+        "fluorophore": "PE-CF594",
+        "clone": "RA3-6B2",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD25",
+        "fluorophore": "PE-Cy5",
+        "clone": "PC61",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CXCR5 (CD185)",
+        "fluorophore": "PE-Cy7",
+        "clone": "2G8",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "MHC class II (I-A/I-E)",
+        "fluorophore": "AF647",
+        "clone": "M5/114.15.2",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD62L",
+        "fluorophore": "APC-R700",
+        "clone": "MEL-14",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "APC-Cy7",
+        "clone": "30-F11",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": [],
+      "gate_type": "Unknown",
+      "children": [
+        {
+          "name": "Prexilox Subset",
+          "markers": [],
+          "marker_logic": "SSC-A vs FSC-A",
+          "gate_type": "Polygon",
+          "children": [
+            {
+              "name": "Wumbus Cells",
+              "markers": [],
+              "marker_logic": "FSC-W vs FSC-A",
+              "gate_type": "Polygon",
+              "children": [
+                {
+                  "name": "Snorfalax Population",
+                  "markers": [],
+                  "marker_logic": "CD45+ Live/Dead-",
+                  "gate_type": "Rectangle",
+                  "children": [
+                    {
+                      "name": "Zymbrix Subset",
+                      "markers": [],
+                      "marker_logic": "TCR\u03b2+ CD4/CD19+",
+                      "gate_type": "Rectangle",
+                      "children": [
+                        {
+                          "name": "Glorp Cells",
+                          "markers": [],
+                          "marker_logic": "CD62L+ CD44lo",
+                          "gate_type": "Rectangle",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Zorphan Population",
+                          "markers": [],
+                          "marker_logic": "CD62L+ CD44hi",
+                          "gate_type": "Rectangle",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Splonix Subset",
+                          "markers": [],
+                          "marker_logic": "CD62L- CD44hi",
+                          "gate_type": "Rectangle",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Qwelnar Cells",
+                          "markers": [],
+                          "marker_logic": "CD25+ Foxp3-",
+                          "gate_type": "Rectangle",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Grindlax Cells",
+                          "markers": [],
+                          "marker_logic": "CD25+ Foxp3+",
+                          "gate_type": "Rectangle",
+                          "children": [
+                            {
+                              "name": "Vondrak Cells",
+                              "markers": [],
+                              "marker_logic": "ICOS+ CD44+",
+                              "gate_type": "Rectangle",
+                              "children": [],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Plixnor Cells",
+                          "markers": [],
+                          "marker_logic": "CXCR5+",
+                          "gate_type": "Rectangle",
+                          "children": [
+                            {
+                              "name": "Flurbigan Cells",
+                              "markers": [],
+                              "marker_logic": "ICOS+ PD-1+",
+                              "gate_type": "Rectangle",
+                              "children": [
+                                {
+                                  "name": "Grimblex Cells",
+                                  "markers": [],
+                                  "marker_logic": "Foxp3+",
+                                  "gate_type": "Rectangle",
+                                  "children": [],
+                                  "is_critical": false
+                                }
+                              ],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        }
+                      ],
+                      "is_critical": true
+                    },
+                    {
+                      "name": "Threxix Population",
+                      "markers": [],
+                      "marker_logic": "TCR\u03b2- CD19+",
+                      "gate_type": "Rectangle",
+                      "children": [
+                        {
+                          "name": "Quixar Subset",
+                          "markers": [],
+                          "marker_logic": "Synd-1+",
+                          "gate_type": "Rectangle",
+                          "children": [
+                            {
+                              "name": "Blixtar Subset",
+                              "markers": [],
+                              "marker_logic": "MHC II+ IgM+",
+                              "gate_type": "Rectangle",
+                              "children": [],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Vexilon Population",
+                          "markers": [],
+                          "marker_logic": "Synd-1-",
+                          "gate_type": "Rectangle",
+                          "children": [
+                            {
+                              "name": "Krondule Cells",
+                              "markers": [],
+                              "marker_logic": "CD80+ PD-L2+",
+                              "gate_type": "Rectangle",
+                              "children": [
+                                {
+                                  "name": "Zanthrex Population",
+                                  "markers": [],
+                                  "marker_logic": "IgM+ IgD-",
+                                  "gate_type": "Rectangle",
+                                  "children": [],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "Frimblax Population",
+                                  "markers": [],
+                                  "marker_logic": "IgM+ IgD+",
+                                  "gate_type": "Rectangle",
+                                  "children": [],
+                                  "is_critical": false
+                                }
+                              ],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "Morglian Cells",
+                              "markers": [],
+                              "marker_logic": "CD80+ PD-L2-",
+                              "gate_type": "Rectangle",
+                              "children": [
+                                {
+                                  "name": "Nimbular Cells",
+                                  "markers": [],
+                                  "marker_logic": "MHC II+ PD-L2-",
+                                  "gate_type": "Rectangle",
+                                  "children": [
+                                    {
+                                      "name": "Flonkian Subset",
+                                      "markers": [],
+                                      "marker_logic": "IgM+ IgD+",
+                                      "gate_type": "Rectangle",
+                                      "children": [],
+                                      "is_critical": false
+                                    }
+                                  ],
+                                  "is_critical": false
+                                }
+                              ],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        }
+                      ],
+                      "is_critical": true
+                    },
+                    {
+                      "name": "Blemfark Cells",
+                      "markers": [],
+                      "marker_logic": "TCR\u03b2- CD4/CD19-",
+                      "gate_type": "Rectangle",
+                      "children": [
+                        {
+                          "name": "B220- Synd-1+",
+                          "markers": [],
+                          "marker_logic": "B220- Synd-1+",
+                          "gate_type": "Rectangle",
+                          "children": [
+                            {
+                              "name": "Plasma cells",
+                              "markers": [],
+                              "marker_logic": "MHC II- IgM+",
+                              "gate_type": "Rectangle",
+                              "children": [],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        }
+                      ],
+                      "is_critical": false
+                    }
+                  ],
+                  "is_critical": true
+                }
+              ],
+              "is_critical": true
+            }
+          ],
+          "is_critical": true
+        }
+      ],
+      "is_critical": true
+    }
+  },
+  "validation": {
+    "curator_notes": "Alien Cell V2 generated from OMIP-076. Naming convention provided in prompt. Valid reasoning test."
+  },
+  "metadata": {
+    "curation_date": "2026-01-09",
+    "curator": "claude-extraction",
+    "flowkit_version": null,
+    "last_updated": "2026-01-13"
+  },
+  "difficulty": "hard",
+  "alien_cell_v2_metadata": {
+    "version": "2.0",
+    "name_mapping": {
+      "Cells": {
+        "alien_name": "Prexilox Subset",
+        "marker_logic": "SSC-A vs FSC-A"
+      },
+      "Single cells": {
+        "alien_name": "Wumbus Cells",
+        "marker_logic": "FSC-W vs FSC-A"
+      },
+      "Viable CD45+": {
+        "alien_name": "Snorfalax Population",
+        "marker_logic": "CD45+ Live/Dead-"
+      },
+      "CD4+ T cells": {
+        "alien_name": "Zymbrix Subset",
+        "marker_logic": "TCR\u03b2+ CD4/CD19+"
+      },
+      "Naive T cells": {
+        "alien_name": "Glorp Cells",
+        "marker_logic": "CD62L+ CD44lo"
+      },
+      "Central memory T cells": {
+        "alien_name": "Zorphan Population",
+        "marker_logic": "CD62L+ CD44hi"
+      },
+      "Effector memory T cells": {
+        "alien_name": "Splonix Subset",
+        "marker_logic": "CD62L- CD44hi"
+      },
+      "Effector T cells": {
+        "alien_name": "Qwelnar Cells",
+        "marker_logic": "CD25+ Foxp3-"
+      },
+      "Regulatory T cells": {
+        "alien_name": "Grindlax Cells",
+        "marker_logic": "CD25+ Foxp3+"
+      },
+      "ICOS+ CD44+ Treg": {
+        "alien_name": "Vondrak Cells",
+        "marker_logic": "ICOS+ CD44+"
+      },
+      "CXCR5+": {
+        "alien_name": "Plixnor Cells",
+        "marker_logic": "CXCR5+"
+      },
+      "T follicular helper cells": {
+        "alien_name": "Flurbigan Cells",
+        "marker_logic": "ICOS+ PD-1+"
+      },
+      "T follicular regulatory cells": {
+        "alien_name": "Grimblex Cells",
+        "marker_logic": "Foxp3+"
+      },
+      "B cells": {
+        "alien_name": "Threxix Population",
+        "marker_logic": "TCR\u03b2- CD19+"
+      },
+      "Synd-1+": {
+        "alien_name": "Quixar Subset",
+        "marker_logic": "Synd-1+"
+      },
+      "Plasmablasts": {
+        "alien_name": "Blixtar Subset",
+        "marker_logic": "MHC II+ IgM+"
+      },
+      "Synd-1-": {
+        "alien_name": "Vexilon Population",
+        "marker_logic": "Synd-1-"
+      },
+      "CD80+ PD-L2+": {
+        "alien_name": "Krondule Cells",
+        "marker_logic": "CD80+ PD-L2+"
+      },
+      "IgM+ Memory B cells": {
+        "alien_name": "Zanthrex Population",
+        "marker_logic": "IgM+ IgD-"
+      },
+      "IgM+ IgD+ Memory B cells": {
+        "alien_name": "Frimblax Population",
+        "marker_logic": "IgM+ IgD+"
+      },
+      "CD80+ PD-L2-": {
+        "alien_name": "Morglian Cells",
+        "marker_logic": "CD80+ PD-L2-"
+      },
+      "MHC II+ PD-L2-": {
+        "alien_name": "Nimbular Cells",
+        "marker_logic": "MHC II+ PD-L2-"
+      },
+      "Activated B cells": {
+        "alien_name": "Flonkian Subset",
+        "marker_logic": "IgM+ IgD+"
+      },
+      "TCR\u03b2- CD19-": {
+        "alien_name": "Blemfark Cells",
+        "marker_logic": "TCR\u03b2- CD4/CD19-"
+      }
+    },
+    "naming_convention_prompt": "## Lab Naming Convention\n\nThis laboratory uses non-standard population names. You MUST use these exact names in your hierarchy:\n\n- **Prexilox Subset**: defined by `SSC-A vs FSC-A`\n- **Wumbus Cells**: defined by `FSC-W vs FSC-A`\n- **Snorfalax Population**: defined by `CD45+ Live/Dead-`\n- **Zymbrix Subset**: defined by `TCR\u03b2+ CD4/CD19+`\n- **Glorp Cells**: defined by `CD62L+ CD44lo`\n- **Zorphan Population**: defined by `CD62L+ CD44hi`\n- **Splonix Subset**: defined by `CD62L- CD44hi`\n- **Qwelnar Cells**: defined by `CD25+ Foxp3-`\n- **Grindlax Cells**: defined by `CD25+ Foxp3+`\n- **Vondrak Cells**: defined by `ICOS+ CD44+`\n- **Plixnor Cells**: defined by `CXCR5+`\n- **Flurbigan Cells**: defined by `ICOS+ PD-1+`\n- **Grimblex Cells**: defined by `Foxp3+`\n- **Threxix Population**: defined by `TCR\u03b2- CD19+`\n- **Quixar Subset**: defined by `Synd-1+`\n- **Blixtar Subset**: defined by `MHC II+ IgM+`\n- **Vexilon Population**: defined by `Synd-1-`\n- **Krondule Cells**: defined by `CD80+ PD-L2+`\n- **Zanthrex Population**: defined by `IgM+ IgD-`\n- **Frimblax Population**: defined by `IgM+ IgD+`\n- **Morglian Cells**: defined by `CD80+ PD-L2-`\n- **Nimbular Cells**: defined by `MHC II+ PD-L2-`\n- **Flonkian Subset**: defined by `IgM+ IgD+`\n- **Blemfark Cells**: defined by `TCR\u03b2- CD4/CD19-`\n\nUse standard names (Singlets, Lymphocytes, Live) for QC gates only.\n",
+    "original_test_case": "OMIP-076",
+    "transformation_type": "instruction_following_test",
+    "hypothesis": "Model is TOLD the naming convention. If it still outputs standard immunology names, it's ignoring instructions (memorization dominates). If it uses the provided alien names, it can follow instructions.",
+    "validity_note": "Unlike v1, this test is valid because the model has the information needed to produce the expected output."
+  }
+}

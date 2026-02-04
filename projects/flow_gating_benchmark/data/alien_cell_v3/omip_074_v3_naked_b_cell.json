@@ -1,0 +1,394 @@
+{
+  "test_case_id": "OMIP-074-V3-naked_b_cell",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-074",
+  "doi": "10.1002/cyto.a.24341",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Fresh or cryopreserved PBMC",
+    "species": "human",
+    "application": "Phenotyping IgA and IgG subclasses on B cells",
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "ALIEN CELL V3: Tests biological reasoning. Novel population 'Naked B Cell' (CD19+ CD20- IgM- IgD- IgG- IgA-) is rare_valid. Original: OMIP-074",
+    "cross_references": [
+      "OMIP-003",
+      "OMIP-033",
+      "OMIP-043",
+      "OMIP-047",
+      "OMIP-051"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "papers/OMIP/CYTO-99-880.pdf"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD19",
+        "fluorophore": "PE-Dazzle 594",
+        "clone": "HIB19",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD20",
+        "fluorophore": "Alexa Fluor 700",
+        "clone": "2H7",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD27",
+        "fluorophore": "BV650",
+        "clone": "O323",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD21",
+        "fluorophore": "BV605",
+        "clone": "B-ly4",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgA",
+        "fluorophore": "DyLight 405",
+        "clone": "Polyclonal (Goat)",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgD",
+        "fluorophore": "PE-Cy5.5",
+        "clone": "IADB6 (IA6-2)",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgE",
+        "fluorophore": "APC-Fire 750",
+        "clone": "MHE-18",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgG",
+        "fluorophore": "PE-Cy5",
+        "clone": "G18-145",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgM",
+        "fluorophore": "BV570",
+        "clone": "MHM-88",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgA1",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": "B3506B4",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgA2",
+        "fluorophore": "PE-Vio770",
+        "clone": "IS11-21E11",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgG1",
+        "fluorophore": "PE",
+        "clone": "HP6001",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgG2",
+        "fluorophore": "BV750",
+        "clone": "HP6002",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgG3",
+        "fluorophore": "Alexa Fluor 488",
+        "clone": "HP6050",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgG4",
+        "fluorophore": "APC",
+        "clone": "SAG4",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgKappa",
+        "fluorophore": "BV711",
+        "clone": "G20-193",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgLambda",
+        "fluorophore": "BV786",
+        "clone": "JDC-12",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "Dead Cells",
+        "fluorophore": "Aqua Blue",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": [],
+      "gate_type": "Unknown",
+      "children": [
+        {
+          "name": "Time gate",
+          "markers": [],
+          "marker_logic": "Time-gated events",
+          "gate_type": "Unknown",
+          "children": [
+            {
+              "name": "Singlets",
+              "markers": [],
+              "marker_logic": "Single events",
+              "gate_type": "Unknown",
+              "children": [
+                {
+                  "name": "Lymphocytes",
+                  "markers": [],
+                  "marker_logic": "FSC vs SSC",
+                  "gate_type": "Unknown",
+                  "children": [
+                    {
+                      "name": "Live cells",
+                      "markers": [],
+                      "marker_logic": "Dead Cells-",
+                      "gate_type": "Unknown",
+                      "children": [
+                        {
+                          "name": "B cells",
+                          "markers": [],
+                          "marker_logic": "CD19+ CD20+",
+                          "gate_type": "Unknown",
+                          "children": [
+                            {
+                              "name": "Naive B cells",
+                              "markers": [],
+                              "marker_logic": "CD21+ CD27-",
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "Resting Memory (RM)",
+                              "markers": [],
+                              "marker_logic": "CD21+ CD27+",
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "Activated Memory (AM)",
+                              "markers": [],
+                              "marker_logic": "CD21- CD27+",
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "Tissue-like Memory (TLM)",
+                              "markers": [],
+                              "marker_logic": "CD21- CD27-",
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "Class-switched B cells",
+                              "markers": [],
+                              "marker_logic": "IgD- IgM-",
+                              "gate_type": "Unknown",
+                              "children": [
+                                {
+                                  "name": "IgE+ B cells",
+                                  "markers": [],
+                                  "marker_logic": "IgE+ IgG-",
+                                  "gate_type": "Unknown",
+                                  "children": [],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "IgA+ B cells",
+                                  "markers": [],
+                                  "marker_logic": "IgA+ IgG-",
+                                  "gate_type": "Unknown",
+                                  "children": [
+                                    {
+                                      "name": "IgA1+ B cells",
+                                      "markers": [],
+                                      "marker_logic": "IgA1+",
+                                      "gate_type": "Unknown",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "IgA2+ B cells",
+                                      "markers": [],
+                                      "marker_logic": "IgA2+",
+                                      "gate_type": "Unknown",
+                                      "children": [],
+                                      "is_critical": false
+                                    }
+                                  ],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "IgG+ B cells",
+                                  "markers": [],
+                                  "marker_logic": "IgG+",
+                                  "gate_type": "Unknown",
+                                  "children": [
+                                    {
+                                      "name": "IgG1+ B cells",
+                                      "markers": [],
+                                      "marker_logic": "IgG1+",
+                                      "gate_type": "Unknown",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "IgG2+ B cells",
+                                      "markers": [],
+                                      "marker_logic": "IgG2+",
+                                      "gate_type": "Unknown",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "IgG3+ B cells",
+                                      "markers": [],
+                                      "marker_logic": "IgG3+",
+                                      "gate_type": "Unknown",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "IgG4+ B cells",
+                                      "markers": [],
+                                      "marker_logic": "IgG4+",
+                                      "gate_type": "Unknown",
+                                      "children": [],
+                                      "is_critical": false
+                                    }
+                                  ],
+                                  "is_critical": false
+                                }
+                              ],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "Kappa+ B cells",
+                              "markers": [],
+                              "marker_logic": "IgKappa+",
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "Lambda+ B cells",
+                              "markers": [],
+                              "marker_logic": "IgLambda+",
+                              "gate_type": "Unknown",
+                              "children": [],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        }
+                      ],
+                      "is_critical": true
+                    }
+                  ],
+                  "is_critical": true
+                }
+              ],
+              "is_critical": true
+            }
+          ],
+          "is_critical": false
+        }
+      ],
+      "is_critical": true
+    }
+  },
+  "validation": {
+    "paper_source": null,
+    "wsp_extraction_match": null,
+    "discrepancies": [],
+    "curator_notes": null,
+    "validation_date": null
+  },
+  "metadata": {
+    "curation_date": "2026-01-09",
+    "curator": "claude-extraction",
+    "flowkit_version": null,
+    "last_updated": "2026-01-13"
+  },
+  "difficulty": "hard",
+  "alien_cell_v3_metadata": {
+    "version": "3.0",
+    "test_type": "biological_reasoning",
+    "novel_population": {
+      "name": "Naked B Cell",
+      "marker_logic": "CD19+ CD20- IgM- IgD- IgG- IgA-",
+      "biological_status": "rare_valid",
+      "reasoning": "Could be early pro-B cell, plasma cell (CD20- is normal), or pathological B-ALL.",
+      "expected_behavior": "Accept, discuss possible identities (plasma cell, pro-B, leukemic)"
+    },
+    "original_test_case": "OMIP-074",
+    "prompt": "You are an expert cytometrist. Given the following panel information, predict the gating hierarchy that an expert would use for data analysis.\n\n## Panel\n\nMarkers: CD19, CD20, CD27, CD21, IgA, IgD, IgE, IgG, IgM, IgA1, IgA2, IgG1, IgG2, IgG3, IgG4, IgKappa, IgLambda, Dead Cells\n\n## Special Instruction\n\nA collaborating lab has identified a novel population they call \"Naked B Cell\" defined by the marker logic: `CD19+ CD20- IgM- IgD- IgG- IgA-`.\n\nPlease incorporate this population into your gating hierarchy at the appropriate location.\n\n## Task\n\nPredict the complete gating hierarchy, starting from \"All Events\" through appropriate quality control gates to final cell population identification. Include the novel \"Naked B Cell\" population.\n\nIf you have concerns about the biological plausibility of the novel population, please note them before providing your hierarchy.\n\nReturn your answer as a JSON object with this structure:\n{\n    \"name\": \"Gate Name\",\n    \"markers\": [\"marker1\", \"marker2\"],\n    \"children\": [...]\n}\n\nProvide only the JSON hierarchy in your final answer, but you may include brief notes about biological considerations before the JSON.\n",
+    "evaluation_criteria": {
+      "blind_acceptance": "Model inserts population without comment \u2192 poor reasoning",
+      "flags_issue": "Model notes biological concerns \u2192 good reasoning",
+      "explains_context": "Model explains when/why this might occur \u2192 excellent reasoning",
+      "refuses": "Model refuses to include impossible combination \u2192 strong reasoning"
+    }
+  }
+}

@@ -1,0 +1,559 @@
+{
+  "test_case_id": "CUSTOM-PBMC-001-V3-lineage_impossible",
+  "source_type": "synthetic",
+  "omip_id": null,
+  "doi": null,
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Human PBMC",
+    "species": "human",
+    "application": "Comprehensive immunophenotyping of T cells, B cells, NK cells, and monocytes with memory subset analysis",
+    "tissue": "Peripheral blood",
+    "disease_state": null,
+    "additional_notes": "ALIEN CELL V3: Tests biological reasoning. Novel population 'Lineage Impossible' (T_MARKER+ B_MARKER+) is implausible. Original: CUSTOM-PBMC-001"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "CD45",
+        "fluorophore": "BV421",
+        "clone": "HI30",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "BUV395",
+        "clone": "UCHT1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "BUV496",
+        "clone": "SK3",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "BUV661",
+        "clone": "SK1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD25",
+        "fluorophore": "PE",
+        "clone": "M-A251",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD127",
+        "fluorophore": "BV650",
+        "clone": "A019D5",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD45RA",
+        "fluorophore": "BV786",
+        "clone": "HI100",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CCR7",
+        "fluorophore": "PE-Cy7",
+        "clone": "G043H7",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "BV605",
+        "clone": "SJ25C1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD20",
+        "fluorophore": "APC-R700",
+        "clone": "2H7",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgD",
+        "fluorophore": "FITC",
+        "clone": "IA6-2",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgM",
+        "fluorophore": "BV711",
+        "clone": "MHM-88",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD27",
+        "fluorophore": "APC",
+        "clone": "O323",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": "M5E2",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD16",
+        "fluorophore": "APC-Cy7",
+        "clone": "3G8",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD56",
+        "fluorophore": "BV510",
+        "clone": "HCD56",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "Live/Dead",
+        "fluorophore": "Zombie NIR",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": [],
+      "gate_type": "Unknown",
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [
+            "FSC-A",
+            "FSC-H"
+          ],
+          "marker_logic": [],
+          "gate_type": "PolygonGate",
+          "children": [
+            {
+              "name": "Live cells",
+              "markers": [
+                "Live/Dead"
+              ],
+              "marker_logic": [],
+              "gate_type": "RectangleGate",
+              "children": [
+                {
+                  "name": "CD45+ Leukocytes",
+                  "markers": [
+                    "CD45"
+                  ],
+                  "marker_logic": [],
+                  "gate_type": "RectangleGate",
+                  "children": [
+                    {
+                      "name": "T cells",
+                      "markers": [
+                        "CD3",
+                        "CD19"
+                      ],
+                      "marker_logic": [],
+                      "gate_type": "RectangleGate",
+                      "notes": "CD3+ CD19-",
+                      "children": [
+                        {
+                          "name": "CD4+ T cells",
+                          "markers": [
+                            "CD4",
+                            "CD8"
+                          ],
+                          "marker_logic": [],
+                          "gate_type": "RectangleGate",
+                          "notes": "CD4+ CD8-",
+                          "children": [
+                            {
+                              "name": "Tregs",
+                              "markers": [
+                                "CD25",
+                                "CD127"
+                              ],
+                              "marker_logic": [],
+                              "gate_type": "RectangleGate",
+                              "notes": "CD25+ CD127lo",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "Conventional CD4+ T cells",
+                              "markers": [
+                                "CD25",
+                                "CD127"
+                              ],
+                              "marker_logic": [],
+                              "gate_type": "RectangleGate",
+                              "notes": "CD25- or CD127+",
+                              "children": [
+                                {
+                                  "name": "Naive CD4",
+                                  "markers": [
+                                    "CD45RA",
+                                    "CCR7"
+                                  ],
+                                  "marker_logic": [],
+                                  "gate_type": "RectangleGate",
+                                  "notes": "CD45RA+ CCR7+",
+                                  "children": [],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "Central Memory CD4",
+                                  "markers": [
+                                    "CD45RA",
+                                    "CCR7"
+                                  ],
+                                  "marker_logic": [],
+                                  "gate_type": "RectangleGate",
+                                  "notes": "CD45RA- CCR7+",
+                                  "children": [],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "Effector Memory CD4",
+                                  "markers": [
+                                    "CD45RA",
+                                    "CCR7"
+                                  ],
+                                  "marker_logic": [],
+                                  "gate_type": "RectangleGate",
+                                  "notes": "CD45RA- CCR7-",
+                                  "children": [],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "TEMRA CD4",
+                                  "markers": [
+                                    "CD45RA",
+                                    "CCR7"
+                                  ],
+                                  "marker_logic": [],
+                                  "gate_type": "RectangleGate",
+                                  "notes": "CD45RA+ CCR7-",
+                                  "children": [],
+                                  "is_critical": false
+                                }
+                              ],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "CD8+ T cells",
+                          "markers": [
+                            "CD4",
+                            "CD8"
+                          ],
+                          "marker_logic": [],
+                          "gate_type": "RectangleGate",
+                          "notes": "CD4- CD8+",
+                          "children": [
+                            {
+                              "name": "Naive CD8",
+                              "markers": [
+                                "CD45RA",
+                                "CCR7"
+                              ],
+                              "marker_logic": [],
+                              "gate_type": "RectangleGate",
+                              "notes": "CD45RA+ CCR7+",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "Central Memory CD8",
+                              "markers": [
+                                "CD45RA",
+                                "CCR7"
+                              ],
+                              "marker_logic": [],
+                              "gate_type": "RectangleGate",
+                              "notes": "CD45RA- CCR7+",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "Effector Memory CD8",
+                              "markers": [
+                                "CD45RA",
+                                "CCR7"
+                              ],
+                              "marker_logic": [],
+                              "gate_type": "RectangleGate",
+                              "notes": "CD45RA- CCR7-",
+                              "children": [],
+                              "is_critical": false
+                            },
+                            {
+                              "name": "TEMRA CD8",
+                              "markers": [
+                                "CD45RA",
+                                "CCR7"
+                              ],
+                              "marker_logic": [],
+                              "gate_type": "RectangleGate",
+                              "notes": "CD45RA+ CCR7-",
+                              "children": [],
+                              "is_critical": false
+                            }
+                          ],
+                          "is_critical": false
+                        }
+                      ],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "B cells",
+                      "markers": [
+                        "CD3",
+                        "CD19"
+                      ],
+                      "marker_logic": [],
+                      "gate_type": "RectangleGate",
+                      "notes": "CD3- CD19+ or CD20+",
+                      "children": [
+                        {
+                          "name": "Naive B cells",
+                          "markers": [
+                            "IgD",
+                            "IgM",
+                            "CD27"
+                          ],
+                          "marker_logic": [],
+                          "gate_type": "RectangleGate",
+                          "notes": "IgD+ IgM+ CD27-",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Unswitched Memory B cells",
+                          "markers": [
+                            "IgD",
+                            "IgM",
+                            "CD27"
+                          ],
+                          "marker_logic": [],
+                          "gate_type": "RectangleGate",
+                          "notes": "IgD+ IgM+ CD27+",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Class-switched Memory B cells",
+                          "markers": [
+                            "IgD",
+                            "IgM",
+                            "CD27"
+                          ],
+                          "marker_logic": [],
+                          "gate_type": "RectangleGate",
+                          "notes": "IgD- IgM- CD27+",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "IgM-only Memory B cells",
+                          "markers": [
+                            "IgD",
+                            "IgM",
+                            "CD27"
+                          ],
+                          "marker_logic": [],
+                          "gate_type": "RectangleGate",
+                          "notes": "IgD- IgM+ CD27+",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Double Negative B cells",
+                          "markers": [
+                            "IgD",
+                            "IgM",
+                            "CD27"
+                          ],
+                          "marker_logic": [],
+                          "gate_type": "RectangleGate",
+                          "notes": "IgD- IgM- CD27-",
+                          "children": [],
+                          "is_critical": false
+                        }
+                      ],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "Monocytes",
+                      "markers": [
+                        "CD3",
+                        "CD14"
+                      ],
+                      "marker_logic": [],
+                      "gate_type": "RectangleGate",
+                      "notes": "CD3- CD14+",
+                      "children": [
+                        {
+                          "name": "Classical Monocytes",
+                          "markers": [
+                            "CD14",
+                            "CD16"
+                          ],
+                          "marker_logic": [],
+                          "gate_type": "RectangleGate",
+                          "notes": "CD14++ CD16-",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Intermediate Monocytes",
+                          "markers": [
+                            "CD14",
+                            "CD16"
+                          ],
+                          "marker_logic": [],
+                          "gate_type": "RectangleGate",
+                          "notes": "CD14++ CD16+",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Non-classical Monocytes",
+                          "markers": [
+                            "CD14",
+                            "CD16"
+                          ],
+                          "marker_logic": [],
+                          "gate_type": "RectangleGate",
+                          "notes": "CD14lo CD16++",
+                          "children": [],
+                          "is_critical": false
+                        }
+                      ],
+                      "is_critical": false
+                    },
+                    {
+                      "name": "NK cells",
+                      "markers": [
+                        "CD3",
+                        "CD56",
+                        "CD16"
+                      ],
+                      "marker_logic": [],
+                      "gate_type": "RectangleGate",
+                      "notes": "CD3- CD56+ and/or CD16+",
+                      "children": [
+                        {
+                          "name": "CD56bright NK cells",
+                          "markers": [
+                            "CD56",
+                            "CD16"
+                          ],
+                          "marker_logic": [],
+                          "gate_type": "RectangleGate",
+                          "notes": "CD56bright CD16-",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "CD56dim NK cells",
+                          "markers": [
+                            "CD56",
+                            "CD16"
+                          ],
+                          "marker_logic": [],
+                          "gate_type": "RectangleGate",
+                          "notes": "CD56dim CD16+",
+                          "children": [],
+                          "is_critical": false
+                        }
+                      ],
+                      "is_critical": false
+                    }
+                  ],
+                  "is_critical": false
+                }
+              ],
+              "is_critical": true
+            }
+          ],
+          "is_critical": true
+        }
+      ],
+      "is_critical": true
+    }
+  },
+  "validation": {
+    "paper_source": null,
+    "wsp_extraction_match": null,
+    "discrepancies": [],
+    "curator_notes": "Custom PBMC test case based on standard immunophenotyping panel. Gating hierarchy follows HIPC guidelines.",
+    "validation_date": "2026-01-12"
+  },
+  "metadata": {
+    "curation_date": "2026-01-12",
+    "curator": "expert-annotated",
+    "flowkit_version": null,
+    "last_updated": "2026-01-12"
+  },
+  "alien_cell_v3_metadata": {
+    "version": "3.0",
+    "test_type": "biological_reasoning",
+    "novel_population": {
+      "name": "Lineage Impossible",
+      "marker_logic": "T_MARKER+ B_MARKER+",
+      "biological_status": "implausible",
+      "reasoning": "T and B cell markers are mutually exclusive lineages.",
+      "expected_behavior": "Flag as impossible lineage combination"
+    },
+    "original_test_case": "CUSTOM-PBMC-001",
+    "prompt": "You are an expert cytometrist. Given the following panel information, predict the gating hierarchy that an expert would use for data analysis.\n\n## Panel\n\nMarkers: CD45, CD3, CD4, CD8, CD25, CD127, CD45RA, CCR7, CD19, CD20, IgD, IgM, CD27, CD14, CD16, CD56, Live/Dead\n\n## Special Instruction\n\nA collaborating lab has identified a novel population they call \"Lineage Impossible\" defined by the marker logic: `T_MARKER+ B_MARKER+`.\n\nPlease incorporate this population into your gating hierarchy at the appropriate location.\n\n## Task\n\nPredict the complete gating hierarchy, starting from \"All Events\" through appropriate quality control gates to final cell population identification. Include the novel \"Lineage Impossible\" population.\n\nIf you have concerns about the biological plausibility of the novel population, please note them before providing your hierarchy.\n\nReturn your answer as a JSON object with this structure:\n{\n    \"name\": \"Gate Name\",\n    \"markers\": [\"marker1\", \"marker2\"],\n    \"children\": [...]\n}\n\nProvide only the JSON hierarchy in your final answer, but you may include brief notes about biological considerations before the JSON.\n",
+    "evaluation_criteria": {
+      "blind_acceptance": "Model inserts population without comment \u2192 poor reasoning",
+      "flags_issue": "Model notes biological concerns \u2192 good reasoning",
+      "explains_context": "Model explains when/why this might occur \u2192 excellent reasoning",
+      "refuses": "Model refuses to include impossible combination \u2192 strong reasoning"
+    }
+  }
+}
