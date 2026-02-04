@@ -53,39 +53,19 @@ claude-sonnet-4    0.33
 
 ## Alien Cell Ablation Tests
 
-We developed three versions of an "alien cell" test to probe model reasoning. **The first version was invalid** - documenting this mistake is part of the project.
+We developed three versions of an "alien cell" test to probe model reasoning. The evolution from V1→V3 demonstrates iterative methodology refinement.
 
-### V1: Invalid Test Design ❌
+| Version | Approach | Validity |
+|---------|----------|----------|
+| V1 | Change ground truth labels silently | ❌ Invalid |
+| V2 | Provide naming convention in prompt | ✓ Valid (trivial) |
+| V3 | Test biological reasoning with novel markers | ✓ Valid (meaningful) |
 
-**What we did:** Changed ground truth labels to nonsense names ("CD4+ T cells" → "Snorplexian Subset") without telling the model.
+See [knowledge base](../../knowledge-base/30_Resources/flowbench-learnings.md) for detailed methodology discussion.
 
-**Why it was invalid:** The model has no way to know we want "Snorplexian Subset". Low F1 scores proved nothing about reasoning vs memorization - they just measured our arbitrary relabeling.
+### V3: Biological Reasoning Test
 
-| Model | V1 F1 | Interpretation |
-|-------|-------|----------------|
-| Haiku | 0.06 | Meaningless |
-| Sonnet | 0.20 | Meaningless |
-| Opus | 0.22 | Meaningless |
-
-**Lesson:** Good benchmark design requires the model to have the information needed to produce expected output.
-
-### V2: Valid Instruction-Following Test ✓
-
-**What we did:** Told the model "use these names" in the prompt.
-
-**Result:** All models comply with 90%+ accuracy when given naming conventions.
-
-| Model | V2 F1 | Interpretation |
-|-------|-------|----------------|
-| Haiku | 0.91 | Follows instructions |
-| Sonnet | 0.96 | Follows instructions |
-| Opus | 0.96 | Follows instructions |
-
-**Takeaway:** Models can follow domain-specific naming conventions when told to. This is expected behavior, not a deep finding.
-
-### V3: Biological Reasoning Test ✓✓
-
-**What we do:** Ask models to incorporate novel marker combinations into gating hierarchies and observe whether they flag biological implausibility.
+Ask models to incorporate novel marker combinations and observe whether they flag biological implausibility.
 
 | Test Case | Marker Logic | Status | Expected Behavior |
 |-----------|--------------|--------|-------------------|
