@@ -1,0 +1,1051 @@
+{
+  "test_case_id": "OMIP-095-ALIEN",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-095",
+  "doi": "10.1002/cyto.a.24788",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "Spleen, Blood, Bone Marrow, Thymus, Inguinal Lymph Nodes, Peyer's Patches",
+    "species": "mouse",
+    "application": "Deep immunophenotyping of all major leukocyte populations in murine lymphoid tissues",
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "ALIEN CELL ABLATION: Population names replaced with nonsense words. Marker logic preserved. Tests reasoning vs memorization. Original: OMIP-095",
+    "cross_references": [
+      "OMIP-031",
+      "OMIP-032",
+      "OMIP-054",
+      "OMIP-057",
+      "OMIP-059",
+      "OMIP-061",
+      "OMIP-076",
+      "OMIP-079",
+      "OMIP-093"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "papers/OMIP/nihms-1926997.pdf"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "Viability",
+        "fluorophore": "Live/Dead Blue",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD45",
+        "fluorophore": "AF532",
+        "clone": "30-F11",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "BUV737",
+        "clone": "1D3",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD45R",
+        "fluorophore": "BV570",
+        "clone": "RA3-6B2",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgM",
+        "fluorophore": "PE-D594",
+        "clone": "RMM-1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IgD",
+        "fluorophore": "SNIR685",
+        "clone": "11-26c.2a",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD24",
+        "fluorophore": "BUV496",
+        "clone": "M1/69",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD38",
+        "fluorophore": "APC-Fire810",
+        "clone": "90",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD274",
+        "fluorophore": "BUV395",
+        "clone": "MIH5",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD11b",
+        "fluorophore": "BUV661",
+        "clone": "M1/70",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD26",
+        "fluorophore": "BUV805",
+        "clone": "H194-112",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD3e",
+        "fluorophore": "Real Yellow 586",
+        "clone": "145-2C11",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "NFB610-70S",
+        "clone": "GK1.5",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD8a",
+        "fluorophore": "NFY690",
+        "clone": "53-6.7",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD25",
+        "fluorophore": "BV421",
+        "clone": "PC61",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "TCRgd",
+        "fluorophore": "APC",
+        "clone": "GL3",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD62L",
+        "fluorophore": "BV650",
+        "clone": "MEL 14",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD44",
+        "fluorophore": "BV510",
+        "clone": "IM7",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD27",
+        "fluorophore": "SB702",
+        "clone": "LG.7F9",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD279",
+        "fluorophore": "BV480",
+        "clone": "J43",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD134",
+        "fluorophore": "BV786",
+        "clone": "OX-86",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "NK1.1",
+        "fluorophore": "BB700",
+        "clone": "PK136",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD127",
+        "fluorophore": "R718",
+        "clone": "A7R34",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD11c",
+        "fluorophore": "eF506",
+        "clone": "N418",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "I-A/I-E",
+        "fluorophore": "PerCP",
+        "clone": "M5/114.15.2",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD135",
+        "fluorophore": "PE",
+        "clone": "A2F10.1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD117",
+        "fluorophore": "BV750",
+        "clone": "2B8",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD103",
+        "fluorophore": "PerCP-eF710",
+        "clone": "2E7",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD40",
+        "fluorophore": "FITC",
+        "clone": "HM40-3",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD80",
+        "fluorophore": "PE-Cy5",
+        "clone": "16-10A1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD86",
+        "fluorophore": "PE-Cy7",
+        "clone": "GL-1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "Siglec-H",
+        "fluorophore": "BUV615",
+        "clone": "440c",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "Ly6C",
+        "fluorophore": "BV605",
+        "clone": "AL-21",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD115",
+        "fluorophore": "BUV563",
+        "clone": "T38-320",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CX3CR1",
+        "fluorophore": "PE-Fire700",
+        "clone": "SA011 F11",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "F4/80",
+        "fluorophore": "eF450",
+        "clone": "BM8",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "FceR1a",
+        "fluorophore": "APC-eF780",
+        "clone": "MAR-1",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "Ly6G",
+        "fluorophore": "PE-Fire810",
+        "clone": "1A8",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "Siglec-F",
+        "fluorophore": "eF660",
+        "clone": "1RNM44N",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD326",
+        "fluorophore": "Real Blue 780",
+        "clone": "G8.8",
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": [],
+      "gate_type": "Unknown",
+      "children": [
+        {
+          "name": "Zlorpindal Population",
+          "markers": [],
+          "marker_logic": "Fluorescence vs Time",
+          "gate_type": "Unknown",
+          "children": [
+            {
+              "name": "Frindolex Cells",
+              "markers": [],
+              "marker_logic": "SSC-A vs FSC-A",
+              "gate_type": "Unknown",
+              "children": [
+                {
+                  "name": "Flondravex Cells",
+                  "markers": [
+                    "Viability"
+                  ],
+                  "marker_logic": "Viability-",
+                  "gate_type": "Unknown",
+                  "children": [
+                    {
+                      "name": "Flonkian Subset",
+                      "markers": [],
+                      "marker_logic": "FSC-H vs FSC-A",
+                      "gate_type": "Unknown",
+                      "children": [
+                        {
+                          "name": "Grimblex Cells",
+                          "markers": [],
+                          "marker_logic": "SSC-A vs SSC-H",
+                          "gate_type": "Unknown",
+                          "children": [
+                            {
+                              "name": "Glimphoran Subset",
+                              "markers": [
+                                "CD45"
+                              ],
+                              "marker_logic": "CD45+",
+                              "gate_type": "Unknown",
+                              "children": [
+                                {
+                                  "name": "Vexnorph Cells",
+                                  "markers": [
+                                    "CD45R",
+                                    "CD19"
+                                  ],
+                                  "marker_logic": "CD19+ CD45R+",
+                                  "gate_type": "Unknown",
+                                  "children": [
+                                    {
+                                      "name": "Wexnifar Population",
+                                      "markers": [
+                                        "CD24",
+                                        "CD38"
+                                      ],
+                                      "marker_logic": "CD24hi CD38+",
+                                      "gate_type": "Unknown",
+                                      "children": [
+                                        {
+                                          "name": "Snorfalax Population",
+                                          "markers": [
+                                            "IgM",
+                                            "I-A/I-E"
+                                          ],
+                                          "marker_logic": "IgM+ I-A/I-E+",
+                                          "gate_type": "Unknown",
+                                          "children": [
+                                            {
+                                              "name": "Frimblax Population",
+                                              "markers": [
+                                                "CD62L"
+                                              ],
+                                              "marker_logic": "CD62L-",
+                                              "gate_type": "Unknown",
+                                              "children": [],
+                                              "is_critical": false
+                                            },
+                                            {
+                                              "name": "Blundrix Subset",
+                                              "markers": [
+                                                "CD62L"
+                                              ],
+                                              "marker_logic": "CD62L+",
+                                              "gate_type": "Unknown",
+                                              "children": [],
+                                              "is_critical": false
+                                            }
+                                          ],
+                                          "is_critical": false
+                                        }
+                                      ],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Zindralax Cells",
+                                      "markers": [
+                                        "CD38",
+                                        "CD274",
+                                        "CD40"
+                                      ],
+                                      "marker_logic": "CD38hi CD274+ CD40+",
+                                      "gate_type": "Unknown",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Grexinoid Population",
+                                      "markers": [
+                                        "CD24",
+                                        "CD38",
+                                        "IgD"
+                                      ],
+                                      "marker_logic": "CD24+ CD38+ IgDhi",
+                                      "gate_type": "Unknown",
+                                      "children": [
+                                        {
+                                          "name": "Plimbaxor Subset",
+                                          "markers": [
+                                            "CD62L"
+                                          ],
+                                          "marker_logic": "CD62L+",
+                                          "gate_type": "Unknown",
+                                          "children": [],
+                                          "is_critical": false
+                                        },
+                                        {
+                                          "name": "Zorphan Population",
+                                          "markers": [
+                                            "CD62L"
+                                          ],
+                                          "marker_logic": "CD62L-",
+                                          "gate_type": "Unknown",
+                                          "children": [],
+                                          "is_critical": false
+                                        }
+                                      ],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Vrondilex Population",
+                                      "markers": [
+                                        "CD38",
+                                        "IgM",
+                                        "IgD"
+                                      ],
+                                      "marker_logic": "CD38lo IgM- IgD-",
+                                      "gate_type": "Unknown",
+                                      "children": [],
+                                      "is_critical": false
+                                    }
+                                  ],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "Blemfark Cells",
+                                  "markers": [
+                                    "CD19",
+                                    "CD45R"
+                                  ],
+                                  "marker_logic": "CD19+ CD45R-",
+                                  "gate_type": "Unknown",
+                                  "children": [],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "Threxaloid Cells",
+                                  "markers": [
+                                    "CD45R",
+                                    "CD19"
+                                  ],
+                                  "marker_logic": "CD45R- CD19-",
+                                  "gate_type": "Unknown",
+                                  "children": [
+                                    {
+                                      "name": "Splonix Subset",
+                                      "markers": [
+                                        "NK1.1"
+                                      ],
+                                      "marker_logic": "NK1.1+",
+                                      "gate_type": "Unknown",
+                                      "children": [
+                                        {
+                                          "name": "Zanthrex Population",
+                                          "markers": [
+                                            "CD127"
+                                          ],
+                                          "marker_logic": "CD127-",
+                                          "gate_type": "Unknown",
+                                          "children": [
+                                            {
+                                              "name": "Grindlax Cells",
+                                              "markers": [
+                                                "CD11b",
+                                                "CD27"
+                                              ],
+                                              "marker_logic": "CD11b+ CD27-",
+                                              "gate_type": "Unknown",
+                                              "children": [],
+                                              "is_critical": false
+                                            },
+                                            {
+                                              "name": "Frimbuloid Cells",
+                                              "markers": [
+                                                "CD11b",
+                                                "CD27"
+                                              ],
+                                              "marker_logic": "CD11b+ CD27+",
+                                              "gate_type": "Unknown",
+                                              "children": [],
+                                              "is_critical": false
+                                            },
+                                            {
+                                              "name": "Qwelnar Cells",
+                                              "markers": [
+                                                "CD27",
+                                                "CD11b"
+                                              ],
+                                              "marker_logic": "CD27+ CD11b-",
+                                              "gate_type": "Unknown",
+                                              "children": [],
+                                              "is_critical": false
+                                            },
+                                            {
+                                              "name": "Crexithan Cells",
+                                              "markers": [
+                                                "CD11b",
+                                                "CD27"
+                                              ],
+                                              "marker_logic": "CD11b- CD27-",
+                                              "gate_type": "Unknown",
+                                              "children": [],
+                                              "is_critical": false
+                                            }
+                                          ],
+                                          "is_critical": false
+                                        }
+                                      ],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Vrexalion Cells",
+                                      "markers": [
+                                        "CD3e"
+                                      ],
+                                      "marker_logic": "CD3e+",
+                                      "gate_type": "Unknown",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Vrembulax Cells",
+                                      "markers": [
+                                        "CD3e",
+                                        "NK1.1"
+                                      ],
+                                      "marker_logic": "CD3e- NK1.1-",
+                                      "gate_type": "Unknown",
+                                      "children": [
+                                        {
+                                          "name": "Zimblorian Cells",
+                                          "markers": [
+                                            "F4/80",
+                                            "Ly6G"
+                                          ],
+                                          "marker_logic": "F4/80+ Ly6G-",
+                                          "gate_type": "Unknown",
+                                          "children": [],
+                                          "is_critical": false
+                                        },
+                                        {
+                                          "name": "Qwomblinar Subset",
+                                          "markers": [
+                                            "Ly6G",
+                                            "F4/80"
+                                          ],
+                                          "marker_logic": "Ly6G+ F4/80-",
+                                          "gate_type": "Unknown",
+                                          "children": [],
+                                          "is_critical": false
+                                        },
+                                        {
+                                          "name": "Vrembulax Cells",
+                                          "markers": [
+                                            "F4/80",
+                                            "Ly6G"
+                                          ],
+                                          "marker_logic": "F4/80- Ly6G-",
+                                          "gate_type": "Unknown",
+                                          "children": [
+                                            {
+                                              "name": "Threxix Population",
+                                              "markers": [
+                                                "CD11c",
+                                                "I-A/I-E"
+                                              ],
+                                              "marker_logic": "CD11c+ I-A/I-E+",
+                                              "gate_type": "Unknown",
+                                              "children": [
+                                                {
+                                                  "name": "Blexinova Subset",
+                                                  "markers": [
+                                                    "CD8a",
+                                                    "CD11b"
+                                                  ],
+                                                  "marker_logic": "CD8a+ CD11b-",
+                                                  "gate_type": "Unknown",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                },
+                                                {
+                                                  "name": "Vexilon Population",
+                                                  "markers": [
+                                                    "CD11b",
+                                                    "CD8a"
+                                                  ],
+                                                  "marker_logic": "CD11b+ CD8a-",
+                                                  "gate_type": "Unknown",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                }
+                                              ],
+                                              "is_critical": false
+                                            },
+                                            {
+                                              "name": "Vrembulax Cells",
+                                              "markers": [
+                                                "CD11c",
+                                                "I-A/I-E"
+                                              ],
+                                              "marker_logic": "CD11c- or I-A/I-E-",
+                                              "gate_type": "Unknown",
+                                              "children": [
+                                                {
+                                                  "name": "Snorplexian Subset",
+                                                  "markers": [
+                                                    "Siglec-F"
+                                                  ],
+                                                  "marker_logic": "Siglec-F+",
+                                                  "gate_type": "Unknown",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                },
+                                                {
+                                                  "name": "Krondule Cells",
+                                                  "markers": [
+                                                    "FceR1a"
+                                                  ],
+                                                  "marker_logic": "FceR1a+",
+                                                  "gate_type": "Unknown",
+                                                  "children": [],
+                                                  "is_critical": false
+                                                },
+                                                {
+                                                  "name": "Vrembulax Cells",
+                                                  "markers": [
+                                                    "Siglec-F",
+                                                    "FceR1a"
+                                                  ],
+                                                  "marker_logic": "Siglec-F- FceR1a-",
+                                                  "gate_type": "Unknown",
+                                                  "children": [
+                                                    {
+                                                      "name": "Blixtar Subset",
+                                                      "markers": [
+                                                        "CX3CR1",
+                                                        "CD11b"
+                                                      ],
+                                                      "marker_logic": "CX3CR1int CD11b+",
+                                                      "gate_type": "Unknown",
+                                                      "children": [
+                                                        {
+                                                          "name": "Prexilox Subset",
+                                                          "markers": [
+                                                            "Ly6C",
+                                                            "CD62L"
+                                                          ],
+                                                          "marker_logic": "Ly6C+ CD62L+",
+                                                          "gate_type": "Unknown",
+                                                          "children": [],
+                                                          "is_critical": false
+                                                        },
+                                                        {
+                                                          "name": "Morglian Cells",
+                                                          "markers": [
+                                                            "Ly6C",
+                                                            "CD62L"
+                                                          ],
+                                                          "marker_logic": "Ly6C+ CD62L-",
+                                                          "gate_type": "Unknown",
+                                                          "children": [],
+                                                          "is_critical": false
+                                                        },
+                                                        {
+                                                          "name": "Vondrak Cells",
+                                                          "markers": [
+                                                            "Ly6C",
+                                                            "CD62L"
+                                                          ],
+                                                          "marker_logic": "Ly6C- CD62L-",
+                                                          "gate_type": "Unknown",
+                                                          "children": [],
+                                                          "is_critical": false
+                                                        }
+                                                      ],
+                                                      "is_critical": false
+                                                    },
+                                                    {
+                                                      "name": "Vrembulax Cells",
+                                                      "markers": [
+                                                        "CD11b"
+                                                      ],
+                                                      "marker_logic": "CD11b-",
+                                                      "gate_type": "Unknown",
+                                                      "children": [],
+                                                      "is_critical": false
+                                                    }
+                                                  ],
+                                                  "is_critical": false
+                                                }
+                                              ],
+                                              "is_critical": false
+                                            }
+                                          ],
+                                          "is_critical": false
+                                        }
+                                      ],
+                                      "is_critical": false
+                                    }
+                                  ],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "Splonix Subset",
+                                  "markers": [
+                                    "NK1.1",
+                                    "CD3e"
+                                  ],
+                                  "marker_logic": "NK1.1+ CD3-",
+                                  "gate_type": "Unknown",
+                                  "children": [
+                                    {
+                                      "name": "Kremblaxor Subset",
+                                      "markers": [
+                                        "CD127"
+                                      ],
+                                      "marker_logic": "CD127+",
+                                      "gate_type": "Unknown",
+                                      "children": [],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Womblier Population",
+                                      "markers": [
+                                        "CD127"
+                                      ],
+                                      "marker_logic": "CD127-",
+                                      "gate_type": "Unknown",
+                                      "children": [
+                                        {
+                                          "name": "Quexiblorp Population",
+                                          "markers": [
+                                            "CD27",
+                                            "CD11b"
+                                          ],
+                                          "marker_logic": "CD11b- CD27-",
+                                          "gate_type": "Unknown",
+                                          "children": [],
+                                          "is_critical": false
+                                        },
+                                        {
+                                          "name": "Blexitroph Cells",
+                                          "markers": [
+                                            "CD27",
+                                            "CD11b"
+                                          ],
+                                          "marker_logic": "CD11b- CD27+",
+                                          "gate_type": "Unknown",
+                                          "children": [],
+                                          "is_critical": false
+                                        },
+                                        {
+                                          "name": "Slorpentine Cells",
+                                          "markers": [
+                                            "CD27",
+                                            "CD11b"
+                                          ],
+                                          "marker_logic": "CD11b+ CD27+",
+                                          "gate_type": "Unknown",
+                                          "children": [],
+                                          "is_critical": false
+                                        },
+                                        {
+                                          "name": "Plonkthar Cells",
+                                          "markers": [
+                                            "CD27",
+                                            "CD11b"
+                                          ],
+                                          "marker_logic": "CD11b+ CD27-",
+                                          "gate_type": "Unknown",
+                                          "children": [
+                                            {
+                                              "name": "Bremulax Cells",
+                                              "markers": [
+                                                "Ly6C"
+                                              ],
+                                              "marker_logic": "Ly6C+",
+                                              "gate_type": "Unknown",
+                                              "children": [],
+                                              "is_critical": false
+                                            }
+                                          ],
+                                          "is_critical": false
+                                        }
+                                      ],
+                                      "is_critical": false
+                                    }
+                                  ],
+                                  "is_critical": false
+                                },
+                                {
+                                  "name": "Plexindral Population",
+                                  "markers": [
+                                    "CD19",
+                                    "CD45R"
+                                  ],
+                                  "marker_logic": "CD19- CD45R+",
+                                  "gate_type": "Unknown",
+                                  "children": [
+                                    {
+                                      "name": "Qwerxilan Subset",
+                                      "markers": [
+                                        "Siglec-H"
+                                      ],
+                                      "marker_logic": "Siglec-H+",
+                                      "gate_type": "Unknown",
+                                      "children": [
+                                        {
+                                          "name": "Flonxitar Subset",
+                                          "markers": [
+                                            "CD4"
+                                          ],
+                                          "marker_logic": "CD4-",
+                                          "gate_type": "Unknown",
+                                          "children": [],
+                                          "is_critical": false
+                                        },
+                                        {
+                                          "name": "Wumbus Cells",
+                                          "markers": [
+                                            "CD4"
+                                          ],
+                                          "marker_logic": "CD4+",
+                                          "gate_type": "Unknown",
+                                          "children": [],
+                                          "is_critical": false
+                                        }
+                                      ],
+                                      "is_critical": false
+                                    },
+                                    {
+                                      "name": "Frondexian Cells",
+                                      "markers": [
+                                        "CD4",
+                                        "Siglec-H"
+                                      ],
+                                      "marker_logic": "CD4- Siglec-H-",
+                                      "gate_type": "Unknown",
+                                      "children": [
+                                        {
+                                          "name": "Slindergax Population",
+                                          "markers": [
+                                            "CD11b",
+                                            "NK1.1"
+                                          ],
+                                          "marker_logic": "CD11b+ NK1.1+",
+                                          "gate_type": "Unknown",
+                                          "children": [],
+                                          "is_critical": false
+                                        },
+                                        {
+                                          "name": "Zymbrix Subset",
+                                          "markers": [
+                                            "CD11b",
+                                            "NK1.1"
+                                          ],
+                                          "marker_logic": "CD11b- NK1.1+",
+                                          "gate_type": "Unknown",
+                                          "children": [],
+                                          "is_critical": false
+                                        }
+                                      ],
+                                      "is_critical": false
+                                    }
+                                  ],
+                                  "is_critical": false
+                                }
+                              ],
+                              "is_critical": true
+                            }
+                          ],
+                          "is_critical": true
+                        }
+                      ],
+                      "is_critical": true
+                    }
+                  ],
+                  "is_critical": true
+                }
+              ],
+              "is_critical": true
+            }
+          ],
+          "is_critical": true
+        }
+      ],
+      "is_critical": true
+    }
+  },
+  "validation": {
+    "paper_source": null,
+    "wsp_extraction_match": null,
+    "discrepancies": [],
+    "curator_notes": "Alien cell ablation generated from OMIP-095. Population names replaced with nonsense words. Marker logic preserved.",
+    "validation_date": "2026-01-13"
+  },
+  "metadata": {
+    "curation_date": "2026-01-09",
+    "curator": "manual-verification",
+    "flowkit_version": null,
+    "last_updated": "2026-01-13"
+  },
+  "difficulty": "hard",
+  "alien_cell_metadata": {
+    "name_mapping": {
+      "Time gate": "Zlorpindal Population",
+      "Scatter gate": "Frindolex Cells",
+      "Live cells": "Flondravex Cells",
+      "Singlets (FSC)": "Flonkian Subset",
+      "Singlets (SSC)": "Grimblex Cells",
+      "Leukocytes": "Glimphoran Subset",
+      "B-2 cells": "Vexnorph Cells",
+      "Transitional B cells": "Wexnifar Population",
+      "IgM+ I-A/I-E+": "Snorfalax Population",
+      "Transitional 1": "Frimblax Population",
+      "Transitional 2": "Blundrix Subset",
+      "Marginal zone B cells": "Zindralax Cells",
+      "Follicular B cells": "Grexinoid Population",
+      "CD62L+ Follicular": "Plimbaxor Subset",
+      "CD62L- Follicular": "Zorphan Population",
+      "Germinal center B cells": "Vrondilex Population",
+      "B-1 cells": "Blemfark Cells",
+      "Other (non-B)": "Threxaloid Cells",
+      "NK cells": "Splonix Subset",
+      "CD127- NK cells": "Zanthrex Population",
+      "Terminal NK": "Grindlax Cells",
+      "DP NK": "Frimbuloid Cells",
+      "CD27+ NK": "Qwelnar Cells",
+      "DN NK": "Crexithan Cells",
+      "T cells": "Vrexalion Cells",
+      "Other": "Vrembulax Cells",
+      "Macrophages": "Zimblorian Cells",
+      "Neutrophils": "Qwomblinar Subset",
+      "DCs": "Threxix Population",
+      "cDC1s": "Blexinova Subset",
+      "cDC2s": "Vexilon Population",
+      "Eosinophils": "Snorplexian Subset",
+      "Basophils": "Krondule Cells",
+      "Monocytes": "Blixtar Subset",
+      "Classical Monocytes": "Prexilox Subset",
+      "Intermediate Monocytes": "Morglian Cells",
+      "Nonclassical Monocytes": "Vondrak Cells",
+      "ILC1s": "Kremblaxor Subset",
+      "NK cells (CD127-)": "Womblier Population",
+      "DN (precursor)": "Quexiblorp Population",
+      "CD27+ (proliferative)": "Blexitroph Cells",
+      "DP (mature effector)": "Slorpentine Cells",
+      "CD11b+ (terminal)": "Plonkthar Cells",
+      "Ly6C+ (inert/resting)": "Bremulax Cells",
+      "CD19- CD45R+ cells": "Plexindral Population",
+      "pDCs": "Qwerxilan Subset",
+      "Immature pDCs": "Flonxitar Subset",
+      "Mature pDCs": "Wumbus Cells",
+      "CD4- Siglec-H-": "Frondexian Cells",
+      "CD11b+ pre-mNKs": "Slindergax Population",
+      "CD11b- pre-mNKs": "Zymbrix Subset"
+    },
+    "original_test_case": "OMIP-095",
+    "transformation_type": "population_name_replacement",
+    "hypothesis": "If model relies on memorization, performance should drop. If model reasons from markers, performance should be maintained."
+  }
+}

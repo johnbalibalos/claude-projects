@@ -65,12 +65,12 @@ class TestCLIModelMap:
     def test_sonnet_mapping(self):
         """claude-sonnet should map to 'sonnet'."""
         assert CLI_MODEL_MAP["claude-sonnet"] == "sonnet"
-        assert CLI_MODEL_MAP["claude-sonnet-4-20250514"] == "sonnet"
+        assert CLI_MODEL_MAP["claude-sonnet-4-5-20250929"] == "sonnet"
 
     def test_opus_mapping(self):
         """claude-opus should map to 'opus'."""
         assert CLI_MODEL_MAP["claude-opus"] == "opus"
-        assert CLI_MODEL_MAP["claude-opus-4-20250514"] == "opus"
+        assert CLI_MODEL_MAP["claude-opus-4-5-20251101"] == "opus"
 
     def test_haiku_mapping(self):
         """claude-haiku should map to 'haiku'."""
@@ -174,9 +174,10 @@ class TestMockClient:
         assert "children" in parsed
 
     def test_mock_model_id(self):
-        """Mock should report correct model ID."""
+        """Mock should report correct model ID (includes mode suffix)."""
         client = MockClient("test-model")
-        assert client.model_id == "test-model"
+        # model_id format is "{model}-{mode}", default mode is "valid"
+        assert client.model_id == "test-model-valid"
 
 
 class TestModelRegistry:
@@ -205,7 +206,7 @@ class TestResolveModel:
 
     def test_resolve_shorthand(self):
         """Should resolve shorthand names."""
-        assert resolve_model("claude-sonnet") == "claude-sonnet-4-20250514"
+        assert resolve_model("claude-sonnet") == "claude-sonnet-4-5-20250929"
 
     def test_resolve_unknown_returns_same(self):
         """Unknown names should return as-is."""
@@ -251,7 +252,7 @@ class TestCLIIntegration:
 
         assert "INTEGRATION_TEST_OK" in response.content or "OK" in response.content
         assert response.tokens_used > 0
-        assert response.model == "claude-sonnet-4-20250514"
+        assert response.model == "claude-sonnet-4-5-20250929"
 
     def test_sonnet_cli_json_response(self):
         """Test CLI can return structured JSON."""

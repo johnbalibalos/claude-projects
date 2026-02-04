@@ -1,0 +1,310 @@
+{
+  "test_case_id": "OMIP-008-ALIEN",
+  "source_type": "synthetic",
+  "omip_id": "OMIP-008",
+  "doi": "10.1002/cyto.a.22035",
+  "flowrepository_id": null,
+  "has_wsp": false,
+  "wsp_validated": false,
+  "context": {
+    "sample_type": "PBMC, T cell clones/lines, tumor-resident T cell lines",
+    "species": "human",
+    "application": "T cell cytokine production following in vitro stimulation",
+    "tissue": null,
+    "disease_state": null,
+    "additional_notes": "ALIEN CELL ABLATION: Population names replaced with nonsense words. Marker logic preserved. Tests reasoning vs memorization. Original: OMIP-008",
+    "cross_references": [
+      "OMIP-001"
+    ],
+    "pdf_verified": true,
+    "pdf_source": "papers/OMIP/nihms363148.pdf"
+  },
+  "panel": {
+    "entries": [
+      {
+        "marker": "IL-2",
+        "fluorophore": "PerCP-Cy5.5",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IL-4",
+        "fluorophore": "Ax488",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IL-10",
+        "fluorophore": "PE",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "IFN-g",
+        "fluorophore": "APC",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "TNF-a",
+        "fluorophore": "PE-Cy7",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD3",
+        "fluorophore": "Ax700",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD4",
+        "fluorophore": "APC-Cy7",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD8",
+        "fluorophore": "QD605",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD14",
+        "fluorophore": "PacBlu",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "CD19",
+        "fluorophore": "eFluor450",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      },
+      {
+        "marker": "ViViD",
+        "fluorophore": "ViViD",
+        "clone": null,
+        "channel": null,
+        "vendor": null,
+        "cat_number": null
+      }
+    ]
+  },
+  "gating_hierarchy": {
+    "root": {
+      "name": "All Events",
+      "markers": [],
+      "marker_logic": [],
+      "gate_type": "Unknown",
+      "children": [
+        {
+          "name": "Singlets",
+          "markers": [],
+          "marker_logic": "FSC-A vs FSC-H",
+          "gate_type": "Unknown",
+          "is_critical": true,
+          "children": [
+            {
+              "name": "Splonix Subset",
+              "markers": [
+                "ViViD",
+                "CD3",
+                "CD14",
+                "CD19"
+              ],
+              "marker_logic": "ViViD- CD3+ CD14- CD19-",
+              "gate_type": "Unknown",
+              "is_critical": true,
+              "children": [
+                {
+                  "name": "Lymphocytes",
+                  "markers": [],
+                  "marker_logic": "FSC vs SSC",
+                  "gate_type": "Unknown",
+                  "is_critical": true,
+                  "children": [
+                    {
+                      "name": "Snorplexian Subset",
+                      "markers": [
+                        "CD4",
+                        "CD8"
+                      ],
+                      "marker_logic": "CD4+ CD8-",
+                      "gate_type": "Unknown",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "Glimphoran Subset",
+                          "markers": [
+                            "IFN-g"
+                          ],
+                          "marker_logic": "IFN-g+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Kremblaxor Subset",
+                          "markers": [
+                            "TNF-a"
+                          ],
+                          "marker_logic": "TNF-a+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Vexnorph Cells",
+                          "markers": [
+                            "IL-2"
+                          ],
+                          "marker_logic": "IL-2+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Wumbus Cells",
+                          "markers": [
+                            "IL-4"
+                          ],
+                          "marker_logic": "IL-4+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Flonkian Subset",
+                          "markers": [
+                            "IL-10"
+                          ],
+                          "marker_logic": "IL-10+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Crexithan Cells",
+                      "markers": [
+                        "CD4",
+                        "CD8"
+                      ],
+                      "marker_logic": "CD4- CD8+",
+                      "gate_type": "Unknown",
+                      "is_critical": true,
+                      "children": [
+                        {
+                          "name": "Glimphoran Subset",
+                          "markers": [
+                            "IFN-g"
+                          ],
+                          "marker_logic": "IFN-g+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Kremblaxor Subset",
+                          "markers": [
+                            "TNF-a"
+                          ],
+                          "marker_logic": "TNF-a+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Vexnorph Cells",
+                          "markers": [
+                            "IL-2"
+                          ],
+                          "marker_logic": "IL-2+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Wumbus Cells",
+                          "markers": [
+                            "IL-4"
+                          ],
+                          "marker_logic": "IL-4+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        },
+                        {
+                          "name": "Flonkian Subset",
+                          "markers": [
+                            "IL-10"
+                          ],
+                          "marker_logic": "IL-10+",
+                          "gate_type": "Unknown",
+                          "children": [],
+                          "is_critical": false
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "is_critical": true
+    }
+  },
+  "validation": {
+    "paper_source": null,
+    "wsp_extraction_match": null,
+    "discrepancies": [],
+    "curator_notes": "Alien cell ablation generated from OMIP-008. Population names replaced with nonsense words. Marker logic preserved.",
+    "validation_date": "2026-01-13"
+  },
+  "metadata": {
+    "curation_date": "2026-01-09",
+    "curator": "manual-verification",
+    "flowkit_version": null,
+    "last_updated": "2026-01-13"
+  },
+  "difficulty": "easy",
+  "alien_cell_metadata": {
+    "name_mapping": {
+      "Live CD3+ T cells": "Splonix Subset",
+      "CD4+ T cells": "Snorplexian Subset",
+      "IFN-g+": "Glimphoran Subset",
+      "TNF-a+": "Kremblaxor Subset",
+      "IL-2+": "Vexnorph Cells",
+      "IL-4+": "Wumbus Cells",
+      "IL-10+": "Flonkian Subset",
+      "CD8+ T cells": "Crexithan Cells"
+    },
+    "original_test_case": "OMIP-008",
+    "transformation_type": "population_name_replacement",
+    "hypothesis": "If model relies on memorization, performance should drop. If model reasons from markers, performance should be maintained."
+  }
+}
