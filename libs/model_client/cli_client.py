@@ -9,6 +9,8 @@ import threading
 import time
 from dataclasses import dataclass
 
+from libs.exceptions import APIError
+
 logger = logging.getLogger(__name__)
 
 
@@ -158,7 +160,7 @@ class ClaudeCLIClient:
             return stdout.strip()
 
 
-class CLIError(Exception):
+class CLIError(APIError):
     """Exception for CLI-related errors."""
 
     pass

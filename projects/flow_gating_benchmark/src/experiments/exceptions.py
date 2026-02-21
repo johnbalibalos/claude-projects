@@ -10,14 +10,18 @@ between different failure modes:
 
 from __future__ import annotations
 
+from libs.exceptions import APIError, BioLLMException
+from libs.exceptions import ConfigurationError as BaseConfigurationError
+from libs.exceptions import ParseError as BaseParseError
 
-class ExperimentError(Exception):
+
+class ExperimentError(BioLLMException):
     """Base exception for experiment-related errors."""
 
     pass
 
 
-class ConfigurationError(ExperimentError):
+class ConfigurationError(ExperimentError, BaseConfigurationError):
     """
     Raised when there's a configuration or setup issue.
 
@@ -31,7 +35,7 @@ class ConfigurationError(ExperimentError):
     pass
 
 
-class LLMClientError(ExperimentError):
+class LLMClientError(ExperimentError, APIError):
     """
     Raised when an LLM API call fails.
 
@@ -45,7 +49,7 @@ class LLMClientError(ExperimentError):
     pass
 
 
-class ParseError(ExperimentError):
+class ParseError(ExperimentError, BaseParseError):
     """
     Raised when parsing LLM output fails.
 
