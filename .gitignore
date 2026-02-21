@@ -42,3 +42,7 @@ pytest.ini
 
 # Test artifacts
 .hypothesis/
+
+# Backup env files
+*.env.bak
+.env.bak
