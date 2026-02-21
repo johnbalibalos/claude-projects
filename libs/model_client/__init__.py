@@ -29,8 +29,10 @@ from typing import Any
 
 from .cache import CachedClient, ResponseCache, get_global_cache
 from .cli_client import ClaudeCLIClient, CLIConfig, CLIError
+from .mock import MockClient, MockMode
 from .protocols import ModelClient, ModelResponse, Provider, TokenUsage
 from .retry import with_retry, with_retry_async
+from .token_counting import MODEL_CONTEXT_WINDOWS, PromptTooLongError, TokenCounter, TokenEstimate
 
 __all__ = [
     "ModelRegistry",
@@ -53,6 +55,14 @@ __all__ = [
     "ClaudeCLIClient",
     "CLIConfig",
     "CLIError",
+    # Token counting
+    "TokenCounter",
+    "TokenEstimate",
+    "PromptTooLongError",
+    "MODEL_CONTEXT_WINDOWS",
+    # Mock
+    "MockClient",
+    "MockMode",
 ]
 
 logger = logging.getLogger(__name__)
