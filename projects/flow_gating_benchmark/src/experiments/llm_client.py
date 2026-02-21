@@ -24,6 +24,9 @@ from typing import Protocol
 from experiments.exceptions import ConfigurationError
 from tenacity import retry, stop_after_attempt, wait_exponential
 
+from libs.model_client.token_counting import MODEL_CONTEXT_WINDOWS as _SHARED_WINDOWS
+from libs.model_client.token_counting import PromptTooLongError as _BasePromptTooLongError
+
 logger = logging.getLogger(__name__)
 
 
@@ -31,19 +34,10 @@ logger = logging.getLogger(__name__)
 # TOKEN COUNTING (Pre-flight checks)
 # =============================================================================
 
-# Model context windows (input tokens)
-# Source: Provider documentation as of 2024
+# Model context windows — merge shared constants with local Ollama/Gemini entries
 MODEL_CONTEXT_WINDOWS = {
-    # Anthropic Claude
-    "claude-opus-4-5-20251101": 200_000,
-    "claude-sonnet-4-5-20250929": 200_000,
-    "claude-haiku-4-5-20251001": 200_000,
-    # OpenAI GPT
-    "gpt-4o": 128_000,
-    "gpt-4o-mini": 128_000,
-    "gpt-4-turbo": 128_000,
-    # Google Gemini
-    "gemini-2.0-flash": 1_000_000,
+    **_SHARED_WINDOWS,
+    # Gemini extended models (not in shared constants yet)
     "gemini-2.5-flash": 1_000_000,
     "gemini-2.5-pro": 1_000_000,
     # Local/Ollama (conservative defaults)
@@ -80,7 +74,7 @@ class TokenCounter:
             return self._encoders[model]
 
         try:
-            import tiktoken
+            import tiktoken  # type: ignore[reportMissingImports]
 
             # Map model to tiktoken encoding
             if "gpt" in model.lower():
@@ -195,11 +189,12 @@ def get_token_counter() -> TokenCounter:
     return _token_counter
 
 
-class PromptTooLongError(Exception):
+class PromptTooLongError(_BasePromptTooLongError):
     """Raised when a prompt exceeds the model's context window."""
 
     def __init__(self, message: str, token_count: int, available: int):
-        super().__init__(message)
+        # Call Exception.__init__ directly since base class has different signature
+        Exception.__init__(self, message)
         self.token_count = token_count
         self.available = available
 
@@ -331,7 +326,7 @@ class AnthropicClient:
             messages=[{"role": "user", "content": prompt}],
         )
         return LLMResponse(
-            content=message.content[0].text,
+            content=message.content[0].text,  # type: ignore[reportAttributeAccessIssue]
             model=self.model,
             tokens_used=message.usage.input_tokens + message.usage.output_tokens,
         )
@@ -354,7 +349,7 @@ class OpenAIClient:
     def _get_client(self):
         if self._client is None:
             try:
-                from openai import OpenAI
+                from openai import OpenAI  # type: ignore[reportMissingImports]
 
                 if not os.environ.get("OPENAI_API_KEY"):
                     raise ConfigurationError(
@@ -431,20 +426,20 @@ class GeminiClient:
         # Relaxed safety settings for biomedical content
         safety_settings = [
             types.SafetySetting(
-                category="HARM_CATEGORY_DANGEROUS_CONTENT",
-                threshold="BLOCK_ONLY_HIGH",
+                category="HARM_CATEGORY_DANGEROUS_CONTENT",  # type: ignore[reportArgumentType]
+                threshold="BLOCK_ONLY_HIGH",  # type: ignore[reportArgumentType]
             ),
             types.SafetySetting(
-                category="HARM_CATEGORY_HARASSMENT",
-                threshold="BLOCK_ONLY_HIGH",
+                category="HARM_CATEGORY_HARASSMENT",  # type: ignore[reportArgumentType]
+                threshold="BLOCK_ONLY_HIGH",  # type: ignore[reportArgumentType]
             ),
             types.SafetySetting(
-                category="HARM_CATEGORY_HATE_SPEECH",
-                threshold="BLOCK_ONLY_HIGH",
+                category="HARM_CATEGORY_HATE_SPEECH",  # type: ignore[reportArgumentType]
+                threshold="BLOCK_ONLY_HIGH",  # type: ignore[reportArgumentType]
             ),
             types.SafetySetting(
-                category="HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                threshold="BLOCK_ONLY_HIGH",
+                category="HARM_CATEGORY_SEXUALLY_EXPLICIT",  # type: ignore[reportArgumentType]
+                threshold="BLOCK_ONLY_HIGH",  # type: ignore[reportArgumentType]
             ),
         ]
 
