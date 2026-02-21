@@ -6,14 +6,18 @@ for supplementary files.
 """
 
 import json
+import logging
 import re
 import time
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
+from datetime import datetime
 from pathlib import Path
-from typing import Callable
+from typing import Any, Callable
 
 import httpx
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -24,6 +28,7 @@ class DownloadResult:
     status: str  # "success", "cached", "error", "invalid_xml"
     path: str | None = None
     error: str | None = None
+    supplementary: list[Any] = field(default_factory=list)
 
 
 @dataclass
@@ -61,6 +66,7 @@ class PMCClient:
 
     EUTILS_BASE = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
     OA_API_URL = "https://www.ncbi.nlm.nih.gov/pmc/utils/oa/oa.fcgi"
+    ID_CONVERTER_URL = "https://pmc.ncbi.nlm.nih.gov/tools/idconv/api/v1/articles/"
 
     def __init__(
         self,
@@ -264,6 +270,88 @@ class PMCClient:
                 error=str(e),
             )]
 
+    def doi_to_pmcid(self, doi: str) -> str | None:
+        """
+        Convert DOI to PMCID using NCBI ID Converter API.
+
+        Args:
+            doi: The DOI to convert (e.g., "10.1002/cyto.a.24292")
+
+        Returns:
+            PMCID (e.g., "PMC7891234") or None if not found
+        """
+        params = {
+            "ids": doi,
+            "format": "json",
+            "email": self.email,
+        }
+
+        try:
+            response = self._client.get(self.ID_CONVERTER_URL, params=params)
+            response.raise_for_status()
+            data = response.json()
+            time.sleep(self.rate_limit_delay)
+
+            records = data.get("records", [])
+            if records and "pmcid" in records[0]:
+                pmcid = records[0]["pmcid"]
+                logger.info(f"Converted DOI {doi} -> {pmcid}")
+                return pmcid
+
+            logger.warning(f"No PMCID found for DOI {doi}")
+            return None
+        except (httpx.HTTPError, json.JSONDecodeError) as e:
+            logger.error(f"Error converting DOI {doi}: {e}")
+            return None
+
+    def fetch_pdf(self, pmc_id: str, output_dir: Path | str) -> Path | None:
+        """
+        Fetch PDF from PMC Open Access subset.
+
+        Args:
+            pmc_id: PMC ID (with or without "PMC" prefix)
+            output_dir: Directory to save PDF file
+
+        Returns:
+            Path to downloaded PDF, or None if not available
+        """
+        pmc_id = pmc_id.replace("PMC", "")
+        output_dir = Path(output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output_path = output_dir / f"PMC{pmc_id}.pdf"
+
+        if output_path.exists():
+            return output_path
+
+        params = {"id": f"PMC{pmc_id}", "format": "json"}
+        try:
+            response = self._client.get(self.OA_API_URL, params=params, timeout=30)
+            response.raise_for_status()
+            data = response.json()
+            time.sleep(self.rate_limit_delay)
+
+            records = data.get("records", [])
+            if not records:
+                return None
+
+            pdf_url = None
+            for link in records[0].get("links", []):
+                if link.get("format") == "pdf":
+                    pdf_url = link.get("href")
+                    break
+
+            if not pdf_url:
+                return None
+
+            resp = self._client.get(pdf_url, timeout=120, follow_redirects=True)
+            resp.raise_for_status()
+            output_path.write_bytes(resp.content)
+            time.sleep(self.rate_limit_delay)
+            return output_path
+        except Exception as e:
+            logger.error(f"Error fetching PDF for PMC{pmc_id}: {e}")
+            return None
+
     def extract_metadata(self, xml_path: Path | str) -> PaperMetadata:
         """
         Extract metadata from downloaded XML.
@@ -395,3 +483,76 @@ class PMCClient:
 
         with open(output_path, "w") as f:
             json.dump(index_data, f, indent=2)
+
+
+def extract_gating_section(xml_content: str) -> str | None:
+    """
+    Extract gating-related sections from PMC XML.
+
+    Searches for sections, figure captions, and table captions containing
+    gating strategy keywords. Useful for flow cytometry papers (OMIP, etc.).
+
+    Args:
+        xml_content: Full text XML content from PMC
+
+    Returns:
+        Concatenated gating-related text, or None if not found
+    """
+    try:
+        root = ET.fromstring(xml_content)
+    except ET.ParseError as e:
+        logger.error(f"XML parse error: {e}")
+        return None
+
+    sections = []
+
+    gating_keywords = [
+        "gating", "gate", "gating strategy", "gating scheme",
+        "gating hierarchy", "population", "subset",
+        "flow cytometry", "facs",
+    ]
+
+    # Search in <sec> elements
+    for sec in root.iter("sec"):
+        title_elem = sec.find("title")
+        title = ""
+        if title_elem is not None and title_elem.text:
+            title = title_elem.text.lower()
+
+        text_parts = []
+        for elem in sec.iter():
+            if elem.text:
+                text_parts.append(elem.text)
+            if elem.tail:
+                text_parts.append(elem.tail)
+        full_text = " ".join(text_parts)
+
+        is_gating_related = any(
+            kw in title or kw in full_text.lower()[:1000]
+            for kw in gating_keywords
+        )
+        if is_gating_related:
+            sections.append(f"=== Section: {title or 'Untitled'} ===\n{full_text}")
+
+    # Search in figure captions
+    for fig in root.iter("fig"):
+        caption = fig.find("caption")
+        if caption is not None:
+            caption_text = " ".join(caption.itertext())
+            if any(kw in caption_text.lower() for kw in ["gating", "gate", "strategy", "hierarchy"]):
+                fig_id = fig.get("id", "unknown")
+                sections.append(f"=== Figure {fig_id} Caption ===\n{caption_text}")
+
+    # Search in table captions
+    for table_wrap in root.iter("table-wrap"):
+        caption = table_wrap.find("caption")
+        if caption is not None:
+            caption_text = " ".join(caption.itertext())
+            if any(kw in caption_text.lower() for kw in ["panel", "marker", "antibody", "gating"]):
+                table_id = table_wrap.get("id", "unknown")
+                sections.append(f"=== Table {table_id} Caption ===\n{caption_text}")
+
+    if not sections:
+        return None
+
+    return "\n\n---\n\n".join(sections)

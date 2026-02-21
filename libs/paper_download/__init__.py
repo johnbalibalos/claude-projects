@@ -15,6 +15,18 @@ Usage:
         client.fetch_supplementary(pmc_id, output_dir="data/papers")
 """
 
-from .pmc_client import PMCClient
+from .pmc_client import (
+    DownloadResult,
+    PaperMetadata,
+    PMCClient,
+    SupplementaryFile,
+    extract_gating_section,
+)
 
-__all__ = ["PMCClient"]
+__all__ = [
+    "DownloadResult",
+    "PaperMetadata",
+    "PMCClient",
+    "SupplementaryFile",
+    "extract_gating_section",
+]
